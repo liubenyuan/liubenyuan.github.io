@@ -14,10 +14,27 @@ NRF51822 AK II 开发板，可以在[nrf51.taobao.com NRF51淘宝店]或者[www.
 ~~~
 
 == jlink
+从官方网站[http://www.segger.com/jlink-software.html?step=1&file=JLinkLinuxTGZ64_480]下载最新的Jlink程序，然后
+
+~~~
+{}{bash}
+>> tar -xvf JLink_Linux_V480.tgz
+>> cd JLink_Linux_V480
+>> sudo cp 99-jlink.rules /etc/udev/rules.d/
+>> cd ..
+>> sudo mv JLink_Linux_V480 ~/bin/jlink
+~~~
+
+我们将jlink安装在了个人目录的bin目录下。安装完成后，需要重新连接jlink调试器，然后运行*JLinkExe*就会看到自动更新固件的信息以及链路上的设备信息，在这里应该是Cortex-M0。
 
 == arm-none-eabi crosscompiler
+这一步就是安装arm-none-eabi的交叉编译环境，在archlinux下，这一步很简单，只要去AUR找到[https://aur.archlinux.org/packages/arm-none-eabi/ arm-non-eabi]，然后再安装即可。你可以自己修改这个编译包，使用mentor的*sourcery codebench*的最新的交叉编译程序。
+
+针对sourcery codebench，如果要手动安装，只需要将下载的压缩包解压，并且放在+\~\/bin\/+目录下即可。
+
+另外一个选择是使用*ARM官方*的交叉编译工具，见[https://launchpad.net/gcc-arm-embedded]。在archlinux下，我们在AUR找到[https://aur.archlinux.org/packages/gcc-arm-none-eabi/ gcc-arm-none-eabi]，然后安装即可。但是官方的交叉编译工具我还没测试。
 
 == template for nrf51822
 
-== your 1st program : blink, blink
+== your first program : blink, blink
 

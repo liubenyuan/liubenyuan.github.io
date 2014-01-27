@@ -4,6 +4,10 @@
 
 I am now a research assistant in *BME* at [http://www.fmmu.edu.cn FMMU], under the supervisor of Prof. XiuZhen Dong and Prof. Feng Fu. I am also a fifth-year Ph.D in ATR Lab at [http://www.nudt.edu.cn NUDT], where I worked with Prof. Qiang Fu and Dr. Hongqi Fan in Adavance Radar Signal Processing *(ARSP)* group. My research interests lie broadly on biomedical imaging, statistics, optimization, tracking and estimation.
 
+~~~
+{}{img_left}{pics/email.gif}{email me}{160px}{}{}
+~~~
+
 = Academia
 
 My primary research focus on developing advanced, informational assisted +Compressive Sensing (CS)+ algorithms, utilizing the Bayesian Inference method. These CS algorithms are then used in group target Direction-of-Arrival estimation and dynamic scene tracking. In corporate with [https://sites.google.com/site/researchbyzhang Dr. Zhilin Zhang], we apply CS as a low complexity, low-power, robust data compression method in wireless bio-signals (ECG, EMG, EEG, etc.) telemonitoring applications, a.k.a, +Portable Healthcare+ (you may also call it eHealth or mHealth, however portable healthcare is IMHO *future*).

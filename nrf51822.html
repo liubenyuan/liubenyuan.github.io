@@ -30,12 +30,25 @@
 <p><b>So, Let's Start!</b></p>
 </td></tr></table>
 <h2>jlink</h2>
+<p>从官方网站<a href="http://www.segger.com/jlink-software.html?step=1&amp;file=JLinkLinuxTGZ64_480">http://www.segger.com/jlink-software.html?step=1&amp;file=JLinkLinuxTGZ64_480</a>下载最新的Jlink程序，然后</p>
+<div class="codeblock">
+<div class="blockcontent"><pre>
+&gt;&gt; tar -xvf JLink_Linux_V480.tgz
+&gt;&gt; cd JLink_Linux_V480
+&gt;&gt; sudo cp 99-jlink.rules /etc/udev/rules.d/
+&gt;&gt; cd ..
+&gt;&gt; sudo mv JLink_Linux_V480 ~/bin/jlink
+</pre></div></div>
+<p>我们将jlink安装在了个人目录的bin目录下。安装完成后，需要重新连接jlink调试器，然后运行<b>JLinkExe</b>就会看到自动更新固件的信息以及链路上的设备信息，在这里应该是Cortex-M0。</p>
 <h2>arm-none-eabi crosscompiler</h2>
+<p>这一步就是安装arm-none-eabi的交叉编译环境，在archlinux下，这一步很简单，只要去AUR找到<a href="https://aur.archlinux.org/packages/arm-none-eabi/">arm-non-eabi</a>，然后再安装即可。你可以自己修改这个编译包，使用mentor的<b>sourcery codebench</b>的最新的交叉编译程序。</p>
+<p>针对sourcery codebench，如果要手动安装，只需要将下载的压缩包解压，并且放在<tt>~/bin/</tt>目录下即可。</p>
+<p>另外一个选择是使用<b>ARM官方</b>的交叉编译工具，见<a href="https://launchpad.net/gcc-arm-embedded">https://launchpad.net/gcc-arm-embedded</a>。在archlinux下，我们在AUR找到<a href="https://aur.archlinux.org/packages/gcc-arm-none-eabi/">gcc-arm-none-eabi</a>，然后安装即可。但是官方的交叉编译工具我还没测试。</p>
 <h2>template for nrf51822</h2>
-<h2>your 1st program : blink, blink</h2>
+<h2>your first program : blink, blink</h2>
 <div id="footer">
 <div id="footer-text">
-Page generated 2014-01-27 16:59:40 CST, by <a href="http://jemdoc.jaboc.net/">jemdoc</a>.
+Page generated 2014-01-27 17:35:37 CST, by <a href="http://jemdoc.jaboc.net/">jemdoc</a>.
 </div>
 </div>
 </td>

@@ -47,10 +47,15 @@ body {
 }
 
 /* texttt */
-pre, tt {
+tt {
     color: #D71108;
-    font-family: 'Frutiger Neue W02 Book', Arial, sans-serif;
     font-weight: bold;
+    font-family: 'Frutiger Neue W02 Book', Arial, sans-serif;
+}
+pre {
+    color: #3f3f3f;
+    font-family: Monaco, monospace;
+    font-size: 90%;
 }
 
 /* hyperlinks (all colors are here) */
