@@ -1,15 +1,7 @@
 Main                [index.html]
-TMSBL
-    overview        [tmsbl.html]
-BSBL
-    overview        [bsbl.html]
-    BSBL-FM         [bsbl_fm.html]
-STSBL
-    overview        [stsbl.html]
+Publications        [publications.html]
 Research
-    summary         [index.html]
-    publications    [publications.html]
-    talks           [talks.html]
-    resources       [resources.html]
-Connected
-    misc            [misc.html]
+    BSBL    [bsbl.html]
+    EIT     [eit.html]
+Hacks
+    RADAR   [radar.html]

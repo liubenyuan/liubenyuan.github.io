@@ -1,3 +1,40 @@
 # jemdoc: menu{MENU}{bsbl.html}
+#
 
-= BSBL - Block SBL 
+= BSBL - The Block Sparse Bayesian Learning Framework
+
+I developing fast implementations of the Block Sparse Bayesian Learning (BSBL, see [https://sites.google.com/site/researchbyzhang Zhilin Zhang's Website]) Framework, using the Fast Marginalized Likelihood Maximization method (see [http://research.microsoft.com/en-us/um/cambridge/events/aistats2003/proceedings/123.pdf Fast marginal likelihood maximisation for sparse Beysian models] for some basics on this method).
+
+= BSBL-FM - A Fast Marginalized Implementation
+
+== Basic
+
+The BSBL-FM is a fast marginalized implementation of the BSBL framework. It is based 
+on the BCS ([http://www.ee.duke.edu/~shji/papers/BCS_preprint.pdf Ji2008]) and 
+fast RVM ([http://www.miketipping.com/papers/met-fastsbl.pdf Tipping2003]). 
+The major work are the block extension and the capability of exploiting the intra-block correlation.
+It is extremely fast when the signal *has* the block structure and the normlized 
+*sparsity* level is not high.
+
+== Demo
+
+== Papers
+
+. *Benyuan Liu*, Zhilin Zhang, Hongqi Fan, [http://arxiv.org/abs/1211.4909 Fast Marginalized Block SBL Algorithm]. Arxiv Preprint, 1211.4909.
+. *Benyuan Liu*, Zhilin Zhang, Gary Xu, Hongqi Fan, Qiang Fu, [http://arxiv.org/abs/1309.7843 Energy Efficient Telemonitoring of Physiological Signals via Compressed Sensing: A Fast Algorithm and Power Consumption Evaluation]. Arxiv Preprint, 1309.7843.
+. *Benyuan Liu*, Zhilin Zhang, Hongqi Fan, Qiang Fu, [http://arxiv.org/abs/1309.4136 Compression via Compressive Sensing: A Low-Power Framework for the Telemonitoring of Multi-Channel Physiological Signals]. International Workshop on Biomedical and Health Informatics (BHI 2013), Shanghai, China, Dec. 2013. Arxiv Preprint, 1309.4136.
+
+== Implementations
+
+
+=== Matlab Version
+
+The *Matlab* Implementation can be downloaded at: \n
+[https://nudtpaper.googlecode.com/files/bsbl_fm.zip bsbl_fm.zip]
+
+=== C Version
+The *C* version as well as the *GPU* Cuda Implementation will be available soon: \n
+
+=== Python Version
+The *Python* implementations are available at: \n
+[https://github.com/liubenyuan/pyBSBL pyBSBL at Github.com]

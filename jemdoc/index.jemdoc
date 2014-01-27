@@ -1,15 +1,16 @@
 # jemdoc: menu{MENU}{index.html}
 
-= BlockSBL - The Block Sparse Bayesian Learning Framework
+= Short Biography
 
-== TMSBL
-see the [tmsbl.html TMSBL] website.
+I am now a research assistant in *BME* at [http://www.fmmu.edu.cn FMMU], under the supervisor of Prof. XiuZhen Dong and Prof. Feng Fu. I am also a fifth-year Ph.D in ATR Lab at [http://www.nudt.edu.cn NUDT], where I worked with Prof. Qiang Fu and Dr. Hongqi Fan in Adavance Radar Signal Processing *(ARSP)* group. My research interests lie broadly on biomedical imaging, statistics, optimization, tracking and estimation.
 
-== BSBL
-see the [bsbl.html BSBL] website.
+= Academia
 
-== STBSBL
-see the [stbsbl.html STBSBL] website.
+My primary research focus on developing advanced, informational assisted +Compressive Sensing (CS)+ algorithms, utilizing the Bayesian Inference method. These CS algorithms are then used in group target Direction-of-Arrival estimation and dynamic scene tracking. In corporate with [https://sites.google.com/site/researchbyzhang Dr. Zhilin Zhang], we apply CS as a low complexity, low-power, robust data compression method in wireless bio-signals (ECG, EMG, EEG, etc.) telemonitoring applications. Focusing on +Portable Healthcare+ (you may also call it eHealth or mHealth, however portable healthcare is IMHO *future*).
+
+I am now building +Electrical Impedance Tomograpgy (EIT)+ systems at [http://bme.fmmu.edu.cn, Dept. Biomedical Enegineering, FMMU] under the supervisor of Prof. XiuZhen Dong and Prof. Feng Fu, and researching related imaging techiniques and hardware platforms. I am also a big electronic fan on amatuer radio (Cadsoft Eagle, HackRF, GNURadio), embedded platforms (ARM cortex-M series, Xilinx FPGAs, and Labview) and Bluetooth technology (Nordic Chips, *nrf51822*).
+
+A amatuer +RADAR+ utilizing the FMCW waveform is building on the way, with Dr. Xia Yang, Dr. Hongqi Fan and Prof. Zaiqi Lu.
 
 = Scholar
 

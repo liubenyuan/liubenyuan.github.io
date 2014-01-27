@@ -7,34 +7,34 @@ table#tlayout {
 }
 
 body {
-	background: white;
-	font-family: Georgia, serif;
-	padding-bottom: 8px;
-	margin: 0;
+    background: white;
+    font-family: 'Frutiger Neue W02 Book', Arial, sans-serif;
+    padding-bottom: 8px;
+    margin: 0;
 }
 
 #layout-menu {
-	background: #f6f6f6;
-	border: 1px solid #dddddd;
-	padding-top: 0.5em;
-	padding-left: 8px;
-	padding-right: 8px;
-	font-size: 1.0em;
-	width: auto;
-	white-space: nowrap;
+    background: #f6f6f6;
+    border: 2px solid #dddddd;
+    padding-top: 1em;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 16px;
+    width: auto;
+    white-space: nowrap;
     text-align: left;
     vertical-align: top;
 }
 
 #layout-menu td {
-	background: #f4f4f4;
+    background: #f4f4f4;
     vertical-align: top;
 }
 
 #layout-content {
-	padding-top: 0.0em;
-	padding-left: 1.0em;
-	padding-right: 1.0em;
+    padding-top: 0.0em;
+    padding-left: 1.0em;
+    padding-right: 1.0em;
     border: none;
     background: white;
     text-align: left;
@@ -42,135 +42,132 @@ body {
 }
 
 #layout-menu a {
-	line-height: 1.5em;
-	margin-left: 0.5em;
+    line-height: 1.5em;
+    margin-left: 0.5em;
 }
 
-tt {
-    background: #ffffdd;
-}
-
+/* texttt */
 pre, tt {
-	font-size: 90%;
-	font-family: monaco, monospace;
+    color: #D71108;
+    font-family: 'Frutiger Neue W02 Book', Arial, sans-serif;
+    font-weight: bold;
 }
 
+/* hyperlinks (all colors are here) */
 a, a > tt {
-	color: #224B8D;
-	text-decoration: none;
+    color: #006D00;
+    text-decoration: none;
+    font-weight : bold;
 }
-
 a:hover {
-	border-bottom: 1px gray dotted;
+    color: #05A605;
+    border-bottom: 2px dotted #05A605;
 }
 
 #layout-menu a.current:link, #layout-menu a.current:visited {
-	color: #022b6d;
-	border-bottom: 1px gray solid;
+    color: #05A605;
+    border-bottom: 1px gray solid;
 }
 #layout-menu a:link, #layout-menu a:visited, #layout-menu a:hover {
-	color: #527bbd;
-	text-decoration: none;
+    color: #006D00;
+    text-decoration: none;
 }
 #layout-menu a:hover {
-	text-decoration: none;
+    text-decoration: none;
 }
 
 div.menu-category {
-	border-bottom: 1px solid gray;
-	margin-top: 0.8em;
-	padding-top: 0.2em;
-	padding-bottom: 0.1em;
-	font-weight: bold;
+    border-bottom: 1px solid gray;
+    margin-top: 0.8em;
+    padding-top: 0.2em;
+    padding-bottom: 0.1em;
+    font-weight: bold;
 }
 
 div.menu-item {
-	padding-left: 16px;
-	text-indent: -16px;
+    padding-left: 16px;
+    text-indent: -16px;
 }
 
 div#toptitle {
-	padding-bottom: 0.2em;
-	margin-bottom: 1.5em;
-	border-bottom: 3px double gray;
+    padding-bottom: 0.2em;
+    margin-bottom: 1.5em;
+    border-bottom: 3px double gray;
 }
 
 /* Reduce space if we begin the page with a title. */
 div#toptitle + h2, div#toptitle + h3 {
-	margin-top: -0.7em;
+    margin-top: -0.7em;
 }
 
 div#subtitle {
-	margin-top: 0.0em;
-	margin-bottom: 0.0em;
-	padding-top: 0em;
-	padding-bottom: 0.1em;
+    margin-top: 0.0em;
+    margin-bottom: 0.0em;
+    padding-top: 0em;
+    padding-bottom: 0.1em;
 }
 
 em {
-	font-style: italic;
+    font-style: italic;
 }
 
 strong {
-	font-weight: bold;
+    font-weight: bold;
 }
 
-
+/* headings */
 h1, h2, h3 {
-	color: #527BAD;
-	margin-top: 0.7em;
-	margin-bottom: 0.3em;
-	padding-bottom: 0.2em;
-	line-height: 1.0;
-	padding-top: 0.5em;
-	border-bottom: 1px solid #aaaaaa;
+    color: #006D00;
+    margin-top: 0.5em;
+    margin-bottom: 0.3em;
+    padding-bottom: 0.3em;
+    line-height: 1.2;
+    padding-top: 0.5em;
+    border-bottom: 2px solid #05A605;
 }
-
 h1 {
-	font-size: 165%;
+    font-size: 24px;
 }
-
 h2 {
-	padding-top: 0.8em;
-	font-size: 125%;
+    padding-top: 0.8em;
+    font-size: 20px;
+    border-bottom: 2px dotted #05A605;
 }
-
 h2 + h3 {
     padding-top: 0.2em;
 }
-
 h3 {
-	font-size: 110%;
-	border-bottom: none;
+    font-size: 18px;
+    border-bottom: none;
 }
 
+/* paragraph */
 p {
-	margin-top: 0.0em;
-	margin-bottom: 0.8em;
-	padding: 0;
-	line-height: 1.3;
+    margin-top: 0.4em;
+    margin-bottom: 0.8em;
+    padding: 0px;
+    line-height: 25px;
+    font-size: 16px;
 }
-
 pre {
-	padding: 0;
-	margin: 0;
+    padding: 0;
+    margin: 0;
 }
 
+/* footers */
 div#footer {
-	font-size: small;
-	border-top: 1px solid #c0c0c0;
-	padding-top: 0.1em;
-	margin-top: 4.0em;
-	color: #c0c0c0;
+    font-size: 12px;
+    border-top: 1px solid #c0c0c0;
+    padding-top: 0.2em;
+    margin-top: 4.0em;
+    color: #c0c0c0;
 }
-
 div#footer a {
-	color: #80a0b0;
+    color: #006D00;
 }
-
 div#footer-text {
-	float: left;
-	padding-bottom: 8px;
+    float: left;
+    padding-bottom: 8px;
 }
 
 ul, ol, dl {
