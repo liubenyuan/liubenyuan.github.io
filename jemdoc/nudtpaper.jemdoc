@@ -1,0 +1,30 @@
+# jemdoc: menu{MENU}{nudtpaper.html}
+
+= NUDTPaper : Msc/Ph.D Latex Thesis Template
+
+代码下载: [https://github.com/liubenyuan/nudtpaper nudtpaper at github] \n
+项目主页: [http://liubenyuan.github.io/nudtpaper nudtpaper frontpage at github]
+
+== 简介
+
+这个项目是国防科学技术大学 硕士/博士 LaTeX 论文模板的项目页。你也可以去这里下载代码和说明文档: [http://nudtpaper.googlecode.com nudtpaper at googlecode].
+
+获取最新的代码，你可以通过[https://github.com/liubenyuan/nudtpaper github项目页]的*clone*或者*download as .zip*来得到。
+
+如果你有任何问题，欢迎发送邮件咨询 liubenyuan ATT gmail.com
+
+== 使用概要
+
+用户强烈看用户手册nudtpaper.pdf的第一页，有一些LaTeX经验的可以很快上手，所有依赖的包在典型的TeX发行版中都会包含。一般来说，包含了Windows字体都可以顺利的编译，但是为了获得更好的论文打印效果，用户可能需要下载一些中文以及英文的OTF字体文件。这方面的内容可以在CTeX论坛上咨询版上的大牛们。
+
+Ctex论坛地址: [http://bbs.ctex.org Ctex Forum] \n
+模板使用的讨论页: [http://bbs.ctex.org/forum.php?mod=viewthread&tid=51842&extra=page%3D2 国防科大硕/博论文模板]
+
+== 模板特性 (old)
+
+. 用xeCJK进行字体选择，比较方便，可以直接使用TTF或者OTF字体；
+. 安装需求少，只需要tex环境和xeCJK包，对平台没有要求，建议使用TeXLive，CTeX完整版；
+. 有模板用户手册和排版样例文件，上手简单；
+. 编译方便：生成样例文件，只需双击makepdf.bat；
+. 参考文献采用Jabref编辑，方便好管理，采用bstutf8的参考文献格式文件，符合中文规范；
+. 模板、样例都采用docstrip生成，由nudtpaper.dtx编译得到，好理解，易管理。
