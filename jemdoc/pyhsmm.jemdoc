@@ -1,0 +1,113 @@
+# jemdoc: menu{MENU}{pyhsmm.html}
+
+= pyhsmm -- Sampling Inference for Bayesian HSMMs and HMMs
+
+[https://github.com/mattjj/pyhsmm pyhsmm] is a Python library for approximate unsupervised sampling inference in Bayesian Hidden Markov Models (HMMs) and explicit-duration Hidden semi-Markov Models (HSMMs), focusing on the Bayesian Nonparametric extensions, the HDP-HMM and HDP-HSMM, via the weak-limit approximation. See also the 
+[https://github.com/mattjj/pyhsmm-collapsedinfinite plugin for collapsed HDP sampling inference] and the
+[https://github.com/mattjj/pyhsmm-factorial plugin for factorial models].
+
+== 1. clone the pyhsmm (recursively)
+
+We clone the code with +git+:
+~~~
+{}{}
+git clone --recursive git://github.com/mattjj/pyhsmm.git
+~~~
+
+Note the +-\-recursive+ option, it will get *all* the +mattjj+'s code in one folder. Suppose the 
+folder named,
+~~~
+{}{}
+D:\mattjj\pyhsmm
+~~~
+
+Next, we might want to install some +plugins+ of the +pyhsmm+ package, for example, 
+the *factorial* plugin.
+~~~
+{}{pyint}
+cd D:\mattjj\pyhsmm\plugins
+git clone git://github.com/mattjj/pyhsmm-factorial.git factorial
+~~~
+Now, the great work of +mattjj+ have been prepared.
+
+== 2. install ipython
+
+[http://ipython.org/install.html IPython] is great, just follow the [http://ipython.org/install.html install links] will do all the job. Suppose the installed EPD dir is
+
+~~~
+{}{}
+D:\epd
+~~~
+
+We can install the +pyhsmm+ package by directly copy the folder +D:\\mattjj\\pyhsmm+ to the 
++D:\\epd\\Lib\\site-packages+ folder, and *that's all*.
+
+IPython has included the [http://matplotlib.org matplotlib] features. The [http://www.numpy.org numpy] can be installed by (at the command prompt +cmd.exe+)
+
+~~~
+{}{}
+enstaller numpy
+~~~
+
+Now we have a working sci-computing python environment.
+
+~~~
+It seemed like the default epd.exe has already include all the +scipy+, +numpy+, and +matplotlib+.
+~~~
+
+== 3. install the MinGW compile
+
++pyhsmm+ can take advantage of the [http://eigen.tuxfamily.org Eigen3] libarary to boost the speed. 
+The compile under the windows enviroment need a +c\+\++ compiler. We choose the 
+[http://www.mingw.org MinGW]. The MinGW compiler can be installed using the 
+[http://sourceforge.net/projects/mingw/files/Installer/mingw-get-inst/ graphic GUI installer] 
+(where you can choose the latest one) with no pains. However during the installation, you 
+must choose the *c* and *c\+\+* compiler options. The MinGW will be installed in
+~~~
+D:\\MinGW
+~~~ 
+
+== 4. Modify the System Environment Variable
+After installing these software. we should modify some system files or environment variables.
+~~~
+{}{}
+PATH = ${PATH}; D:\mingw\bin
+TMP = D:\Temp
+TEMP = D:\Temp
+USER = D:\lby
+~~~
+It should be noted that in windows, the +TMP+ folder and the +USER+ should include no *spaces*,
+otherwise +g\+\++ will issue an error. Then we must *tell* python to use the +MinGW+ compiler 
+by modifying (if it does not exist, create it).
+~~~
+D:\\epd\\Lib\\distutils\\distutils.cfg
+~~~
+
+and with the following content
+~~~
+{}{}
+[build]
+compiler=mingw32
+~~~
+
+*Note*
+~~~
+In linux, all these operation will be very convenient.  +L.+
+~~~
+
+== 5. run the pyhsmm-factorial demo
+There are relevant code which should be modified before we run the +factorial+ demo,
+such as the location of the +Eigen3+ folder. The file must be 
+modified is +\\plugins\\ factorial\\internals\\states.py+, find the line including the string 
++include_dirs+, and change it to something like,
+~~~
+{}{}
+include_dirs=['D:\epd\Lib\site-packages\pyhsmm\deps\Eigen3']
+~~~
+where the content was the location where the +Eigen3+ library located.
+Now we can run the +pyhsmm-factorial+ demo by
+~~~
+{}{}
+\plugins\factorial> python example.py
+~~~
+The results will bump out.
