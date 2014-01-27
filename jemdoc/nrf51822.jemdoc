@@ -2,4 +2,22 @@
 
 = NRF51822 : Cortex-M0 + BLE stack, Dev in Linux.
 
+# {}{where it is}{img file}{alt text}{Width}{Height}{}
+~~~
+{}{img_left}{pics/nrf51822ak.jpg}{NRF51822 AK II Board}{300px}{}{}
+
+NRF51822 AK II 开发板，可以在[nrf51.taobao.com NRF51淘宝店]或者[www.nrf51.com NRF51开发者论坛]上购买或者询价。与nrf51822 DK/EK不同的是，这个板子不自带jlink调试器，因此，我们需要额外的购买jlink V8调试器来开发和调试ARM程序。需要注意的是，我们也可以将nrf51822理解成，搭载BLE蓝牙外设的Cortex-M0开发板：）
+
+我们开发的环境是Linux，因此，相比较官方提供的keil，nrf51822 SDK，nrfgo的开发环境，需要较为繁琐的建立步骤。
+
+*So, Let's Start!*
+~~~
+
+== jlink
+
+== arm-none-eabi crosscompiler
+
+== template for nrf51822
+
+== your 1st program : blink, blink
 
