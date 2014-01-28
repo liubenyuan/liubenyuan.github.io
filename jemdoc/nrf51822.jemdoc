@@ -37,7 +37,7 @@ NRF51822 AK II 开发板，可以在[http://nrf51.taobao.com NRF51淘宝店]或�
 == Nordic nrf51822 SDK
 当前，你可以下载最新的nrf51822的SDK，以及nordic的s110 softdevice（类比FPGA中的说法，我们可以称softdevice为有*API的软核*）。如果你购买的是nrf51822 AK开发板，那么可以去[http://www.nrf51.com nrf51论坛]下载。
 
-== template for nrf51822
+== ARM 开发初探
 
 作为一个新手，我对启动开发Cortex-M0加蓝牙的程序是很茫然的，我先前的所有经验都是在FPGA和ADSP上进行开发。现在，我们要一步的迁移到交叉编译环境加ARM与蓝牙上面。所幸，网上有很多相当优秀的教程，我列以下两个：
 
@@ -50,6 +50,36 @@ NRF51822 AK II 开发板，可以在[http://nrf51.taobao.com NRF51淘宝店]或�
 
 [http://balau82.wordpress.com/2010/02/14/simplest-bare-metal-program-for-arm/ Simplest bare metal program for ARM]. Bare Metal (裸机) 程序是无需操作系统即可运行的程式。学习裸机程序对于理解硬件架构以及操作系统的底层都很有帮助。我们在安装好arm-none-eabi工具(none即为bare metal的含义)后，将arm-none-eabi-\*添加到系统可执行路径中即可。
 
+~~~
+{}{img_left}{pics/balau82_20100214.png}{ARM bare metal}{300px}{}{}
+
+nrf51822 AK开发板可以看作是cortex-M0架构下+最小+的开发板。最基本的源代码包括test.c，启动代码startup.s，链接配置test.ld。相应的交叉编译工具也可以在图中找到。+启动代码+最基本的功能就是在程序初始化端口，屏蔽中断，映射程序。+链接配置+则包含text，data以及堆栈的位置。针对cortex-M0架构，我们需好好理解启动代码（balau给出的例子并不是针对cortex-M0架构的，针对不同架构有不同的汇编语法），不要被复杂的.s程序所困扰，只要让程序运行起来即可。编程的深入离不开芯片的数据手册和DEMO板的硬件原理图。
+~~~
+
+[http://balau82.wordpress.com/2010/02/28/hello-world-for-bare-metal-arm-using-qemu/ Hello world for bare metal ARM using QEMU]. 我们可以用qemu和arm-none-eabi-gdb来调试程序。在这里，我们还是使用上面test.c的例子。运行
+
+~~~
+{}{bash}
+$ arm-none-eabi-as -mcpu=arm926ej-s -g startup.s -o startup.o
+$ arm-none-eabi-gcc -c -mcpu=arm926ej-s -g test.c -o test.o
+$ arm-none-eabi-ld -T test.ld test.o startup.o -o test.elf
+$ arm-none-eabi-objcopy -O binary test.elf test.bin
+$ qemu-system-arm -M versatilepb -m 128M -nographic -s -S -kernel test.bin
+~~~
+
+随后在另一个终端中该目录下（需要有test.elf），
+~~~
+{}{bash}
+$ arm-none-eabi-gdb
+(gdb) target remote localhost:1234
+(gdb) file test.elf
+(gdb) b c_entry
+(gdb) continue
+(gdb) set $pc=0
+(gdb) stepi
+~~~
+
+== template for nrf51822
 
 == your first program : blink, blink
 

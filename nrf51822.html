@@ -47,7 +47,7 @@
 <p>另外一个选择是使用<b>ARM官方</b>的交叉编译工具，见<a href="https://launchpad.net/gcc-arm-embedded">https://launchpad.net/gcc-arm-embedded</a>。在archlinux下，我们在AUR找到<a href="https://aur.archlinux.org/packages/gcc-arm-none-eabi/">gcc-arm-none-eabi</a>，然后安装即可。但是官方的交叉编译工具我还没测试。</p>
 <h2>Nordic nrf51822 SDK</h2>
 <p>当前，你可以下载最新的nrf51822的SDK，以及nordic的s110 softdevice（类比FPGA中的说法，我们可以称softdevice为有<b>API的软核</b>）。如果你购买的是nrf51822 AK开发板，那么可以去<a href="http://www.nrf51.com">nrf51论坛</a>下载。</p>
-<h2>template for nrf51822</h2>
+<h2>ARM 开发初探</h2>
 <p>作为一个新手，我对启动开发Cortex-M0加蓝牙的程序是很茫然的，我先前的所有经验都是在FPGA和ADSP上进行开发。现在，我们要一步的迁移到交叉编译环境加ARM与蓝牙上面。所幸，网上有很多相当优秀的教程，我列以下两个：</p>
 <ol>
 <li><p>这个博客 <a href="http://cms.mcuapps.com/tooltips/tt0004">mcuapps博客</a></p>
@@ -58,10 +58,35 @@
 <h3>Balau82的博客集锦</h3>
 <p>我们首先阅读Balau82的博客获取一些基础知识。</p>
 <p><a href="http://balau82.wordpress.com/2010/02/14/simplest-bare-metal-program-for-arm/">Simplest bare metal program for ARM</a>. Bare Metal (裸机) 程序是无需操作系统即可运行的程式。学习裸机程序对于理解硬件架构以及操作系统的底层都很有帮助。我们在安装好arm-none-eabi工具(none即为bare metal的含义)后，将arm-none-eabi-*添加到系统可执行路径中即可。</p>
+<table class="imgtable"><tr><td>
+<img src="pics/balau82_20100214.png" alt="ARM bare metal" width="300px" />&nbsp;</td>
+<td align="left"><p>nrf51822 AK开发板可以看作是cortex-M0架构下<tt>最小</tt>的开发板。最基本的源代码包括test.c，启动代码startup.s，链接配置test.ld。相应的交叉编译工具也可以在图中找到。<tt>启动代码</tt>最基本的功能就是在程序初始化端口，屏蔽中断，映射程序。<tt>链接配置</tt>则包含text，data以及堆栈的位置。针对cortex-M0架构，我们需好好理解启动代码（balau给出的例子并不是针对cortex-M0架构的，针对不同架构有不同的汇编语法），不要被复杂的.s程序所困扰，只要让程序运行起来即可。编程的深入离不开芯片的数据手册和DEMO板的硬件原理图。</p>
+</td></tr></table>
+<p><a href="http://balau82.wordpress.com/2010/02/28/hello-world-for-bare-metal-arm-using-qemu/">Hello world for bare metal ARM using QEMU</a>. 我们可以用qemu和arm-none-eabi-gdb来调试程序。在这里，我们还是使用上面test.c的例子。运行</p>
+<div class="codeblock">
+<div class="blockcontent"><pre>
+$ arm-none-eabi-as -mcpu=arm926ej-s -g startup.s -o startup.o
+$ arm-none-eabi-gcc -c -mcpu=arm926ej-s -g test.c -o test.o
+$ arm-none-eabi-ld -T test.ld test.o startup.o -o test.elf
+$ arm-none-eabi-objcopy -O binary test.elf test.bin
+$ qemu-system-arm -M versatilepb -m 128M -nographic -s -S -kernel test.bin
+</pre></div></div>
+<p>随后在另一个终端中该目录下（需要有test.elf），</p>
+<div class="codeblock">
+<div class="blockcontent"><pre>
+$ arm-none-eabi-gdb
+(gdb) target remote localhost:1234
+(gdb) file test.elf
+(gdb) b c_entry
+(gdb) continue
+(gdb) set $pc=0
+(gdb) stepi
+</pre></div></div>
+<h2>template for nrf51822</h2>
 <h2>your first program : blink, blink</h2>
 <div id="footer">
 <div id="footer-text">
-Page generated 2014-01-28 16:42:54 CST, by <a href="http://jemdoc.jaboc.net/">jemdoc</a>.
+Page generated 2014-01-29 07:53:45 CST, by <a href="http://jemdoc.jaboc.net/">jemdoc</a>.
 </div>
 </div>
 </td>
