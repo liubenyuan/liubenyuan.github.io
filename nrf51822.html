@@ -46,7 +46,7 @@
 <p>针对sourcery codebench，如果要手动安装，只需要将下载的压缩包解压，并且放在<tt>~/bin/</tt>目录下即可。</p>
 <p>另外一个选择是使用<b>ARM官方</b>的交叉编译工具，见<a href="https://launchpad.net/gcc-arm-embedded">https://launchpad.net/gcc-arm-embedded</a>。在archlinux下，我们在AUR找到<a href="https://aur.archlinux.org/packages/gcc-arm-none-eabi/">gcc-arm-none-eabi</a>，然后安装即可。但是官方的交叉编译工具我还没测试。</p>
 <h2>Nordic nrf51822 SDK</h2>
-<p>当前，你可以下载最新的nrf51822的SDK，以及nordic的s110 softdevice（我该怎样叫这个呢？按照FPGA中的说法，我们可以称softdevice为有API的软核）。如果你购买的是nrf51822 AK开发板，那么可以去<a href="http://www.nrf51.com">nrf51论坛</a>下载。</p>
+<p>当前，你可以下载最新的nrf51822的SDK，以及nordic的s110 softdevice（类比FPGA中的说法，我们可以称softdevice为有<b>API的软核</b>）。如果你购买的是nrf51822 AK开发板，那么可以去<a href="http://www.nrf51.com">nrf51论坛</a>下载。</p>
 <h2>template for nrf51822</h2>
 <p>作为一个新手，我对启动开发Cortex-M0加蓝牙的程序是很茫然的，我先前的所有经验都是在FPGA和ADSP上进行开发。现在，我们要一步的迁移到交叉编译环境加ARM与蓝牙上面。所幸，网上有很多相当优秀的教程，我列以下两个：</p>
 <ol>
@@ -55,10 +55,13 @@
 <li><p>以及这个大牛 <a href="http://balau82.wordpress.com/category/software/embedded-software">balau82的博客</a></p>
 </li>
 </ol>
+<h3>Balau82的博客集锦</h3>
+<p>我们首先阅读Balau82的博客获取一些基础知识。</p>
+<p><a href="http://balau82.wordpress.com/2010/02/14/simplest-bare-metal-program-for-arm/">Simplest bare metal program for ARM</a>. Bare Metal (裸机) 程序是无需操作系统即可运行的程式。学习裸机程序对于理解硬件架构以及操作系统的底层都很有帮助。我们在安装好arm-none-eabi工具(none即为bare metal的含义)后，将arm-none-eabi-*添加到系统可执行路径中即可。</p>
 <h2>your first program : blink, blink</h2>
 <div id="footer">
 <div id="footer-text">
-Page generated 2014-01-28 10:23:34 CST, by <a href="http://jemdoc.jaboc.net/">jemdoc</a>.
+Page generated 2014-01-28 16:42:54 CST, by <a href="http://jemdoc.jaboc.net/">jemdoc</a>.
 </div>
 </div>
 </td>

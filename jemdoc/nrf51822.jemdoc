@@ -35,7 +35,7 @@ NRF51822 AK II 开发板，可以在[http://nrf51.taobao.com NRF51淘宝店]或�
 另外一个选择是使用*ARM官方*的交叉编译工具，见[https://launchpad.net/gcc-arm-embedded]。在archlinux下，我们在AUR找到[https://aur.archlinux.org/packages/gcc-arm-none-eabi/ gcc-arm-none-eabi]，然后安装即可。但是官方的交叉编译工具我还没测试。
 
 == Nordic nrf51822 SDK
-当前，你可以下载最新的nrf51822的SDK，以及nordic的s110 softdevice（我该怎样叫这个呢？按照FPGA中的说法，我们可以称softdevice为有API的软核）。如果你购买的是nrf51822 AK开发板，那么可以去[http://www.nrf51.com nrf51论坛]下载。
+当前，你可以下载最新的nrf51822的SDK，以及nordic的s110 softdevice（类比FPGA中的说法，我们可以称softdevice为有*API的软核*）。如果你购买的是nrf51822 AK开发板，那么可以去[http://www.nrf51.com nrf51论坛]下载。
 
 == template for nrf51822
 
@@ -43,6 +43,13 @@ NRF51822 AK II 开发板，可以在[http://nrf51.taobao.com NRF51淘宝店]或�
 
 . 这个博客 [http://cms.mcuapps.com/tooltips/tt0004 mcuapps博客]
 . 以及这个大牛 [http://balau82.wordpress.com/category/software/embedded-software balau82的博客]
+
+=== Balau82的博客集锦
+
+我们首先阅读Balau82的博客获取一些基础知识。
+
+[http://balau82.wordpress.com/2010/02/14/simplest-bare-metal-program-for-arm/ Simplest bare metal program for ARM]. Bare Metal (裸机) 程序是无需操作系统即可运行的程式。学习裸机程序对于理解硬件架构以及操作系统的底层都很有帮助。我们在安装好arm-none-eabi工具(none即为bare metal的含义)后，将arm-none-eabi-\*添加到系统可执行路径中即可。
+
 
 == your first program : blink, blink
 
