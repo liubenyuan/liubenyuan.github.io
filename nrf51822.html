@@ -17,6 +17,7 @@
 <div class="menu-item"><a href="bsbl.html">BSBL</a></div>
 <div class="menu-item"><a href="eit.html">EIT</a></div>
 <div class="menu-category">Hacks</div>
+<div class="menu-item"><a href="phealth.html">pHealth</a></div>
 <div class="menu-item"><a href="radar.html">RADAR</a></div>
 <div class="menu-item"><a href="nudtpaper.html">NUDTPaper</a></div>
 <div class="menu-item"><a href="nrf51822.html" class="current">NRF51822</a></div>
@@ -44,11 +45,20 @@
 <p>这一步就是安装arm-none-eabi的交叉编译环境，在archlinux下，这一步很简单，只要去AUR找到<a href="https://aur.archlinux.org/packages/arm-none-eabi/">arm-non-eabi</a>，然后再安装即可。你可以自己修改这个编译包，使用mentor的<b>sourcery codebench</b>的最新的交叉编译程序。</p>
 <p>针对sourcery codebench，如果要手动安装，只需要将下载的压缩包解压，并且放在<tt>~/bin/</tt>目录下即可。</p>
 <p>另外一个选择是使用<b>ARM官方</b>的交叉编译工具，见<a href="https://launchpad.net/gcc-arm-embedded">https://launchpad.net/gcc-arm-embedded</a>。在archlinux下，我们在AUR找到<a href="https://aur.archlinux.org/packages/gcc-arm-none-eabi/">gcc-arm-none-eabi</a>，然后安装即可。但是官方的交叉编译工具我还没测试。</p>
+<h2>Nordic nrf51822 SDK</h2>
+<p>当前，你可以下载最新的nrf51822的SDK，以及nordic的s110 softdevice（我该怎样叫这个呢？按照FPGA中的说法，我们可以称softdevice为有API的软核）。如果你购买的是nrf51822 AK开发板，那么可以去<a href="http://www.nrf51.com">nrf51论坛</a>下载。</p>
 <h2>template for nrf51822</h2>
+<p>作为一个新手，我对启动开发Cortex-M0加蓝牙的程序是很茫然的，我先前的所有经验都是在FPGA和ADSP上进行开发。现在，我们要一步的迁移到交叉编译环境加ARM与蓝牙上面。所幸，网上有很多相当优秀的教程，我列以下两个：</p>
+<ol>
+<li><p>这个博客 <a href="http://cms.mcuapps.com/tooltips/tt0004">mcuapps博客</a></p>
+</li>
+<li><p>以及这个大牛 <a href="http://balau82.wordpress.com/category/software/embedded-software">balau82的博客</a></p>
+</li>
+</ol>
 <h2>your first program : blink, blink</h2>
 <div id="footer">
 <div id="footer-text">
-Page generated 2014-01-28 10:00:16 CST, by <a href="http://jemdoc.jaboc.net/">jemdoc</a>.
+Page generated 2014-01-28 10:23:34 CST, by <a href="http://jemdoc.jaboc.net/">jemdoc</a>.
 </div>
 </div>
 </td>
