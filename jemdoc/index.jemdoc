@@ -1,16 +1,23 @@
 # jemdoc: menu{MENU}{index.html}
 
-= Short Biography
-
-I am now a research assistant in *BME* at [http://www.fmmu.edu.cn FMMU], under the supervisor of Prof. XiuZhen Dong and Prof. Feng Fu. I am also a fifth-year Ph.D in ATR Lab at [http://www.nudt.edu.cn NUDT], where I worked with Prof. Qiang Fu and Dr. Hongqi Fan in Adavance Radar Signal Processing *(ARSP)* group. My research interests lie broadly on biomedical imaging, statistics, optimization, tracking and estimation.
+~~~
+{}{img_left}{pics/lby.jpg}{liu benyuan}{160px}{}{}
+My Chinese name *liu benyuan* in kai font. *liu* is the Family name, *benyuan* is the Given name. \n
+It usually appears as /benyuan liu/ :)
+~~~
 
 ~~~
 {}{img_left}{pics/email.gif}{email me}{160px}{}{}
+You may contact me at this email address.
 ~~~
+
+= About
+
+I am now a research assistant in BME at [http://www.fmmu.edu.cn FMMU], under the supervisor of *Prof. XiuZhen Dong* and *Prof. Feng Fu*. I am also a fifth-year Ph.D in ATR Lab at [http://www.nudt.edu.cn NUDT], where I worked with *Prof. Qiang Fu* and *Dr. Hongqi Fan* in Adavance Radar Signal Processing *(ARSP)* group. My research interests lie broadly on biomedical signal processing, statistics, optimization, tracking and estimation.
 
 = Academia
 
-My primary research focus on developing advanced, informational assisted +Compressive Sensing (CS)+ algorithms, utilizing the Bayesian Inference method. These CS algorithms are then used in group target Direction-of-Arrival estimation and dynamic scene tracking. In corporate with [https://sites.google.com/site/researchbyzhang Dr. Zhilin Zhang], we apply CS as a low complexity, low-power, robust data compression method in wireless bio-signals (ECG, EMG, EEG, etc.) telemonitoring applications, a.k.a, +Portable Healthcare+ (you may also call it eHealth or mHealth, however portable healthcare is IMHO *future*).
+My primary research focuses on developing advanced, side-information assisted +Compressive Sensing (CS)+ algorithms, utilizing the Bayesian Inference method. These CS algorithms are then used in group target Direction-of-Arrival (DOA) estimation and dynamic scene tracking. In corporate with [https://sites.google.com/site/researchbyzhang Dr. Zhilin Zhang], we apply CS as a low complexity, low-power, robust data compression method in wireless bio-signals (ECG, EMG, EEG, etc.) telemonitoring applications, a.k.a, +Portable Healthcare+ (you may also call it *eHealth* or *mHealth*, however portable healthcare is IMHO *future*).
 
 I am now building +Electrical Impedance Tomograpgy (EIT)+ systems at [http://bme.fmmu.edu.cn, Dept. Biomedical Enegineering, FMMU] under the supervisor of Prof. XiuZhen Dong and Prof. Feng Fu, and researching related imaging techiniques and hardware platforms. I am also a big electronic fan on amatuer radio (Cadsoft Eagle, HackRF, GNURadio), embedded platforms (ARM cortex-M series, Xilinx FPGAs, and Labview) and Bluetooth technology (Nordic Chips, nrf51822).
 
