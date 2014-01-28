@@ -29,11 +29,11 @@ It is extremely fast when the signal *has* the block structure and the normlized
 
 === Matlab Version
 
-The *Matlab* Implementation can be downloaded at: \n
+The *Matlab* Implementation can be downloaded at (you may also obtain these .m files at [https://github.com/liubenyuan/pyBSBL pyBSBL]): \n
 [https://nudtpaper.googlecode.com/files/bsbl_fm.zip bsbl_fm.zip]
 
 === C Version
-The *C* version as well as the *GPU* Cuda Implementation will be available soon: \n
+The *C* version as well as the *GPU* Cuda Implementation will be available soon. (EDT 2014.01.28) \n
 
 === Python Version
 The *Python* implementations are available at: \n
