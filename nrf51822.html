@@ -83,12 +83,28 @@ $ arm-none-eabi-gdb
 (gdb) stepi
 </pre></div></div>
 <p>需要退出qemu的仿真，可以Ctrl+a, x。</p>
-<p><a href="http://balau82.wordpress.com/2011/09/03/using-codesourcery-bare-metal-toolchain-for-cortex-m3/">Using CodeSourcery bare metal toolchain for Cortex-M3</a>. 之前的交叉编译的例子都是基于arm926ej-s，balau在本文中提供了针对cortex-m3的例子。Bare metal程式最大的用处是在MCU上，我直接复制了例子中的文件并且制作了makefile，在qemu上仿真一切OK，问题是：针对cortex-m0的开发，我们需要怎样做呢？</p>
+<p><a href="http://balau82.wordpress.com/2011/09/03/using-codesourcery-bare-metal-toolchain-for-cortex-m3/">Using CodeSourcery bare metal toolchain for Cortex-M3</a>. 之前的交叉编译的例子都是基于arm926ej-s，balau在本文中提供了针对cortex-m3的例子。Bare metal程式最大的用处是在MCU上，我直接复制了例子中的文件并且制作了makefile，在qemu上仿真一切OK，源代码可见 <tt>main.c, syscalls.c, reset.S, lm3s6965.ld</tt> 。</p>
+<div class="codeblock">
+<div class="blockcontent"><pre>
+$ alias gcc-cortex-m3 = 'arm-none-eabi-gcc -mthumb -march=armv7 -mfix-cortex-m3-ldrd'
+$ gcc-cortex-m3 -c main.c -o main.o
+$ gcc-cortex-m3 -c reset.S -o reset.o
+$ gcc-cortex-m3 -c syscalls.c -o syscalls.o
+$ gcc-cortex-m3 -T lm3s6965.ld main.o reset.o syscalls.o -o main.elf
+$ arm-none-eabi-objcopy -O binary main.elf main.bin
+$ qemu-system-arm -M lm3s6965evb --kernel main.bin --serial stdio
+</pre></div></div>
+<p>我们也可以直接一步编译生成main.elf</p>
+<div class="codeblock">
+<div class="blockcontent"><pre>
+$ gcc-cortex-m3 -T lm3s6965.ld main.c reset.S syscalls.c -o main.elf
+</pre></div></div>
+<p>随后我们还要检查程序大小，初始化向量表（台湾的称呼为序列埠，很有意思），以及用MCU官方的工具对Flash进行擦写。问题是：针对cortex-m0的开发，我们需要怎样做呢？</p>
 <h2>template for nrf51822</h2>
 <h2>your first program : blink, blink</h2>
 <div id="footer">
 <div id="footer-text">
-Page generated 2014-01-29 10:09:49 CST, by <a href="http://jemdoc.jaboc.net/">jemdoc</a>.
+Page generated 2014-01-29 10:23:36 CST, by <a href="http://jemdoc.jaboc.net/">jemdoc</a>.
 </div>
 </div>
 </td>
