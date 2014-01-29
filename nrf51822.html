@@ -82,11 +82,13 @@ $ arm-none-eabi-gdb
 (gdb) set $pc=0
 (gdb) stepi
 </pre></div></div>
+<p>需要退出qemu的仿真，可以Ctrl+a, x。</p>
+<p><a href="http://balau82.wordpress.com/2011/09/03/using-codesourcery-bare-metal-toolchain-for-cortex-m3/">Using CodeSourcery bare metal toolchain for Cortex-M3</a>. 之前的交叉编译的例子都是基于arm926ej-s，balau在本文中提供了针对cortex-m3的例子。Bare metal程式最大的用处是在MCU上，我直接复制了例子中的文件并且制作了makefile，在qemu上仿真一切OK，问题是：针对cortex-m0的开发，我们需要怎样做呢？</p>
 <h2>template for nrf51822</h2>
 <h2>your first program : blink, blink</h2>
 <div id="footer">
 <div id="footer-text">
-Page generated 2014-01-29 07:53:45 CST, by <a href="http://jemdoc.jaboc.net/">jemdoc</a>.
+Page generated 2014-01-29 10:09:49 CST, by <a href="http://jemdoc.jaboc.net/">jemdoc</a>.
 </div>
 </div>
 </td>
