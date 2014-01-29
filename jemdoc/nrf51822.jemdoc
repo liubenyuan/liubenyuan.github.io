@@ -53,7 +53,7 @@ NRF51822 AK II 开发板，可以在[http://nrf51.taobao.com NRF51淘宝店]或�
 ~~~
 {}{img_left}{pics/balau82_20100214.png}{ARM bare metal}{300px}{}{}
 
-nrf51822 AK开发板可以看作是cortex-M0架构下+最小+的开发板。最基本的源代码包括test.c，启动代码startup.s，链接配置test.ld。相应的交叉编译工具也可以在图中找到。+启动代码+最基本的功能就是在程序初始化端口，屏蔽中断，映射程序。+链接配置+则包含text，data以及堆栈的位置。针对cortex-M0架构，我们需好好理解启动代码（balau给出的例子并不是针对cortex-M0架构的，针对不同架构有不同的汇编语法），不要被复杂的.s程序所困扰，只要让程序运行起来即可。编程的深入离不开芯片的数据手册和DEMO板的硬件原理图。
+nrf51822 AK开发板可以看作是cortex-M0架构下+最小+的开发板。最基本的源代码包括test.c，启动代码startup.s，链接配置test.ld。相应的交叉编译工具也可以在图中找到。+启动代码+最基本的功能就是在程序初始化端口，屏蔽中断，映射程序。+链接配置+则包含text，data以及堆栈的位置，或者说 /tells the linker where different memory sections map into real, physical memory on the chip/ 。针对cortex-M0架构，我们需好好理解启动代码（balau给出的例子并不是针对cortex-M0架构的，针对不同架构有不同的汇编语法），不要被复杂的.s程序所困扰，只要让程序运行起来即可。编程的深入离不开芯片的数据手册和DEMO板的硬件原理图。
 ~~~
 
 [http://balau82.wordpress.com/2010/02/28/hello-world-for-bare-metal-arm-using-qemu/ Hello world for bare metal ARM using QEMU]. 我们可以用qemu和arm-none-eabi-gdb来调试程序。在这里，我们还是使用上面test.c的例子。运行
