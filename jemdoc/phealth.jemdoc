@@ -4,3 +4,23 @@
 
 Building a demo board to collect cardio-related bio-signals based on nrf51822-AK.
 
+== pmodAD2 \+ Lx9micro \+ USB : building a 3-channel evaluation system
+
+先用中文夹杂英文做笔记 ：）
+
+=== pmodAD2
+
+pmodAD2, ad7991, I2C interface, up to 4 channels, 12-bit resolution. 要想使用vin4，需要disable REF_SEL，同时将JP1连接到vin4端口上。对于ad7991的操作通过I2C接口进行，主要配置哪几路AD用来转换，是否使用外部参考电压，是否有bit trial或sample delay。*We may use this module with nrf51822*.
+
+ad7991 remains in shutdown mode, powering up only for conversions. The conversion process is controlled by a command mode. The range (when REF_SEL disabled) is 0V to VDD.
+
+ad7991的串口时钟速率fSCL划分为standard (100K), fast (400K), high speed (3.4M)三种, VDD典型范围在2.7V到5.5V。ad7991的地址为 0101000 (0101001)，注意地址是7位的哦，外带一位的R/W位：如果R/W=0，则对ad7991发起写操作；如果R/W=1，则对ad7991发起读操作。对配置地址写入配置数据即可完成ad7991的配置。配置字可参见器件手册 Table 10.
+
+一个操作的要点是，在ad7991进行采样的过程中 (busy) ， I2C总线不要发起请求。ad7991的转化结果包含2B数据，其中最高两位为0，后续两位为对应的所转化的通道数，后续12位（不足的低位补零）则包含ADC结果。关键的步骤是：
+. SDA pulled low, and wake up device
+. 写配置地址和配置寄存器
+. 写配置地址和读转化结果
+. 根据通道数目确定master的ACK种类
+
+
+
