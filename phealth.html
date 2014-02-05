@@ -42,9 +42,31 @@
 <li><p>根据通道数目确定master的ACK种类</p>
 </li>
 </ol>
+<h3>Lx9micro</h3>
+<p>为什么不学习一下Xilinx的SDK呢，让我们用一晚上rock一下microblaze吧 :)</p>
+<div class="infoblock">
+<div class="blockcontent">
+<p>我们针对的是Xilinx的Spartan 6 Lx9 micro开发板，需要用到cp210x uart to usb转接芯片以及Digilent的Jtag驱动。在Archlinux的wiki主页上（或者你可以Google搜索linux, digilent, lx9micro, Xilinx ISE），有关于在linux下，配置Xilinx ISE和Lx9micro的具体步骤。</p>
+</div></div>
+<p>Microblaze是一个Xilinx基于FPGA的硬核，主要使用Xilinx Platform Studio (XPS) Base System Builder (BSB) 进行开发. </p>
+<div class="infoblock">
+<div class="blockcontent">
+<p>需要注意的是，我们需要下载Lx9micro对应的Xilinx Board Description (XBD)文件，这个文件可以从Avnet网站上下载到。具体到对于新制作的板子，我们应该怎样设计和编写这个文件，我们可以暂时放下。</p>
+</div></div>
+<p><b>第一课</b>, <a href="https://www.em.avnet.com/Support%20And%20Downloads/EDK01-Creating_Embedded_System_13_2_1.pdf">EDK01 - Creating Embedded System</a> 课程中讲解的很详细了，我们在这里重新温习一下里面的关键步骤和器件、软件。测试程序将置于LPDDR (一种mobile DDR) 中。步骤包括：</p>
+<ol>
+<li><p>使用ISE添加一个embedded processor，通过BSB定制我们的硬件；在做这一步之前，我们需要下载Avnet的XBD文件，<a href="https://www.em.avnet.com/Support%20And%20Downloads/avnet_edk14_3_xbd_files_9_11_2012_spartan.zip">EDK 14.3 XBD/IP-XACT Files</a>，按照步骤添加板级描述文件。</p>
+</li>
+<li><p>生成microblaze的bit文件，并且调出EDK界面；</p>
+</li>
+<li><p>生成一个peripheral的测试程序，这一步有现成的模板，生成后自动添加一个默认的BSP和默认的linker script；</p>
+</li>
+<li><p>配置run as，将STDIO重定向到ttyUSB0上，这样我们即可以在Console中看到运行结果，也可以通过EDK的Terminal连接来查看程序的运行结果。为了访问USB转串口，需要将你的用户添加到uucp以及lock组中，并且可以通过udev.rules修改ttyUSB0的默认属性（方法看这里<a href="https://bbs.archlinux.org/viewtopic.php?id=86088">Permission to /dev/ttyUSB0</a>）。另外在ISE 14.3下，EDK会出现segfault，我们需要安装java-rxtx包，随后参考<a href="http://forums.xilinx.com/t5/Installation-and-Licensing/SDK-segfault-on-UART-output/td-p/160000">SDK segfault on UART output?</a>，创建simlink即可。</p>
+</li>
+</ol>
 <div id="footer">
 <div id="footer-text">
-Page generated 2014-02-04 21:07:38 CST, by <a href="http://jemdoc.jaboc.net/">jemdoc</a>.
+Page generated 2014-02-05 09:32:59 CST, by <a href="http://jemdoc.jaboc.net/">jemdoc</a>.
 </div>
 </div>
 </td>
