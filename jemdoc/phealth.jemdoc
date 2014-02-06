@@ -10,7 +10,7 @@ Building a demo board to collect cardio-related bio-signals based on nrf51822-AK
 
 === pmodAD2
 
-pmodAD2, ad7991, I2C interface, up to 4 channels, 12-bit resolution. 要想使用vin4，需要disable REF_SEL，同时将JP1连接到vin4端口上。对于ad7991的操作通过I2C接口进行，主要配置哪几路AD用来转换，是否使用外部参考电压，是否有bit trial或sample delay。*We may use this module with nrf51822*.
+pmodAD2, ad7991, I2C interface, up to 4 channels, 12-bit resolution. 要想使用vin4，需要disable REF_SEL，同时将JP1连接到vin4端口上。对于ad7991的操作通过I2C接口进行，主要配置哪几路AD用来转换（通过分时复用来实现多路ADC），是否使用外部参考电压，是否有bit trial或sample delay。*We may use this module with nrf51822 via the IIC bus*.
 
 ad7991 remains in shutdown mode, powering up only for conversions. The conversion process is controlled by a command mode. The range (when REF_SEL disabled) is 0V to VDD.
 
@@ -27,7 +27,7 @@ ad7991的串口时钟速率fSCL划分为standard (100K), fast (400K), high speed
 为什么不学习一下Xilinx的SDK呢，让我们用一晚上rock一下microblaze吧 :)
 
 ~~~
-我们针对的是Xilinx的Spartan 6 Lx9 micro开发板，需要用到cp210x uart to usb转接芯片以及Digilent的Jtag驱动。在Archlinux的wiki主页上（或者你可以Google搜索linux, digilent, lx9micro, Xilinx ISE），有关于在linux下，配置Xilinx ISE和Lx9micro的具体步骤。
+我们针对的是Xilinx的Spartan 6 Lx9 (XC6SLX9) micro开发板，需要用到cp210x uart to usb转接芯片以及Digilent的Jtag驱动。在Archlinux的wiki主页上（或者你可以Google搜索linux, digilent, lx9micro, Xilinx ISE），有关于在linux下，配置Xilinx ISE和Lx9micro的具体步骤。
 ~~~
 
 Microblaze是一个Xilinx基于FPGA的硬核，主要使用Xilinx Platform Studio (XPS) Base System Builder (BSB) 进行开发. 
@@ -37,8 +37,9 @@ Microblaze是一个Xilinx基于FPGA的硬核，主要使用Xilinx Platform Studi
 ~~~
 
 *第一课*, [https://www.em.avnet.com/Support%20And%20Downloads/EDK01-Creating_Embedded_System_13_2_1.pdf EDK01 - Creating Embedded System] 课程中讲解的很详细了，我们在这里重新温习一下里面的关键步骤和器件、软件。测试程序将置于LPDDR (一种mobile DDR) 中。步骤包括：
-. 使用ISE添加一个embedded processor，通过BSB定制我们的硬件；在做这一步之前，我们需要下载Avnet的XBD文件，[https://www.em.avnet.com/Support%20And%20Downloads/avnet_edk14_3_xbd_files_9_11_2012_spartan.zip EDK 14.3 XBD\/IP-XACT Files]，按照步骤添加板级描述文件。
-. 生成microblaze的bit文件，并且调出EDK界面；
-. 生成一个peripheral的测试程序，这一步有现成的模板，生成后自动添加一个默认的BSP和默认的linker script；
+. *Create the hardware platform*: 使用ISE添加一个embedded processor，通过BSB定制我们的硬件；在做这一步之前，我们需要下载Avnet的XBD文件，[https://www.em.avnet.com/Support%20And%20Downloads/avnet_edk14_3_xbd_files_9_11_2012_spartan.zip EDK 14.3 XBD\/IP-XACT Files]，按照步骤添加板级描述文件。(需要注意的是，在配置processor和peripheral时，我们没有添加CDCE913_I2C模块)。这一步骤会生成两个文件，一个是Microprocessor Hardware Specification (MHS)，用来配置总线以及外设等；另外一个是UCF文件，这一文件与VHDL工程中的用法一致。
+. *Compiling the bitstream*: 添加UCF, Generate Top HDL Source，生成microblaze的bit文件，并且调出EDK界面；
+. *Add Xilinx Application*: 生成一个peripheral的测试程序，这一步有现成的模板，生成后自动添加一个默认的BSP和默认的linker script；随后我们可以从EDK中将bit文件和Block Memory Map File (BMM)文件烧录到板子上。
 . 配置run as，将STDIO重定向到ttyUSB0上，这样我们即可以在Console中看到运行结果，也可以通过EDK的Terminal连接来查看程序的运行结果。为了访问USB转串口，需要将你的用户添加到uucp以及lock组中，并且可以通过udev.rules修改ttyUSB0的默认属性（方法看这里[https://bbs.archlinux.org/viewtopic.php?id=86088 Permission to \/dev\/ttyUSB0]）。另外在ISE 14.3下，EDK会出现segfault，我们需要安装java-rxtx包，随后参考[http://forums.xilinx.com/t5/Installation-and-Licensing/SDK-segfault-on-UART-output/td-p/160000 SDK segfault on UART output?]，创建simlink即可。
 
+*第一课后续练习*，[https://wiki.analog.com/resources/fpga/xilinx/pmod/ad7991 AD7991 PMOD XILINX FPGA REFERENCE DESIGN]. 发扬rapid  prototyping精神，我们直接研究一下AD7991模板的结构。
