@@ -43,3 +43,18 @@ Microblaze是一个Xilinx基于FPGA的硬核，主要使用Xilinx Platform Studi
 . 配置run as，将STDIO重定向到ttyUSB0上，这样我们即可以在Console中看到运行结果，也可以通过EDK的Terminal连接来查看程序的运行结果。为了访问USB转串口，需要将你的用户添加到uucp以及lock组中，并且可以通过udev.rules修改ttyUSB0的默认属性（方法看这里[https://bbs.archlinux.org/viewtopic.php?id=86088 Permission to \/dev\/ttyUSB0]）。另外在ISE 14.3下，EDK会出现segfault，我们需要安装java-rxtx包，随后参考[http://forums.xilinx.com/t5/Installation-and-Licensing/SDK-segfault-on-UART-output/td-p/160000 SDK segfault on UART output?]，创建simlink即可。
 
 *第一课后续练习*，[https://wiki.analog.com/resources/fpga/xilinx/pmod/ad7991 AD7991 PMOD XILINX FPGA REFERENCE DESIGN]. 发扬rapid  prototyping精神，我们直接研究一下AD7991模板的结构。
+
+我们得到的reference design中有system.mhs system.xmp system.bsd data\/system.ucf，在这些文件中，system.xmp是有ISE添加embedded processor自动生成的，而system.bsd是由xps (bsd)在配置MHS后编译得到的。我们首先：
+. 在ISE中添加embedded processor
+. 然后启动一个空的XPS工程，将UCF文件和MHS文件*先后*复制到工程中。这里会弹出一个version manager更新我们的BSD。
+. 随后我们退出XPS，在ISE中生成HDL。生成的新的MHS文件可以用diff查看与旧工程文件的区别。
+
+注意在dos编码格式下，我们可以用
+~~~
+{}{vim}
+:update
+:set ff=unix
+~~~
+将refdesign中的编码更新一下，在diff之后，我们就看到仅仅是peripheral器件的版本号发生了改变。
+
++注意！+ 当我们采用microblaze的refdesign时，+仅仅需要连接pmodAD2到3-6管脚上+，而不能将8个管脚全部连接。这是因为在这个默认的refdesign中，7-12管脚是接地的。我们可以用extension cable来连接。

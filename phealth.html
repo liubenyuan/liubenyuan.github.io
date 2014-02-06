@@ -65,9 +65,26 @@
 </li>
 </ol>
 <p><b>第一课后续练习</b>，<a href="https://wiki.analog.com/resources/fpga/xilinx/pmod/ad7991">AD7991 PMOD XILINX FPGA REFERENCE DESIGN</a>. 发扬rapid  prototyping精神，我们直接研究一下AD7991模板的结构。</p>
+<p>我们得到的reference design中有system.mhs system.xmp system.bsd data/system.ucf，在这些文件中，system.xmp是有ISE添加embedded processor自动生成的，而system.bsd是由xps (bsd)在配置MHS后编译得到的。我们首先：</p>
+<ol>
+<li><p>在ISE中添加embedded processor</p>
+</li>
+<li><p>然后启动一个空的XPS工程，将UCF文件和MHS文件<b>先后</b>复制到工程中。这里会弹出一个version manager更新我们的BSD。</p>
+</li>
+<li><p>随后我们退出XPS，在ISE中生成HDL。生成的新的MHS文件可以用diff查看与旧工程文件的区别。</p>
+</li>
+</ol>
+<p>注意在dos编码格式下，我们可以用</p>
+<div class="codeblock">
+<div class="blockcontent"><pre>
+:update
+:set ff=unix
+</pre></div></div>
+<p>将refdesign中的编码更新一下，在diff之后，我们就看到仅仅是peripheral器件的版本号发生了改变。</p>
+<p><tt>注意！</tt> 当我们采用microblaze的refdesign时，<tt>仅仅需要连接pmodAD2到3-6管脚上</tt>，而不能将8个管脚全部连接。这是因为在这个默认的refdesign中，7-12管脚是接地的。我们可以用extension cable来连接。</p>
 <div id="footer">
 <div id="footer-text">
-Page generated 2014-02-05 10:03:36 CST, by <a href="http://jemdoc.jaboc.net/">jemdoc</a>.
+Page generated 2014-02-06 19:33:18 CST, by <a href="http://jemdoc.jaboc.net/">jemdoc</a>.
 </div>
 </div>
 </td>
