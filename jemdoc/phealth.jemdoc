@@ -58,3 +58,10 @@ Microblaze是一个Xilinx基于FPGA的硬核，主要使用Xilinx Platform Studi
 将refdesign中的编码更新一下，在diff之后，我们就看到仅仅是peripheral器件的版本号发生了改变。
 
 +注意！+ 当我们采用microblaze的refdesign时，+仅仅需要连接pmodAD2到3-6管脚上+，而不能将8个管脚全部连接。这是因为在这个默认的refdesign中，7-12管脚是接地的。我们可以用extension cable来连接。
+
+=== ECG/PPG Frontend
+
+我们的ECG前端使用的是淘宝买到的ECG差分放大器，而PPG采用的是Pulsesensor一代的PPG采集玩具。*需要列出具体指标*
+
+PPG的使用方法很简单，只要驱动上电源，其内置的信号放大器就可以实现采集。
+
