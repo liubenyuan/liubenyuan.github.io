@@ -86,9 +86,11 @@
 <p>我们的ECG前端使用的是淘宝买到的ECG差分放大器，而PPG采用的是Pulsesensor一代的PPG采集玩具。<b>需要列出具体指标</b>。PPG的使用方法很简单，只要驱动上电源，其内置的信号放大器就可以实现采集。</p>
 <h3>return to the FPGA/VHDL land</h3>
 <p>最终精确的硬件实现我们还是使用VHDL，另外能否用内部存储器暂时将数据存储下来呢？</p>
+<h2>添加一个PmodBT2</h2>
+<p>我们准备添加一个pmodBT2模块，当前所有跳线都禁止。我们直接将pmodBT2的RX和TX，跟板子上CP2102的RX和TX直通，然后我们用一个蓝牙转USB的dongle，以及两个串口调试工具直连调试。</p>
 <div id="footer">
 <div id="footer-text">
-Page generated 2014-03-01 20:42:20 UTC, by <a href="http://jemdoc.jaboc.net/">jemdoc</a>.
+Page generated 2014-03-09 15:51:01 UTC, by <a href="http://jemdoc.jaboc.net/">jemdoc</a>.
 </div>
 </div>
 </td>

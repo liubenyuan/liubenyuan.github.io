@@ -67,3 +67,8 @@ Microblaze是一个Xilinx基于FPGA的硬核，主要使用Xilinx Platform Studi
 
 最终精确的硬件实现我们还是使用VHDL，另外能否用内部存储器暂时将数据存储下来呢？
 
+== 添加一个PmodBT2
+
+我们准备添加一个pmodBT2模块，当前所有跳线都禁止。我们直接将pmodBT2的RX和TX，跟板子上CP2102的RX和TX直通，然后我们用一个蓝牙转USB的dongle，以及两个串口调试工具直连调试。
+
+
