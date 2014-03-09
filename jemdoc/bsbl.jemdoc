@@ -1,22 +1,17 @@
 # jemdoc: menu{MENU}{bsbl.html}
 #
 
-= BSBL - The Block Sparse Bayesian Learning Framework
+= BSBL -- The Block Sparse Bayesian Learning Framework
 
-I developing fast implementations of the Block Sparse Bayesian Learning (BSBL, see [https://sites.google.com/site/researchbyzhang Zhilin Zhang's Website]) Framework, using the Fast Marginalized Likelihood Maximization method (see [http://research.microsoft.com/en-us/um/cambridge/events/aistats2003/proceedings/123.pdf Fast marginal likelihood maximisation for sparse Beysian models] for some basics on this method).
+I developed fast implementations of the Block Sparse Bayesian Learning (*BSBL*, see [https://sites.google.com/site/researchbyzhang Zhilin Zhang's Website]) Framework, using the Fast Marginalized Likelihood Maximization method (see [http://research.microsoft.com/en-us/um/cambridge/events/aistats2003/proceedings/123.pdf Fast marginal likelihood maximisation for sparse Beysian models]).
 
-= BSBL-FM - A Fast Marginalized Implementation
+= BSBL-FM -- A Fast Marginalized Implementation
 
 == Basic
 
-The BSBL-FM is a fast marginalized implementation of the BSBL framework. It is based 
-on the BCS ([http://www.ee.duke.edu/~shji/papers/BCS_preprint.pdf Ji2008]) and 
-fast RVM ([http://www.miketipping.com/papers/met-fastsbl.pdf Tipping2003]). 
-The major work are the block extension and the capability of exploiting the intra-block correlation.
-It is extremely fast when the signal *has* the block structure and the normlized 
-*sparsity* level is not high.
+The BSBL-FM is a fast implementation of the BSBL framework. It is based on BCS ([http://www.ee.duke.edu/~shji/papers/BCS_preprint.pdf Ji2008]) and fastRVM ([http://www.miketipping.com/papers/met-fastsbl.pdf Tipping2003]). The major contributions are the block extension and the exploiting of intra-block correlation. The BSBL-FM algorithm is extremely fast when the signal has *block structure* and low *block sparsity* level.
 
-== Demo
+== Demos
 
 == Papers
 
@@ -28,12 +23,10 @@ It is extremely fast when the signal *has* the block structure and the normlized
 
 === Matlab Version :
 
-The *Matlab* Implementation can be downloaded at (you may also obtain these .m files at [https://github.com/liubenyuan/pyBSBL pyBSBL]): \n
-[https://nudtpaper.googlecode.com/files/bsbl_fm.zip bsbl_fm.zip]
+The *Matlab* Implementation can be downloaded at (you may also obtain these .m files at [https://github.com/liubenyuan/pyBSBL pyBSBL]): [https://nudtpaper.googlecode.com/files/bsbl_fm.zip bsbl_fm.zip]
 
 === C Version :
-The *C* version as well as the *GPU* Cuda Implementation will be available soon. (EDT 2014.01.28) \n
+The *C* version as well as the *GPU* Cuda Implementation will be available soon. (EDT 2014.01.28)
 
 === Python Version :
-The *Python* implementations are available at: \n
-[https://github.com/liubenyuan/pyBSBL pyBSBL @ Github]
+The *Python* implementations are available at: [https://github.com/liubenyuan/pyBSBL pyBSBL -- Github]
