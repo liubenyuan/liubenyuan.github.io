@@ -92,7 +92,7 @@
 <p>成功。<tt>但是</tt>，文档中说的RN42的串口开启了Hardware Flowcontrol，当我用minicom -s连接时，首先用Ctrl+A,E打开Echo，然后只有禁止了Hardware Flowcontrol，才能正确的进入命令模式。如输入三个dollar符号，显示CMD，等。</p>
 <p>这一直显模式表示着pmodBT2模块已经顺利的和电脑通过USB2UART对接成功！</p>
 <h3>第二步，主机搜索到RN42 Slave</h3>
-<p>首先，我们要启动蓝牙设备。可以参考Archlinux <a href="https://bbs.archlinux.org/viewtopic.php?pid=1388523">问答1</a>，<a href="https://bbs.archlinux.org/viewtopic.php?pid=1322604">问答2</a>，<a href="https://wiki.archlinux.org/index.php/bluetooth">官方bluetooth教程</a>，<a href="http://www.thinkwiki.org/wiki/How_to_setup_Bluetooth">Thinkwiki的Bluetooth教程</a>，以及<a href="http://archlinuxarm.org/forum/viewtopic.php?f=9&amp;t=6016">写一个rfcomm.conf</a>。</p>
+<p>首先，我们要启动蓝牙设备。可以参考Archlinux <a href="https://bbs.archlinux.org/viewtopic.php?pid=1388523">问答1</a>，<a href="https://bbs.archlinux.org/viewtopic.php?pid=1322604">问答2</a>，<a href="https://wiki.archlinux.org/index.php/bluetooth">官方bluetooth教程</a>，<a href="http://www.thinkwiki.org/wiki/How_to_setup_Bluetooth">Thinkwiki的Bluetooth教程</a>，以及<a href="http://archlinuxarm.org/forum/viewtopic.php?f=9&amp;t=6016">写一个rfcomm.conf</a>。我们可以使用蓝牙Dongle，也可以直接使用笔记本内置的蓝牙设备实现连接。</p>
 <div class="codeblock">
 <div class="blockcontent"><pre>
 $ rfkill list
@@ -115,6 +115,13 @@ Scanning ...
     00:06:66:43:0F:2E   RN42-0F2E
 </pre></div></div>
 <p>就能找到我们的设备了，前面有MAC地址和设备ID。下一步就是配对儿啦。</p>
+<p><b>注意</b>，我们可以添加一个udev rules让蓝牙设备随着电脑的启动自动开启，</p>
+<div class="codeblock">
+<div class="blockcontent"><pre>
+$ vim /etc/udev/rules.d/10-local.rules
+# Set bluetooth power up
+# ACTION=="add", KERNEL=="hci0", RUN+="/usr/bin/hciconfig hci0 up"
+</pre></div></div>
 <h3>第三步，我们将蓝牙设备当作UART串口设备</h3>
 <p>这里需要用到rfcomm工具</p>
 <div class="codeblock">
@@ -128,7 +135,7 @@ $ sudo rfcomm bind rfcomm0 00:06:66:43:0F:2E
 <p>分别打开两个终端，一个连接<tt>/dev/ttyUSB0</tt>，一个连接<tt>/dev/rfcomm0</tt>即可。需要注意的是，两边的设置都为115200 8N1。在这种通信中，我发现无论两边开启hardware flowcontrol与否，都不影响两者的通信。记得要在minicom中开启Ctrl+A,E回显哦！</p>
 <div id="footer">
 <div id="footer-text">
-Page generated 2014-03-10 21:15:36 UTC, by <a href="http://jemdoc.jaboc.net/">jemdoc</a>.
+Page generated 2014-03-10 21:29:54 UTC, by <a href="http://jemdoc.jaboc.net/">jemdoc</a>.
 </div>
 </div>
 </td>

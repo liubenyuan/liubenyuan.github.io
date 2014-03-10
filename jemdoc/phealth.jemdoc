@@ -77,7 +77,8 @@ Microblaze是一个Xilinx基于FPGA的硬核，主要使用Xilinx Platform Studi
 这一直显模式表示着pmodBT2模块已经顺利的和电脑通过USB2UART对接成功！
 
 === 第二步，主机搜索到RN42 Slave
-首先，我们要启动蓝牙设备。可以参考Archlinux [https://bbs.archlinux.org/viewtopic.php?pid=1388523 问答1]，[https://bbs.archlinux.org/viewtopic.php?pid=1322604 问答2]，[https://wiki.archlinux.org/index.php/bluetooth 官方bluetooth教程]，[http://www.thinkwiki.org/wiki/How_to_setup_Bluetooth Thinkwiki的Bluetooth教程]，以及[http://archlinuxarm.org/forum/viewtopic.php?f=9&t=6016 写一个rfcomm.conf]。
+首先，我们要启动蓝牙设备。可以参考Archlinux [https://bbs.archlinux.org/viewtopic.php?pid=1388523 问答1]，[https://bbs.archlinux.org/viewtopic.php?pid=1322604 问答2]，[https://wiki.archlinux.org/index.php/bluetooth 官方bluetooth教程]，[http://www.thinkwiki.org/wiki/How_to_setup_Bluetooth Thinkwiki的Bluetooth教程]，以及[http://archlinuxarm.org/forum/viewtopic.php?f=9&t=6016 写一个rfcomm.conf]。我们可以使用蓝牙Dongle，也可以直接使用笔记本内置的蓝牙设备实现连接。
+
 ~~~
 {}{bash}
 $ rfkill list
@@ -103,6 +104,14 @@ Scanning ...
 ~~~
 
 就能找到我们的设备了，前面有MAC地址和设备ID。下一步就是配对儿啦。
+
+*注意*，我们可以添加一个udev rules让蓝牙设备随着电脑的启动自动开启，
+~~~
+{}{bash}
+$ vim /etc/udev/rules.d/10-local.rules
+# Set bluetooth power up
+# ACTION=="add", KERNEL=="hci0", RUN+="/usr/bin/hciconfig hci0 up"
+~~~
 
 === 第三步，我们将蓝牙设备当作UART串口设备
 这里需要用到rfcomm工具
