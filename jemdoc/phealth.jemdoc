@@ -77,7 +77,7 @@ Microblaze是一个Xilinx基于FPGA的硬核，主要使用Xilinx Platform Studi
 这一直显模式表示着pmodBT2模块已经顺利的和电脑通过USB2UART对接成功！
 
 === 第二步，主机搜索到RN42 Slave
-首先，我们要启动蓝牙设备
+首先，我们要启动蓝牙设备。可以参考Archlinux [https://bbs.archlinux.org/viewtopic.php?pid=1388523 问答1]，[https://bbs.archlinux.org/viewtopic.php?pid=1322604 问答2]，[https://wiki.archlinux.org/index.php/bluetooth 官方bluetooth教程]，[http://www.thinkwiki.org/wiki/How_to_setup_Bluetooth Thinkwiki的Bluetooth教程]，以及[http://archlinuxarm.org/forum/viewtopic.php?f=9&t=6016 写一个rfcomm.conf]。
 ~~~
 {}{bash}
 $ rfkill list

@@ -87,12 +87,12 @@
 <h3>return to the FPGA/VHDL land</h3>
 <p>最终精确的硬件实现我们还是使用VHDL，另外能否用内部存储器暂时将数据存储下来呢？</p>
 <h2>添加一个PmodBT2</h2>
-<p>我们准备添加一个pmodBT2模块，当前所有跳线都禁止。我们直接将pmodBT2的RX和TX，跟板子上CP2102的RX和TX直通，然后我们用一个蓝牙转USB的dongle，以及两个串口调试工具直连调试。</p>
+<p>我们准备添加一个pmodBT2模块，当前所有跳线都禁止。我们直接将pmodBT2的RX和TX，跟板子上CP2102的RX和TX直通。而且在FPGA里面，RN42的RTS注入到CTS中（直连）。然后我们用一个蓝牙转USB的dongle，以及两个串口调试工具直连调试。</p>
 <h3>第一步，直连PMODBT2到CP2102</h3>
 <p>成功。<tt>但是</tt>，文档中说的RN42的串口开启了Hardware Flowcontrol，当我用minicom -s连接时，首先用Ctrl+A,E打开Echo，然后只有禁止了Hardware Flowcontrol，才能正确的进入命令模式。如输入三个dollar符号，显示CMD，等。</p>
 <p>这一直显模式表示着pmodBT2模块已经顺利的和电脑通过USB2UART对接成功！</p>
 <h3>第二步，主机搜索到RN42 Slave</h3>
-<p>首先，我们要启动蓝牙设备</p>
+<p>首先，我们要启动蓝牙设备。可以参考Archlinux <a href="https://bbs.archlinux.org/viewtopic.php?pid=1388523">问答1</a>，<a href="https://bbs.archlinux.org/viewtopic.php?pid=1322604">问答2</a>，<a href="https://wiki.archlinux.org/index.php/bluetooth">官方bluetooth教程</a>，<a href="http://www.thinkwiki.org/wiki/How_to_setup_Bluetooth">Thinkwiki的Bluetooth教程</a>，以及<a href="http://archlinuxarm.org/forum/viewtopic.php?f=9&amp;t=6016">写一个rfcomm.conf</a>。</p>
 <div class="codeblock">
 <div class="blockcontent"><pre>
 $ rfkill list
@@ -128,7 +128,7 @@ $ sudo rfcomm bind rfcomm0 00:06:66:43:0F:2E
 <p>分别打开两个终端，一个连接<tt>/dev/ttyUSB0</tt>，一个连接<tt>/dev/rfcomm0</tt>即可。需要注意的是，两边的设置都为115200 8N1。在这种通信中，我发现无论两边开启hardware flowcontrol与否，都不影响两者的通信。记得要在minicom中开启Ctrl+A,E回显哦！</p>
 <div id="footer">
 <div id="footer-text">
-Page generated 2014-03-10 21:00:12 UTC, by <a href="http://jemdoc.jaboc.net/">jemdoc</a>.
+Page generated 2014-03-10 21:15:36 UTC, by <a href="http://jemdoc.jaboc.net/">jemdoc</a>.
 </div>
 </div>
 </td>
