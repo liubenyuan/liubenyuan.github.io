@@ -69,7 +69,7 @@ Microblaze是一个Xilinx基于FPGA的硬核，主要使用Xilinx Platform Studi
 
 == 添加一个PmodBT2
 
-我们准备添加一个pmodBT2模块，当前所有跳线都禁止。我们直接将pmodBT2的RX和TX，跟板子上CP2102的RX和TX直通，然后我们用一个蓝牙转USB的dongle，以及两个串口调试工具直连调试。
+我们准备添加一个pmodBT2模块，当前所有跳线都禁止。我们直接将pmodBT2的RX和TX，跟板子上CP2102的RX和TX直通。而且在FPGA里面，RN42的RTS注入到CTS中（直连）。然后我们用一个蓝牙转USB的dongle，以及两个串口调试工具直连调试。
 
 === 第一步，直连PMODBT2到CP2102
 成功。+但是+，文档中说的RN42的串口开启了Hardware Flowcontrol，当我用minicom -s连接时，首先用Ctrl+A,E打开Echo，然后只有禁止了Hardware Flowcontrol，才能正确的进入命令模式。如输入三个dollar符号，显示CMD，等。
