@@ -88,9 +88,47 @@
 <p>最终精确的硬件实现我们还是使用VHDL，另外能否用内部存储器暂时将数据存储下来呢？</p>
 <h2>添加一个PmodBT2</h2>
 <p>我们准备添加一个pmodBT2模块，当前所有跳线都禁止。我们直接将pmodBT2的RX和TX，跟板子上CP2102的RX和TX直通，然后我们用一个蓝牙转USB的dongle，以及两个串口调试工具直连调试。</p>
+<h3>第一步，直连PMODBT2到CP2102</h3>
+<p>成功。<tt>但是</tt>，文档中说的RN42的串口开启了Hardware Flowcontrol，当我用minicom -s连接时，首先用Ctrl+A,E打开Echo，然后只有禁止了Hardware Flowcontrol，才能正确的进入命令模式。如输入三个dollar符号，显示CMD，等。</p>
+<p>这一直显模式表示着pmodBT2模块已经顺利的和电脑通过USB2UART对接成功！</p>
+<h3>第二步，主机搜索到RN42 Slave</h3>
+<p>首先，我们要启动蓝牙设备</p>
+<div class="codeblock">
+<div class="blockcontent"><pre>
+$ rfkill list
+$ pacman -Q | grep blue
+$ systemctl status bluetooth.service
+</pre></div></div>
+<p>要是<tt>bluetooth.service</tt>没开启，要记得enable。然后，看看我们的蓝牙是</p>
+<div class="codeblock">
+<div class="blockcontent"><pre>
+$ lsusb
+Bus 003 Device 005: ID 0a5c:21e6 Broadcom Corp. BCM20702 Bluetooth 4.0 [ThinkPad]
+Bus 001 Device 017: ID 0a12:0001 Cambridge Silicon Radio, Ltd Bluetooth Dongle (HCI mode)
+</pre></div></div>
+<p>注意到x230上原声的蓝牙是hci1，而我们新买的dongle是hci0后，我们用</p>
+<div class="codeblock">
+<div class="blockcontent"><pre>
+$ sudo hciconfig hci0 up
+$ sudo hcitool scan
+Scanning ...
+    00:06:66:43:0F:2E   RN42-0F2E
+</pre></div></div>
+<p>就能找到我们的设备了，前面有MAC地址和设备ID。下一步就是配对儿啦。</p>
+<h3>第三步，我们将蓝牙设备当作UART串口设备</h3>
+<p>这里需要用到rfcomm工具</p>
+<div class="codeblock">
+<div class="blockcontent"><pre>
+$ sudo modprobe btusb
+$ sudo modprobe ath3k
+$ sudo modprobe rfcomm
+$ sudo rfcomm bind rfcomm0 00:06:66:43:0F:2E
+</pre></div></div>
+<p>然后我们的设备就成了一个串口哦</p>
+<p>分别打开两个终端，一个连接<tt>/dev/ttyUSB0</tt>，一个连接<tt>/dev/rfcomm0</tt>即可。需要注意的是，两边的设置都为115200 8N1。在这种通信中，我发现无论两边开启hardware flowcontrol与否，都不影响两者的通信。记得要在minicom中开启Ctrl+A,E回显哦！</p>
 <div id="footer">
 <div id="footer-text">
-Page generated 2014-03-09 15:51:01 UTC, by <a href="http://jemdoc.jaboc.net/">jemdoc</a>.
+Page generated 2014-03-10 21:00:12 UTC, by <a href="http://jemdoc.jaboc.net/">jemdoc</a>.
 </div>
 </div>
 </td>
