@@ -1,4 +1,4 @@
-DOCS = index publications bsbl eit radar nudtpaper nrf51822 phealth
+DOCS = index publications bsbl eit radar nudtpaper nrf51822 phealth dlog
 
 HDOCS=$(addsuffix .html, $(DOCS))
 # PHDOCS=$(addprefix html/, $(HDOCS))

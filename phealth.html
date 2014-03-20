@@ -18,6 +18,7 @@
 <div class="menu-item"><a href="eit.html">EIT</a></div>
 <div class="menu-category">Hacks</div>
 <div class="menu-item"><a href="phealth.html" class="current">pHealth</a></div>
+<div class="menu-item"><a href="dlog.html">dlog</a></div>
 <div class="menu-item"><a href="radar.html">RADAR</a></div>
 <div class="menu-item"><a href="nudtpaper.html">NUDTPaper</a></div>
 <div class="menu-item"><a href="nrf51822.html">NRF51822</a></div>
@@ -133,9 +134,10 @@ $ sudo rfcomm bind rfcomm0 00:06:66:43:0F:2E
 </pre></div></div>
 <p>然后我们的设备就成了一个串口哦</p>
 <p>分别打开两个终端，一个连接<tt>/dev/ttyUSB0</tt>，一个连接<tt>/dev/rfcomm0</tt>即可。需要注意的是，两边的设置都为115200 8N1。在这种通信中，我发现无论两边开启hardware flowcontrol与否，都不影响两者的通信。记得要在minicom中开启Ctrl+A,E回显哦！</p>
+<p><tt>注意：</tt> 当我们用python打开串口准备接收数据后，主机（PC）会自动的连接绑定的蓝牙设备。同时，RN42上的配对灯也会闪现，而连接状态也会变低（连通）。这时，我们在slave设备上传输的数据就会发送到主机终端上。</p>
 <div id="footer">
 <div id="footer-text">
-Page generated 2014-03-10 21:29:54 UTC, by <a href="http://jemdoc.jaboc.net/">jemdoc</a>.
+Page generated 2014-03-20 23:28:57 UTC, by <a href="http://jemdoc.jaboc.net/">jemdoc</a>.
 </div>
 </div>
 </td>

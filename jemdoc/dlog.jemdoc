@@ -1,0 +1,36 @@
+# jemdoc: menu{MENU}{dlog.html}
+
+= High-speed full duplex data logging from FPGA to PC
+
+Most of the time, we aim to transfer data collected using FPGA direct to PC, where standard peripherals are used. Some standard protocols bump to our mind, i.e., Bluetooth 2.1 (BLE is slow for logging large amount of data), RS232 (where most of the time, we will use CP2102 to convert a typical serial interface to USB, and utilize the USB2UART on PC), wifi and ethernet. Among all these, UART is the best choice. As it is simple, utilize little or none standard, the data can be logged in raw format. The data can be rebuilt from the raw recordings via software, which is desirable.
+
+Transparent data transfer using RS232 via bluetooth or wifi, or even ethernet are implemented. Here, we have this problem : how could we transfer data from FPGA to PC, with high-speed, long-distance, and best of all, with little or no dirty work on excessive complex state machines ?
+
+== Ethernet
+
+The basic IP core (Xilinx Tri-mac) is a full implementation of the MAC layer. In the lx9 microboard, it does has an National Semiconductor DP83848J Phy layer and Tyco RJ45 connector. I googled the web, there are designs which direct use the LVDS pins of FPGA to implement the 10BASE-T protocol, for example:
+
+  . [http://www.punk.co.nz/2013/03/07/crafting-a-basic-ethernet-mac-and-10base-t-phy/]
+  . [http://www.fpga4fun.com/10BASE-T.html]
+
+and some publicity available code on interfacing with a PHY device,
+
+  . [http://forums.xilinx.com/t5/Spartan-Family-FPGAs/UDP-IP-stack-on-a-Spartan-6/td-p/149492]
+  . [http://www.joelw.id.au/FPGA/DigilentAtlysResources]
+  . [http://people.ece.cornell.edu/land/courses/ece5760/FinalProjects/f2011/mis47_ayg6/mis47_ayg6/]
+
+and a GMAC on opencores (I do not like opencores as I had little success in using that website)
+
+  . [http://opencores.org/project,ethernet_tri_mode]
+
+some discussion might lead you to that, it may not be a wise choice to use FPGA to negotiate the ethernet protocol, it is best using a microcontroller.
+
+  . [http://www.eevblog.com/forum/microcontrollers/open-(functional!)-core-for-ethernet-vhdl-for-ethernet-spartan-6/?PHPSESSID=f6f35063e39f50fd4818c8ba811cac6f Topic: Open (functional!) core for Ethernet / VHDL for Ethernet - Spartan 6?  (Read 3120 times)]
+
+However, as I do only want to use a spartan6 FPGA, a softcore is my best choice.
+
+== USB3
+
+How about the newly introduced USB3 ? is it suit for this application ?
+
+

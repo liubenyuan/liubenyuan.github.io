@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta name="generator" content="jemdoc, see http://jemdoc.jaboc.net/" />
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<link rel="stylesheet" href="jemdoc.css" type="text/css" />
+<title></title>
+</head>
+<body>
+<table summary="Table for page layout." id="tlayout">
+<tr valign="top">
+<td id="layout-menu">
+<div class="menu-item"><a href="index.html">Main</a></div>
+<div class="menu-item"><a href="publications.html">Publications</a></div>
+<div class="menu-category">Research</div>
+<div class="menu-item"><a href="bsbl.html">BSBL</a></div>
+<div class="menu-item"><a href="eit.html">EIT</a></div>
+<div class="menu-category">Hacks</div>
+<div class="menu-item"><a href="phealth.html">pHealth</a></div>
+<div class="menu-item"><a href="dlog.html" class="current">dlog</a></div>
+<div class="menu-item"><a href="radar.html">RADAR</a></div>
+<div class="menu-item"><a href="nudtpaper.html">NUDTPaper</a></div>
+<div class="menu-item"><a href="nrf51822.html">NRF51822</a></div>
+</td>
+<td id="layout-content">
+<h1>High-speed full duplex data logging from FPGA to PC</h1>
+<p>Most of the time, we aim to transfer data collected using FPGA direct to PC, where standard peripherals are used. Some standard protocols bump to our mind, i.e., Bluetooth 2.1 (BLE is slow for logging large amount of data), RS232 (where most of the time, we will use CP2102 to convert a typical serial interface to USB, and utilize the USB2UART on PC), wifi and ethernet. Among all these, UART is the best choice. As it is simple, utilize little or none standard, the data can be logged in raw format. The data can be rebuilt from the raw recordings via software, which is desirable.</p>
+<p>Transparent data transfer using RS232 via bluetooth or wifi, or even ethernet are implemented. Here, we have this problem : how could we transfer data from FPGA to PC, with high-speed, long-distance, and best of all, with little or no dirty work on excessive complex state machines ?</p>
+<h2>Ethernet</h2>
+<p>The basic IP core (Xilinx Tri-mac) is a full implementation of the MAC layer. In the lx9 microboard, it does has an National Semiconductor DP83848J Phy layer and Tyco RJ45 connector. I googled the web, there are designs which direct use the LVDS pins of FPGA to implement the 10BASE-T protocol, for example:</p>
+<ol>
+<li><p><a href="http://www.punk.co.nz/2013/03/07/crafting-a-basic-ethernet-mac-and-10base-t-phy/">http://www.punk.co.nz/2013/03/07/crafting-a-basic-ethernet-mac-and-10base-t-phy/</a></p>
+</li>
+<li><p><a href="http://www.fpga4fun.com/10BASE-T.html">http://www.fpga4fun.com/10BASE-T.html</a></p>
+</li>
+</ol>
+<p>and some publicity available code on interfacing with a PHY device,</p>
+<ol>
+<li><p><a href="http://forums.xilinx.com/t5/Spartan-Family-FPGAs/UDP-IP-stack-on-a-Spartan-6/td-p/149492">http://forums.xilinx.com/t5/Spartan-Family-FPGAs/UDP-IP-stack-on-a-Spartan-6/td-p/149492</a></p>
+</li>
+<li><p><a href="http://www.joelw.id.au/FPGA/DigilentAtlysResources">http://www.joelw.id.au/FPGA/DigilentAtlysResources</a></p>
+</li>
+<li><p><a href="http://people.ece.cornell.edu/land/courses/ece5760/FinalProjects/f2011/mis47_ayg6/mis47_ayg6/">http://people.ece.cornell.edu/land/courses/ece5760/FinalProjects/f2011/mis47_ayg6/mis47_ayg6/</a></p>
+</li>
+</ol>
+<p>and a GMAC on opencores (I do not like opencores as I had little success in using that website)</p>
+<ol>
+<li><p><a href="http://opencores.org/project,ethernet_tri_mode">http://opencores.org/project,ethernet_tri_mode</a></p>
+</li>
+</ol>
+<p>some discussion might lead you to that, it may not be a wise choice to use FPGA to negotiate the ethernet protocol, it is best using a microcontroller.</p>
+<ol>
+<li><p><a href="http://www.eevblog.com/forum/microcontrollers/open-(functional!)-core-for-ethernet-vhdl-for-ethernet-spartan-6/?PHPSESSID=f6f35063e39f50fd4818c8ba811cac6f">Topic: Open (functional!) core for Ethernet / VHDL for Ethernet - Spartan 6?  (Read 3120 times)</a></p>
+</li>
+</ol>
+<p>However, as I do only want to use a spartan6 FPGA, a softcore is my best choice.</p>
+<h2>USB3</h2>
+<p>How about the newly introduced USB3 ? is it suit for this application ?</p>
+<div id="footer">
+<div id="footer-text">
+Page generated 2014-03-20 23:48:09 UTC, by <a href="http://jemdoc.jaboc.net/">jemdoc</a>.
+</div>
+</div>
+</td>
+</tr>
+</table>
+</body>
+</html>
