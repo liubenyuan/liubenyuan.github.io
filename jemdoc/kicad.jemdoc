@@ -1,0 +1,10 @@
+# jemdoc: menu{MENU}{kicad.html}
+
+= Kicad : from pmod boards to complex design
+
+The best tutorial goes to the official tutorial *Getting started in Kicad* and [http://store.curiousinventor.com/guides/ Courious Inventor]. The latter also has comprehensive video guide on how to soldering SMD and many others.
+
+== Digilent : pmod resource
+
+The most simple circuit board, as an add-on peripherals, might by the digilent pmod module. There are a lot example designs (schematics) on [http://www.digilentinc.com/Products Digilent]. The +first step+, you could /copy board/ one digilent module, and feel the whole *print* and *soldering* process of making one real PCB.
+
