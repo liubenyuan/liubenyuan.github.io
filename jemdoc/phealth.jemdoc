@@ -2,7 +2,7 @@
 
 = Portable Healthcare : Hybrid Cardiography Monitoring via BLE
 
-Building a demo board to collect cardio-related bio-signals based on nrf51822-AK.
+Building a demo board to collect cardio-related bio-signals.
 
 == pmodAD2 \+ Lx9micro \+ USB : building a 4-channel evaluation system
 

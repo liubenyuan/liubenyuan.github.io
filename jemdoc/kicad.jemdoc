@@ -8,3 +8,11 @@ The best tutorial goes to the official tutorial *Getting started in Kicad* and [
 
 The most simple circuit board, as an add-on peripherals, might by the digilent pmod module. There are a lot example designs (schematics) on [http://www.digilentinc.com/Products Digilent]. The +first step+, you could /copy board/ a digilent pmod module, and feel the whole process of *printing* and *soldering* of one real PCB.
 
+== Eagle : which one is better ?
+
+(1) Eagle has a verb-noun working flow, each time you select a verb (i.e., +move+, +add+, +copy+) and click the object. Group operation is therefore, /group > move > right click > group move/. Commands can be abbrievated, move can be typed in the command line as mov, copy is cop, etc.
+
+(2) you may +drag+ component to connect to another pin, and to visually connect a wire to a pin, or cross wires, you may add a +junction+ to the crosspoint.
+
+(3) each time you add a component, there is a +mirror+ icon just beside the grid icon.
+
