@@ -10,9 +10,16 @@ The most simple circuit board, as an add-on peripherals, might by the digilent p
 
 == Eagle : which one is better ?
 
-(1) Eagle has a verb-noun working flow, each time you select a verb (i.e., +move+, +add+, +copy+) and click the object. Group operation is therefore, /group > move > right click > group move/. Commands can be abbrievated, move can be typed in the command line as mov, copy is cop, etc.
+=== eagle -- schematic
 
-(2) you may +drag+ component to connect to another pin, and to visually connect a wire to a pin, or cross wires, you may add a +junction+ to the crosspoint.
+. Eagle has a verb-noun working flow, each time you select a verb (i.e., +move+, +add+, +copy+) and click the object. Group operation is therefore, /group > move > right click > group move/. Commands can be abbrievated, move can be typed in the command line as mov, copy is cop, etc. Each time you add a component, there is a +mirror+ icon just beside the grid icon.
+. You may +move+ component to connect to another pin, and to visually connect a wire to a pin, or cross wires, you may add a +junction+ to the crosspoint. Airwires are thin lines that have not been routed yet.
 
-(3) each time you add a component, there is a +mirror+ icon just beside the grid icon.
+=== eagle -- PCB layout
+
+. While you in +move+ command, press +Ctrl+ key while clicking a component, the origin of the component will snap to the grid. You must decide whether you +route+ in the top or bottom layer. In surface mount devices, we usually route on the *top copper* layer. If you want to use the +autorouter+, be sure to setup the grid to appropriate width, for example, *7mil* or *14mil*, and then press the +autorouter+, set the line width to the corresponding value.
+. Routing the *GND* plane. This is most important when you are using eagle. First, select the +polygon+ tool, change line *width* to 10mil, and *select on* (the icon with a small circle on the up-left corner) to isolate parts and wires, the *isolation width* is 12mil, spacing (between the ground plane and the boarder of the PCB). Second, draw a rectangular around the board. Third, +name+ the polygon *GND*. Final, press the +ratsnest+ to generate the GND plane.
+. Some useful .ulp scripts by 
+
+=== eagle -- Gerber viewer
 
