@@ -10,6 +10,10 @@ The most simple circuit board, as an add-on peripherals, might by the digilent p
 
 == Eagle : which one is better ?
 
+    Sparkfun is a great website, see some [https://www.sparkfun.com/tutorials/ tutorials],
+    . [https://www.sparkfun.com/tutorials/115 Better PCBs in Eagle]
+    . [https://www.sparkfun.com/tutorials/109 Beginning Embedded Electronics - 9]
+
 === eagle -- schematic
 
 . Eagle has a verb-noun working flow, each time you select a verb (i.e., +move+, +add+, +copy+) and click the object. Group operation is therefore, /group > move > right click > group move/. Commands can be abbrievated, move can be typed in the command line as mov, copy is cop, etc. Each time you add a component, there is a +mirror+ icon just beside the grid icon.
@@ -17,9 +21,22 @@ The most simple circuit board, as an add-on peripherals, might by the digilent p
 
 === eagle -- PCB layout
 
+/usually, you may route with 10mil width and 8mil spacing, try to see how far you can go/
+
 . While you in +move+ command, press +Ctrl+ key while clicking a component, the origin of the component will snap to the grid. You must decide whether you +route+ in the top or bottom layer. In surface mount devices, we usually route on the *top copper* layer. If you want to use the +autorouter+, be sure to setup the grid to appropriate width, for example, *7mil* or *14mil*, and then press the +autorouter+, set the line width to the corresponding value.
-. Routing the *GND* plane. This is most important when you are using eagle. First, select the +polygon+ tool, change line *width* to 10mil, and *select on* (the icon with a small circle on the up-left corner) to isolate parts and wires, the *isolation width* is 12mil, spacing (between the ground plane and the boarder of the PCB). Second, draw a rectangular around the board. Third, +name+ the polygon *GND*. Final, press the +ratsnest+ to generate the GND plane.
-. Some useful .ulp scripts by 
+. Routing the *GND* plane. This is most important when you are using eagle. First, select the +polygon+ tool, change line *width* to 10mil, and *select on* (the icon with a small circle on the up-left corner) to isolate parts and wires, the *isolation width* is 12mil, spacing (between the ground plane and the boarder of the PCB). Second, draw a rectangular around the board. Third, +name+ the polygon *GND*. Final, press the +ratsnest+ to generate the GND plane. *Note*, when you re-open the PCB board, the copper pour is not shown, so you need to press +ratsnest+ to regenerate the GND plane. /Try, always pour GND plane with 10mil isolation./ You could modify the isolation and spacing of GND polygon by (i) +information+ button.
+. Some useful .ulp scripts by sparkfun is +silk_gen.ulp+, which will process fancy *bSilk* and *tSilk* layers. Some important information, such as polarize of diode or capacitors, can be shown in the silk layer.
+. The 0.05" grid rule (found within the Eagle doc) applies to the component centers. Many component footprints are hard metric (for example 0.5mm spacing or 1x1.2mm pad sizes) and it is completely ok to layout pads and parts on the mm grid. However, when placing components I recommend the component centers stay ‘on grid’. This will help with routing and overall component alignment.
+
+=== Analog PCB design rules (by Ondo88)
+. Some PCB software offer “tear” connections for pads and vias. This reduces mechanical stress around the via connection, avoiding possible rupture of the traces. Again, it’s also useful for RF applications, as it makes a better Z matching (it behaves as a tamper used in micro-wave circuits).
+. It’s a good practice to place holes around the boards, joining top and bottom ground layers. That makes the board more similar to a Faraday cage, reducing greatly effects from EMI (Electro-magnetic Interference). But to be truth, randomizing the distance between the holes makes a better isolation as no single frequency gets benefited form constructive interference.
+. Get to know what you’re building. Before getting serious about PCB design, you should learn what is everything you’re using on them. I’ve always said you can know if someone is a good PCB designer by asking him to give you FR4 permitivity, solder fusion temperature and the like (without checking wikipedia ;D).
+. Another common mistake is not taking account of thermal activity on the board. Make sure your temperature sensitive components (like oscillators, and almost any analog circuit) are far from your heat generating circuits (regulators and the like). If your board fits in a box, be sure to have cooling paths that keep the things ok.
+. Some chips may have two Vcc or GND pins one to each other. On SMD packages it’s tempting to just join them straight, avoid that if you’re using oven soldering (very likely on production). That will unbalance the thermal forces your chip may suffer, moving it from its original position, and possibly making it tombstone.
+. I’ve found very useful to place a couple of squares on silkscreen, with an E (Error) and a T (Tested) on the side of each one. That allows you to mark easily your boards with anything you may have at hand, from a pen to a screwdriver.
+. The last one is the more ethereal of the advises, “follow your ground paths”. Your signal propagates from your Vcc to your GND, mainly through the shortest path, if two signals share that ground path, they’ll interfere each other. Try to make that paths as short and trouble free as you can.
 
 === eagle -- Gerber viewer
 
+. Here, we will use +sfe-gerb274x.cam+ script by sparkfun.

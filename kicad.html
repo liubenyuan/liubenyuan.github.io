@@ -31,6 +31,13 @@
 <h2>Digilent : pmod resource</h2>
 <p>The most simple circuit board, as an add-on peripherals, might by the digilent pmod module. There are a lot example designs (schematics) on <a href="http://www.digilentinc.com/Products">Digilent</a>. The <tt>first step</tt>, you could <i>copy board</i> a digilent pmod module, and feel the whole process of <b>printing</b> and <b>soldering</b> of one real PCB.</p>
 <h2>Eagle : which one is better ?</h2>
+<p>Sparkfun is a great website, see some <a href="https://www.sparkfun.com/tutorials/">tutorials</a>,</p>
+<ol>
+<li><p><a href="https://www.sparkfun.com/tutorials/115">Better PCBs in Eagle</a></p>
+</li>
+<li><p><a href="https://www.sparkfun.com/tutorials/109">Beginning Embedded Electronics - 9</a></p>
+</li>
+</ol>
 <h3>eagle &ndash; schematic</h3>
 <ol>
 <li><p>Eagle has a verb-noun working flow, each time you select a verb (i.e., <tt>move</tt>, <tt>add</tt>, <tt>copy</tt>) and click the object. Group operation is therefore, <i>group &gt; move &gt; right click &gt; group move</i>. Commands can be abbrievated, move can be typed in the command line as mov, copy is cop, etc. Each time you add a component, there is a <tt>mirror</tt> icon just beside the grid icon.</p>
@@ -39,16 +46,42 @@
 </li>
 </ol>
 <h3>eagle &ndash; PCB layout</h3>
+<p><i>usually, you may route with 10mil width and 8mil spacing, try to see how far you can go</i></p>
 <ol>
 <li><p>While you in <tt>move</tt> command, press <tt>Ctrl</tt> key while clicking a component, the origin of the component will snap to the grid. You must decide whether you <tt>route</tt> in the top or bottom layer. In surface mount devices, we usually route on the <b>top copper</b> layer. If you want to use the <tt>autorouter</tt>, be sure to setup the grid to appropriate width, for example, <b>7mil</b> or <b>14mil</b>, and then press the <tt>autorouter</tt>, set the line width to the corresponding value.</p>
 </li>
-<li><p>Routing the <b>GND</b> plane. This is most important when you are using eagle. First, select the <tt>polygon</tt> tool, change line <b>width</b> to 10mil, and <b>select on</b> (the icon with a small circle on the up-left corner) to isolate parts and wires, the <b>isolation width</b> is 12mil, spacing (between the ground plane and the boarder of the PCB). Second, draw a rectangular around the board. Third, <tt>name</tt> the polygon <b>GND</b>. Final, press the <tt>ratsnest</tt> to generate the GND plane.</p>
+<li><p>Routing the <b>GND</b> plane. This is most important when you are using eagle. First, select the <tt>polygon</tt> tool, change line <b>width</b> to 10mil, and <b>select on</b> (the icon with a small circle on the up-left corner) to isolate parts and wires, the <b>isolation width</b> is 12mil, spacing (between the ground plane and the boarder of the PCB). Second, draw a rectangular around the board. Third, <tt>name</tt> the polygon <b>GND</b>. Final, press the <tt>ratsnest</tt> to generate the GND plane. <b>Note</b>, when you re-open the PCB board, the copper pour is not shown, so you need to press <tt>ratsnest</tt> to regenerate the GND plane. <i>Try, always pour GND plane with 10mil isolation.</i> You could modify the isolation and spacing of GND polygon by (i) <tt>information</tt> button.</p>
+</li>
+<li><p>Some useful .ulp scripts by sparkfun is <tt>silk_gen.ulp</tt>, which will process fancy <b>bSilk</b> and <b>tSilk</b> layers. Some important information, such as polarize of diode or capacitors, can be shown in the silk layer.</p>
+</li>
+<li><p>The 0.05" grid rule (found within the Eagle doc) applies to the component centers. Many component footprints are hard metric (for example 0.5mm spacing or 1x1.2mm pad sizes) and it is completely ok to layout pads and parts on the mm grid. However, when placing components I recommend the component centers stay ‘on grid’. This will help with routing and overall component alignment.</p>
+</li>
+</ol>
+<h3>Analog PCB design rules (by Ondo88)</h3>
+<ol>
+<li><p>Some PCB software offer “tear” connections for pads and vias. This reduces mechanical stress around the via connection, avoiding possible rupture of the traces. Again, it’s also useful for RF applications, as it makes a better Z matching (it behaves as a tamper used in micro-wave circuits).</p>
+</li>
+<li><p>It’s a good practice to place holes around the boards, joining top and bottom ground layers. That makes the board more similar to a Faraday cage, reducing greatly effects from EMI (Electro-magnetic Interference). But to be truth, randomizing the distance between the holes makes a better isolation as no single frequency gets benefited form constructive interference.</p>
+</li>
+<li><p>Get to know what you’re building. Before getting serious about PCB design, you should learn what is everything you’re using on them. I’ve always said you can know if someone is a good PCB designer by asking him to give you FR4 permitivity, solder fusion temperature and the like (without checking wikipedia ;D).</p>
+</li>
+<li><p>Another common mistake is not taking account of thermal activity on the board. Make sure your temperature sensitive components (like oscillators, and almost any analog circuit) are far from your heat generating circuits (regulators and the like). If your board fits in a box, be sure to have cooling paths that keep the things ok.</p>
+</li>
+<li><p>Some chips may have two Vcc or GND pins one to each other. On SMD packages it’s tempting to just join them straight, avoid that if you’re using oven soldering (very likely on production). That will unbalance the thermal forces your chip may suffer, moving it from its original position, and possibly making it tombstone.</p>
+</li>
+<li><p>I’ve found very useful to place a couple of squares on silkscreen, with an E (Error) and a T (Tested) on the side of each one. That allows you to mark easily your boards with anything you may have at hand, from a pen to a screwdriver.</p>
+</li>
+<li><p>The last one is the more ethereal of the advises, “follow your ground paths”. Your signal propagates from your Vcc to your GND, mainly through the shortest path, if two signals share that ground path, they’ll interfere each other. Try to make that paths as short and trouble free as you can.</p>
 </li>
 </ol>
 <h3>eagle &ndash; Gerber viewer</h3>
+<ol>
+<li><p>Here, we will use <tt>sfe-gerb274x.cam</tt> script by sparkfun.</p>
+</li>
+</ol>
 <div id="footer">
 <div id="footer-text">
-Page generated 2014-03-23 09:20:42 UTC, by <a href="http://jemdoc.jaboc.net/">jemdoc</a>.
+Page generated 2014-03-23 13:00:52 UTC, by <a href="http://jemdoc.jaboc.net/">jemdoc</a>.
 </div>
 </div>
 </td>
