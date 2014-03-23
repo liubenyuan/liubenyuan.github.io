@@ -23,10 +23,11 @@ The most simple circuit board, as an add-on peripherals, might by the digilent p
 
 /usually, you may route with 10mil width and 8mil spacing, try to see how far you can go/
 
-. While you in +move+ command, press +Ctrl+ key while clicking a component, the origin of the component will snap to the grid. You must decide whether you +route+ in the top or bottom layer. In surface mount devices, we usually route on the *top copper* layer. If you want to use the +autorouter+, be sure to setup the grid to appropriate width, for example, *7mil* or *14mil*, and then press the +autorouter+, set the line width to the corresponding value.
+. While you in +move+ command, press +Ctrl+ key while clicking a component, the origin of the component will snap to the grid. You must decide whether you +route+ in the top or bottom layer. In surface mount devices, we usually route on the *top copper* layer. When you placed all the components, you may use +ratsnest+ to recalculate the air wires. If you want to use the +autorouter+, be sure to setup the grid to appropriate width, for example, *7mil* or *14mil*, and then press the +autorouter+, set the line width to the corresponding value.
 . Routing the *GND* plane. This is most important when you are using eagle. First, select the +polygon+ tool, change line *width* to 10mil, and *select on* (the icon with a small circle on the up-left corner) to isolate parts and wires, the *isolation width* is 12mil, spacing (between the ground plane and the boarder of the PCB). Second, draw a rectangular around the board. Third, +name+ the polygon *GND*. Final, press the +ratsnest+ to generate the GND plane. *Note*, when you re-open the PCB board, the copper pour is not shown, so you need to press +ratsnest+ to regenerate the GND plane. /Try, always pour GND plane with 10mil isolation./ You could modify the isolation and spacing of GND polygon by (i) +information+ button.
-. Some useful .ulp scripts by sparkfun is +silk_gen.ulp+, which will process fancy *bSilk* and *tSilk* layers. Some important information, such as polarize of diode or capacitors, can be shown in the silk layer.
+. Some useful .ulp scripts by sparkfun is +silk_gen.ulp+, which will process fancy *bSilk* and *tSilk* layers. Some important information, such as polarize of diode or capacitors, can be shown in the silk layer. (*WARNING*, you may simply add +text+ to *tPlace* layer). Next, make sure you add +text+ to your functional pins, and place them on the *tPlace* layer, please use the +change+ button to alter the size of text to *0.05"*. You may use the eye button to +show+ the connection of pins and wires. Add time stamp to the *tBottom* layer where there is no connections, this will automatically mirro the text, it's cool.
 . The 0.05" grid rule (found within the Eagle doc) applies to the component centers. Many component footprints are hard metric (for example 0.5mm spacing or 1x1.2mm pad sizes) and it is completely ok to layout pads and parts on the mm grid. However, when placing components I recommend the component centers stay ‘on grid’. This will help with routing and overall component alignment.
+. Hand route critical or sensitive parts of certain boards, Spend your time innovating, not routing mundane traces. *Remember*, add (1) Date code, (2) Silkscreen title and pin labels, (3) Standoff holes *drews*, (4) All connections routed, (5) TX and RX routed correctly, you may name *RX-I* and *TX-O*. (6) add debug vias, leds, and pullup and pulldown resistors.
 
 === Analog PCB design rules (by Ondo88)
 . Some PCB software offer “tear” connections for pads and vias. This reduces mechanical stress around the via connection, avoiding possible rupture of the traces. Again, it’s also useful for RF applications, as it makes a better Z matching (it behaves as a tamper used in micro-wave circuits).
@@ -38,5 +39,22 @@ The most simple circuit board, as an add-on peripherals, might by the digilent p
 . The last one is the more ethereal of the advises, “follow your ground paths”. Your signal propagates from your Vcc to your GND, mainly through the shortest path, if two signals share that ground path, they’ll interfere each other. Try to make that paths as short and trouble free as you can.
 
 === eagle -- Gerber viewer
+Gerber Files are txt files with coordinates that tell the PCB machines to go to location X,Y and do something (drill, expose, etch, print, etc). Because there are different layers to your PCB, you need to create different text files for the different layers. This is where the Eagle CAM program comes into play.
 
-. Here, we will use +sfe-gerb274x.cam+ script by sparkfun.
+Here, we will use +sfe-gerb274x.cam+ script by sparkfun. Remember *Drill file is 2:4 Leading*. Anytime you transmit a PCB layout to a fab house, you need to pass them 7 files, and 7 files only:
+
+. boardname.GTL Top Copper Layer
+. boardname.GBL Bottom Copper Layer
+. boardname.GTS Top Soldermask
+. boardname.GBS Bottom Soldermask
+. boardname.GTO Top Silkscreen
+. boardname.GBO Bottom Silkscreen
+. boardname.GKO Board Outline
+. boardname.G2L only if you're uploading a four layer board
+. boardname.G3L only if you're uploading a four layer board
+. boardname.XLN Drills (2:4 Leading -- remember this)
+
+You will also see a *GTP* file extension. This is the Gerber Top Paste file. GTP includes all the paste for the pads of SMD and GTS includes both pads and vias.
+
+Last, but not finally, you can use +kicad+ to visualize the gerber file.
+
