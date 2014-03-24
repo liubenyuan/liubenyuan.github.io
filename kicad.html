@@ -44,6 +44,10 @@
 </li>
 <li><p>You may <tt>move</tt> component to connect to another pin, and to visually connect a wire to a pin, or cross wires, you may add a <tt>junction</tt> to the crosspoint. Airwires are thin lines that have not been routed yet.</p>
 </li>
+<li><p>You should use <tt>net</tt> and <tt>label</tt> to denote a connection from some ICs to another IC. Do not use <tt>wire</tt> and label (?). <tt>Show</tt> command is very useful in visualizing wires and ICs.</p>
+</li>
+<li><p>Use <tt>add frames</tt> to add frame to your schematics.</p>
+</li>
 </ol>
 <h3>eagle &ndash; PCB layout</h3>
 <p><i>usually, you may route with 10mil width and 8mil spacing, try to see how far you can go</i></p>
@@ -56,7 +60,9 @@
 </li>
 <li><p>The 0.05" grid rule (found within the Eagle doc) applies to the component centers. Many component footprints are hard metric (for example 0.5mm spacing or 1x1.2mm pad sizes) and it is completely ok to layout pads and parts on the mm grid. However, when placing components I recommend the component centers stay ‘on grid’. This will help with routing and overall component alignment.</p>
 </li>
-<li><p>Hand route critical or sensitive parts of certain boards, Spend your time innovating, not routing mundane traces. <b>Remember</b>, add (1) Date code, (2) Silkscreen title and pin labels, (3) Standoff holes <b>drews</b>, (4) All connections routed, (5) TX and RX routed correctly, you may name <b>RX-I</b> and <b>TX-O</b>. (6) add debug vias, leds, and pullup and pulldown resistors.</p>
+<li><p>Hand route critical or sensitive parts of certain boards, Spend your time innovating, not routing mundane traces. <b>Remember</b>, add (1) Date code, (2) Silkscreen title and pin labels, (3) Standoff holes <b>drews</b>, (4) All connections routed, (5) TX and RX routed correctly, you may name <b>RX-I</b> and <b>TX-O</b>. (6) add debug vias, leds, and pullup and pulldown resistors.a</p>
+</li>
+<li><p>use <tt>hole</tt> to add your mounting skews.</p>
 </li>
 </ol>
 <h3>Analog PCB design rules (by Ondo88)</h3>
@@ -117,7 +123,7 @@
 </ol>
 <div id="footer">
 <div id="footer-text">
-Page generated 2014-03-24 07:26:31 UTC, by <a href="http://jemdoc.jaboc.net/">jemdoc</a>.
+Page generated 2014-03-24 08:08:48 UTC, by <a href="http://jemdoc.jaboc.net/">jemdoc</a>.
 </div>
 </div>
 </td>
