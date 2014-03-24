@@ -31,7 +31,7 @@
 <h2>Digilent : pmod resource</h2>
 <p>The most simple circuit board, as an add-on peripherals, might by the digilent pmod module. There are a lot example designs (schematics) on <a href="http://www.digilentinc.com/Products">Digilent</a>. The <tt>first step</tt>, you could <i>copy board</i> a digilent pmod module, and feel the whole process of <b>printing</b> and <b>soldering</b> of one real PCB.</p>
 <h2>Eagle : which one is better ?</h2>
-<p>Sparkfun is a great website, see some <a href="https://www.sparkfun.com/tutorials/">tutorials</a>,</p>
+<p>Sparkfun is a great website. We watched the videos and some on-line <a href="https://www.sparkfun.com/tutorials/">tutorials</a>,</p>
 <ol>
 <li><p><a href="https://www.sparkfun.com/tutorials/115">Better PCBs in Eagle</a></p>
 </li>
@@ -40,90 +40,97 @@
 </ol>
 <h3>eagle &ndash; schematic</h3>
 <ol>
-<li><p>Eagle has a verb-noun working flow, each time you select a verb (i.e., <tt>move</tt>, <tt>add</tt>, <tt>copy</tt>) and click the object. Group operation is therefore, <i>group &gt; move &gt; right click &gt; group move</i>. Commands can be abbrievated, move can be typed in the command line as mov, copy is cop, etc. Each time you add a component, there is a <tt>mirror</tt> icon just beside the grid icon.</p>
+<li><p>Eagle has a verb-noun working flow, each time you select a <b>verb</b> (i.e., <tt>move</tt>, <tt>add</tt>, <tt>copy</tt>) and click the object to perform such operation. Group-ops is: <i>&gt; move &gt; group &gt; right click &gt; group move</i>. Commands can be abbrievated, <tt>move</tt> can be typed in the command line as <b>mov</b>, <tt>copy</tt> is <b>cop</b>, etc. Remember there is a <tt>mirror</tt> icon just beside the grid icon.</p>
 </li>
-<li><p>You may <tt>move</tt> component to connect to another pin, and to visually connect a wire to a pin, or cross wires, you may add a <tt>junction</tt> to the crosspoint. Airwires are thin lines that have not been routed yet.</p>
+<li><p>You may <tt>move</tt> or <tt>copy</tt> a component to connect to another pin. To visually connect a wire to a pin, or cross wires, you may add a <tt>junction</tt> to the crosspoint.</p>
 </li>
-<li><p>You should use <tt>net</tt> and <tt>label</tt> to denote a connection from some ICs to another IC. Do not use <tt>wire</tt> and label (?). <tt>Show</tt> command is very useful in visualizing wires and ICs.</p>
+<li><p>You should use <tt>net</tt> and <tt>label</tt> to denote a <b>common</b> connection from some ICs to another IC. Do not use <tt>wire</tt> and <tt>label</tt>. <tt>Show</tt> command is very useful in visualizing wires and ICs.</p>
 </li>
-<li><p>Use <tt>add frames</tt> to add frame to your schematics.</p>
+<li><p>Try always <tt>add frames</tt> to your schematics and group align the frame w.r.t the center.</p>
 </li>
 </ol>
 <h3>eagle &ndash; PCB layout</h3>
 <p><i>usually, you may route with 10mil width and 8mil spacing, try to see how far you can go</i></p>
 <ol>
-<li><p>While you in <tt>move</tt> command, press <tt>Ctrl</tt> key while clicking a component, the origin of the component will snap to the grid. You must decide whether you <tt>route</tt> in the top or bottom layer. In surface mount devices, we usually route on the <b>top copper</b> layer. When you placed all the components, you may use <tt>ratsnest</tt> to recalculate the air wires. If you want to use the <tt>autorouter</tt>, be sure to setup the grid to appropriate width, for example, <b>7mil</b> or <b>14mil</b>, and then press the <tt>autorouter</tt>, set the line width to the corresponding value.</p>
+<li><p>Make sure all <tt>airwires</tt> (thin lines that have not been routed yet) are routed.</p>
 </li>
-<li><p>Routing the <b>GND</b> plane. This is most important when you are using eagle. First, select the <tt>polygon</tt> tool, change line <b>width</b> to 10mil, and <b>select on</b> (the icon with a small circle on the up-left corner) to isolate parts and wires, the <b>isolation width</b> is 12mil, spacing (between the ground plane and the boarder of the PCB). Second, draw a rectangular around the board. Third, <tt>name</tt> the polygon <b>GND</b>. Final, press the <tt>ratsnest</tt> to generate the GND plane. <b>Note</b>, when you re-open the PCB board, the copper pour is not shown, so you need to press <tt>ratsnest</tt> to regenerate the GND plane. <i>Try, always pour GND plane with 10mil isolation.</i> You could modify the isolation and spacing of GND polygon by (i) <tt>information</tt> button.</p>
+<li><p>While you in <tt>move</tt> command, press <tt>Ctrl</tt> key while clicking a component, the origin of the component will snap to the grid. You must decide whether you <tt>route</tt> in the top or bottom layer. In surface mount devices, we usually route on the <b>top copper</b> layer. After you placed all the components, you can use <tt>ratsnest</tt> to recalculate the airwires. If you want to use the <tt>autorouter</tt>, be sure to setup the grid to appropriate width, for example, <b>7mil</b> or <b>14mil</b>, and then press the <tt>autorouter</tt>. In the config-box, set the line width to the corresponding value.</p>
 </li>
-<li><p>Some useful .ulp scripts by sparkfun is <tt>silk_gen.ulp</tt>, which will process fancy <b>bSilk</b> and <b>tSilk</b> layers. Some important information, such as polarize of diode or capacitors, can be shown in the silk layer. (<b>WARNING</b>, you may simply add <tt>text</tt> to <b>tPlace</b> layer). Next, make sure you add <tt>text</tt> to your functional pins, and place them on the <b>tPlace</b> layer, please use the <tt>change</tt> button to alter the size of text to <b>0.05"</b>. You may use the eye button to <tt>show</tt> the connection of pins and wires. Add time stamp to the <b>tBottom</b> layer where there is no connections, this will automatically mirro the text, it's cool.</p>
+<li><p>Routing the <b>GND</b> plane. This is most important when you are using eagle. First, select the <tt>polygon</tt> tool, change line <b>width</b> to 10mil, and <b>select on</b> (the icon with a small circle on the up-left corner) to isolate parts and wires, the <b>isolation width</b> is 10mil, spacing (between the ground plane and the boarder of the PCB). Second, draw a rectangular around the board. Third, <tt>name</tt> the polygon <b>GND</b>. Final, press the <tt>ratsnest</tt> to generate the GND plane. <b>Note</b>, when you re-open the PCB board, the copper pour is not shown, so you need to press <tt>ratsnest</tt> to regenerate the GND plane. <i>Try, always pour GND plane with 10mil isolation.</i> You could modify the <b>isolation</b> and <b>spacing</b> of GND polygon by (i) <tt>information</tt> button.</p>
 </li>
-<li><p>The 0.05" grid rule (found within the Eagle doc) applies to the component centers. Many component footprints are hard metric (for example 0.5mm spacing or 1x1.2mm pad sizes) and it is completely ok to layout pads and parts on the mm grid. However, when placing components I recommend the component centers stay ‘on grid’. This will help with routing and overall component alignment.</p>
+<li><p>Add important information, such as polarize of diode or capacitors, in the silk layer. (you may simply add <tt>text</tt> to <b>tPlace</b> layer). Make sure you add <tt>text</tt> to your functional pins, and place them on the <b>tPlace</b> layer, please use the <tt>change</tt> button to alter the size of text to <b>0.05"</b>. You can use the eye button to <tt>show</tt> the connection of pins and wires during this process. Add time stamp wires to the <b>tBottom</b> layer where there is no connection, it will automatically mirro the text and it's cool.</p>
 </li>
-<li><p>Hand route critical or sensitive parts of certain boards, Spend your time innovating, not routing mundane traces. <b>Remember</b>, add (1) Date code, (2) Silkscreen title and pin labels, (3) Standoff holes <b>drews</b>, (4) All connections routed, (5) TX and RX routed correctly, you may name <b>RX-I</b> and <b>TX-O</b>. (6) add debug vias, leds, and pullup and pulldown resistors.a</p>
+<li><p>Use grid smart! Component Placement grid should be <tt>50mil</tt> and the routing should be the width (<tt>10mil</tt>) of the wire. The 0.05" grid rule applies to the component centers. Many component footprints are hard metric (for example 0.5mm spacing or 1x1.2mm pad sizes) and it is completely ok to layout pads and parts on the mm grid. However, when placing components I recommend the component centers stay ‘on grid’. This will help with routing and component alignment.</p>
 </li>
-<li><p>use <tt>hole</tt> to add your mounting skews.</p>
+<li><p>Hand route critical or sensitive parts of certain boards, Spend your time innovating! <b>Remember</b>, add (1) Date code at <b>tBottom</b>, (2) Silkscreen title and pin labels <tt>text</tt> <b>tPlace</b>, (3) Add standoff <tt>hole</tt> mounting <b>drews</b>, (4) Make sure all connections routed, (5) The direction of TX and RX being routed correctly, you may name <b>RX-I</b> and <b>TX-O</b>. (6) add debug vias, leds, and pullup and pulldown resistors.</p>
 </li>
 </ol>
-<h3>Analog PCB design rules (by Ondo88)</h3>
+<h3>Analog &amp; RF PCB design rules (by Ondo88)</h3>
 <ol>
-<li><p>Some PCB software offer “tear” connections for pads and vias. This reduces mechanical stress around the via connection, avoiding possible rupture of the traces. Again, it’s also useful for RF applications, as it makes a better Z matching (it behaves as a tamper used in micro-wave circuits).</p>
+<li><p>Some PCB software offer “tear” connections (<tt>use teardrop.ulp</tt>) for pads and vias. This reduces mechanical stress around the via connection, avoiding possible rupture of the traces. Again, it’s also useful for RF applications, as it makes a better Z matching (it behaves as a tamper used in micro-wave circuits).</p>
 </li>
-<li><p>It’s a good practice to place holes around the boards, joining top and bottom ground layers. That makes the board more similar to a Faraday cage, reducing greatly effects from EMI (Electro-magnetic Interference). But to be truth, randomizing the distance between the holes makes a better isolation as no single frequency gets benefited form constructive interference.</p>
+<li><p>It’s a good practice to place holes around the boards, joining top and bottom ground layers. That makes the board more similar to <tt>a Faraday cage</tt>, reducing greatly effects from EMI (Electro-magnetic Interference). But to be truth, randomizing the distance between the holes makes a better isolation as no single frequency gets benefited form constructive interference.</p>
 </li>
-<li><p>Get to know what you’re building. Before getting serious about PCB design, you should learn what is everything you’re using on them. I’ve always said you can know if someone is a good PCB designer by asking him to give you FR4 permitivity, solder fusion temperature and the like (without checking wikipedia ;D).</p>
+<li><p>Get to know what you’re building. Before getting serious about PCB design, you should learn what is everything you’re using on them. I’ve always said you can know if someone is a good PCB designer by asking him to give you <tt>FR4</tt> permitivity, solder fusion temperature and the like (without checking wikipedia ;D).</p>
 </li>
-<li><p>Another common mistake is not taking account of thermal activity on the board. Make sure your temperature sensitive components (like oscillators, and almost any analog circuit) are far from your heat generating circuits (regulators and the like). If your board fits in a box, be sure to have cooling paths that keep the things ok.</p>
+<li><p>Another common mistake is not taking account of <tt>thermal activity</tt> on the board. Make sure your temperature sensitive components (like oscillators, and almost any analog circuit) are far from your heat generating circuits (regulators and the like). If your board fits in a box, be sure to have cooling paths that keep the things ok.</p>
 </li>
-<li><p>Some chips may have two Vcc or GND pins one to each other. On SMD packages it’s tempting to just join them straight, avoid that if you’re using oven soldering (very likely on production). That will unbalance the thermal forces your chip may suffer, moving it from its original position, and possibly making it tombstone.</p>
+<li><p>Some chips may have two VCC or GND pins one to each other. On SMD packages it’s tempting to just join them straight, avoid that if you’re using oven soldering (very likely on production). That will <tt>unbalance</tt> the thermal forces your chip may suffer, moving it from its original position, and possibly making it tombstone.</p>
 </li>
-<li><p>I’ve found very useful to place a couple of squares on silkscreen, with an E (Error) and a T (Tested) on the side of each one. That allows you to mark easily your boards with anything you may have at hand, from a pen to a screwdriver.</p>
+<li><p>I’ve found very useful to place a couple of <tt>squares on silkscreen</tt>, with an E (Error) and a T (Tested) on the side of each one. That allows you to mark easily your boards with anything you may have at hand, from a pen to a screwdriver.</p>
 </li>
-<li><p>The last one is the more ethereal of the advises, “follow your ground paths”. Your signal propagates from your Vcc to your GND, mainly through the shortest path, if two signals share that ground path, they’ll interfere each other. Try to make that paths as short and trouble free as you can.</p>
+<li><p>The last one is the more ethereal of the advises, <tt>“follow your ground paths”</tt>. Your signal propagates from your Vcc to your GND, mainly through the shortest path, if two signals share that ground path, they’ll interfere each other. Try to make that paths as short and trouble free as you can.</p>
 </li>
 </ol>
 <h3>eagle &ndash; Gerber viewer</h3>
-<p>Gerber Files are txt files with coordinates that tell the PCB machines to go to location X,Y and do something (drill, expose, etch, print, etc). Because there are different layers to your PCB, you need to create different text files for the different layers. This is where the Eagle CAM program comes into play.</p>
-<p>Here, we will use <tt>sfe-gerb274x.cam</tt> script by sparkfun (<b>Top Section</b> : Top, Pads, Vias, <tt>Dimension(?)</tt>. <b>Bottom Section</b> : Bottom, Pads, Vias). Remember <b>Drill file is 2:4 Leading</b>. Anytime you transmit a PCB layout to a fab house, you need to pass them 7 files, and 7 files only:</p>
+<p>Gerber Files are text files with coordinates that tell the PCB machines to go to location X,Y and do something (drill, expose, etch, print, etc). Because there are different layers to your PCB, you need to create different text files for the different layers. This is where the Eagle CAM program comes into play.</p>
+<p>Here, we will use <tt>sfe-gerb274x.cam</tt> script by sparkfun (<b>Top Section</b> : Top, Pads, Vias, <tt>Dimension(?)</tt>. <b>Bottom Section</b> : Bottom, Pads, Vias). Anytime you transmit a PCB layout to a fab house, you need to pass them 7 files, and 7 files only:</p>
 <ol>
-<li><p>boardname.GTL Top Copper Layer</p>
+<li><p>boardname.<b>GTL</b> Top Copper Layer</p>
 </li>
-<li><p>boardname.GBL Bottom Copper Layer</p>
+<li><p>boardname.<b>GBL</b> Bottom Copper Layer</p>
 </li>
-<li><p>boardname.GTS Top Soldermask</p>
+<li><p>boardname.<b>GTS</b> Top Soldermask</p>
 </li>
-<li><p>boardname.GBS Bottom Soldermask</p>
+<li><p>boardname.<b>GBS</b> Bottom Soldermask</p>
 </li>
-<li><p>boardname.GTO Top Silkscreen</p>
+<li><p>boardname.<b>GTO</b> Top Silkscreen</p>
 </li>
-<li><p>boardname.GBO Bottom Silkscreen</p>
+<li><p>boardname.<b>GBO</b> Bottom Silkscreen</p>
 </li>
-<li><p>boardname.GKO Board Outline (<tt>x</tt>)</p>
+<li><p>boardname.<b>GKO</b> Board Outline (<tt>x</tt>)</p>
 </li>
-<li><p>boardname.G2L only if you're uploading a four layer board</p>
+<li><p>boardname.<b>G2L</b> only if you're uploading a four layer board</p>
 </li>
-<li><p>boardname.G3L only if you're uploading a four layer board</p>
+<li><p>boardname.<b>G3L</b> only if you're uploading a four layer board</p>
 </li>
-<li><p>boardname.XLN Drills (2:4 Leading &ndash; remember this) (<tt>.TXT</tt>, 1st digit 2bit, 2nd digit 4bit)</p>
+<li><p>boardname.<b>XLN</b> Drills <b>(2:4 Leading &ndash; remember this)</b> (<tt>.TXT</tt>, 1st digit 2bit, 2nd digit 4bit)</p>
 </li>
 </ol>
-<p>You will also see a <b>GTP</b> file extension. This is the Gerber Top Paste file. GTP includes all the paste for the pads of SMD and GTS includes both pads and vias.</p>
-<p>Last, but not finally, you can use <tt>kicad</tt> to visualize the gerber file.</p>
-<h3>CAM process</h3>
+<p>You will also see a <b>GTP</b> file extension. This is the Gerber Top Paste file. GTP includes all the paste for the pads of SMD and GTS includes both pads and vias. Last, but not finally, you can use <tt>kicad</tt> to visualize the gerber file.</p>
+<h3>eagle &ndash; CAM process</h3>
 <p>Finally, we come to the CAM process (for ShenZhen manufacture). We will need <b>drillcfg.ulp</b>, <b>sfe-gerb274x.cam</b> and <b>excellon.cam</b>.</p>
 <ol>
-<li><p>in PCB editor, type <tt>run drillcfg</tt> at the command window, select <b>inch</b> and press <b>ok</b>, you will get <b>.drl</b> file.</p>
+<li><p>In PCB editor, type <tt>run drillcfg</tt> at the command window, select <b>inch</b> and press <b>ok</b>, you will get <b>.drl</b> file.</p>
 </li>
 <li><p>Process CAM button, and <tt>load sfe-gerb274x.cam</tt>, process job. You may also use <tt>load excellon.cam</tt> to generate <b>.drd</b> file.</p>
 </li>
-<li><p>Open CAM350, import all the files exclude .TXT (the drill file), we will importing the drill file in CAM350 by <b>import drill data</b>, and then select format as <b>Leading 2:4</b> to pad zeros.</p>
+<li><p>Open CAM350, import all the files exclude .TXT (the drill file), we will importing the drill file in CAM350 by: <b>import drill data</b>, then select format as <b>Leading 2:4</b> to pad zeros.</p>
 </li>
 <li><p>Save all as <b>.cam</b> file.</p>
 </li>
 </ol>
+<p>So let's sum up, we have <tt>GTL, GTS, GTO</tt> and <tt>GBL, GBS, GBO</tt> files, plus the drill file <tt>.TXT, .drl, .drd</tt>. And one file <tt>.GTP</tt> may also be included. If we are manufacturing 4-layer PCB, we will need <tt>.G2L, .G3L</tt> to denote the 3rd and 4th layer. All these files need to be visually checked in CAM350 and export as <tt>.CAM</tt> file.</p>
+<h2>電阻，電感，電容的封裝 (note)</h2>
+<ol>
+<li><p>例风华系列的贴片电容的命名：<b>0805CG102J500NT</b>。<b>0805</b>：是指该贴片电容的尺寸套小，是用英寸来表示的。08表示长度是0.08英寸、05表示宽度为0.05英寸； <b>CG</b>：是表示做这种电容要求用的材质，这个材质一般适合于做小于10000PF以下的电容； <b>102</b>：是指电容容量，前面两位是有效数字、后面的2表示有多少个零102=10×102,也就是=1000PF； <b>J</b>：是要求电容的容量值达到的误差精度为5％，介质材料和误差精度是配对的； <b>500</b>：是要求电容承受的耐压为50V。同样500前面两位是有效数字，后面是指有多少个零； <b>N</b>：是指端头材料。现在一般的端头都是指三层电极(银/铜层)、镍、锡； <b>T</b>：是指包装方式，T表示编带包装，B表示塑料盒散包装。</p>
+</li>
+<li><p>钽贴片电解电容有黑色或灰色标志的一头是正极，另外一头是负极。对于铝贴片电解电容就和普通直插电解电容一样，有杠杠的那端为负极。</p>
+</li>
+</ol>
 <div id="footer">
 <div id="footer-text">
-Page generated 2014-03-24 08:08:48 UTC, by <a href="http://jemdoc.jaboc.net/">jemdoc</a>.
+Page generated 2014-03-24 10:00:22 UTC, by <a href="http://jemdoc.jaboc.net/">jemdoc</a>.
 </div>
 </div>
 </td>
