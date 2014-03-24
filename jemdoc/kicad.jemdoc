@@ -41,7 +41,7 @@ The most simple circuit board, as an add-on peripherals, might by the digilent p
 === eagle -- Gerber viewer
 Gerber Files are txt files with coordinates that tell the PCB machines to go to location X,Y and do something (drill, expose, etch, print, etc). Because there are different layers to your PCB, you need to create different text files for the different layers. This is where the Eagle CAM program comes into play.
 
-Here, we will use +sfe-gerb274x.cam+ script by sparkfun. Remember *Drill file is 2:4 Leading*. Anytime you transmit a PCB layout to a fab house, you need to pass them 7 files, and 7 files only:
+Here, we will use +sfe-gerb274x.cam+ script by sparkfun (*Top Section* : Top, Pads, Vias, +Dimension(?)+. *Bottom Section* : Bottom, Pads, Vias). Remember *Drill file is 2:4 Leading*. Anytime you transmit a PCB layout to a fab house, you need to pass them 7 files, and 7 files only:
 
 . boardname.GTL Top Copper Layer
 . boardname.GBL Bottom Copper Layer
@@ -49,12 +49,21 @@ Here, we will use +sfe-gerb274x.cam+ script by sparkfun. Remember *Drill file is
 . boardname.GBS Bottom Soldermask
 . boardname.GTO Top Silkscreen
 . boardname.GBO Bottom Silkscreen
-. boardname.GKO Board Outline
+. boardname.GKO Board Outline (+x+)
 . boardname.G2L only if you're uploading a four layer board
 . boardname.G3L only if you're uploading a four layer board
-. boardname.XLN Drills (2:4 Leading -- remember this)
+. boardname.XLN Drills (2:4 Leading -- remember this) (+.TXT+, 1st digit 2bit, 2nd digit 4bit)
 
 You will also see a *GTP* file extension. This is the Gerber Top Paste file. GTP includes all the paste for the pads of SMD and GTS includes both pads and vias.
 
 Last, but not finally, you can use +kicad+ to visualize the gerber file.
+
+=== CAM process
+
+Finally, we come to the CAM process (for ShenZhen manufacture). We will need *drillcfg.ulp*, *sfe-gerb274x.cam* and *excellon.cam*.
+
+. in PCB editor, type +run drillcfg+ at the command window, select *inch* and press *ok*, you will get *.drl* file.
+. Process CAM button, and +load sfe-gerb274x.cam+, process job. You may also use +load excellon.cam+ to generate *.drd* file.
+. Open CAM350, import all the files exclude .TXT, we will importing the drill file by *import drill data*, select format as *Leading 2:4* to pad zeros.
+. Save all as *.cam* file.
 
