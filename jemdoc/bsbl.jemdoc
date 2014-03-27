@@ -7,6 +7,8 @@ I developed fast implementations of the Block Sparse Bayesian Learning (*BSBL*, 
 
 = BSBL-FM -- A Fast Marginalized Implementation
 
++ /see the github repository for more details/ : [https://github.com/liubenyuan/bsbl-fm bsbl-fm] +
+
 == Basic
 
 The BSBL-FM is a fast implementation of the BSBL framework. It is based on BCS ([http://www.ee.duke.edu/~shji/papers/BCS_preprint.pdf Ji2008]) and fastRVM ([http://www.miketipping.com/papers/met-fastsbl.pdf Tipping2003]). The major contributions are the block extension and the exploiting of intra-block correlation. The BSBL-FM algorithm is extremely fast when the signal has *block structure* and low *block sparsity* level.
@@ -15,18 +17,18 @@ The BSBL-FM is a fast implementation of the BSBL framework. It is based on BCS (
 
 == Papers
 
-. *Benyuan Liu*, Zhilin Zhang, Gary Xu, Hongqi Fan, Qiang Fu, [http://arxiv.org/abs/1309.7843 Energy Efficient Telemonitoring of Physiological Signals via Compressed Sensing: A Fast Algorithm and Power Consumption Evaluation]. Biomedical Signal Processing and Control, 2014 (*accepted*). /Arxiv Preprint, 1309.7843./ DOI:[http://dx.doi.org/10.1016/j.bspc.2014.02.010 10.1016/j.bspc.2014.02.010]
-. *Benyuan Liu*, Zhilin Zhang, Hongqi Fan, Qiang Fu, [http://arxiv.org/abs/1309.4136 Compression via Compressive Sensing: A Low-Power Framework for the Telemonitoring of Multi-Channel Physiological Signals]. International Workshop on Biomedical and Health Informatics (BHI2013, in conjunction with IEEE International Conference on Bioinformatics and Biomedicine *BIBM*), Shanghai, China, Dec. 2013, pp 9-12. /Arxiv Preprint, 1309.4136./ DOI:[http://dx.doi.org/10.1109/BIBM.2013.6732592 10.1109/BIBM.2013.6732592]
+. *Benyuan Liu*, Zhilin Zhang, Gary Xu, Hongqi Fan, Qiang Fu, [http://arxiv.org/abs/1309.7843 Energy Efficient Telemonitoring of Physiological Signals via Compressed Sensing: A Fast Algorithm and Power Consumption Evaluation]. Biomedical Signal Processing and Control, 2014 Vol 11C, pp 80--88. /Arxiv Preprint, 1309.7843./ DOI:[http://dx.doi.org/10.1016/j.bspc.2014.02.010 10.1016/j.bspc.2014.02.010]
+. *Benyuan Liu*, Zhilin Zhang, Hongqi Fan, Qiang Fu, [http://arxiv.org/abs/1309.4136 Compression via Compressive Sensing: A Low-Power Framework for the Telemonitoring of Multi-Channel Physiological Signals]. International Workshop on Biomedical and Health Informatics (*BHI2013*, in conjunction with IEEE International Conference on Bioinformatics and Biomedicine *BIBM*), Shanghai, China, Dec. 2013, pp 9-12. /Arxiv Preprint, 1309.4136./ DOI:[http://dx.doi.org/10.1109/BIBM.2013.6732592 10.1109/BIBM.2013.6732592]
 . *Benyuan Liu*, Zhilin Zhang, Hongqi Fan, [http://arxiv.org/abs/1211.4909 Fast Marginalized Block Sparse Bayesian Learning Algorithm]. /Arxiv Preprint, 1211.4909./
 
 == Implementations
 
 === Matlab Version :
 
-The *Matlab* Implementation can be downloaded at: [https://github.com/liubenyuan/pyBSBL pyBSBL -- github].
+The *Matlab* Implementation can be downloaded at: [https://github.com/liubenyuan/bsbl-fm bsbl-fm @ github].
 
 === C Version :
 The *C* version as well as the *GPU* Cuda Implementation will be available soon.
 
 === Python Version :
-The *Python* implementations are available at: [https://github.com/liubenyuan/pyBSBL pyBSBL -- github].
+The *Python* implementations are available at: [https://github.com/liubenyuan/pyBSBL pyBSBL @ github].
