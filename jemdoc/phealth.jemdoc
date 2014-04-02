@@ -4,6 +4,14 @@
 
 Building a demo board to collect cardio-related bio-signals.
 
++Highlights:+
+
+  . *Robust heartbeat tracking using wrist mounted photoplethysmography(PPG) signals*
+  . *Synchronous ECG\/PPG sampling during fitness on a treadmill with speed ranging from 2km\/h to 17km\/h*
+  . *PPG data with strong motion artifact can be effectively compressed using low-power compresssed sensing algorithms*
+
++Papers:+
+
 == pmodAD2 \+ Lx9micro \+ USB : building a 4-channel evaluation system
 
 先用中文夹杂英文做笔记 ：）
