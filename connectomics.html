@@ -28,9 +28,26 @@
 </td>
 <td id="layout-content">
 <h1>Connectomics - Inferring Connectivity From Calcium Fluorescence</h1>
+<ol>
+<li><p>What's the <tt>connectivities</tt> in population of neurons ?</p>
+</li>
+<li><p>What's the <tt>mathematical model</tt> of spikes ?</p>
+</li>
+<li><p>How do neurons <tt>comupte</tt> and <tt>memory</tt> ?</p>
+</li>
+</ol>
+<p>We are working towards these exciting problems !</p>
+<h2>Py-oopsi : the python implementation of the fast-oopsi algorithm</h2>
+<p>Fast-oopsi was developed by joshua vogelstein in 2009, which is now widely used to extract neuron spike activities from calcium fluorescence signals. Here, we propose detailed implementation of the fast-oopsi algorithm in python programming language. Some corrections are also made to the original fast-oopsi paper.</p>
+<p>The <tt>py-oopsi</tt> implementation can be obtained at: <a href="https://github.com/liubenyuan/py-oopsi">py-oopsi @ github</a></p>
+<table class="imgtable"><tr><td>
+<img src="pics/pyoopsi-demo.png" alt="Simulation Result of py-oopsi" width="500px" />&nbsp;</td>
+<td align="left"><p>Top (a), The synthetic calcium fluorescence trace, where random noise are added to the ground truth signal (shows in red color). The parameters are : T=2000, dt=0.02ms, lambda=0.1, tau=1.5 and sigma=0.2.</p>
+<p>Bottom (b), (c), (d), The reconstructed spikes from fluorescence trace using <tt>py-oopsi</tt>, <tt>wiener</tt> filter, and <tt>discretize binning</tt>. The py-oopsi favors sparse (via Poison prior) and non-negativity, which has the most sparse yet positive spikes. Wiener filter has oscillary at the inferred spikes, discretize with binning is not robust agains noise.</p>
+</td></tr></table>
 <div id="footer">
 <div id="footer-text">
-Page generated 2014-05-06 10:05:06 UTC, by <a href="http://jemdoc.jaboc.net/">jemdoc</a>.
+Page generated 2014-05-06 13:00:04 UTC, by <a href="http://jemdoc.jaboc.net/">jemdoc</a>.
 </div>
 </div>
 </td>
