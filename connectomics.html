@@ -29,25 +29,26 @@
 <td id="layout-content">
 <h1>Connectomics - Inferring Connectivity From Calcium Fluorescence</h1>
 <ol>
-<li><p>What's the <tt>connectivities</tt> in population of neurons ?</p>
+<li><p>What's the <b>connectivities</b> in population of neurons ? <tt>connectomics</tt></p>
 </li>
-<li><p>What's the <tt>mathematical model</tt> of spikes ?</p>
+<li><p>What's the <b>mathematical model</b> of spikes ? <tt>mathematics</tt></p>
 </li>
-<li><p>How do neurons <tt>comupte</tt> and <tt>memory</tt> ?</p>
+<li><p>How do neurons <b>comupte</b> and <b>memory</b> ? <tt>intelligence</tt></p>
 </li>
 </ol>
 <p>We are working towards these exciting problems !</p>
 <h2>Py-oopsi : the python implementation of the fast-oopsi algorithm</h2>
-<p>Fast-oopsi was developed by joshua vogelstein in 2009, which is now widely used to extract neuron spike activities from calcium fluorescence signals. Here, we propose detailed implementation of the fast-oopsi algorithm in python programming language. Some corrections are also made to the original fast-oopsi paper.</p>
-<p>The <tt>py-oopsi</tt> implementation can be obtained at: <a href="https://github.com/liubenyuan/py-oopsi">py-oopsi @ github</a></p>
+<p><tt>Fast-oopsi</tt> was developed by Dr. <b>joshua vogelstein</b> in 2009, which is now widely used to extract neuron spikes from calcium fluorescence signals. Here, we propose detailed implementation of the fast-oopsi algorithm in the python programming language, which is called <tt>py-oopsi</tt>. Some corrections are also made to the original fast-oopsi paper.</p>
+<p><i> The <tt>py-oopsi</tt> implementation can be obtained at: <a href="https://github.com/liubenyuan/py-oopsi">py-oopsi @ github</a> </i></p>
 <table class="imgtable"><tr><td>
-<img src="pics/pyoopsi-demo.png" alt="Simulation Result of py-oopsi" width="500px" />&nbsp;</td>
-<td align="left"><p>Top (a), The synthetic calcium fluorescence trace, where random noise are added to the ground truth signal (shows in red color). The parameters are : T=2000, dt=0.02ms, lambda=0.1, tau=1.5 and sigma=0.2.</p>
-<p>Bottom (b), (c), (d), The reconstructed spikes from fluorescence trace using <tt>py-oopsi</tt>, <tt>wiener</tt> filter, and <tt>discretize binning</tt>. The py-oopsi favors sparse (via Poison prior) and non-negativity, which has the most sparse yet positive spikes. Wiener filter has oscillary at the inferred spikes, discretize with binning is not robust agains noise.</p>
+<img src="pics/pyoopsi-demo.png" alt="Simulation Result of py-oopsi" width="400px" />&nbsp;</td>
+<td align="left"><p><b>Top (a),</b> The synthetic calcium fluorescence trace, random noise are added to the ground truth signal (shows in red color). The parameters used to generate the synthetic fluorescence signals are : T=2000, dt=0.02ms, lambda=0.1, tau=1.5 and sigma=0.2.</p>
+<p><b>Bottom (b), (c), (d),</b> The reconstructed spikes from fluorescence trace using <tt>py-oopsi</tt>, <tt>wiener filter</tt>, and <tt>discretize binning</tt>. The py-oopsi favors sparse (by adopting Poison prior and Gaussian approximation) and non-negativity, it has the most sparse yet positive spikes. Wiener filter has oscillary at the inferred spikes. It can also reconstruct spikes correctly. We may, for example, set a threshold at 0.5 to obtain clean spikes. Discretize with binning is not robust agains noise. However, in stetter2012, he used discretized with binning and GTE (generalized transfer entropy) to achieve ~0.90 AUC.</p>
+<p>Therefore, what an algorithm matters is the way it uses the spikes to infer the network topography.</p>
 </td></tr></table>
 <div id="footer">
 <div id="footer-text">
-Page generated 2014-05-06 13:00:04 UTC, by <a href="http://jemdoc.jaboc.net/">jemdoc</a>.
+Page generated 2014-05-06 19:16:49 UTC, by <a href="http://jemdoc.jaboc.net/">jemdoc</a>.
 </div>
 </div>
 </td>
