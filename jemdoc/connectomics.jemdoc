@@ -24,4 +24,7 @@ We are working towards these exciting problems !
 Therefore, what an algorithm matters is the way it uses the spikes to infer the network topography.
 ~~~
 
+== Connectomics challenge at kaggle
+
+This [http://www.kaggle.com/c/connectomics/ connectomics] challenge brought about many interesting discussions, it also draw me a new look (perspective) on the frontier of the neuron technology. For example the [http://www.nature.com/nbt/journal/v31/n8/full/nbt.2635.html Netword Deconvolotion (ND)] method, and many usefull features used by the kaggler. This section will address more of the related issues on the forum.
 
