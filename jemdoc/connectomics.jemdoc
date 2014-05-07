@@ -1,6 +1,6 @@
 # jemdoc: menu{MENU}{connectomics.html}
 
-= Connectomics - Inferring Connectivity From Calcium Fluorescence
+= Connectomics -- Inferring Connectivity From Calcium Fluorescence
 
   . What's the *connectivities* in population of neurons ? +connectomics+
   . What's the *mathematical model* of spikes ? +mathematics+

@@ -1,18 +1,18 @@
 # jemdoc: menu{MENU}{kicad.html}
 
-= Kicad : from pmod boards to complex design
+= Kicad -- from pmod boards to complex design
 
 This page is divided into two parts, +(one)+ is a gallery of homebrew PCB boards and the corresponding *.sch* and *.brd* on github. +(the other)+ is a on-going learning note of eagle(kicad) CAD software.
 
 == Homebrew PCB Galleries
 
-== Digilent : pmod resource
+== Digilent -- the pmod resources
 
 The best tutorial goes to the official tutorial *Getting started in Kicad* and [http://store.curiousinventor.com/guides/ Courious Inventor]. It also has comprehensive video guide on how to soldering SMD and many others.
 
 The most simple circuit board, as an add-on peripherals, might by the digilent pmod module. There are a lot example designs (schematics) on [http://www.digilentinc.com/Products Digilent]. The +first step+, you could /copy board/ a digilent pmod module, and feel the whole process of *printing* and *soldering* of one real PCB.
 
-== Eagle : which one is better ?
+== Eagle vs Kicad -- which one is better ?
 
 Sparkfun is a great website. We watched the videos and some on-line [https://www.sparkfun.com/tutorials/ tutorials],
     . [https://www.sparkfun.com/tutorials/115 Better PCBs in Eagle]

@@ -1,6 +1,6 @@
 # jemdoc: menu{MENU}{phealth.html}
 
-= Portable Healthcare : Hybrid Cardiography Monitoring via BLE
+= Portable Healthcare -- Hybrid Cardiography Monitoring via BLE
 
 Building a demo board to collect cardio-related bio-signals.
 
