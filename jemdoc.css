@@ -8,7 +8,7 @@ table#tlayout {
 
 body {
     background: white;
-    /* font-family: 'Frutiger Neue W02 Book', Arial, sans-serif; */
+    /* font-family: Monaco, 'Frutiger Neue W02 Book', sans-serif; */
     font-family : Georgia, serif;
     padding-bottom: 8px;
     margin: 0;
@@ -52,9 +52,8 @@ tt {
     color : #D71108;
     font-weight : bold;
 }
-pre {
-    color : #3f3f3f;
-    font-family : Monaco, monospace;
+pre, tt {
+    font-family : monaco, monospace;
     font-size : 90%;
 }
 
@@ -131,7 +130,8 @@ h1, h2, h3 {
     border-bottom: 2px solid #05A605;
 }
 h1 {
-    font-size: 24px;
+    font-size: 26px;
+    padding-top: 1.0em;
 }
 h2 {
     padding-top: 0.8em;
@@ -299,15 +299,6 @@ span.comment, span.comment > *, span.string, span.string > * {
 
 @media print {
     #layout-menu { display: none; }
-}
-
-#fwtitle {
-    margin: 2px;
-}
-
-#fwtitle #toptitle {
-    padding-left: 0.5em;
-    margin-bottom: 0.5em;
 }
 
 #layout-content h1:first-child, #layout-content h2:first-child, #layout-content h3:first-child {

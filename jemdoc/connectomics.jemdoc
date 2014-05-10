@@ -2,9 +2,9 @@
 
 = Connectomics -- Inferring Connectivity From Calcium Fluorescence
 
-  . What's the *connectivities* in population of neurons ? +connectomics+
-  . What's the *mathematical model* of spikes ? +mathematics+
-  . How do neurons *comupte* and *memory* ? +intelligence+
+. What's the *connectivities* in population of neurons ? +connectomics+
+. What's the *mathematical model* of spikes ? +mathematics+
+. How do neurons *comupte* and *memory* ? +intelligence+
 
 We are working towards these exciting problems !
 
