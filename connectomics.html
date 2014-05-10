@@ -46,13 +46,12 @@
 <img src="pics/pyoopsi-demo.png" alt="Simulation Result of py-oopsi" width="400px" />&nbsp;</td>
 <td align="left"><p><b>Top (a),</b> The synthetic calcium fluorescence trace, random noise are added to the ground truth signal (shows in red color). The parameters used to generate the synthetic fluorescence signals are : T=2000, dt=0.02ms, lambda=0.1, tau=1.5 and sigma=0.2.</p>
 <p><b>Bottom (b), (c), (d),</b> The reconstructed spikes from fluorescence trace using <tt>py-oopsi</tt>, <tt>wiener filter</tt>, and <tt>discretize binning</tt>. The py-oopsi favors sparse (by adopting Poison prior and Gaussian approximation) and non-negativity, it has the most sparse yet positive spikes. Wiener filter has oscillary at the inferred spikes. It can also reconstruct spikes correctly. We may, for example, set a threshold at 0.5 to obtain clean spikes. Discretize with binning is not robust agains noise. However, in stetter2012, he used discretized with binning and GTE (generalized transfer entropy) to achieve ~0.90 AUC.</p>
-<p>Therefore, what an algorithm matters is the way it uses the spikes to infer the network topography.</p>
 </td></tr></table>
 <h2>Connectomics challenge at kaggle</h2>
 <p>This <a href="http://www.kaggle.com/c/connectomics/">connectomics</a> challenge brought about many interesting discussions, it also draw me a new look (perspective) on the frontier of the neuron technology. For example the <a href="http://www.nature.com/nbt/journal/v31/n8/full/nbt.2635.html">Netword Deconvolotion (ND)</a> method, and many usefull features used by the kaggler. This section will address more of the related issues on the forum.</p>
 <div id="footer">
 <div id="footer-text">
-Page generated 2014-05-10 17:19:26 UTC, by <a href="http://jemdoc.jaboc.net/">jemdoc</a>.
+Page generated 2014-05-10 17:47:12 UTC, by <a href="http://jemdoc.jaboc.net/">jemdoc</a>.
 </div>
 </div>
 </td>
