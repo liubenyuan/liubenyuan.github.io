@@ -229,13 +229,14 @@ ol ol ol {
 }
 
 p + div.codeblock {
-    margin-top: -0.6em;
+    margin-top: -0.2em;
+    margin-bottom: 0.6em;
 }
 
 div.codeblock, div.infoblock {
     margin-right: 0%;
     margin-top: 1.2em;
-    margin-bottom: 1.3em;
+    margin-bottom: 1.2em;
 }
 
 div.blocktitle {

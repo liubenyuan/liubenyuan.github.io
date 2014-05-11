@@ -6,14 +6,12 @@
 ~~~
 {}{img_left}{pics/nrf51822ak.jpg}{NRF51822 AK II Board}{300px}{}{}
 
-NRF51822 AK II 开发板，可以在[http://nrf51.taobao.com NRF51淘宝店]或者[http://www.nrf51.com NRF51开发者论坛]上购买或者询价。与nrf51822 DK/EK不同的是，这个板子不自带jlink调试器，因此，我们需要额外的购买jlink V8调试器来开发和调试ARM程序。需要注意的是，我们也可以将nrf51822理解成，搭载BLE蓝牙外设的Cortex-M0开发板：）
+左边就是我们的NRF51822 AK--II开发板！可以在[http://nrf51.taobao.com NRF51淘宝店]或者[http://www.nrf51.com NRF51开发者论坛]上购买。与nrf51822 DK(EK)不同的是，这个板子不自带jlink调试器，因此，我们需要购买jlink V8调试器来开发和调试程序。另外，尤为重要的是，我们可以将nrf51822理解成，+搭载BLE蓝牙外设的Cortex-M0开发板+ ：）
 
-我们开发的环境是Linux，因此，相比较官方提供的keil，nrf51822 SDK，nrfgo的开发环境，需要较为繁琐的建立步骤。
-
-*So, Let's Start!*
+我们开发的环境是Linux，其方便之处是可以使用gcc cross toolchain开发环境和Makefile。比较官方提供的keil \+ nrf51822 SDK \+ nrfgo的开发环境，其优点是自如，可以集成到任何使用makefile的IDE中去。下面，我们一步一步的讲解如何建立linux下的Makefile template。 *So, Let's Start!*
 ~~~
 
-== jlink
+== 1. jlink -- FLASH的擦写
 从官方网站[http://www.segger.com/jlink-software.html?step=1&file=JLinkLinuxTGZ64_480]下载最新的Jlink程序，然后
 
 ~~~
@@ -25,19 +23,33 @@ NRF51822 AK II 开发板，可以在[http://nrf51.taobao.com NRF51淘宝店]或�
 >> sudo mv JLink_Linux_V480 ~/bin/jlink
 ~~~
 
-我们将jlink安装在了个人目录的bin目录下。安装完成后，需要重新连接jlink调试器，然后运行*JLinkExe*就会看到自动更新固件的信息以及链路上的设备信息，在这里应该是Cortex-M0。
+我们将jlink安装在了个人目录的bin目录下。安装完成后，需要重新连接jlink调试器，然后运行*JLinkExe*就会看到自动更新固件的信息以及链路上的设备信息，在这里应该是Cortex-M0。在后面的Makefile中，我们需要设定+PROG_ROOT+为
+~~~
+{}{bash}
+PROG_ROOT = $(HOME)/bin/jlink
+~~~
 
-== arm-none-eabi crosscompiler
-这一步就是安装arm-none-eabi的交叉编译环境，在archlinux下，这一步很简单，只要去AUR找到[https://aur.archlinux.org/packages/arm-none-eabi/ arm-non-eabi]，然后再安装即可。你可以自己修改这个编译包，使用mentor的*sourcery codebench*的最新的交叉编译程序。
+== 2. arm-none-eabi-\{gcc,binutils,gdb\} -- cross toolchain 编译环境
 
-针对sourcery codebench，如果要手动安装，只需要将下载的压缩包解压，并且放在+\~\/bin\/+目录下即可。
+我们需要在linux下用交叉编译工具生成cortex-M0可执行代码。这一步很简单，可以使用官方的arm-none-eabi，或者使用mentor的*sourcery codebench*的最新的交叉编译程序。
 
-另外一个选择是使用*ARM官方*的交叉编译工具，见[https://launchpad.net/gcc-arm-embedded]。在archlinux下，我们在AUR找到[https://aur.archlinux.org/packages/gcc-arm-none-eabi/ gcc-arm-none-eabi]，然后安装即可。但是官方的交叉编译工具我还没测试。
+这里，我们选择是使用archlinux提供的ARM交叉编译工具，见[https://launchpad.net/gcc-arm-embedded]，直接用pacman安装好*arm-non-eabi-\{gcc,gdb,binutils\}*包即可。然后我们需要设定+GNU_INSTALL_ROOT+:
+~~~
+{}{bash}
+GNU_INSTALL_ROOT := /usr
+GNU_VERSION := 4.9.0
+GNU_PREFIX := arm-none-eabi
+~~~
 
-== Nordic nrf51822 SDK
-当前，你可以下载最新的nrf51822的SDK，以及nordic的s110 softdevice（类比FPGA中的说法，我们可以称softdevice为有*API的软核*）。如果你购买的是nrf51822 AK开发板，那么可以去[http://www.nrf51.com nrf51论坛]下载。
+== 3. Nordic nrf51822 SDK
+我们可以下载最新的nrf51822的SDK，以及nordic的+s110,s120+ softdevice（类比FPGA中的说法，我们可以称softdevice为有*API的软核*）。如果你购买的是nrf51822 AK开发板，那么可以去[http://www.nrf51.com nrf51论坛]下载。假定他们都放在了*$(HOME)/bin*目录下，那么需要设定好+SDK_PATH+和+DEVICE_PATH+:
+~~~
+{}{bash}
+SDK_PATH := $(HOME)/bin/nrf51_sdk_v5_2_0_39364/Nordic/nrf51822/
+DEVICE_PATH := $(HOME)/bin/s110_nrf51822_6/
+~~~
 
-== ARM 开发初探
+== ARM 开发初探 (you may skip this section)
 
 作为一个新手，我对启动开发Cortex-M0加蓝牙的程序是很茫然的，我先前的所有经验都是在FPGA和ADSP上进行开发。现在，我们要一步的迁移到交叉编译环境加ARM与蓝牙上面。所幸，网上有很多相当优秀的教程，我列以下两个：
 
@@ -48,12 +60,12 @@ NRF51822 AK II 开发板，可以在[http://nrf51.taobao.com NRF51淘宝店]或�
 
 我们首先阅读Balau82的博客获取一些基础知识。
 
-[http://balau82.wordpress.com/2010/02/14/simplest-bare-metal-program-for-arm/ Simplest bare metal program for ARM]. Bare Metal (裸机) 程序是无需操作系统即可运行的程式。学习裸机程序对于理解硬件架构以及操作系统的底层都很有帮助。我们在安装好arm-none-eabi工具(none即为bare metal的含义)后，将arm-none-eabi-\*添加到系统可执行路径中即可。
+[http://balau82.wordpress.com/2010/02/14/simplest-bare-metal-program-for-arm/ Simplest bare metal program for ARM]. Bare Metal (裸机) 程序是无需操作系统即可运行的程式。学习裸机程序对于理解硬件架构以及操作系统的底层都很有帮助。我们在安装好arm-none-eabi工具(+none+即为*bare metal*的含义)后，将arm-none-eabi-\*添加到系统可执行路径中即可。
 
 ~~~
 {}{img_left}{pics/balau82_20100214.png}{ARM bare metal}{300px}{}{}
 
-nrf51822 AK开发板可以看作是cortex-M0架构下+最小+的开发板。最基本的源代码包括test.c，启动代码startup.s，链接配置test.ld。相应的交叉编译工具也可以在图中找到。+启动代码+最基本的功能就是在程序初始化端口，屏蔽中断，映射程序。+链接配置+则包含text，data以及堆栈的位置，或者说 /tells the linker where different memory sections map into real, physical memory on the chip/ 。针对cortex-M0架构，我们需好好理解启动代码（balau给出的例子并不是针对cortex-M0架构的，针对不同架构有不同的汇编语法），不要被复杂的.s程序所困扰，只要让程序运行起来即可。编程的深入离不开芯片的数据手册和DEMO板的硬件原理图。
+nrf51822 AK开发板可以看作是cortex-M0架构下+最小+的开发板。最基本的源代码包括*test.c*，启动代码*startup.s*，链接配置*test.ld*。相应的交叉编译工具也可以在图中找到。+启动代码+最基本的功能就是在程序初始化端口，屏蔽中断，映射程序。+链接配置+则包含text，data以及堆栈的位置，或者说 /+tells the linker where different memory sections map into real, physical memory on the chip+/ 。针对cortex-M0架构，我们需好好理解启动代码（balau给出的例子并不是针对cortex-M0架构的，针对不同架构有不同的汇编语法），不要被复杂的.s程序所困扰，只要让程序运行起来即可。编程离不开数据手册和硬件原理图的。
 ~~~
 
 [http://balau82.wordpress.com/2010/02/28/hello-world-for-bare-metal-arm-using-qemu/ Hello world for bare metal ARM using QEMU]. 我们可以用qemu和arm-none-eabi-gdb来调试程序。在这里，我们还是使用上面test.c的例子。运行
@@ -84,7 +96,7 @@ $ arm-none-eabi-gdb
 
 ~~~
 {}{bash}
-$ alias gcc-cortex-m3 = 'arm-none-eabi-gcc -mthumb -march=armv7 -mfix-cortex-m3-ldrd'
+$ alias gcc-cortex-m3='arm-none-eabi-gcc -mthumb -march=armv7 -mfix-cortex-m3-ldrd'
 $ gcc-cortex-m3 -c main.c -o main.o
 $ gcc-cortex-m3 -c reset.S -o reset.o
 $ gcc-cortex-m3 -c syscalls.c -o syscalls.o
@@ -99,10 +111,34 @@ $ qemu-system-arm -M lm3s6965evb --kernel main.bin --serial stdio
 $ gcc-cortex-m3 -T lm3s6965.ld main.c reset.S syscalls.c -o main.elf
 ~~~
 
-随后我们还要检查程序大小，初始化向量表（台湾的称呼为序列埠，很有意思），以及用MCU官方的工具对Flash进行擦写。问题是：针对cortex-m0的开发，我们需要怎样做呢？
+随后我们还要+(1)+~检查程序大小，+(2)+~初始化向量表（湾湾的称呼为*序列埠*，很有意思），以及+(3)+~用MCU官方的工具对Flash进行擦写。问题是：针对cortex-m0的开发，我们需要怎样做呢？
 
-== template for nrf51822
+== 4. template for nrf51822
 
-== your first program : blink, blink
+可以从[  nrf51822-template @ github]下载linux下nrf51822的Makefile，需要注意，当前测试的工作环境是：
+- JLinkExe 4.80 (from segger.com)
+- arm-none-eabi-gcc 4.9.0 (via pacman)
+- nrf51822 SDK v5.2.0 39364 (official)
 
+我们需要将makefile (包括Makefile，Makefile.gcc)放到各自的位置上，如对于project，
+~~~
+{}{bash}
+$ mkdir -p project/gcc
+$ cp -v Makefile project/gcc/
+$ cp -v Makefile.gcc $(SDK_PATH)/Source/templates/gcc/
+~~~
+
+== your 1st program : blinky
+
+第一个例子很简单，是硬件调试中的 /hello, world/，我们直接用默认的Makefile即可，
+~~~
+{}{bash}
+$ mkdir -p blinky_example/gcc
+$ cp -v Makefile blinky_example/gcc/
+$ cd blinky_example/gcc/
+$ make erase-all
+$ make flash
+~~~
+
+== your 2nd program : ble_hrs
 
