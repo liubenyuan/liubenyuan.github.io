@@ -60,12 +60,13 @@ GNU_VERSION := 4.9.0
 GNU_PREFIX := arm-none-eabi
 </pre></div></div>
 <h2>3. Nordic nrf51822 SDK</h2>
-<p>我们可以下载最新的nrf51822的SDK，以及nordic的<tt>s110,s120</tt> softdevice（类比FPGA中的说法，我们可以称softdevice为有<b>API的软核</b>）。如果你购买的是nrf51822 AK开发板，那么可以去<a href="http://www.nrf51.com">nrf51论坛</a>下载。假定他们都放在了<b>$(HOME)/bin</b>目录下，那么需要设定好<tt>SDK_PATH</tt>和<tt>DEVICE_PATH</tt>:</p>
+<p>我们可以下载最新的nrf51822的SDK，以及nordic的<tt>s110,s120</tt> softdevice（类比FPGA中的说法，我们可以称softdevice为有<b>API的软核</b>）。如果你购买的是nrf51822 AK开发板，那么可以去<a href="http://www.nrf51.com">nrf51论坛</a>下载。假定他们都放在了<b>$(HOME)/bin</b>目录下，那么需要设定好<tt>SDK_PATH</tt>和<tt>SOC_PATH</tt>:</p>
 <div class="codeblock">
 <div class="blockcontent"><pre>
 SDK_PATH := $(HOME)/bin/nrf51_sdk_v5_2_0_39364/Nordic/nrf51822/
-DEVICE_PATH := $(HOME)/bin/s110_nrf51822_6/
+SOC_PATH := $(HOME)/bin/nrf51_softdevice/
 </pre></div></div>
+<p>这样，<tt>s110</tt>, <tt>s120</tt>等软核的hex文件都位于<tt>SOC_PATH</tt>下面。</p>
 <h2>ARM 开发初探 (you may skip this section)</h2>
 <p>作为一个新手，我对启动开发Cortex-M0加蓝牙的程序是很茫然的，我先前的所有经验都是在FPGA和ADSP上进行开发。现在，我们要一步的迁移到交叉编译环境加ARM与蓝牙上面。所幸，网上有很多相当优秀的教程，我列以下两个：</p>
 <ol>
@@ -120,7 +121,7 @@ $ gcc-cortex-m3 -T lm3s6965.ld main.c reset.S syscalls.c -o main.elf
 </pre></div></div>
 <p>随后我们还要<tt>(1)</tt>&nbsp;检查程序大小，<tt>(2)</tt>&nbsp;初始化向量表（湾湾的称呼为<b>序列埠</b>，很有意思），以及<tt>(3)</tt>&nbsp;用MCU官方的工具对Flash进行擦写。问题是：针对cortex-m0的开发，我们需要怎样做呢？</p>
 <h2>4. template for nrf51822</h2>
-<p>可以从<a href="">nrf51822-template @ github</a>下载linux下nrf51822的Makefile，需要注意，当前测试的工作环境是：</p>
+<p>可以从<a href="https://github.com/liubenyuan/nrf51822-makefile">nrf51822-makefile @ github</a>下载linux下nrf51822的Makefile，需要注意，当前测试的工作环境是：</p>
 <ul>
 <li><p>JLinkExe 4.80 (from segger.com)</p>
 </li>
@@ -128,8 +129,10 @@ $ gcc-cortex-m3 -T lm3s6965.ld main.c reset.S syscalls.c -o main.elf
 </li>
 <li><p>nrf51822 SDK v5.2.0 39364 (official)</p>
 </li>
+<li><p>s110 6.0.0-5 beta, s120 0.8.0-3 alpha</p>
+</li>
 </ul>
-<p>我们只需将makefile（包括Makefile, Makefile.config）放到正确的位置上即可，如对于project，</p>
+<p>我们只需将makefile（包括<tt>Makefile</tt>, <tt>Makefile.config</tt>）放到正确的位置上即可，如对于project，</p>
 <div class="codeblock">
 <div class="blockcontent"><pre>
 $ mkdir -p project/gcc
@@ -145,6 +148,14 @@ $ cd blinky_example/gcc/
 $ make erase-all
 $ make flash
 </pre></div></div>
+<p>所使用的依赖文件有，</p>
+<div class="codeblock">
+<div class="blockcontent"><pre>
+$ make echostuff
+C_OBJECTS: [_build/main.o _build/nrf_delay.o _build/system_nrf51.o]
+C_SOURCE_FILES: [main.c nrf_delay.c system_nrf51.c]
+</pre></div></div>
+<p>当然还有<tt>gcc_startup_nrf51.s</tt></p>
 <h2>your 2nd program : ble_hrs</h2>
 <p>对于第二个例子，由于我们用到了s110 SOC，因此，需要修改<b>Makefile.config</b>（或者可以直接使用<b>Makefile.config.ble</b>）</p>
 <div class="codeblock">
@@ -156,13 +167,13 @@ USE_SOFTDEVICE := s110
 <div class="blockcontent"><pre>
 $ make clean
 $ make all
-$ make erase-all
 $ make flash-softdevice
 $ make flash
 </pre></div></div>
+<p>Note that <tt>make flash-softdevice</tt> automatically erase-all the device.</p>
 <div id="footer">
 <div id="footer-text">
-Page generated 2014-05-11 18:03:00 UTC, by <a href="http://jemdoc.jaboc.net/">jemdoc</a>.
+Page generated 2014-05-11 20:51:35 UTC, by <a href="http://jemdoc.jaboc.net/">jemdoc</a>.
 </div>
 </div>
 </td>

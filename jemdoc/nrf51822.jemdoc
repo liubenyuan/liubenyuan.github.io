@@ -42,12 +42,13 @@ GNU_PREFIX := arm-none-eabi
 ~~~
 
 == 3. Nordic nrf51822 SDK
-我们可以下载最新的nrf51822的SDK，以及nordic的+s110,s120+ softdevice（类比FPGA中的说法，我们可以称softdevice为有*API的软核*）。如果你购买的是nrf51822 AK开发板，那么可以去[http://www.nrf51.com nrf51论坛]下载。假定他们都放在了*$(HOME)/bin*目录下，那么需要设定好+SDK_PATH+和+DEVICE_PATH+:
+我们可以下载最新的nrf51822的SDK，以及nordic的+s110,s120+ softdevice（类比FPGA中的说法，我们可以称softdevice为有*API的软核*）。如果你购买的是nrf51822 AK开发板，那么可以去[http://www.nrf51.com nrf51论坛]下载。假定他们都放在了*$(HOME)/bin*目录下，那么需要设定好+SDK_PATH+和+SOC_PATH+:
 ~~~
 {}{bash}
 SDK_PATH := $(HOME)/bin/nrf51_sdk_v5_2_0_39364/Nordic/nrf51822/
-DEVICE_PATH := $(HOME)/bin/s110_nrf51822_6/
+SOC_PATH := $(HOME)/bin/nrf51_softdevice/
 ~~~
+这样，+s110+, +s120+等软核的hex文件都位于+SOC_PATH+下面。
 
 == ARM 开发初探 (you may skip this section)
 
@@ -115,12 +116,13 @@ $ gcc-cortex-m3 -T lm3s6965.ld main.c reset.S syscalls.c -o main.elf
 
 == 4. template for nrf51822
 
-可以从[  nrf51822-template @ github]下载linux下nrf51822的Makefile，需要注意，当前测试的工作环境是：
+可以从[https://github.com/liubenyuan/nrf51822-makefile nrf51822-makefile @ github]下载linux下nrf51822的Makefile，需要注意，当前测试的工作环境是：
 - JLinkExe 4.80 (from segger.com)
 - arm-none-eabi-gcc 4.9.0 (via pacman)
 - nrf51822 SDK v5.2.0 39364 (official)
+- s110 6.0.0-5 beta, s120 0.8.0-3 alpha
 
-我们只需将makefile（包括Makefile, Makefile.config）放到正确的位置上即可，如对于project，
+我们只需将makefile（包括+Makefile+, +Makefile.config+）放到正确的位置上即可，如对于project，
 ~~~
 {}{bash}
 $ mkdir -p project/gcc
@@ -138,6 +140,14 @@ $ cd blinky_example/gcc/
 $ make erase-all
 $ make flash
 ~~~
+所使用的依赖文件有，
+~~~
+{}{bash}
+$ make echostuff
+C_OBJECTS: [_build/main.o _build/nrf_delay.o _build/system_nrf51.o]
+C_SOURCE_FILES: [main.c nrf_delay.c system_nrf51.c]
+~~~
+当然还有+gcc_startup_nrf51.s+
 
 == your 2nd program : ble_hrs
 
@@ -151,8 +161,8 @@ USE_SOFTDEVICE := s110
 {}{bash}
 $ make clean
 $ make all
-$ make erase-all
 $ make flash-softdevice
 $ make flash
 ~~~
+Note that +make flash-softdevice+ automatically erase-all the device.
 
