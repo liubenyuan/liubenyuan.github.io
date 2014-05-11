@@ -129,27 +129,40 @@ $ gcc-cortex-m3 -T lm3s6965.ld main.c reset.S syscalls.c -o main.elf
 <li><p>nrf51822 SDK v5.2.0 39364 (official)</p>
 </li>
 </ul>
-<p>我们需要将makefile (包括Makefile，Makefile.gcc)放到各自的位置上，如对于project，</p>
+<p>我们只需将makefile（包括Makefile, Makefile.config）放到正确的位置上即可，如对于project，</p>
 <div class="codeblock">
 <div class="blockcontent"><pre>
 $ mkdir -p project/gcc
-$ cp -v Makefile project/gcc/
-$ cp -v Makefile.gcc $(SDK_PATH)/Source/templates/gcc/
+$ cp -v Makefile.config Makefile project/gcc/
 </pre></div></div>
 <h2>your 1st program : blinky</h2>
-<p>第一个例子很简单，是硬件调试中的 <i>hello, world</i>，我们直接用默认的Makefile即可，</p>
+<p>第一个例子很简单，是硬件调试中的 <i>hello, world</i>，我们直接用默认的<b>Makefile.config</b>即可，</p>
 <div class="codeblock">
 <div class="blockcontent"><pre>
 $ mkdir -p blinky_example/gcc
-$ cp -v Makefile blinky_example/gcc/
+$ cp -v Makefile.config Makefile blinky_example/gcc/
 $ cd blinky_example/gcc/
 $ make erase-all
 $ make flash
 </pre></div></div>
 <h2>your 2nd program : ble_hrs</h2>
+<p>对于第二个例子，由于我们用到了s110 SOC，因此，需要修改<b>Makefile.config</b>（或者可以直接使用<b>Makefile.config.ble</b>）</p>
+<div class="codeblock">
+<div class="blockcontent"><pre>
+USE_SOFTDEVICE := s110
+</pre></div></div>
+<p>然后</p>
+<div class="codeblock">
+<div class="blockcontent"><pre>
+$ make clean
+$ make all
+$ make erase-all
+$ make flash-softdevice
+$ make flash
+</pre></div></div>
 <div id="footer">
 <div id="footer-text">
-Page generated 2014-05-11 10:51:02 UTC, by <a href="http://jemdoc.jaboc.net/">jemdoc</a>.
+Page generated 2014-05-11 18:03:00 UTC, by <a href="http://jemdoc.jaboc.net/">jemdoc</a>.
 </div>
 </div>
 </td>
