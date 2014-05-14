@@ -9,7 +9,7 @@ table#tlayout {
 body {
     background: white;
     /* font-family: Monaco, 'Frutiger Neue W02 Book', sans-serif; */
-    font-family : Georgia, serif;
+    font-family : Inconsolata, Georgia, 'Frutiger Neue W02 Book', sans-serif;
     padding-bottom: 8px;
     margin: 0;
 }
@@ -37,7 +37,7 @@ body {
     padding-left: 1.0em;
     padding-right: 1.0em;
     border: none;
-    background: white;
+    background: #faffff;
     text-align: left;
     vertical-align: top;
 }
@@ -49,31 +49,31 @@ body {
 
 /* texttt */
 tt {
-    color : #D71108;
+    color : #E71108; /* Red : #D71108 */
     font-weight : bold;
 }
 pre, tt {
-    font-family : monaco, monospace;
-    font-size : 90%;
+    font-family : Inconsolata, Monaco, 'Frutiger Neue W02 Book', monospace;
+    font-size : 95%;
 }
 
 /* hyperlinks (all colors are here), font-weight: bold, normal */
 a, a > tt {
-    color: #006D00;
+    color: #006D00; /* dark-green : #006D00 */
     text-decoration: none;
     font-weight : normal;
 }
 a:hover {
-    color: #05A605;
+    color: #05A605; /* light-green : #05A605 */
     border-bottom: 2px dotted #05A605;
 }
 
 #layout-menu a.current:link, #layout-menu a.current:visited {
-    color: #05A605;
+    color: #0535D6;
     border-bottom: 1px gray solid;
 }
 #layout-menu a:link, #layout-menu a:visited, #layout-menu a:hover {
-    color: #006D00;
+    color: #00006D;
     text-decoration: none;
 }
 #layout-menu a:hover {
@@ -252,7 +252,7 @@ div.blockcontent {
 }
 
 div.infoblock > div.blockcontent {
-    background: #ffffee;
+    background: #fffff0;
 }
 
 div.blockcontent p + ul, div.blockcontent p + ol {
