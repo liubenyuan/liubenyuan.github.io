@@ -136,4 +136,20 @@ $ sudo rfcomm bind rfcomm0 00:06:66:43:0F:2E
 
 +注意：+ 当我们用python打开串口准备接收数据后，主机（PC）会自动的连接绑定的蓝牙设备。同时，RN42上的配对灯也会闪现，而连接状态也会变低（连通）。这时，我们在slave设备上传输的数据就会发送到主机终端上。
 
+== 再添加一个加速度传感器 -- ADXL345 !
+
+我们要测量一下健身过程中的加速度变化，当前，从淘宝上购买了ADXL345数字加速度计，以及MPU6050六DOF传感器。由于我们的评估平台是FPGA，比较底层，因此我们先从ADXL345开始。而且，是从我们熟悉的I2C接口开始。
+
+第一步，就是替换掉原先的ad7991模块，在保持相同的接口前提下，测试得到加速度数据。
+
+管脚连接的顺序为（+6-VCC+, *5-GND*, 4-SDA, 3-SCL, 2-SDO, 1-CS），需要注意的是，Pmod连接线上，有个梅花印的方向为一致连接的，我们设定梅花印处对应着+VCC+。
+
+In order to use the I2C interface, and address +0x1D+, you should tied *CS* to +HIGH+ and *SDO* to +HIGH+; if you want to use the alternate address +0x53+, pin *SDO* may pulldown. The first program in using I2C, should be read the chip ID from the *CHIPID* address +0x00+, see if you can get +0xE5+.
+
+. *Hint 1*, in *SPI* interface, DATAX0 is stored in 0x32 and 0x33 respectively, so you may put address +(0x80 | 0x32) = 0xB2+ on that bus, where the MSB is for read; or +(0x80 | 0x40 | 0x32) = 0xF2+ for continuous read operation. While for *I2C* to function, you only need +0x32+ for single byte read, or +0x72+ for continuous read. No *MSB* tunation is needed.
+. *Hint 2*, in I2C mode, when your read DATAX0 using 0x32, and continuous trigger the I2C read operation, it defaults works in the continous read mode. A.k.a, +0x32+ has the same effect as +0x72+ in I2C mode.
+
+== 将所有传感器的FIFO拼接起来 -- FIFO pool
+
+
 
