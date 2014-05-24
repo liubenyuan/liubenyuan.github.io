@@ -30,99 +30,99 @@
 </td>
 <td id="layout-content">
 <h1>Portable Healthcare &ndash; Hybrid Cardiography Monitoring via BLE</h1>
-<p>Building a demo board to collect cardio-related bio-signals.</p>
+<p>We build a FPGA prototyping board to collect cardio-related bio-signals.</p>
 <p><tt>Highlights:</tt></p>
 <ol>
-<li><p><b>Robust heartbeat tracking using wrist mounted photoplethysmography(PPG) signals</b></p>
+<li><p><b>Robust heartbeat tracking using wrist mounted photoplethysmography(PPG) signals;</b></p>
 </li>
-<li><p><b>Synchronous ECG/PPG sampling during fitness on a treadmill with speed ranging from 2km/h to 17km/h</b></p>
+<li><p><b>Synchronous ECG/PPG sampling during fitness on a treadmill with speed ranging from 2km/h to 15km/h;</b></p>
 </li>
-<li><p><b>PPG data with strong motion artifact can be effectively compressed using low-power compresssed sensing algorithms</b></p>
+<li><p><b>PPG data with strong motion artifact can be effectively compressed via low-power compresssed sensing.</b></p>
 </li>
 </ol>
 <p><tt>Papers:</tt></p>
-<h2>pmodAD2 + Lx9micro + USB : building a 4-channel evaluation system</h2>
-<p>先用中文夹杂英文做笔记 ：）</p>
-<h3>pmodAD2</h3>
-<p>pmodAD2, ad7991, I2C interface, up to 4 channels, 12-bit resolution. 要想使用vin4，需要disable REF_SEL，同时将JP1连接到vin4端口上。对于ad7991的操作通过I2C接口进行，主要配置哪几路AD用来转换（通过分时复用来实现多路ADC），是否使用外部参考电压，是否有bit trial或sample delay。<b>We may use this module with nrf51822 via the IIC bus</b>.</p>
-<p>ad7991 remains in shutdown mode, powering up only for conversions. The conversion process is controlled by a command mode. The range (when REF_SEL disabled) is 0V to VDD.</p>
-<p>ad7991的串口时钟速率fSCL划分为standard (100K), fast (400K), high speed (3.4M)三种, VDD典型范围在2.7V到5.5V。ad7991的地址为 0101000 (0101001)，注意地址是7位的哦，外带一位的R<i>W位：如果R</i>W=0，则对ad7991发起写操作；如果R/W=1，则对ad7991发起读操作。对配置地址写入配置数据即可完成ad7991的配置。配置字可参见器件手册 Table 10.</p>
-<p>一个操作的要点是，在ad7991进行采样的过程中 (busy) ， I2C总线不要发起请求。ad7991的转化结果包含2B数据，其中最高两位为0，后续两位为对应的所转化的通道数，后续12位（不足的低位补零）则包含ADC结果。关键的步骤是：</p>
+<h1>lx9micro + pmodAD2 + pmodACL + pmodBT2</h1>
+<p><b>building a 4-channel, 3-axis accelerometer evaluation system</b></p>
+<h2>phealth &ndash; architecture</h2>
+<table class="imgtable"><tr><td>
+<img src="pics/lx9health.png" alt="Lx9 Microboard for Healthcare" width="400px" />&nbsp;</td>
+<td align="left"><p>FPGA captures 3-axis accelerometer reads from <tt>ADXL345</tt>, 4-channel biosignals (one for ECG, and three for PPG) from <tt>AD7991</tt>. These recordings are transferred to PC via USB2UART using <tt>CP2102</tt>, or remotely via a bluetooth device <tt>RN-42</tt>.</p>
+<p>Two peripherals are used, which are I2C and UART. SPI may also be used if we utilize the 4-wire connection of ADXL345. Those codes, <b>i2c_master.vhd</b> and <b>uart.vhd</b> are publicity available, and borrowed from <a href="http://eewiki.net/pages/viewpage.action?pageId=10125324">I2C master @ eewiki</a> and <a href="https://github.com/pabennett/uart">uart @ pabennett</a>.</p>
+<p>FPGA, is simply a <b>logic wrapper</b> of all the auxiliary peripherals.</p>
+</td></tr></table>
+<h2>pmodAD2 &ndash; AD7991</h2>
+<p>PmodAD2, ad7991, has an I2C interface and up to 4 channels of ADC conversion. It supports 12-bit resolution. AD7991 remains in shutdown mode, powering up only for conversions. The conversion process is controlled by an I2C command. The range (when REF_SEL disabled) is 0V to VDD. We enable <b>4-channel</b> conversion by disable REF_SEL, and connet jumper JP1 to vin4.</p>
+<p>The serial clock frequencies for AD7991 are standard (100KHz), fast (400KHz) and high speed(3.4MHz). The address of AD7991 is <tt>b&ldquo;0101000&rdquo;</tt>, followed by a tailing bit denotes whether it is write <tt>(RW=0)</tt> or read <tt>(RW=1)</tt>. You may refer to AD7991 datasheet, Table 10, for more details.</p>
+<p>The converted samples, each has 2-Byte, where D15-D14 are 0s, D13-D12 is the channel identifier, D11-D0 are the ADC conversions in the range 0 to VDD.</p>
+<p>The workflow of <b>ad7991.vhd</b> wrapper is,</p>
 <ol>
-<li><p>SDA pulled low, and wake up device</p>
+<li><p>put address <tt>b&ldquo;0101000&rdquo;</tt> on the ADDRESS bus of <b>i2c_master.vhd</b>, <tt>RW=0</tt> for write, I2C data is <tt>b&ldquo;11110100&rdquo;</tt>;</p>
 </li>
-<li><p>写配置地址和配置寄存器</p>
+<li><p><tt>RW=1</tt> for read, wait until <tt>i2c_busy</tt> is pulled up;</p>
 </li>
-<li><p>写配置地址和读转化结果</p>
-</li>
-<li><p>根据通道数目确定master的ACK种类</p>
+<li><p>put AD7991 in continuous read mode, issue <tt>RW=1</tt> and register <b>valid</b> and <b>dout</b> for the incomming data.</p>
 </li>
 </ol>
-<h3>Lx9micro</h3>
-<p>为什么不学习一下Xilinx的SDK呢，让我们用一晚上rock一下microblaze吧 :)</p>
-<div class="infoblock">
-<div class="blockcontent">
-<p>我们针对的是Xilinx的Spartan 6 Lx9 (XC6SLX9) micro开发板，需要用到cp210x uart to usb转接芯片以及Digilent的Jtag驱动。在Archlinux的wiki主页上（或者你可以Google搜索linux, digilent, lx9micro, Xilinx ISE），有关于在linux下，配置Xilinx ISE和Lx9micro的具体步骤。</p>
-</div></div>
-<p>Microblaze是一个Xilinx基于FPGA的硬核，主要使用Xilinx Platform Studio (XPS) Base System Builder (BSB) 进行开发. </p>
-<div class="infoblock">
-<div class="blockcontent">
-<p>需要注意的是，我们需要下载Lx9micro对应的Xilinx Board Description (XBD)文件，这个文件可以从Avnet网站上下载到。具体到对于新制作的板子，我们应该怎样设计和编写这个文件，我们可以暂时放下。</p>
-</div></div>
-<p><b>第一课</b>, <a href="https://www.em.avnet.com/Support%20And%20Downloads/EDK01-Creating_Embedded_System_13_2_1.pdf">EDK01 - Creating Embedded System</a> 课程中讲解的很详细了，我们在这里重新温习一下里面的关键步骤和器件、软件。测试程序将置于LPDDR (一种mobile DDR) 中。步骤包括：</p>
+<p>see the code <b>ad7991.vhd</b> for more details.</p>
+<h2>pmodACL &ndash; ADXL345</h2>
+<p>We connect the ADXL345 cable to the pmod slot by,</p>
+<table>
+<tr class="r1"><td class="c1">1 </td><td class="c2"> 2 </td><td class="c3"> 3 </td><td class="c4"> 4 </td><td class="c5"> 5 </td><td class="c6"> 6 </td></tr>
+<tr class="r2"><td class="c1">CS </td><td class="c2"> SDO </td><td class="c3"> SCL </td><td class="c4"> SDA </td><td class="c5"> <b>GND</b> </td><td class="c6"> <tt>VCC</tt>
+</td></tr></table>
+<p>The I2C address of ADXL345 is <tt>0x1D</tt>. In order to use this address (rather than SPI interface or the alternate address), you should tied <b>CS</b> to HIGH and <b>SDO</b> to HIGH; if you want to use the alternate address <tt>0x53</tt>, pin <b>SDO</b> must pulldown to GND. You could test the function of I2C interface by reading the chip ID from the <b>CHIPID</b> address <tt>0x00</tt>, see if you can get <tt>0xE5</tt>.</p>
 <ol>
-<li><p><b>Create the hardware platform</b>: 使用ISE添加一个embedded processor，通过BSB定制我们的硬件；在做这一步之前，我们需要下载Avnet的XBD文件（参见 <a href="https://www.em.avnet.com/Support%20And%20Downloads/avnet_edk14_3_xbd_files_9_11_2012_spartan.zip">EDK 14.3 XBD/IP-XACT Files</a>），按照步骤添加板级描述文件。(需要注意的是，在配置processor和peripheral时，我们没有添加CDCE913_I2C模块)。这一步骤会生成两个文件，一个是Microprocessor Hardware Specification (MHS)，用来配置总线以及外设等；另外一个是UCF文件，这一文件与VHDL工程中的用法一致。</p>
+<li><p><b>Hint 1</b>, in <b>SPI</b> interface, DATAX0 is stored in 0x32 and 0x33 respectively, so you may put address <tt>(0x80 | 0x32) = 0xB2</tt> on that bus, where the MSB is for read; or <tt>(0x80 | 0x40 | 0x32) = 0xF2</tt> for continuous read operation. While for <b>I2C</b> to function, you only need <tt>0x32</tt> for single byte read, or <tt>0x72</tt> for continuous read. No <b>MSB</b> tunation is needed.</p>
 </li>
-<li><p><b>Compiling the bitstream</b>: 添加UCF, Generate Top HDL Source，生成microblaze的bit文件，并且调出EDK界面；</p>
-</li>
-<li><p><b>Add Xilinx Application</b>: 生成一个peripheral的测试程序，这一步有现成的模板，生成后自动添加一个默认的BSP和默认的linker script；随后我们可以从EDK中将bit文件和Block Memory Map File (BMM)文件烧录到板子上。</p>
-</li>
-<li><p>配置run as，将STDIO重定向到ttyUSB0上，这样我们即可以在Console中看到运行结果，也可以通过EDK的Terminal连接来查看程序的运行结果。为了访问USB转串口，需要将你的用户添加到uucp以及lock组中，并且可以通过udev.rules修改ttyUSB0的默认属性（方法看这里 <a href="https://bbs.archlinux.org/viewtopic.php?id=86088">Permission to /dev/ttyUSB0</a>）。另外在ISE 14.3下，EDK会出现segfault，我们需要安装java-rxtx包，随后（参考 <a href="http://forums.xilinx.com/t5/Installation-and-Licensing/SDK-segfault-on-UART-output/td-p/160000">SDK segfault on UART output?</a>），创建simlink即可。</p>
+<li><p><b>Hint 2</b>, in I2C mode, when your read DATAX0 using 0x32, and continuous trigger the I2C read operation, it by default works in the continous read mode. <tt>0x32</tt> has the same effect as <tt>0x72</tt> in I2C mode.</p>
 </li>
 </ol>
-<p><b>第一课后续练习</b>，<a href="https://wiki.analog.com/resources/fpga/xilinx/pmod/ad7991">AD7991 PMOD XILINX FPGA REFERENCE DESIGN</a>. 发扬rapid  prototyping精神，我们直接研究一下AD7991模板的结构。</p>
-<p>我们得到的reference design中有system.mhs system.xmp system.bsd data/system.ucf，在这些文件中，system.xmp是有ISE添加embedded processor自动生成的，而system.bsd是由xps (bsd)在配置MHS后编译得到的。我们首先：</p>
+<p>The <b>adxl345.vhd</b> wrapper works as,</p>
 <ol>
-<li><p>在ISE中添加embedded processor</p>
+<li><p>ADDRESS <tt>x&ldquo;1D&rdquo;</tt>, <tt>RW=0</tt>, continuous write data <tt>x&ldquo;31&rdquo;</tt> (DATA_FORMAT) and <tt>x&ldquo;01&rdquo;</tt> (4g range); <b>stop</b>;</p>
 </li>
-<li><p>然后启动一个空的XPS工程，将UCF文件和MHS文件<b>先后</b>复制到工程中。这里会弹出一个version manager更新我们的BSD。</p>
+<li><p>ADDRESS <tt>x&ldquo;1D&rdquo;</tt>, <tt>RW=0</tt>, continuous write data <tt>x&ldquo;2C&rdquo;</tt> (BW_RATE) and <tt>x&ldquo;0C&rdquo;</tt> (400Hz rates); <b>stop</b>;</p>
 </li>
-<li><p>随后我们退出XPS，在ISE中生成HDL。生成的新的MHS文件可以用diff查看与旧工程文件的区别。</p>
+<li><p>ADDRESS <tt>x&ldquo;1D&rdquo;</tt>, <tt>RW=0</tt>, continuous write data <tt>x&ldquo;2D&rdquo;</tt> (POWER_CTL) and <tt>x&ldquo;08&rdquo;</tt> (start measure); <b>stop</b>;</p>
+</li>
+<li><p>ADDRESS <tt>x&ldquo;1D&rdquo;</tt>, <tt>RW=0</tt>, write data <tt>x&ldquo;72&rdquo;</tt> (0x40 | 0x32 = 0x72, continuous read from DATAX0); <b>restart</b></p>
+</li>
+<li><p>ADDRESS <tt>x&ldquo;1D&rdquo;</tt>, <tt>RW=1</tt>, continous read 6-Byte; <b>idle</b>.</p>
 </li>
 </ol>
-<p>注意在dos编码格式下，我们可以用</p>
-<div class="codeblock">
-<div class="blockcontent"><pre>
-:update
-:set ff=unix
-</pre></div></div>
-<p>将refdesign中的编码更新一下，在diff之后，我们就看到仅仅是peripheral器件的版本号发生了改变。</p>
-<p><tt>注意！</tt> 当我们采用microblaze的refdesign时，<tt>仅仅需要连接pmodAD2到3-6管脚上</tt>，而不能将8个管脚全部连接。这是因为在这个默认的refdesign中，7-12管脚是接地的。我们可以用extension cable来连接。</p>
-<h3>ECG/PPG Frontend</h3>
-<p>我们的ECG前端使用的是淘宝买到的ECG差分放大器，而PPG采用的是Pulsesensor一代的PPG采集玩具。<b>需要列出具体指标</b>。PPG的使用方法很简单，只要驱动上电源，其内置的信号放大器就可以实现采集。</p>
-<h3>return to the FPGA/VHDL land</h3>
-<p>最终精确的硬件实现我们还是使用VHDL，另外能否用内部存储器暂时将数据存储下来呢？</p>
-<h2>添加一个PmodBT2</h2>
-<p>我们准备添加一个pmodBT2模块，当前所有跳线都禁止。我们直接将pmodBT2的RX和TX，跟板子上CP2102的RX和TX直通。而且在FPGA里面，RN42的RTS注入到CTS中（直连）。然后我们用一个蓝牙转USB的dongle，以及两个串口调试工具直连调试。</p>
-<h3>第一步，直连PMODBT2到CP2102</h3>
-<p>成功。<tt>但是</tt>，文档中说的RN42的串口开启了Hardware Flowcontrol，当我用minicom -s连接时，首先用Ctrl+A,E打开Echo，然后只有禁止了Hardware Flowcontrol，才能正确的进入命令模式。如输入三个dollar符号，显示CMD，等。</p>
-<p>这一直显模式表示着pmodBT2模块已经顺利的和电脑通过USB2UART对接成功！</p>
-<h3>第二步，主机搜索到RN42 Slave</h3>
-<p>首先，我们要启动蓝牙设备。可以参考Archlinux <a href="https://bbs.archlinux.org/viewtopic.php?pid=1388523">问答1</a>，<a href="https://bbs.archlinux.org/viewtopic.php?pid=1322604">问答2</a>，<a href="https://wiki.archlinux.org/index.php/bluetooth">官方bluetooth教程</a>，<a href="http://www.thinkwiki.org/wiki/How_to_setup_Bluetooth">Thinkwiki的Bluetooth教程</a>，以及<a href="http://archlinuxarm.org/forum/viewtopic.php?f=9&amp;t=6016">写一个rfcomm.conf</a>。我们可以使用蓝牙Dongle，也可以直接使用笔记本内置的蓝牙设备实现连接。</p>
+<h2>USB2UART &ndash; cp2102</h2>
+<p>The interface of <b>uart.vhd</b> is very pleasant ! We may connect rx, tx pins to proper direction, (<tt>tx</tt> on <b>uart.vhd</b> denotes <b>bits</b> streamed out this module, <tt>data_stream_in_*</tt> denote the <b>Byte</b> to be write <b>into</b> this module.)</p>
+<ol>
+<li><p><tt>WRITE</tt>, put data on bus, issue <tt>data_stream_in_stb</tt>, wait until <tt>data_stream_in_ack</tt>;</p>
+</li>
+<li><p><tt>READ</tt>, register data when <tt>data_stream_out_stb</tt> is valid, responds by issue <tt>data_stream_out_ack</tt>.</p>
+</li>
+</ol>
+<h2>pmodBT2 &ndash; RN-42</h2>
+<p>We may use RN-42 as a replacement of CP2102, where</p>
+<table id="UART Connections">
+<tr class="r1"><td class="c1"><b>uart.vhd</b> </td><td class="c2"> <b>CP2102</b> (fpga is master) </td><td class="c3"> <b>RN-42</b> (rn42 is master) </td></tr>
+<tr class="r2"><td class="c1">tx </td><td class="c2"> USB_RS232_TXD </td><td class="c3"> RN42_RXD </td></tr>
+<tr class="r3"><td class="c1">rx </td><td class="c2"> USB_RS232_RXD </td><td class="c3"> RN42_TXD
+</td></tr></table>
+<p>The serial can be debuged using <b>minicom</b>. <tt>Warning</tt>, it was said that RN42 enable <b>hardware flowcontrol</b>, however when I connect via minicom -s, (remember to enable <tt>echo</tt> by Ctrl + A, E), I had to <b>disable hardware flowcontrol</b>, to enter the command mode of RN42. (where 3 dollar signs may enter the CMD prompt).</p>
+<p><i>you may use the command mode to debug the connection of RN42</i></p>
+<h3>connect to RN42 and record data</h3>
+<p>References : Archlinux <a href="https://bbs.archlinux.org/viewtopic.php?pid=1388523">FAQ 1</a>, <a href="https://bbs.archlinux.org/viewtopic.php?pid=1322604">FAQ 2</a>, <a href="https://wiki.archlinux.org/index.php/bluetooth">Archlinux bluetooth tutorial</a>, <a href="http://www.thinkwiki.org/wiki/How_to_setup_Bluetooth">Thinkwiki &ndash; Bluetooth</a>, <a href="http://archlinuxarm.org/forum/viewtopic.php?f=9&amp;t=6016">write a rfcomm.conf</a>. We may use either bluetooth dongle or the bluetooth in the PC.</p>
 <div class="codeblock">
 <div class="blockcontent"><pre>
 $ rfkill list
 $ pacman -Q | grep blue
 $ systemctl status bluetooth.service
 </pre></div></div>
-<p>要是<tt>bluetooth.service</tt>没开启，要记得enable。然后，看看我们的蓝牙是</p>
+<p>enable the <tt>bluetooth.service</tt></p>
 <div class="codeblock">
 <div class="blockcontent"><pre>
 $ lsusb
 Bus 003 Device 005: ID 0a5c:21e6 Broadcom Corp. BCM20702 Bluetooth 4.0 [ThinkPad]
 Bus 001 Device 017: ID 0a12:0001 Cambridge Silicon Radio, Ltd Bluetooth Dongle (HCI mode)
 </pre></div></div>
-<p>注意到x230上原声的蓝牙是hci1，而我们新买的dongle是hci0后，我们用</p>
+<p>The bluetooth on-board is <tt>hci0</tt>, then</p>
 <div class="codeblock">
 <div class="blockcontent"><pre>
 $ sudo hciconfig hci0 up
@@ -130,16 +130,15 @@ $ sudo hcitool scan
 Scanning ...
     00:06:66:43:0F:2E   RN42-0F2E
 </pre></div></div>
-<p>就能找到我们的设备了，前面有MAC地址和设备ID。下一步就是配对儿啦。</p>
-<p><b>注意</b>，我们可以添加一个udev rules让蓝牙设备随着电脑的启动自动开启，</p>
+<p>The device name of <b>RN42</b> as well as the MAC address are listed.</p>
+<p>We may add a <tt>udev.rules</tt> to bringup the bluetooth by default.</p>
 <div class="codeblock">
 <div class="blockcontent"><pre>
 $ vim /etc/udev/rules.d/10-local.rules
 # Set bluetooth power up
 # ACTION=="add", KERNEL=="hci0", RUN+="/usr/bin/hciconfig hci0 up"
 </pre></div></div>
-<h3>第三步，我们将蓝牙设备当作UART串口设备</h3>
-<p>这里需要用到rfcomm工具</p>
+<p>Finally, we use the bluetooth as a replacement of Serial interface, via <tt>rfcomm</tt>,</p>
 <div class="codeblock">
 <div class="blockcontent"><pre>
 $ sudo modprobe btusb
@@ -147,24 +146,11 @@ $ sudo modprobe ath3k
 $ sudo modprobe rfcomm
 $ sudo rfcomm bind rfcomm0 00:06:66:43:0F:2E
 </pre></div></div>
-<p>然后我们的设备就成了一个串口哦</p>
-<p>分别打开两个终端，一个连接<tt>/dev/ttyUSB0</tt>，一个连接<tt>/dev/rfcomm0</tt>即可。需要注意的是，两边的设置都为115200 8N1。在这种通信中，我发现无论两边开启hardware flowcontrol与否，都不影响两者的通信。记得要在minicom中开启Ctrl+A,E回显哦！</p>
-<p><tt>注意：</tt> 当我们用python打开串口准备接收数据后，主机（PC）会自动的连接绑定的蓝牙设备。同时，RN42上的配对灯也会闪现，而连接状态也会变低（连通）。这时，我们在slave设备上传输的数据就会发送到主机终端上。</p>
-<h2>再添加一个加速度传感器 &ndash; ADXL345 !</h2>
-<p>我们要测量一下健身过程中的加速度变化，当前，从淘宝上购买了ADXL345数字加速度计，以及MPU6050六DOF传感器。由于我们的评估平台是FPGA，比较底层，因此我们先从ADXL345开始。而且，是从我们熟悉的I2C接口开始。</p>
-<p>第一步，就是替换掉原先的ad7991模块，在保持相同的接口前提下，测试得到加速度数据。</p>
-<p>管脚连接的顺序为（<tt>6-VCC</tt>, <b>5-GND</b>, 4-SDA, 3-SCL, 2-SDO, 1-CS），需要注意的是，Pmod连接线上，有个梅花印的方向为一致连接的，我们设定梅花印处对应着<tt>VCC</tt>。</p>
-<p>In order to use the I2C interface, and address <tt>0x1D</tt>, you should tied <b>CS</b> to <tt>HIGH</tt> and <b>SDO</b> to <tt>HIGH</tt>; if you want to use the alternate address <tt>0x53</tt>, pin <b>SDO</b> may pulldown. The first program in using I2C, should be read the chip ID from the <b>CHIPID</b> address <tt>0x00</tt>, see if you can get <tt>0xE5</tt>.</p>
-<ol>
-<li><p><b>Hint 1</b>, in <b>SPI</b> interface, DATAX0 is stored in 0x32 and 0x33 respectively, so you may put address <tt>(0x80 | 0x32) = 0xB2</tt> on that bus, where the MSB is for read; or <tt>(0x80 | 0x40 | 0x32) = 0xF2</tt> for continuous read operation. While for <b>I2C</b> to function, you only need <tt>0x32</tt> for single byte read, or <tt>0x72</tt> for continuous read. No <b>MSB</b> tunation is needed.</p>
-</li>
-<li><p><b>Hint 2</b>, in I2C mode, when your read DATAX0 using 0x32, and continuous trigger the I2C read operation, it defaults works in the continous read mode. A.k.a, <tt>0x32</tt> has the same effect as <tt>0x72</tt> in I2C mode.</p>
-</li>
-</ol>
-<h2>将所有传感器的FIFO拼接起来 &ndash; FIFO pool</h2>
+<p>We now have two serial interfaces, one is USB2UART <tt>/dev/ttyUSB0</tt>, another is bluetooth UART <tt>/dev/rfcomm0</tt>. By setting 115200 8N1 for both serial devices, we can communicate in minicom ! Remember to enable ECHO in minicom via Ctrl + A, E.</p>
+<p><tt>NOTE</tt> When we connect to the bluetooth serial (via python, minicom, etc.,) and receive data, the pairing LED on RN42 will <b>flash</b>, and the connection status LED will <b>pulldown</b> (connected). Data are now transmitted from slave to our PC.</p>
 <div id="footer">
 <div id="footer-text">
-Page generated 2014-05-23 19:17:52 UTC, by <a href="http://jemdoc.jaboc.net/">jemdoc</a>.
+Page generated 2014-05-24 09:29:43 UTC, by <a href="http://jemdoc.jaboc.net/">jemdoc</a>.
 </div>
 </div>
 </td>
