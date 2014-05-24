@@ -4,3 +4,22 @@
 
 Hardware/Software
 
+= NIR -- Near Infra-Red Monitoring
+
++Pmod J4:+ (look into the holes)
+~~~
+{}{table}{NIR Pin set -- J4}
+1 | 2 | 3 | 4 | 5 | 6 ||
+ D8 | D6 | D7 | D5 | *GND* | *VCC* ||
+ FRV | D9 | EXP | LIV | - | - ||
+7 | 8 | 9 | 10 | 11 | 12
+~~~
+
++Pmod J5:+ (look into the holes)
+~~~
+{}{table}{NIR Pin set -- J4}
+1 | 2 | 3 | 4 | 5 | 6 ||
+ D2 | XCK | D4 | SCK | *GND* | *VCC* ||
+ PCK | D3 | LED | SDA | - | - ||
+7 | 8 | 9 | 10 | 11 | 12
+~~~
