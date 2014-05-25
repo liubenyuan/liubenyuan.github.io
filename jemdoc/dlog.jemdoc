@@ -1,5 +1,21 @@
 # jemdoc: menu{MENU}{dlog.html}
 
+= dlog -- Data logging via DP83848J and VHDL based MAC layer
+
+MII mode configuration of DP83848, via power up boot mode (1 for pullup, 0 for pulldown, by default, RX_DV is internally weakly pulled down, the default value of RX_DV is 0),
+~~~
+{}{table}{Configuration of DP83848}
+*RX_DV* (pin 39, MII_MODE) | MAC Interface ||
+0 | MII Mode ||
+1 | RMII Mode
+~~~
+
+About the PHY_ADDRESS. PHYAD4-PHYAD1 is internally *pulled down*, PHYAD0 is internally weakly *pulled up*, the PHY_ADDRESS is by default +b"00001"+; if *bitgen* let's unused pins COL/PHYAD0 pulled down, and PHYAD4-PHYAD1 pulled-up as specified in ucf, the PHY_ADDRESS will be altered as +b"11110"+.
+
+== +downlink+ -- receive data from PC and send packet back via UART interface
+
+== +uplink+ -- receive data from uart and send to PC via ethernet
+
 == High-speed full duplex data logging from FPGA to PC
 
 Most of the time, we collected large amount of data using FPGA and on-chip ADCs, and want sent them direct to PC. Only standard peripherals can be used. Some protocols may bump to our mind, for example, Bluetooth 2.1 (BLE is too slow for data logging), RS232 (where most of the time, we will use CP2102 to convert a serial interface to USB, and utilize the ttyUSBx on PC), wifi and ethernet. Among all these options, UART is the best. It is simple, utilize little FPGA on-chip resources, and the data can be logged in raw format. Most important, I had success with this protocol.

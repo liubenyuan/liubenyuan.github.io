@@ -29,6 +29,16 @@
 <div class="menu-item"><a href="dlog.html" class="current">dlog</a></div>
 </td>
 <td id="layout-content">
+<h1>dlog &ndash; Data logging via DP83848J and VHDL based MAC layer</h1>
+<p>MII mode configuration of DP83848, via power up boot mode (1 for pullup, 0 for pulldown, by default, RX_DV is internally weakly pulled down, the default value of RX_DV is 0),</p>
+<table id="Configuration of DP83848">
+<tr class="r1"><td class="c1"><b>RX_DV</b> (pin 39, MII_MODE) </td><td class="c2"> MAC Interface </td></tr>
+<tr class="r2"><td class="c1">0 </td><td class="c2"> MII Mode </td></tr>
+<tr class="r3"><td class="c1">1 </td><td class="c2"> RMII Mode
+</td></tr></table>
+<p>About the PHY_ADDRESS. PHYAD4-PHYAD1 is internally <b>pulled down</b>, PHYAD0 is internally weakly <b>pulled up</b>, the PHY_ADDRESS is by default <tt>b&ldquo;00001&rdquo;</tt>; if <b>bitgen</b> let's unused pins COL/PHYAD0 pulled down, and PHYAD4-PHYAD1 pulled-up as specified in ucf, the PHY_ADDRESS will be altered as <tt>b&ldquo;11110&rdquo;</tt>.</p>
+<h2><tt>downlink</tt> &ndash; receive data from PC and send packet back via UART interface</h2>
+<h2><tt>uplink</tt> &ndash; receive data from uart and send to PC via ethernet</h2>
 <h2>High-speed full duplex data logging from FPGA to PC</h2>
 <p>Most of the time, we collected large amount of data using FPGA and on-chip ADCs, and want sent them direct to PC. Only standard peripherals can be used. Some protocols may bump to our mind, for example, Bluetooth 2.1 (BLE is too slow for data logging), RS232 (where most of the time, we will use CP2102 to convert a serial interface to USB, and utilize the ttyUSBx on PC), wifi and ethernet. Among all these options, UART is the best. It is simple, utilize little FPGA on-chip resources, and the data can be logged in raw format. Most important, I had success with this protocol.</p>
 <p>Transparent data transfer using RS232 via bluetooth or wifi, or even ethernet are now available. However, we had this problem : how could we transfer data from FPGA to PC, in high-speed, long-distance, and best of all, with little or no dirty work on excessive complex state machines?</p>
@@ -107,7 +117,7 @@
 <p>If crafting an PHY + MAC + IP protocol is not your <b>job</b>, then simply using one softcore with light IP stack.</p>
 <div id="footer">
 <div id="footer-text">
-Page generated 2014-05-24 08:06:15 UTC, by <a href="http://jemdoc.jaboc.net/">jemdoc</a>.
+Page generated 2014-05-25 00:23:42 UTC, by <a href="http://jemdoc.jaboc.net/">jemdoc</a>.
 </div>
 </div>
 </td>
