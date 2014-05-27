@@ -30,13 +30,13 @@
 </td>
 <td id="layout-content">
 <h1>dlog &ndash; Data logging via DP83848J and VHDL based MAC layer</h1>
-<p>MII mode configuration of DP83848, via power up boot mode (1 for pullup, 0 for pulldown, by default, RX_DV is internally weakly pulled down, the default value of RX_DV is 0),</p>
+<p>MII mode configuration of DP83848, via power up boot mode (1 for pullup, 0 for pulldown, by default, RX_DV is internally weakly <b>pulled down</b>, the default value of <b>RX_DV is 0</b>),</p>
 <table id="Configuration of DP83848">
 <tr class="r1"><td class="c1"><b>RX_DV</b> (pin 39, MII_MODE) </td><td class="c2"> MAC Interface </td></tr>
 <tr class="r2"><td class="c1">0 </td><td class="c2"> MII Mode </td></tr>
 <tr class="r3"><td class="c1">1 </td><td class="c2"> RMII Mode
 </td></tr></table>
-<p>About the PHY_ADDRESS. PHYAD4-PHYAD1 is internally <b>pulled down</b>, PHYAD0 is internally weakly <b>pulled up</b>, the PHY_ADDRESS is by default <tt>b&ldquo;00001&rdquo;</tt>; if <b>bitgen</b> let's unused pins COL/PHYAD0 pulled down, and PHYAD4-PHYAD1 pulled-up as specified in ucf, the PHY_ADDRESS will be altered as <tt>b&ldquo;11110&rdquo;</tt>.</p>
+<p>About the PHY_ADDRESS. PHYAD4-PHYAD1 is internally <b>pulled down</b>, PHYAD0 is internally weakly <b>pulled up</b>, the PHY_ADDRESS is by default <tt>b&ldquo;00001&rdquo;</tt>; if <b>bitgen</b> let's unused pins COL/PHYAD0 pulled down, and PHYAD4-PHYAD1 pulled-up as specified in ucf, the PHY_ADDRESS will be altered as <tt>b&ldquo;11110&rdquo;</tt>. PHY_ADDRESS <tt>b&ldquo;00000&rdquo;</tt> is not allowed.</p>
 <h2><tt>downlink</tt> &ndash; receive data from PC and send packet back via UART interface</h2>
 <h2><tt>uplink</tt> &ndash; receive data from uart and send to PC via ethernet</h2>
 <h2>High-speed full duplex data logging from FPGA to PC</h2>
@@ -117,7 +117,7 @@
 <p>If crafting an PHY + MAC + IP protocol is not your <b>job</b>, then simply using one softcore with light IP stack.</p>
 <div id="footer">
 <div id="footer-text">
-Page generated 2014-05-25 00:23:42 UTC, by <a href="http://jemdoc.jaboc.net/">jemdoc</a>.
+Page generated 2014-05-27 09:42:18 UTC, by <a href="http://jemdoc.jaboc.net/">jemdoc</a>.
 </div>
 </div>
 </td>

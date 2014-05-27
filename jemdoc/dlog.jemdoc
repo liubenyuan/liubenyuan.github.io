@@ -2,7 +2,7 @@
 
 = dlog -- Data logging via DP83848J and VHDL based MAC layer
 
-MII mode configuration of DP83848, via power up boot mode (1 for pullup, 0 for pulldown, by default, RX_DV is internally weakly pulled down, the default value of RX_DV is 0),
+MII mode configuration of DP83848, via power up boot mode (1 for pullup, 0 for pulldown, by default, RX_DV is internally weakly *pulled down*, the default value of *RX_DV is 0*),
 ~~~
 {}{table}{Configuration of DP83848}
 *RX_DV* (pin 39, MII_MODE) | MAC Interface ||
@@ -10,7 +10,7 @@ MII mode configuration of DP83848, via power up boot mode (1 for pullup, 0 for p
 1 | RMII Mode
 ~~~
 
-About the PHY_ADDRESS. PHYAD4-PHYAD1 is internally *pulled down*, PHYAD0 is internally weakly *pulled up*, the PHY_ADDRESS is by default +b"00001"+; if *bitgen* let's unused pins COL/PHYAD0 pulled down, and PHYAD4-PHYAD1 pulled-up as specified in ucf, the PHY_ADDRESS will be altered as +b"11110"+.
+About the PHY_ADDRESS. PHYAD4-PHYAD1 is internally *pulled down*, PHYAD0 is internally weakly *pulled up*, the PHY_ADDRESS is by default +b"00001"+; if *bitgen* let's unused pins COL/PHYAD0 pulled down, and PHYAD4-PHYAD1 pulled-up as specified in ucf, the PHY_ADDRESS will be altered as +b"11110"+. PHY_ADDRESS +b"00000"+ is not allowed.
 
 == +downlink+ -- receive data from PC and send packet back via UART interface
 
