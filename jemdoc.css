@@ -247,7 +247,7 @@ div.blocktitle {
 }
 
 div.blockcontent {
-    border: 1px solid silver;
+    border-left: 6px solid silver;
     padding: 0.3em 0.5em;
 }
 
