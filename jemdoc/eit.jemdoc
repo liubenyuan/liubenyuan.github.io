@@ -53,12 +53,11 @@ These two boards works in master mode, with steroscopy mode disabled. +SCK+ and 
 In principles, the mt9v034 works +output wide-VGA image at 60fps+ by default.
 
 ~~~
-By injecting +DCMI_SYS_CLK+ with 25MHz clock input, and trigger +DCMI_EXP+ with a rising-edge sensitive pulse (*1000* cycles duty period, in snapshot or slave mode). We may monitor the +DCMI_DATA+ bus, +DCMI_HSYNC+ and +DCMI_VSYNC+ signals, as well as +DCMI_LED+ pins.
+By injecting +DCMI_SYS_CLK+ with 25MHz clock input, and trigger +DCMI_EXP+ with a rising-edge sensitive pulse (*1000* cycles duty period, in snapshot or slave mode; in master mode, +DCMI_EXP+ may tie to GND). We may monitor the +DCMI_DATA+ bus, +DCMI_HSYNC+ and +DCMI_VSYNC+ signals, as well as +DCMI_LED+ pins.
 
-+DCMI_VSYNC+ is HIGH valid during the whole imaging process (a frame), +DCMI_HSYNC+ is periodorically HIGH valid. The image format is *752x480*. However, currently +DCMI_CLK+ could not register exactly +752+ datum each *HSYNC* pules.
++DCMI_VSYNC+ is HIGH valid during the whole imaging process (a frame), +DCMI_HSYNC+ is periodorically HIGH valid. The image format is *752x480*. However, currently +DCMI_CLK+ could not register exactly +752+ datum each *HSYNC* pules. /(need debug this)/. Strange, +DCMI_CLK+ may be *26.6*MHz PLL locked even if we inject a *25*MHz +DCMI_SYS_CLK+.
 ~~~
 
-Strange, +DCMI_CLK+ may be *26.6*MHz PLL locked even if we inject a *25*MHz +DCMI_SYS_CLK+.
 
 == NIR -- config mt9v034
 
@@ -85,5 +84,9 @@ We build dedicated module +mt9v034_io.vhd+ to handle the Read Write process to M
 ~~~
 
 for example, +0x90070188+ write 0x0188 to 0x07 in mt9v034, +0x9107XXXX+ read DBYTE from 0x07 in mt9v034.
+
+== NIR -- implementation
+
+
 
 
