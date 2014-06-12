@@ -47,6 +47,15 @@
 <div class="infoblock">
 <div class="blockcontent">
 <p>我们针对的是Xilinx的Spartan 6 Lx9 (XC6SLX9) micro开发板，需要用到cp210x uart to usb转接芯片以及Digilent的Jtag驱动。在Archlinux的wiki主页上（或者你可以Google搜索linux, digilent, lx9micro, Xilinx ISE），有关于在linux下，配置Xilinx ISE和Lx9micro的具体步骤。</p>
+<p>简而言之，就是[https:<i></i>wiki.archlinux.org<i>index.php</i>Xilinx_ISE_WebPACK</p>
+<ol>
+<li><p>安装<tt>adept-runtime</tt>, 安装<tt>digilent-plugin</tt>，安装<tt>adept-utilities</tt>；</p>
+</li>
+<li><p>安装一些archlinux需要的<tt>usbdrv</tt>以及<tt>fxload</tt>，需要配置好<b>udev.rules</b>。添加用户到<tt>uucp</tt>；</p>
+</li>
+<li><p>最后，安装digilent plugin到ISE的<tt>plugins</tt>目录；</p>
+</li>
+</ol>
 </div></div>
 <p>Microblaze是一个Xilinx基于FPGA的硬核，主要使用Xilinx Platform Studio (XPS) Base System Builder (BSB) 进行开发. </p>
 <div class="infoblock">
@@ -117,7 +126,7 @@
 <p>If crafting an PHY + MAC + IP protocol is not your <b>job</b>, then simply using one softcore with light IP stack.</p>
 <div id="footer">
 <div id="footer-text">
-Page generated 2014-05-27 09:42:18 UTC, by <a href="http://jemdoc.jaboc.net/">jemdoc</a>.
+Page generated 2014-06-12 23:22:21 UTC, by <a href="http://jemdoc.jaboc.net/">jemdoc</a>.
 </div>
 </div>
 </td>

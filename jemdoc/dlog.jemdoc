@@ -28,6 +28,11 @@ Transparent data transfer using RS232 via bluetooth or wifi, or even ethernet ar
 
 ~~~
 我们针对的是Xilinx的Spartan 6 Lx9 (XC6SLX9) micro开发板，需要用到cp210x uart to usb转接芯片以及Digilent的Jtag驱动。在Archlinux的wiki主页上（或者你可以Google搜索linux, digilent, lx9micro, Xilinx ISE），有关于在linux下，配置Xilinx ISE和Lx9micro的具体步骤。
+
+简而言之，就是[https://wiki.archlinux.org/index.php/Xilinx_ISE_WebPACK#Digilent_USB-JTAG_Drivers digilent USB-jtag]
+. 安装+adept-runtime+, 安装+digilent-plugin+，安装+adept-utilities+；
+. 安装一些archlinux需要的+usbdrv+以及+fxload+，需要配置好*udev.rules*。添加用户到+uucp+；
+. 最后，安装digilent plugin到ISE的+plugins+目录；
 ~~~
 
 Microblaze是一个Xilinx基于FPGA的硬核，主要使用Xilinx Platform Studio (XPS) Base System Builder (BSB) 进行开发. 
