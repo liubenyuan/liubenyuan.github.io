@@ -1,10 +1,10 @@
-DOCS = index publications bsbl eit radar nudtpaper nrf51822 phealth dlog kicad msp430 connectomics flexbot atmel
+DOCS = index publications bsbl eit radar nudtpaper nrf51822 phealth nircm kicad msp430 connectomics flexbot atmel
 
 HDOCS=$(addsuffix .html, $(DOCS))
 # PHDOCS=$(addprefix html/, $(HDOCS))
 
 .PHONY : all
-%.html : jemdoc/%.jemdoc MENU
+%.html : jemdoc/%.jemdoc MENU jemdoc.py
 	python2 jemdoc.py -o $@ $<
 
 .PHONY : docs

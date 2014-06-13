@@ -865,6 +865,13 @@ def gethl(lang):
     d['builtin'] = putbsbs(['csolve'])
     d['commentuntilend'] = '%'
     d['strings'] = True
+  elif lang == 'vhdl':
+    d['statement'] = ['for', 'if', 'then', 'while', 'use', 'case', 'switch', 'when',
+                    'loop', 'begin', 'end', 'map', 'with', 'select', 'others']
+    d['operator'] = ['&lt;=', ':=', '>>', '~', '\.\.\.']
+    d['special'] = ['entity', 'component', 'architecture', 'process', 'port',
+                    'generate', 'generic']
+    d['commentuntilend'] = '--'
   elif lang == 'commented':
     d['commentuntilend'] = '#'
 

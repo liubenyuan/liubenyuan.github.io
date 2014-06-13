@@ -1,4 +1,112 @@
-# jemdoc: menu{MENU}{dlog.html}
+# jemdoc: menu{MENU}{nircm.html}
+
+#
+# this is a working document for <N>ear <I>nfra <R>ed <C>ontactless <M>onitoring
+#
+
+= Nexys3 -- Demo board accquisition
+
+== Nexys3 -- boards and vhdl basics
+
+~~~
+Device : xc6slx16-csg324-3 \n
+SPI bus-width should be +4+ ?
+~~~
+
+=== How to program?
+~~~
+{}{bash}
+$ djtgcfg prog -f top.bit -d Nexys3 -i 0
+~~~
+
+=== Learn the VHDL +for+, +if+, +generate+, syntax:
+~~~
+{}{vhdl}
+btn_debounce_for : for i in 0 to 4 generate
+   UBTN : btn_debounce port map(clkin,gpio_btn(i),btn_internal(i));
+end generate btn_debounce_for;
+~~~
+
++for+ -- +generate+ loop also supports +process+, and moreover, it supports nested +if+ -- +generate+ statement,
+~~~
+{}{vhdl}
+led_for : for i in 0 to 4 generate
+    p_led_latch : process(clkin) is
+    begin
+        if rising_edge(clkin) then
+            if btn_internal(i)='1' then
+                led_internal(i) <= not led_internal(i);
+            end if;
+        end if;
+    end process p_led_latch;
+    gpio_led(i) <= led_internal(i);
+end generate led_for;
+~~~
+
+We may also infer combinational logic use +with+ -- +select+ clause,
+~~~
+{}{vhdl}
+with seg select
+    bcd <= "10001110" when "1111";
+           "11111111" when others;
+~~~
+
+== Nexys3 -- connect mt9v034 with dual--pmods
+
+=== NIR -- the hardware
+
+*MT9V034 :* \n
+Look from top-down, on the camera side.
+~~~
+{}{table}{mt9v034 pin configuration}
+*12* | *11* | *10* | *9* | *8* | *7* | *6* | *5* | *4* | *3* | *2* | *1* ||
+ D1 | PCK | D3 | LED | SDA | FRV | D9 | C_P | D_P | D8 | D6 | +VCC+ ||
+ D2 | D0 | XCK | D4 | SCK | EXP | LIV | C_N | D_N | D7 | D5 | +GND+ ||
+*13* | *14* | *15* | *16* | *17* | *18* | *19* | *20* | *21* | *22* | *23* | *24*
+~~~
+
+where +D0+, +D1+ and +C_P+, +C_N+, +D_P+, +D_N+ are NC.
+
+*Pmod B :* (GND and VCC are more closer to the boards)
+~~~
+{}{table}{NIR Pin set -- J4}
+*7* | *8* | *9* | *10* | *11* | *12* ||
+ FRV | D9 | D8 | D6 | +GND+ | +VCC+ ||
+ EXP | LIV | D7 | D5 | - | - ||
+*1* | *2* | *3* | *4* | *5* | *6*
+~~~
+
+*Pmod C :* (GND and VCC are more closer to the boards)
+~~~
+{}{table}{NIR Pin set -- J4}
+*7* | *8* | *9* | *10* | *11* | *12* ||
+ PCK | D3 | LED | SDA | +GND+ | +VCC+ ||
+ D2 | XCK | D4 | SCK | - | - ||
+*1* | *2* | *3* | *4* | *5* | *6*
+~~~
+
+We wire (where FPGA is the master)
+~~~
+{}{table}{ucf definition}
+*Port* | *MT9V034-devboard* | *IO (FPGA is the master)* | *Annotation* ||
+DCMI_SYS_CLK | XCK | Output | *system clock* ||
+DCMI_CLK | PCK | Input | *Data clock* ||
+DCMI_EXP | EXP | Output | *Exposure* ||
+DCMI_DATA<7:0> | D9 -- D2 | Input | *Data* ||
+DCMI_HSYNC | LIV | Input | *Line valid* ||
+DCMI_VSYNC | FRV | Input | *Frame valid* ||
+DCMI_LED | LED | Input | ||
+DCMI_SCK | SCK | Output | ||
+DCMI_SDA | SDA | Inout |
+~~~
+
+~~~
+By comparing PX4Flow and the MT9v034 taobao board, we found some common connections, +OE+ (active HIGH) tied to VCC, +RSVD+ tied to GND. +BYPASS_CLKIN_P+ and +SER_DATAIN_P+ are tied to GND, while +BYPASS_CLKIN_N+ and +SER_DATAIN_N+ are tied to VCC with 1k Ohm pull-up resistor.
+
+However, for MT9v034-dev, the +STANDBY+ is tied to GND, and the +RESET_N+ is tied to VCC with 10k Ohm pull-up resistor. For PX4Flow, these two pins are controlled by MCU. For mt9v034-dev, +SCTRL_ADDR0+ and +SCTRL_ADDR1+ are tied to GND, while for PX4Flow, these pins are tied to VCC.
+
+These two boards works in master mode, with steroscopy mode disabled. +SCK+ and +SDA+ should be pulled-up with 1.5K Ohm resistors when no other I2C peripheral is connected.
+~~~
 
 = dlog -- Data logging via DP83848J and VHDL based MAC layer
 
