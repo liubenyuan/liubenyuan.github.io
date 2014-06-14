@@ -49,45 +49,6 @@ However, for MT9v034-dev, the +STANDBY+ is tied to GND, and the +RESET_N+ is tie
 These two boards works in master mode, with steroscopy mode disabled. +SCK+ and +SDA+ should be pulled-up with 1.5K Ohm resistors when no other I2C peripheral is connected.
 ~~~
 
-== NIR -- boot mt9v034
-
-In principles, the mt9v034 works +output wide-VGA image at 60fps+ by default.
-
-~~~
-By injecting +DCMI_SYS_CLK+ with 25MHz clock input, and trigger +DCMI_EXP+ with a rising-edge sensitive pulse (*1000* cycles duty period, in snapshot or slave mode; in master mode, +DCMI_EXP+ may tie to GND). We may monitor the +DCMI_DATA+ bus, +DCMI_HSYNC+ and +DCMI_VSYNC+ signals, as well as +DCMI_LED+ pins.
-
-+DCMI_VSYNC+ is HIGH valid during the whole imaging process (a frame), +DCMI_HSYNC+ is periodorically HIGH valid. The image format is *752x480*. However, currently +DCMI_CLK+ could not register exactly +752+ datum each *HSYNC* pules. /(need debug this)/. Strange, +DCMI_CLK+ may be *26.6*MHz PLL locked even if we inject a *25*MHz +DCMI_SYS_CLK+.
-~~~
-
-
-== NIR -- config mt9v034
-
-With +ADDR0+ and +ADDR1+ pins pulled low on mt9v034-dev, the address is +0x48+, with the last bit denotes write ('0') or read ('1'). Therefore, the mt9v034 board has +0x90+ for write, +0x91+ for read.
-
-We port the source code +mt9v034.c+ in PX4Flow to NIR project, (+Context A+, context, is like a fast register switching machanism, Context B in PX4Flow is used for video capture only, while context A is for practical optical flow usage)
-~~~
-{}{table}{mt9v034.c}
- *Register* | *Name* | *Default* | *Context A (Context B)* | *Shadow Reg* | *Annotation* ||
- 0x07 | Chip Control | 0x0388 | 0x0188 (0x8188) | Y | *Normal* operation ||
- 0x01 | Column Start | 1 | (752 - 64\*4)\/2 \+ 1 | Y | Center Window ||
- 0x02 | Row Start | 4 | (480 - 64\*4)\/2 \+ 4 | N | ||
- 0x03 (OxCB)| WINDOW_HEIGHT | 480 | 64\*4 (120\*4) | Y | 4-binning ||
- 0x04 (0xCC) | WINDOW_WIDTH | 752 | 64\*4 (188\*4) | N | ||
- 0x05 | Hor Blanking | 4 \+ 91 | (752 - 64\*4) \+ 91 | Y | ||
- 0x06 | Ver Blanking | 45 | 10 | N | ||
- 0x0D (0x0E) | Read Mode | 0x300 | 0x30A (0x305) | Y | row bin-4, col bin-4
-~~~
-
-We build dedicated module +mt9v034_io.vhd+ to handle the Read Write process to MT9v034,
-~~~
-{}{table}{mt9v034 IO}
- 0x90 (0x91) | REG_ADDRESS | WB1 (RB0) | WB2 (RB0)
-~~~
-
-for example, +0x90070188+ write 0x0188 to 0x07 in mt9v034, +0x9107XXXX+ read DBYTE from 0x07 in mt9v034.
-
-== NIR -- implementation
-
 
 
 

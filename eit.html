@@ -66,36 +66,9 @@
 <p>However, for MT9v034-dev, the <tt>STANDBY</tt> is tied to GND, and the <tt>RESET_N</tt> is tied to VCC with 10k Ohm pull-up resistor. For PX4Flow, these two pins are controlled by MCU. For mt9v034-dev, <tt>SCTRL_ADDR0</tt> and <tt>SCTRL_ADDR1</tt> are tied to GND, while for PX4Flow, these pins are tied to VCC.</p>
 <p>These two boards works in master mode, with steroscopy mode disabled. <tt>SCK</tt> and <tt>SDA</tt> should be pulled-up with 1.5K Ohm resistors when no other I2C peripheral is connected.</p>
 </div></div>
-<h2>NIR &ndash; boot mt9v034</h2>
-<p>In principles, the mt9v034 works <tt>output wide-VGA image at 60fps</tt> by default.</p>
-<div class="infoblock">
-<div class="blockcontent">
-<p>By injecting <tt>DCMI_SYS_CLK</tt> with 25MHz clock input, and trigger <tt>DCMI_EXP</tt> with a rising-edge sensitive pulse (<b>1000</b> cycles duty period, in snapshot or slave mode; in master mode, <tt>DCMI_EXP</tt> may tie to GND). We may monitor the <tt>DCMI_DATA</tt> bus, <tt>DCMI_HSYNC</tt> and <tt>DCMI_VSYNC</tt> signals, as well as <tt>DCMI_LED</tt> pins.</p>
-<p><tt>DCMI_VSYNC</tt> is HIGH valid during the whole imaging process (a frame), <tt>DCMI_HSYNC</tt> is periodorically HIGH valid. The image format is <b>752x480</b>. However, currently <tt>DCMI_CLK</tt> could not register exactly <tt>752</tt> datum each <b>HSYNC</b> pules. <i>(need debug this)</i>. Strange, <tt>DCMI_CLK</tt> may be <b>26.6</b>MHz PLL locked even if we inject a <b>25</b>MHz <tt>DCMI_SYS_CLK</tt>.</p>
-</div></div>
-<h2>NIR &ndash; config mt9v034</h2>
-<p>With <tt>ADDR0</tt> and <tt>ADDR1</tt> pins pulled low on mt9v034-dev, the address is <tt>0x48</tt>, with the last bit denotes write (&rsquo;0&rsquo;) or read (&rsquo;1&rsquo;). Therefore, the mt9v034 board has <tt>0x90</tt> for write, <tt>0x91</tt> for read.</p>
-<p>We port the source code <tt>mt9v034.c</tt> in PX4Flow to NIR project, (<tt>Context A</tt>, context, is like a fast register switching machanism, Context B in PX4Flow is used for video capture only, while context A is for practical optical flow usage)</p>
-<table id="mt9v034.c">
-<tr class="r1"><td class="c1"><b>Register</b> </td><td class="c2"> <b>Name</b> </td><td class="c3"> <b>Default</b> </td><td class="c4"> <b>Context A (Context B)</b> </td><td class="c5"> <b>Shadow Reg</b> </td><td class="c6"> <b>Annotation</b> </td></tr>
-<tr class="r2"><td class="c1">0x07 </td><td class="c2"> Chip Control </td><td class="c3"> 0x0388 </td><td class="c4"> 0x0188 (0x8188) </td><td class="c5"> Y </td><td class="c6"> <b>Normal</b> operation </td></tr>
-<tr class="r3"><td class="c1">0x01 </td><td class="c2"> Column Start </td><td class="c3"> 1 </td><td class="c4"> (752 - 64*4)/2 + 1 </td><td class="c5"> Y </td><td class="c6"> Center Window </td></tr>
-<tr class="r4"><td class="c1">0x02 </td><td class="c2"> Row Start </td><td class="c3"> 4 </td><td class="c4"> (480 - 64*4)/2 + 4 </td><td class="c5"> N </td><td class="c6"> </td></tr>
-<tr class="r5"><td class="c1">0x03 (OxCB)</td><td class="c2"> WINDOW_HEIGHT </td><td class="c3"> 480 </td><td class="c4"> 64*4 (120*4) </td><td class="c5"> Y </td><td class="c6"> 4-binning </td></tr>
-<tr class="r6"><td class="c1">0x04 (0xCC) </td><td class="c2"> WINDOW_WIDTH </td><td class="c3"> 752 </td><td class="c4"> 64*4 (188*4) </td><td class="c5"> N </td><td class="c6"> </td></tr>
-<tr class="r7"><td class="c1">0x05 </td><td class="c2"> Hor Blanking </td><td class="c3"> 4 + 91 </td><td class="c4"> (752 - 64*4) + 91 </td><td class="c5"> Y </td><td class="c6"> </td></tr>
-<tr class="r8"><td class="c1">0x06 </td><td class="c2"> Ver Blanking </td><td class="c3"> 45 </td><td class="c4"> 10 </td><td class="c5"> N </td><td class="c6"> </td></tr>
-<tr class="r9"><td class="c1">0x0D (0x0E) </td><td class="c2"> Read Mode </td><td class="c3"> 0x300 </td><td class="c4"> 0x30A (0x305) </td><td class="c5"> Y </td><td class="c6"> row bin-4, col bin-4
-</td></tr></table>
-<p>We build dedicated module <tt>mt9v034_io.vhd</tt> to handle the Read Write process to MT9v034,</p>
-<table id="mt9v034 IO">
-<tr class="r1"><td class="c1">0x90 (0x91) </td><td class="c2"> REG_ADDRESS </td><td class="c3"> WB1 (RB0) </td><td class="c4"> WB2 (RB0)
-</td></tr></table>
-<p>for example, <tt>0x90070188</tt> write 0x0188 to 0x07 in mt9v034, <tt>0x9107XXXX</tt> read DBYTE from 0x07 in mt9v034.</p>
-<h2>NIR &ndash; implementation</h2>
 <div id="footer">
 <div id="footer-text">
-Page generated 2014-06-13 20:56:53 UTC, by <a href="http://jemdoc.jaboc.net/">jemdoc</a>.
+Page generated 2014-06-14 08:52:56 UTC, by <a href="http://jemdoc.jaboc.net/">jemdoc</a>.
 </div>
 </div>
 </td>

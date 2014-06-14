@@ -131,7 +131,10 @@ h1, h2, h3 {
 }
 h1 {
     font-size: 26px;
-    padding-top: 1.0em;
+    padding-top: 0.6em;
+    padding-bottom: 0.4em;
+    padding-left: 0.4em;
+    border-left: 8px solid silver;
 }
 h2 {
     padding-top: 0.8em;
@@ -247,8 +250,8 @@ div.blocktitle {
 }
 
 div.blockcontent {
-    border-left: 6px solid silver;
-    padding: 0.3em 0.5em;
+    border-left: 6px solid #F1EDE0;
+    padding: 0.2em 0.5em;
 }
 
 div.infoblock > div.blockcontent {
