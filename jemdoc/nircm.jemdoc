@@ -141,17 +141,50 @@ After testing the *R\/W* functionality of +i2c_io_16bit.vhd+, we next store all 
 
 We port the source code +mt9v034.c+ in PX4Flow to NIR project, (+Context A+, context, is like a fast stack-switch machanism, context B in PX4Flow is used for videos streaming only, while context A is for practical optical flow calculation).
 
+*Context A\/B*
 ~~~
 {}{table}{mt9v034.c}
- *Register* | *Name* | *Default* | *Context A (Context B)* | *Shadow Reg* | *Annotation* ||
- 0x07 | Chip Control | 0x0388 | 0x0188 (0x8188) | Y | *Normal* operation ||
- 0x01 | Column Start | 1 | (752 - 64\*4)\/2 \+ 1 | Y | Center Window ||
- 0x02 | Row Start | 4 | (480 - 64\*4)\/2 \+ 4 | N | ||
- 0x03 (OxCB)| WINDOW_HEIGHT | 480 | 64\*4 (120\*4) | Y | 4-binning ||
- 0x04 (0xCC) | WINDOW_WIDTH | 752 | 64\*4 (188\*4) | N | ||
- 0x05 | Hor Blanking | 4 \+ 91 | (752 - 64\*4) \+ 91 | Y | ||
- 0x06 | Ver Blanking | 45 | 10 | N | ||
- 0x0D (0x0E) | Read Mode | 0x300 | 0x30A (0x305) | Y | row bin-4, col bin-4
+ *Register* | *Name* | *Default* | *Context A (Context B)* | *COMMAND* | *Annotation* ||
+ 0x07 | Chip Control | 0x0388 | 0x0188 (0x8188) | 90070188 | +0x0108+ ||
+ 0x03 (OxCB) | WINDOW_HEIGHT | 480 | 64\*4 (120\*4) | 90030100 | 4-binning ||
+ 0x04 (0xCC) | WINDOW_WIDTH | 752 | 64\*4 (188\*4) | 90040100 | ||
+ 0x05 | Hor Blanking | 4 \+ 91 | (752 - 64\*4) \+ 91 | 9005024B | ||
+ 0x06 | Ver Blanking | 45 | 10 | 9006000A | ||
+ 0x0D (0x0E) | Read Mode | 0x300 | 0x30A (0x305) | 900D030A | row bin-4, col bin-4 ||
+ 0x01 | Column Start | 1 | (752 - 64\*4)\/2 \+ 1 | 900100F9 | Center Window ||
+ 0x02 | Row Start | 4 | (480 - 64\*4)\/2 \+ 4 | 90020074 | ||
+ 0x08 | Coarse Shutter Width 1 | | | 900801BB | ||
+ 0x09 | Coarse Shutter Width 2 | | | 900901D9 | ||
+ 0x0A | Coarse Width Control   | | | 900A0164 | ||
+ 0x0B | Coarse Width Total     | | | 900B01E0 |
+~~~
+
+*General Settings*
+~~~
+{}{table}{mt9v034.c section2}
+ *Register* | *Name* | *Default* | *Context A (Context B)* | *COMMAND* | *Annotation* ||
+ 0x70 | Row Noise Corr | 0 | 0x0000 | 90700000 | ||
+ 0xAF | AEC\/AGC Enable | 0x3 | 0x0303 | 90AF0303 | ||
+ 0x0F | HDR | 0x0100 | 0x0000 | 900F0000 | ||
+ 0xAC | Min exposure | 1 | 1 | 90AC0001 | ||
+ 0xAD | Max exposure | 0x01E0 | 0x80 | 90AD0050 | ||
+ 0xAB | Max gain | 0x40 (64) | 0x40 (64) | 90AB0040 | ||
+ 0xB0 | AEC\/AGC Pixel Count | 0xABE0 | 0x1000 (4096) | 90B01000 | ||
+ 0xA5 | AEC\/AGC Desired Bin | 0x3A | 0x32 (50) | 90A50032 | ||
+ 0x1C | ADC Res Control | 0x0302 | 0x0202 | 901C0202 | ||
+ 0x7F | Test pattern | 0x0000 | 0x0000 | 907F0000 | ||
+ 0xA6 | AEC update Freq | 0x2 | 0x2 | 90A60002 | ||
+ 0xA8 | AEC lowpass Filter | 0x0 | 0x1 | 90A80001 | ||
+ 0xA9 | AGC update Freq | 0x2 | 0x2 | 90A90002 | ||
+ 0xAA | AGC lowpass Filter | 0x2 | 0x2 | 90AA0002 |
+~~~
+
+*finally, reset*
+~~~
+{}{table}{mt9v034.c section2}
+ *Register* | *Name* | *Default* | *Context A (Context B)* | *COMMAND* | *Annotation* ||
+ 0x0C | Reset | | | 0x900C0001 | ||
+ 0x00 | Chip ID | | | 0x91000000 | *read back*
 ~~~
 
 The rom is a simplified form of PX4flow, where we may add more functionality with different configurations of switches.

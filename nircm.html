@@ -135,16 +135,45 @@ Look from top-down, on the camera side.</p>
 <h2>NIR &ndash; config mt9v034 (copied from <tt>px4flow</tt>)</h2>
 <p>After testing the <b>R/W</b> functionality of <tt>i2c_io_16bit.vhd</tt>, we next store all the command and registers in the <tt>mt9v034.coe</tt>, and loaded in a rom to config this camera module. The top module, which is called <tt>mt9v034.vhd</tt>, embedded the <b>mt9v034.coe</b>, sequentially read the content out, and config the device via I2C protocol.</p>
 <p>We port the source code <tt>mt9v034.c</tt> in PX4Flow to NIR project, (<tt>Context A</tt>, context, is like a fast stack-switch machanism, context B in PX4Flow is used for videos streaming only, while context A is for practical optical flow calculation).</p>
+<p><b>Context A/B</b></p>
 <table id="mt9v034.c">
-<tr class="r1"><td class="c1"><b>Register</b> </td><td class="c2"> <b>Name</b> </td><td class="c3"> <b>Default</b> </td><td class="c4"> <b>Context A (Context B)</b> </td><td class="c5"> <b>Shadow Reg</b> </td><td class="c6"> <b>Annotation</b> </td></tr>
-<tr class="r2"><td class="c1">0x07 </td><td class="c2"> Chip Control </td><td class="c3"> 0x0388 </td><td class="c4"> 0x0188 (0x8188) </td><td class="c5"> Y </td><td class="c6"> <b>Normal</b> operation </td></tr>
-<tr class="r3"><td class="c1">0x01 </td><td class="c2"> Column Start </td><td class="c3"> 1 </td><td class="c4"> (752 - 64*4)/2 + 1 </td><td class="c5"> Y </td><td class="c6"> Center Window </td></tr>
-<tr class="r4"><td class="c1">0x02 </td><td class="c2"> Row Start </td><td class="c3"> 4 </td><td class="c4"> (480 - 64*4)/2 + 4 </td><td class="c5"> N </td><td class="c6"> </td></tr>
-<tr class="r5"><td class="c1">0x03 (OxCB)</td><td class="c2"> WINDOW_HEIGHT </td><td class="c3"> 480 </td><td class="c4"> 64*4 (120*4) </td><td class="c5"> Y </td><td class="c6"> 4-binning </td></tr>
-<tr class="r6"><td class="c1">0x04 (0xCC) </td><td class="c2"> WINDOW_WIDTH </td><td class="c3"> 752 </td><td class="c4"> 64*4 (188*4) </td><td class="c5"> N </td><td class="c6"> </td></tr>
-<tr class="r7"><td class="c1">0x05 </td><td class="c2"> Hor Blanking </td><td class="c3"> 4 + 91 </td><td class="c4"> (752 - 64*4) + 91 </td><td class="c5"> Y </td><td class="c6"> </td></tr>
-<tr class="r8"><td class="c1">0x06 </td><td class="c2"> Ver Blanking </td><td class="c3"> 45 </td><td class="c4"> 10 </td><td class="c5"> N </td><td class="c6"> </td></tr>
-<tr class="r9"><td class="c1">0x0D (0x0E) </td><td class="c2"> Read Mode </td><td class="c3"> 0x300 </td><td class="c4"> 0x30A (0x305) </td><td class="c5"> Y </td><td class="c6"> row bin-4, col bin-4
+<tr class="r1"><td class="c1"><b>Register</b> </td><td class="c2"> <b>Name</b> </td><td class="c3"> <b>Default</b> </td><td class="c4"> <b>Context A (Context B)</b> </td><td class="c5"> <b>COMMAND</b> </td><td class="c6"> <b>Annotation</b> </td></tr>
+<tr class="r2"><td class="c1">0x07 </td><td class="c2"> Chip Control </td><td class="c3"> 0x0388 </td><td class="c4"> 0x0188 (0x8188) </td><td class="c5"> 90070188 </td><td class="c6"> <tt>0x0108</tt> </td></tr>
+<tr class="r3"><td class="c1">0x03 (OxCB) </td><td class="c2"> WINDOW_HEIGHT </td><td class="c3"> 480 </td><td class="c4"> 64*4 (120*4) </td><td class="c5"> 90030100 </td><td class="c6"> 4-binning </td></tr>
+<tr class="r4"><td class="c1">0x04 (0xCC) </td><td class="c2"> WINDOW_WIDTH </td><td class="c3"> 752 </td><td class="c4"> 64*4 (188*4) </td><td class="c5"> 90040100 </td><td class="c6"> </td></tr>
+<tr class="r5"><td class="c1">0x05 </td><td class="c2"> Hor Blanking </td><td class="c3"> 4 + 91 </td><td class="c4"> (752 - 64*4) + 91 </td><td class="c5"> 9005024B </td><td class="c6"> </td></tr>
+<tr class="r6"><td class="c1">0x06 </td><td class="c2"> Ver Blanking </td><td class="c3"> 45 </td><td class="c4"> 10 </td><td class="c5"> 9006000A </td><td class="c6"> </td></tr>
+<tr class="r7"><td class="c1">0x0D (0x0E) </td><td class="c2"> Read Mode </td><td class="c3"> 0x300 </td><td class="c4"> 0x30A (0x305) </td><td class="c5"> 900D030A </td><td class="c6"> row bin-4, col bin-4 </td></tr>
+<tr class="r8"><td class="c1">0x01 </td><td class="c2"> Column Start </td><td class="c3"> 1 </td><td class="c4"> (752 - 64*4)/2 + 1 </td><td class="c5"> 900100F9 </td><td class="c6"> Center Window </td></tr>
+<tr class="r9"><td class="c1">0x02 </td><td class="c2"> Row Start </td><td class="c3"> 4 </td><td class="c4"> (480 - 64*4)/2 + 4 </td><td class="c5"> 90020074 </td><td class="c6"> </td></tr>
+<tr class="r10"><td class="c1">0x08 </td><td class="c2"> Coarse Shutter Width 1 </td><td class="c3"> </td><td class="c4"> </td><td class="c5"> 900801BB </td><td class="c6"> </td></tr>
+<tr class="r11"><td class="c1">0x09 </td><td class="c2"> Coarse Shutter Width 2 </td><td class="c3"> </td><td class="c4"> </td><td class="c5"> 900901D9 </td><td class="c6"> </td></tr>
+<tr class="r12"><td class="c1">0x0A </td><td class="c2"> Coarse Width Control   </td><td class="c3"> </td><td class="c4"> </td><td class="c5"> 900A0164 </td><td class="c6"> </td></tr>
+<tr class="r13"><td class="c1">0x0B </td><td class="c2"> Coarse Width Total     </td><td class="c3"> </td><td class="c4"> </td><td class="c5"> 900B01E0 </td><td class="c6">
+</td></tr></table>
+<p><b>General Settings</b></p>
+<table id="mt9v034.c section2">
+<tr class="r1"><td class="c1"><b>Register</b> </td><td class="c2"> <b>Name</b> </td><td class="c3"> <b>Default</b> </td><td class="c4"> <b>Context A (Context B)</b> </td><td class="c5"> <b>COMMAND</b> </td><td class="c6"> <b>Annotation</b> </td></tr>
+<tr class="r2"><td class="c1">0x70 </td><td class="c2"> Row Noise Corr </td><td class="c3"> 0 </td><td class="c4"> 0x0000 </td><td class="c5"> 90700000 </td><td class="c6"> </td></tr>
+<tr class="r3"><td class="c1">0xAF </td><td class="c2"> AEC/AGC Enable </td><td class="c3"> 0x3 </td><td class="c4"> 0x0303 </td><td class="c5"> 90AF0303 </td><td class="c6"> </td></tr>
+<tr class="r4"><td class="c1">0x0F </td><td class="c2"> HDR </td><td class="c3"> 0x0100 </td><td class="c4"> 0x0000 </td><td class="c5"> 900F0000 </td><td class="c6"> </td></tr>
+<tr class="r5"><td class="c1">0xAC </td><td class="c2"> Min exposure </td><td class="c3"> 1 </td><td class="c4"> 1 </td><td class="c5"> 90AC0001 </td><td class="c6"> </td></tr>
+<tr class="r6"><td class="c1">0xAD </td><td class="c2"> Max exposure </td><td class="c3"> 0x01E0 </td><td class="c4"> 0x80 </td><td class="c5"> 90AD0050 </td><td class="c6"> </td></tr>
+<tr class="r7"><td class="c1">0xAB </td><td class="c2"> Max gain </td><td class="c3"> 0x40 (64) </td><td class="c4"> 0x40 (64) </td><td class="c5"> 90AB0040 </td><td class="c6"> </td></tr>
+<tr class="r8"><td class="c1">0xB0 </td><td class="c2"> AEC/AGC Pixel Count </td><td class="c3"> 0xABE0 </td><td class="c4"> 0x1000 (4096) </td><td class="c5"> 90B01000 </td><td class="c6"> </td></tr>
+<tr class="r9"><td class="c1">0xA5 </td><td class="c2"> AEC/AGC Desired Bin </td><td class="c3"> 0x3A </td><td class="c4"> 0x32 (50) </td><td class="c5"> 90A50032 </td><td class="c6"> </td></tr>
+<tr class="r10"><td class="c1">0x1C </td><td class="c2"> ADC Res Control </td><td class="c3"> 0x0302 </td><td class="c4"> 0x0202 </td><td class="c5"> 901C0202 </td><td class="c6"> </td></tr>
+<tr class="r11"><td class="c1">0x7F </td><td class="c2"> Test pattern </td><td class="c3"> 0x0000 </td><td class="c4"> 0x0000 </td><td class="c5"> 907F0000 </td><td class="c6"> </td></tr>
+<tr class="r12"><td class="c1">0xA6 </td><td class="c2"> AEC update Freq </td><td class="c3"> 0x2 </td><td class="c4"> 0x2 </td><td class="c5"> 90A60002 </td><td class="c6"> </td></tr>
+<tr class="r13"><td class="c1">0xA8 </td><td class="c2"> AEC lowpass Filter </td><td class="c3"> 0x0 </td><td class="c4"> 0x1 </td><td class="c5"> 90A80001 </td><td class="c6"> </td></tr>
+<tr class="r14"><td class="c1">0xA9 </td><td class="c2"> AGC update Freq </td><td class="c3"> 0x2 </td><td class="c4"> 0x2 </td><td class="c5"> 90A90002 </td><td class="c6"> </td></tr>
+<tr class="r15"><td class="c1">0xAA </td><td class="c2"> AGC lowpass Filter </td><td class="c3"> 0x2 </td><td class="c4"> 0x2 </td><td class="c5"> 90AA0002 </td><td class="c6">
+</td></tr></table>
+<p><b>finally, reset</b></p>
+<table id="mt9v034.c section2">
+<tr class="r1"><td class="c1"><b>Register</b> </td><td class="c2"> <b>Name</b> </td><td class="c3"> <b>Default</b> </td><td class="c4"> <b>Context A (Context B)</b> </td><td class="c5"> <b>COMMAND</b> </td><td class="c6"> <b>Annotation</b> </td></tr>
+<tr class="r2"><td class="c1">0x0C </td><td class="c2"> Reset </td><td class="c3"> </td><td class="c4"> </td><td class="c5"> 0x900C0001 </td><td class="c6"> </td></tr>
+<tr class="r3"><td class="c1">0x00 </td><td class="c2"> Chip ID </td><td class="c3"> </td><td class="c4"> </td><td class="c5"> 0x91000000 </td><td class="c6"> <b>read back</b>
 </td></tr></table>
 <p>The rom is a simplified form of PX4flow, where we may add more functionality with different configurations of switches.</p>
 <h1>dlog &ndash; Data logging via DP83848J and VHDL based MAC layer</h1>
@@ -244,7 +273,7 @@ Look from top-down, on the camera side.</p>
 <p>If crafting an PHY + MAC + IP protocol is not your <b>job</b>, then simply using one softcore with light IP stack.</p>
 <div id="footer">
 <div id="footer-text">
-Page generated 2014-06-15 18:46:29 UTC, by <a href="http://jemdoc.jaboc.net/">jemdoc</a>.
+Page generated 2014-06-15 22:03:17 UTC, by <a href="http://jemdoc.jaboc.net/">jemdoc</a>.
 </div>
 </div>
 </td>
