@@ -120,23 +120,27 @@ By injecting +DCMI_SYS_CLK+ with 25MHz clock input, and trigger +DCMI_EXP+ with 
 
 == NIR -- the wrapper of +i2c_io_16bit.vhd+
 
-We build dedicated module +i2c_io_16bit.vhd+ to handle the Read\/Write process to MT9v034,
+With +ADDR0+ and +ADDR1+ pins pulled low on mt9v034-dev, the address is +0x48+, with the last bit denotes write ('0') or read ('1'). Therefore, the mt9v034 board has +0x90+ for *write*, +0x91+ for *read*. We build dedicated module +i2c_io_16bit.vhd+ to handle the *Read\/Write* process to MT9v034.
+
 ~~~
 {}{table}{mt9v034 IO}
  0x90 (0x91) | REG_ADDRESS | WB1 (RB0) | WB2 (RB0)
 ~~~
 
-for example, +0x90070188+ write 0x0188 to 0x07 in mt9v034, +0x9107XXXX+ read DBYTE from 0x07 in mt9v034. 
+for example, +0x90070188+ write 0x0188 to 0x07 in mt9v034, +0x9107XXXX+ read DBYTE from 0x07 in mt9v034.
 
 ~~~
 As a simple rule-of-the-thumb, we may put +0x91000000+ on data bus, trigger +data_stream_in_stb+, and read out the content of +0x00+ on mt9v034 by acknowledge +data_stream_out_stb+, and finally put the register (which is the CHIPID, +0x1324+) on BCD segment display.
 ~~~
 
+Another simple example is command +0x900400FF+, which changes the +WINDOW_WIDTH+ to *256*, this can also be verified via Chipscope.
+
 == NIR -- config mt9v034 (copied from +px4flow+)
 
-With +ADDR0+ and +ADDR1+ pins pulled low on mt9v034-dev, the address is +0x48+, with the last bit denotes write ('0') or read ('1'). Therefore, the mt9v034 board has +0x90+ for write, +0x91+ for read.
+After testing the *R\/W* functionality of +i2c_io_16bit.vhd+, we next store all the command and registers in the +mt9v034.coe+, and loaded in a rom to config this camera module. The top module, which is called +mt9v034.vhd+, embedded the *mt9v034.coe*, sequentially read the content out, and config the device via I2C protocol.
 
-We port the source code +mt9v034.c+ in PX4Flow to NIR project, (+Context A+, context, is like a fast register switching machanism, Context B in PX4Flow is used for video capture only, while context A is for practical optical flow usage)
+We port the source code +mt9v034.c+ in PX4Flow to NIR project, (+Context A+, context, is like a fast stack-switch machanism, context B in PX4Flow is used for videos streaming only, while context A is for practical optical flow calculation).
+
 ~~~
 {}{table}{mt9v034.c}
  *Register* | *Name* | *Default* | *Context A (Context B)* | *Shadow Reg* | *Annotation* ||
@@ -149,6 +153,8 @@ We port the source code +mt9v034.c+ in PX4Flow to NIR project, (+Context A+, con
  0x06 | Ver Blanking | 45 | 10 | N | ||
  0x0D (0x0E) | Read Mode | 0x300 | 0x30A (0x305) | Y | row bin-4, col bin-4
 ~~~
+
+The rom is a simplified form of PX4flow, where we may add more functionality with different configurations of switches.
 
 = dlog -- Data logging via DP83848J and VHDL based MAC layer
 

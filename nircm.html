@@ -122,18 +122,19 @@ Look from top-down, on the camera side.</p>
 <p><tt>DCMI_VSYNC</tt> is HIGH valid during the whole imaging process (a frame), <tt>DCMI_HSYNC</tt> is periodorically HIGH valid. The image format is <b>752x480</b>. However, currently <tt>DCMI_CLK</tt> could not register exactly <tt>752</tt> datum each <b>HSYNC</b> pules. <i>(need debug this)</i>. Strange, <tt>DCMI_CLK</tt> may be <b>26.6</b>MHz PLL locked even if we inject a <b>25</b>MHz <tt>DCMI_SYS_CLK</tt>.</p>
 </div></div>
 <h2>NIR &ndash; the wrapper of <tt>i2c_io_16bit.vhd</tt></h2>
-<p>We build dedicated module <tt>i2c_io_16bit.vhd</tt> to handle the Read/Write process to MT9v034,</p>
+<p>With <tt>ADDR0</tt> and <tt>ADDR1</tt> pins pulled low on mt9v034-dev, the address is <tt>0x48</tt>, with the last bit denotes write (&rsquo;0&rsquo;) or read (&rsquo;1&rsquo;). Therefore, the mt9v034 board has <tt>0x90</tt> for <b>write</b>, <tt>0x91</tt> for <b>read</b>. We build dedicated module <tt>i2c_io_16bit.vhd</tt> to handle the <b>Read/Write</b> process to MT9v034.</p>
 <table id="mt9v034 IO">
 <tr class="r1"><td class="c1">0x90 (0x91) </td><td class="c2"> REG_ADDRESS </td><td class="c3"> WB1 (RB0) </td><td class="c4"> WB2 (RB0)
 </td></tr></table>
-<p>for example, <tt>0x90070188</tt> write 0x0188 to 0x07 in mt9v034, <tt>0x9107XXXX</tt> read DBYTE from 0x07 in mt9v034. </p>
+<p>for example, <tt>0x90070188</tt> write 0x0188 to 0x07 in mt9v034, <tt>0x9107XXXX</tt> read DBYTE from 0x07 in mt9v034.</p>
 <div class="infoblock">
 <div class="blockcontent">
 <p>As a simple rule-of-the-thumb, we may put <tt>0x91000000</tt> on data bus, trigger <tt>data_stream_in_stb</tt>, and read out the content of <tt>0x00</tt> on mt9v034 by acknowledge <tt>data_stream_out_stb</tt>, and finally put the register (which is the CHIPID, <tt>0x1324</tt>) on BCD segment display.</p>
 </div></div>
+<p>Another simple example is command <tt>0x900400FF</tt>, which changes the <tt>WINDOW_WIDTH</tt> to <b>256</b>, this can also be verified via Chipscope.</p>
 <h2>NIR &ndash; config mt9v034 (copied from <tt>px4flow</tt>)</h2>
-<p>With <tt>ADDR0</tt> and <tt>ADDR1</tt> pins pulled low on mt9v034-dev, the address is <tt>0x48</tt>, with the last bit denotes write (&rsquo;0&rsquo;) or read (&rsquo;1&rsquo;). Therefore, the mt9v034 board has <tt>0x90</tt> for write, <tt>0x91</tt> for read.</p>
-<p>We port the source code <tt>mt9v034.c</tt> in PX4Flow to NIR project, (<tt>Context A</tt>, context, is like a fast register switching machanism, Context B in PX4Flow is used for video capture only, while context A is for practical optical flow usage)</p>
+<p>After testing the <b>R/W</b> functionality of <tt>i2c_io_16bit.vhd</tt>, we next store all the command and registers in the <tt>mt9v034.coe</tt>, and loaded in a rom to config this camera module. The top module, which is called <tt>mt9v034.vhd</tt>, embedded the <b>mt9v034.coe</b>, sequentially read the content out, and config the device via I2C protocol.</p>
+<p>We port the source code <tt>mt9v034.c</tt> in PX4Flow to NIR project, (<tt>Context A</tt>, context, is like a fast stack-switch machanism, context B in PX4Flow is used for videos streaming only, while context A is for practical optical flow calculation).</p>
 <table id="mt9v034.c">
 <tr class="r1"><td class="c1"><b>Register</b> </td><td class="c2"> <b>Name</b> </td><td class="c3"> <b>Default</b> </td><td class="c4"> <b>Context A (Context B)</b> </td><td class="c5"> <b>Shadow Reg</b> </td><td class="c6"> <b>Annotation</b> </td></tr>
 <tr class="r2"><td class="c1">0x07 </td><td class="c2"> Chip Control </td><td class="c3"> 0x0388 </td><td class="c4"> 0x0188 (0x8188) </td><td class="c5"> Y </td><td class="c6"> <b>Normal</b> operation </td></tr>
@@ -145,6 +146,7 @@ Look from top-down, on the camera side.</p>
 <tr class="r8"><td class="c1">0x06 </td><td class="c2"> Ver Blanking </td><td class="c3"> 45 </td><td class="c4"> 10 </td><td class="c5"> N </td><td class="c6"> </td></tr>
 <tr class="r9"><td class="c1">0x0D (0x0E) </td><td class="c2"> Read Mode </td><td class="c3"> 0x300 </td><td class="c4"> 0x30A (0x305) </td><td class="c5"> Y </td><td class="c6"> row bin-4, col bin-4
 </td></tr></table>
+<p>The rom is a simplified form of PX4flow, where we may add more functionality with different configurations of switches.</p>
 <h1>dlog &ndash; Data logging via DP83848J and VHDL based MAC layer</h1>
 <p>MII mode configuration of DP83848, via power up boot mode (1 for pullup, 0 for pulldown, by default, RX_DV is internally weakly <b>pulled down</b>, the default value of <b>RX_DV is 0</b>),</p>
 <table id="Configuration of DP83848">
@@ -242,7 +244,7 @@ Look from top-down, on the camera side.</p>
 <p>If crafting an PHY + MAC + IP protocol is not your <b>job</b>, then simply using one softcore with light IP stack.</p>
 <div id="footer">
 <div id="footer-text">
-Page generated 2014-06-14 09:05:17 UTC, by <a href="http://jemdoc.jaboc.net/">jemdoc</a>.
+Page generated 2014-06-15 18:46:29 UTC, by <a href="http://jemdoc.jaboc.net/">jemdoc</a>.
 </div>
 </div>
 </td>
