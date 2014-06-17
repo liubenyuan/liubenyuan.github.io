@@ -95,7 +95,7 @@ Look from top-down, on the camera side.</p>
 <tr class="r3"><td class="c1">D2 </td><td class="c2"> SDA </td><td class="c3"> D4 </td><td class="c4"> SCK </td><td class="c5"> - </td><td class="c6"> - </td></tr>
 <tr class="r4"><td class="c1"><b>1</b> </td><td class="c2"> <b>2</b> </td><td class="c3"> <b>3</b> </td><td class="c4"> <b>4</b> </td><td class="c5"> <b>5</b> </td><td class="c6"> <b>6</b>
 </td></tr></table>
-<p><tt>Note:</tt> we should place <b>clk</b> pins on GCLK sites, where <b>C-1 (H3)</b>, <b>B-9 (K3)</b>, <b>B-10 (K5)</b>.</p>
+<p><tt>Note:</tt> we should place <b>clk</b> pins on GCLK sites, where <b>C-1 (H3)</b>, <b>B-9 (K3)</b>, <b>B-10 (K5)</b>. We wrap B9 and B10 to <b>XCK</b> and <b>PCK</b>. And we add insulate via Tin foil (锡铂纸).</p>
 <p>We wire (where FPGA is the master)</p>
 <table id="ucf definition">
 <tr class="r1"><td class="c1"><b>Port</b> </td><td class="c2"> <b>MT9V034-devboard</b> </td><td class="c3"> <b>IO (FPGA is the master)</b> </td><td class="c4"> <b>Annotation</b> </td></tr>
@@ -274,7 +274,7 @@ Look from top-down, on the camera side.</p>
 <p>If crafting an PHY + MAC + IP protocol is not your <b>job</b>, then simply using one softcore with light IP stack.</p>
 <div id="footer">
 <div id="footer-text">
-Page generated 2014-06-17 22:38:21 UTC, by <a href="http://jemdoc.jaboc.net/">jemdoc</a>.
+Page generated 2014-06-17 23:11:57 UTC, by <a href="http://jemdoc.jaboc.net/">jemdoc</a>.
 </div>
 </div>
 </td>

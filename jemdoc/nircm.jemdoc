@@ -85,7 +85,7 @@ where +D0+, +D1+ and +C_P+, +C_N+, +D_P+, +D_N+ are NC.
 *1* | *2* | *3* | *4* | *5* | *6*
 ~~~
 
-+Note:+ we should place *clk* pins on GCLK sites, where *C-1 (H3)*, *B-9 (K3)*, *B-10 (K5)*.
++Note:+ we should place *clk* pins on GCLK sites, where *C-1 (H3)*, *B-9 (K3)*, *B-10 (K5)*. We wrap B9 and B10 to *XCK* and *PCK*. And we add insulate via Tin foil (锡铂纸).
 
 We wire (where FPGA is the master)
 ~~~
