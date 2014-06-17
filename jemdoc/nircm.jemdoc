@@ -67,7 +67,7 @@ Look from top-down, on the camera side.
 
 where +D0+, +D1+ and +C_P+, +C_N+, +D_P+, +D_N+ are NC.
 
-*Pmod B :* (GND and VCC are more closer to the boards)
+*Pmod C :* (GND and VCC are more closer to the boards)
 ~~~
 {}{table}{NIR Pin set -- J4}
 *7* | *8* | *9* | *10* | *11* | *12* ||
@@ -76,14 +76,16 @@ where +D0+, +D1+ and +C_P+, +C_N+, +D_P+, +D_N+ are NC.
 *1* | *2* | *3* | *4* | *5* | *6*
 ~~~
 
-*Pmod C :* (GND and VCC are more closer to the boards)
+*Pmod B :* (GND and VCC are more closer to the boards)
 ~~~
 {}{table}{NIR Pin set -- J4}
 *7* | *8* | *9* | *10* | *11* | *12* ||
- PCK | D3 | LED | SDA | +GND+ | +VCC+ ||
- D2 | XCK | D4 | SCK | - | - ||
+ LED | D3 | *XCK* | *PCK* | +GND+ | +VCC+ ||
+ D2 | SDA | D4 | SCK | - | - ||
 *1* | *2* | *3* | *4* | *5* | *6*
 ~~~
+
++Note:+ we should place *clk* pins on GCLK sites, where *C-1 (H3)*, *B-9 (K3)*, *B-10 (K5)*.
 
 We wire (where FPGA is the master)
 ~~~
@@ -145,7 +147,7 @@ We port the source code +mt9v034.c+ in PX4Flow to NIR project, (+Context A+, con
 ~~~
 {}{table}{mt9v034.c}
  *Register* | *Name* | *Default* | *Context A (Context B)* | *COMMAND* | *Annotation* ||
- 0x07 | Chip Control | 0x0388 | 0x0188 (0x8188) | 90070188 | +0x0108+ ||
+ 0x07 | Chip Control | 0x0388 | 0x0188 (0x8188) | 90070188 | +0x0008+ ||
  0x03 (OxCB) | WINDOW_HEIGHT | 480 | 64\*4 (120\*4) | 90030100 | 4-binning ||
  0x04 (0xCC) | WINDOW_WIDTH | 752 | 64\*4 (188\*4) | 90040100 | ||
  0x05 | Hor Blanking | 4 \+ 91 | (752 - 64\*4) \+ 91 | 9005024B | ||

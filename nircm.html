@@ -81,20 +81,21 @@ Look from top-down, on the camera side.</p>
 <tr class="r4"><td class="c1"><b>13</b> </td><td class="c2"> <b>14</b> </td><td class="c3"> <b>15</b> </td><td class="c4"> <b>16</b> </td><td class="c5"> <b>17</b> </td><td class="c6"> <b>18</b> </td><td class="c7"> <b>19</b> </td><td class="c8"> <b>20</b> </td><td class="c9"> <b>21</b> </td><td class="c10"> <b>22</b> </td><td class="c11"> <b>23</b> </td><td class="c12"> <b>24</b>
 </td></tr></table>
 <p>where <tt>D0</tt>, <tt>D1</tt> and <tt>C_P</tt>, <tt>C_N</tt>, <tt>D_P</tt>, <tt>D_N</tt> are NC.</p>
-<p><b>Pmod B :</b> (GND and VCC are more closer to the boards)</p>
+<p><b>Pmod C :</b> (GND and VCC are more closer to the boards)</p>
 <table id="NIR Pin set -- J4">
 <tr class="r1"><td class="c1"><b>7</b> </td><td class="c2"> <b>8</b> </td><td class="c3"> <b>9</b> </td><td class="c4"> <b>10</b> </td><td class="c5"> <b>11</b> </td><td class="c6"> <b>12</b> </td></tr>
 <tr class="r2"><td class="c1">FRV </td><td class="c2"> D9 </td><td class="c3"> D8 </td><td class="c4"> D6 </td><td class="c5"> <tt>GND</tt> </td><td class="c6"> <tt>VCC</tt> </td></tr>
 <tr class="r3"><td class="c1">EXP </td><td class="c2"> LIV </td><td class="c3"> D7 </td><td class="c4"> D5 </td><td class="c5"> - </td><td class="c6"> - </td></tr>
 <tr class="r4"><td class="c1"><b>1</b> </td><td class="c2"> <b>2</b> </td><td class="c3"> <b>3</b> </td><td class="c4"> <b>4</b> </td><td class="c5"> <b>5</b> </td><td class="c6"> <b>6</b>
 </td></tr></table>
-<p><b>Pmod C :</b> (GND and VCC are more closer to the boards)</p>
+<p><b>Pmod B :</b> (GND and VCC are more closer to the boards)</p>
 <table id="NIR Pin set -- J4">
 <tr class="r1"><td class="c1"><b>7</b> </td><td class="c2"> <b>8</b> </td><td class="c3"> <b>9</b> </td><td class="c4"> <b>10</b> </td><td class="c5"> <b>11</b> </td><td class="c6"> <b>12</b> </td></tr>
-<tr class="r2"><td class="c1">PCK </td><td class="c2"> D3 </td><td class="c3"> LED </td><td class="c4"> SDA </td><td class="c5"> <tt>GND</tt> </td><td class="c6"> <tt>VCC</tt> </td></tr>
-<tr class="r3"><td class="c1">D2 </td><td class="c2"> XCK </td><td class="c3"> D4 </td><td class="c4"> SCK </td><td class="c5"> - </td><td class="c6"> - </td></tr>
+<tr class="r2"><td class="c1">LED </td><td class="c2"> D3 </td><td class="c3"> <b>XCK</b> </td><td class="c4"> <b>PCK</b> </td><td class="c5"> <tt>GND</tt> </td><td class="c6"> <tt>VCC</tt> </td></tr>
+<tr class="r3"><td class="c1">D2 </td><td class="c2"> SDA </td><td class="c3"> D4 </td><td class="c4"> SCK </td><td class="c5"> - </td><td class="c6"> - </td></tr>
 <tr class="r4"><td class="c1"><b>1</b> </td><td class="c2"> <b>2</b> </td><td class="c3"> <b>3</b> </td><td class="c4"> <b>4</b> </td><td class="c5"> <b>5</b> </td><td class="c6"> <b>6</b>
 </td></tr></table>
+<p><tt>Note:</tt> we should place <b>clk</b> pins on GCLK sites, where <b>C-1 (H3)</b>, <b>B-9 (K3)</b>, <b>B-10 (K5)</b>.</p>
 <p>We wire (where FPGA is the master)</p>
 <table id="ucf definition">
 <tr class="r1"><td class="c1"><b>Port</b> </td><td class="c2"> <b>MT9V034-devboard</b> </td><td class="c3"> <b>IO (FPGA is the master)</b> </td><td class="c4"> <b>Annotation</b> </td></tr>
@@ -138,7 +139,7 @@ Look from top-down, on the camera side.</p>
 <p><b>Context A/B</b></p>
 <table id="mt9v034.c">
 <tr class="r1"><td class="c1"><b>Register</b> </td><td class="c2"> <b>Name</b> </td><td class="c3"> <b>Default</b> </td><td class="c4"> <b>Context A (Context B)</b> </td><td class="c5"> <b>COMMAND</b> </td><td class="c6"> <b>Annotation</b> </td></tr>
-<tr class="r2"><td class="c1">0x07 </td><td class="c2"> Chip Control </td><td class="c3"> 0x0388 </td><td class="c4"> 0x0188 (0x8188) </td><td class="c5"> 90070188 </td><td class="c6"> <tt>0x0108</tt> </td></tr>
+<tr class="r2"><td class="c1">0x07 </td><td class="c2"> Chip Control </td><td class="c3"> 0x0388 </td><td class="c4"> 0x0188 (0x8188) </td><td class="c5"> 90070188 </td><td class="c6"> <tt>0x0008</tt> </td></tr>
 <tr class="r3"><td class="c1">0x03 (OxCB) </td><td class="c2"> WINDOW_HEIGHT </td><td class="c3"> 480 </td><td class="c4"> 64*4 (120*4) </td><td class="c5"> 90030100 </td><td class="c6"> 4-binning </td></tr>
 <tr class="r4"><td class="c1">0x04 (0xCC) </td><td class="c2"> WINDOW_WIDTH </td><td class="c3"> 752 </td><td class="c4"> 64*4 (188*4) </td><td class="c5"> 90040100 </td><td class="c6"> </td></tr>
 <tr class="r5"><td class="c1">0x05 </td><td class="c2"> Hor Blanking </td><td class="c3"> 4 + 91 </td><td class="c4"> (752 - 64*4) + 91 </td><td class="c5"> 9005024B </td><td class="c6"> </td></tr>
@@ -273,7 +274,7 @@ Look from top-down, on the camera side.</p>
 <p>If crafting an PHY + MAC + IP protocol is not your <b>job</b>, then simply using one softcore with light IP stack.</p>
 <div id="footer">
 <div id="footer-text">
-Page generated 2014-06-15 22:03:17 UTC, by <a href="http://jemdoc.jaboc.net/">jemdoc</a>.
+Page generated 2014-06-17 22:38:21 UTC, by <a href="http://jemdoc.jaboc.net/">jemdoc</a>.
 </div>
 </div>
 </td>
