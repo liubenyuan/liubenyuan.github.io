@@ -14,6 +14,6 @@ Hacks
     nrf51822 [nrf51822.html]
     flexbot [flexbot.html]
     msp430 [msp430.html]
-jemdoc
+    udp\/ip [udpip.html]
     mathjax [mathjax.html]
 

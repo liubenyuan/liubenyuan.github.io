@@ -8,16 +8,16 @@ My name is *liu benyuan* (the Chinese characters are displayed in the left). *li
 # you may use img_center if you like
 ~~~
 {}{img_left}{pics/email.gif}{email me}{160px}{}{}
-you may contact me at this email address.
+you may contact me at this email address, or liubenyuan $\boldsymbol{\alpha\tau}$ gmail $\boldsymbol{\delta o\tau}$ com
 ~~~
 
 = About
 
-I am now a research assistant in the department of BioMedical Engineering (BME) at [http://www.fmmu.edu.cn FMMU], under the supervisor of *Prof. Xiuzhen Dong* and *Prof. Feng Fu*. I am also a fifth-year Ph.D in the Science and Technology on Automatic Target Recognition Laboratory (ATR Lab) at [http://www.nudt.edu.cn NUDT], where I worked with *Prof. Qiang Fu* and *Dr. Hongqi Fan* in Adavance Radar Signal Processing *(ARSP)* group. My research interests lie broadly on biomedical signal processing, statistics, optimization, tracking and estimation.
+I am now a research assistant at the department of BioMedical Engineering (BME), [http://www.fmmu.edu.cn FMMU], under the supervisor of *Prof. Xiuzhen Dong* and *Prof. Feng Fu*. I am also a fifth-year Ph.D at the Science and Technology on Automatic Target Recognition Laboratory (ATR Lab), [http://www.nudt.edu.cn NUDT], where I worked with *Prof. Qiang Fu* and *Dr. Hongqi Fan* in Adavance Radar Signal Processing *(ARSP)* group. My research interests lie broadly on biomedical signal processing, statistics, optimization, tracking and estimation.
 
 = Academia
 
-My primary research is side-information assisted +Compressive Sensing (CS)+. We (in collaborate with [https://sites.google.com/site/researchbyzhang Dr. Zhilin Zhang]) have developed advanced Bayesian learning algorithms, which are termed the [https://sites.google.com/site/researchbyzhang/biocs BSBL] framework. I used those algorithms in group target Direction-of-Arrival (DOA) estimation, radar imaging and dynamic scene tracking. We also applied CS as a /low-complexity, low-power, robust/ data compression method in bio-signals (ECG, EEG, PPG, etc.) telemonitoring applications, a.k.a, +Portable Healthcare+. (it may also be called as *eHealth* or *mHealth*, however portable healthcare is IMHO *future*).
+My primary research is side-information assisted +Compressive Sensing (CS)+. We (in collaborate with [https://sites.google.com/site/researchbyzhang Dr. Zhilin Zhang]) have developed advanced Bayesian learning algorithms --- the [https://sites.google.com/site/researchbyzhang/biocs BSBL] framework. I used those algorithms in group target Direction-of-Arrival (DOA) estimation, radar imaging and dynamic scene tracking. We also applied CS as a /low-complexity, low-power, robust/ data compression method in bio-signals (ECG, EEG, PPG, etc.) telemonitoring applications.
 
 I am now building +Electrical Impedance Tomograpgy (EIT)+ hardware/software at [http://bme.fmmu.edu.cn Dept. of Biomedical Enegineering, FMMU], under the supervisor of *Prof. Xiuzhen Dong*, *Prof. Feng Fu* and *Prof. Xuetao Shi*.
 
@@ -25,5 +25,5 @@ I am also a big electronic fan on amatuer radio (HackRF, GNURadio), homebrew PCB
 
 = Scholar
 
-see my google scholar website : [http://scholar.google.com/citations?user=hq_pop0AAAAJ&hl=en Google Scholar -- liu benyuan].
+See my google scholar website : [http://scholar.google.com/citations?user=hq_pop0AAAAJ&hl=en Google Scholar -- liu benyuan].
 
