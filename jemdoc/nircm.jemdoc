@@ -147,7 +147,7 @@ We port the source code *mt9v034.c* in PX4Flow to NIR project, (*Context A*, con
 ~~~
 {}{table}{mt9v034.c}
  *Register* | *Name* | *Default* | *Context A (Context B)* | *COMMAND* | *Annotation* ||
- 0x07 | Chip Control | 0x0388 | 0x0188 (0x8188) | 90070188 | +0x0008+ ||
+ 0x07 | Chip Control | 0x0388 | 0x0188 (0x8188) | 90070188 | *0x0088* ||
  0x03 (OxCB) | WINDOW\_HEIGHT | 480 | 64\*4 (120\*4) | 90030100 | 4-binning ||
  0x04 (0xCC) | WINDOW\_WIDTH | 752 | 64\*4 (188\*4) | 90040100 | ||
  0x05 | Hor Blanking | 4 \+ 91 | (752 - 64\*4) \+ 91 | 9005024B | ||
