@@ -70,7 +70,7 @@
 <p>We connect the ADXL345 cable to the pmod slot by,</p>
 <table>
 <tr class="r1"><td class="c1">1 </td><td class="c2"> 2 </td><td class="c3"> 3 </td><td class="c4"> 4 </td><td class="c5"> 5 </td><td class="c6"> 6 </td></tr>
-<tr class="r2"><td class="c1">CS </td><td class="c2"> SDO </td><td class="c3"> SCL </td><td class="c4"> SDA </td><td class="c5"> <b>GND</b> </td><td class="c6"> <tt>VCC</tt>
+<tr class="r2"><td class="c1">CS </td><td class="c2"> SDO </td><td class="c3"> SCL </td><td class="c4"> SDA </td><td class="c5"> <b>GND</b> </td><td class="c6"> <b>VCC</b>
 </td></tr></table>
 <p>The I2C address of ADXL345 is <tt>0x1D</tt>. In order to use this address (rather than SPI interface or the alternate address), you should tied <b>CS</b> to HIGH and <b>SDO</b> to HIGH; if you want to use the alternate address <tt>0x53</tt>, pin <b>SDO</b> must pulldown to GND. You could test the function of I2C interface by reading the chip ID from the <b>CHIPID</b> address <tt>0x00</tt>, see if you can get <tt>0xE5</tt>.</p>
 <ol>
@@ -107,7 +107,7 @@
 <tr class="r2"><td class="c1">tx </td><td class="c2"> USB_RS232_TXD </td><td class="c3"> RN42_RXD </td></tr>
 <tr class="r3"><td class="c1">rx </td><td class="c2"> USB_RS232_RXD </td><td class="c3"> RN42_TXD
 </td></tr></table>
-<p>The serial can be debuged using <b>minicom</b>. <tt>Warning</tt>, it was said that RN42 enable <b>hardware flowcontrol</b>, however when I connect via minicom -s, (remember to enable <tt>echo</tt> by Ctrl + A, E), I had to <b>disable hardware flowcontrol</b>, to enter the command mode of RN42. (where 3 dollar signs may enter the CMD prompt).</p>
+<p>The serial can be debuged using <b>minicom</b>. <b>Warning:</b> it was said that RN42 enable <b>hardware flowcontrol</b>, however when I connect via minicom -s, (remember to enable <b>echo</b> by Ctrl + A, E), I had to <b>disable hardware flowcontrol</b>, to enter the command mode of RN42. (where 3 dollar signs may enter the CMD prompt).</p>
 <p><i>you may use the command mode to debug the connection of RN42</i></p>
 <h3>connect to RN42 and record data</h3>
 <p>References : Archlinux <a href="https://bbs.archlinux.org/viewtopic.php?pid=1388523" target=&ldquo;blank&rdquo;>FAQ 1</a>, <a href="https://bbs.archlinux.org/viewtopic.php?pid=1322604" target=&ldquo;blank&rdquo;>FAQ 2</a>, <a href="https://wiki.archlinux.org/index.php/bluetooth" target=&ldquo;blank&rdquo;>Archlinux bluetooth tutorial</a>, <a href="http://www.thinkwiki.org/wiki/How_to_setup_Bluetooth" target=&ldquo;blank&rdquo;>Thinkwiki &ndash; Bluetooth</a>, <a href="http://archlinuxarm.org/forum/viewtopic.php?f=9&amp;t=6016" target=&ldquo;blank&rdquo;>write a rfcomm.conf</a>. We may use either bluetooth dongle or the bluetooth in the PC.</p>
@@ -152,7 +152,7 @@ $ sudo rfcomm bind rfcomm0 00:06:66:43:0F:2E
 <p><tt>NOTE</tt> When we connect to the bluetooth serial (via python, minicom, etc.,) and receive data, the pairing LED on RN42 will <b>flash</b>, and the connection status LED will <b>pulldown</b> (connected). Data are now transmitted from slave to our PC.</p>
 <div id="footer">
 <div id="footer-text">
-Page generated 2014-06-21 17:50:38 UTC, by <a href="https://github.com/wsshin/jemdoc_mathjax" target="blank">jemdoc+MathJax</a>.
+Page generated 2014-06-21 21:59:52 UTC, by <a href="https://github.com/wsshin/jemdoc_mathjax" target="blank">jemdoc+MathJax</a>.
 </div>
 </div>
 </td>

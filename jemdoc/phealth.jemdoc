@@ -48,7 +48,7 @@ We connect the ADXL345 cable to the pmod slot by,
 ~~~
 {}{table}{}
  1 | 2 | 3 | 4 | 5 | 6 ||
-CS | SDO | SCL | SDA | *GND* | +VCC+
+CS | SDO | SCL | SDA | *GND* | *VCC*
 ~~~
 Note that, in the pmod extension cable, we made default, the +plum marker+ (梅花印) denotes common connections, and it is connected to +VCC+ at the plum side.
 
@@ -81,7 +81,7 @@ rx | USB\_RS232\_RXD | RN42\_TXD
 ~~~
 we also wire the RTS pin of RN-42 *into* CTS.
 
-The serial can be debuged using *minicom*. +Warning+, it was said that RN42 enable *hardware flowcontrol*, however when I connect via minicom -s, (remember to enable +echo+ by Ctrl + A, E), I had to *disable hardware flowcontrol*, to enter the command mode of RN42. (where 3 dollar signs may enter the CMD prompt).
+The serial can be debuged using *minicom*. *Warning:* it was said that RN42 enable *hardware flowcontrol*, however when I connect via minicom -s, (remember to enable *echo* by Ctrl + A, E), I had to *disable hardware flowcontrol*, to enter the command mode of RN42. (where 3 dollar signs may enter the CMD prompt).
 
 /you may use the command mode to debug the connection of RN42/
 

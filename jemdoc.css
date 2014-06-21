@@ -7,10 +7,12 @@ table#tlayout {
 }
 
 body {
-    background: white;
+    color: #212121;
+    background: #ffffff;
     /* font-family: Monaco, 'Frutiger Neue W02 Book', sans-serif; */
     font-family : Inconsolata, Georgia, 'Frutiger Neue W02 Book', sans-serif;
     padding-bottom: 8px;
+    line-height: 1.25;
     margin: 0;
 }
 
@@ -49,12 +51,15 @@ body {
 
 /* texttt */
 tt {
-    color : #E71108; /* Red : #D71108, #E71108 */
-    font-weight : normal; /* bold */
+    color: #E71108; /* Red : #D71108, #E71108 */
+    font-weight: normal; /* bold */
+    border: 1px solid silver;
+    background: #F6F6F6;
+    padding: 0.2em 0.2em 0.2em 0.2em;
 }
 pre, tt {
     font-family : Inconsolata, Monaco, 'Frutiger Neue W02 Book', monospace;
-    font-size : 95%;
+    font-size : 90%;
 }
 
 /* hyperlinks (all colors are here), font-weight: bold, normal */
@@ -125,16 +130,15 @@ h1, h2, h3 {
     margin-top: 0.5em;
     margin-bottom: 0.3em;
     padding-bottom: 0.3em;
-    line-height: 1.2;
+    line-height: 1.25;
     padding-top: 0.5em;
     border-bottom: 2px solid #05A605;
 }
 h1 {
     font-size: 26px;
-    padding-top: 1.0em;
+    padding-top: 0.6em;
     padding-bottom: 0.4em;
-    padding-left: 0.4em;
-    border-left: 8px solid silver;
+    /* border-left: 8px solid silver; */
 }
 /*
 h1:after {

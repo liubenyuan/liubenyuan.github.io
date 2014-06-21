@@ -39,8 +39,8 @@
 <tr class="r3"><td class="c1">1 </td><td class="c2"> RMII Mode
 </td></tr></table>
 <p>About the PHY_ADDRESS. PHYAD4-PHYAD1 is internally <b>pulled down</b>, PHYAD0 is internally weakly <b>pulled up</b>, the PHY_ADDRESS is by default <tt>b&ldquo;00001&rdquo;</tt>; if <b>bitgen</b> let's unused pins COL/PHYAD0 pulled down, and PHYAD4-PHYAD1 pulled-up as specified in ucf, the PHY_ADDRESS will be altered as <tt>b&ldquo;11110&rdquo;</tt>. PHY_ADDRESS <tt>b&ldquo;00000&rdquo;</tt> is not allowed.</p>
-<h2><tt>downlink</tt> &ndash; receive data from PC and send packet back via UART interface</h2>
-<h2><tt>uplink</tt> &ndash; receive data from uart and send to PC via ethernet</h2>
+<h2>downlink &ndash; receive data from PC and send packet back via UART interface</h2>
+<h2>uplink &ndash; receive data from uart and send to PC via ethernet</h2>
 <h2>High-speed full duplex data logging from FPGA to PC</h2>
 <p>Most of the time, we collected large amount of data using FPGA and on-chip ADCs, and want sent them direct to PC. Only standard peripherals can be used. Some protocols may bump to our mind, for example, Bluetooth 2.1 (BLE is too slow for data logging), RS232 (where most of the time, we will use CP2102 to convert a serial interface to USB, and utilize the ttyUSBx on PC), wifi and ethernet. Among all these options, UART is the best. It is simple, utilize little FPGA on-chip resources, and the data can be logged in raw format. Most important, I had success with this protocol.</p>
 <p>Transparent data transfer using RS232 via bluetooth or wifi, or even ethernet are now available. However, we had this problem : how could we transfer data from FPGA to PC, in high-speed, long-distance, and best of all, with little or no dirty work on excessive complex state machines?</p>
@@ -92,7 +92,7 @@
 :set ff=unix
 </pre></div></div>
 <p>将refdesign中的编码更新一下，在diff之后，我们就看到仅仅是peripheral器件的版本号发生了改变。</p>
-<p><tt>注意！</tt> 当我们采用microblaze的refdesign时，<tt>仅仅需要连接pmodAD2到3-6管脚上</tt>，而不能将8个管脚全部连接。这是因为在这个默认的refdesign中，7-12管脚是接地的。我们可以用extension cable来连接。</p>
+<p><b>注意！</b> 当我们采用microblaze的refdesign时，<b>仅仅需要连接pmodAD2到3-6管脚上</b>，而不能将8个管脚全部连接。这是因为在这个默认的refdesign中，7-12管脚是接地的。我们可以用extension cable来连接。</p>
 <h2>Ethernet</h2>
 <p>The commercial IP core (Xilinx Tri-MAC) is a complete implementation of a MAC layer. The lx9 microboard has an National Semiconductor DP83848J Phy layer and Tyco RJ45 connector. I found designs which directly use the LVDS pins on FPGA to implement the 10BASE-T protocol (MAC + PHY all in FPGA):</p>
 <ol>
@@ -128,7 +128,7 @@
 <p>If crafting an PHY + MAC + IP protocol is not your <b>job</b>, then simply using one softcore with light IP stack.</p>
 <div id="footer">
 <div id="footer-text">
-Page generated 2014-06-21 17:51:35 UTC, by <a href="https://github.com/wsshin/jemdoc_mathjax" target="blank">jemdoc+MathJax</a>.
+Page generated 2014-06-21 22:12:03 UTC, by <a href="https://github.com/wsshin/jemdoc_mathjax" target="blank">jemdoc+MathJax</a>.
 </div>
 </div>
 </td>

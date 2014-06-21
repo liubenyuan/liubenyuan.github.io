@@ -1,6 +1,8 @@
 # jemdoc: menu{MENU}{mathjax.html}
 
-= MathJax Example
+= New features in local copy : jemdoc.py
+
+== MathJax Example
 
 In this modified version of +jemdoc+, a LaTeX equation block can be typed in as
 \(

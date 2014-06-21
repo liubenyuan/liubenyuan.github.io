@@ -60,8 +60,8 @@ Look from top-down, on the camera side.
 ~~~
 {}{table}{mt9v034 pin configuration}
 *12* | *11* | *10* | *9* | *8* | *7* | *6* | *5* | *4* | *3* | *2* | *1* ||
- D1 | PCK | D3 | LED | SDA | FRV | D9 | C\_P | D\_P | D8 | D6 | +VCC+ ||
- D2 | D0 | XCK | D4 | SCK | EXP | LIV | C\_N | D\_N | D7 | D5 | +GND+ ||
+ D1 | PCK | D3 | LED | SDA | FRV | D9 | C\_P | D\_P | D8 | D6 | *VCC* ||
+ D2 | D0 | XCK | D4 | SCK | EXP | LIV | C\_N | D\_N | D7 | D5 | *GND* ||
 *13* | *14* | *15* | *16* | *17* | *18* | *19* | *20* | *21* | *22* | *23* | *24*
 ~~~
 
@@ -71,7 +71,7 @@ where +D0+, +D1+ and +C\_P+, +C\_N+, +D\_P+, +D\_N+ are NC.
 ~~~
 {}{table}{NIR Pin set -- J4}
 *7* | *8* | *9* | *10* | *11* | *12* ||
- FRV | D9 | D8 | D6 | +GND+ | +VCC+ ||
+ FRV | D9 | D8 | D6 | *GND* | *VCC* ||
  EXP | LIV | D7 | D5 | - | - ||
 *1* | *2* | *3* | *4* | *5* | *6*
 ~~~
@@ -80,12 +80,12 @@ where +D0+, +D1+ and +C\_P+, +C\_N+, +D\_P+, +D\_N+ are NC.
 ~~~
 {}{table}{NIR Pin set -- J4}
 *7* | *8* | *9* | *10* | *11* | *12* ||
- LED | D3 | *XCK* | *PCK* | +GND+ | +VCC+ ||
+ LED | D3 | *XCK* | *PCK* | *GND* | *VCC* ||
  D2 | SDA | D4 | SCK | - | - ||
 *1* | *2* | *3* | *4* | *5* | *6*
 ~~~
 
-+Note:+ we should place *clk* pins on GCLK sites, where *C-1 (H3)*, *B-9 (K3)*, *B-10 (K5)*. We wrap B9 and B10 to *XCK* and *PCK*. And we add insulate via Tin foil (锡铂纸).
+*Note:* we should place *clk* pins on GCLK sites, where +C-1 (H3)+, +B-9 (K3)+, +B-10 (K5)+. We wrap B9 and B10 to *XCK* and *PCK*. And we add insulate via Tin foil (锡铂纸).
 
 We wire (where FPGA is the master)
 ~~~
@@ -120,7 +120,7 @@ By injecting +DCMI\_SYS\_CLK+ with 25MHz clock input, and trigger +DCMI\_EXP+ wi
 +DCMI\_VSYNC+ is HIGH valid during the whole imaging process (a frame), +DCMI\_HSYNC+ is periodorically HIGH valid. The image format is *752x480*. However, currently +DCMI\_CLK+ could not register exactly +752+ datum each *HSYNC* pules. /(need debug this)/. Strange, +DCMI\_CLK+ may be *26.6*MHz PLL locked even if we inject a *25*MHz +DCMI\_SYS\_CLK+.
 ~~~
 
-== NIR -- the wrapper of +i2c\_io\_16bit.vhd+
+== NIR -- the wrapper of i2c\_io\_16bit.vhd
 
 With +ADDR0+ and +ADDR1+ pins pulled low on mt9v034-dev, the address is +0x48+, with the last bit denotes write ('0') or read ('1'). Therefore, the mt9v034 board has +0x90+ for *write*, +0x91+ for *read*. We build dedicated module +i2c\_io\_16bit.vhd+ to handle the *Read\/Write* process to MT9v034.
 
@@ -129,7 +129,7 @@ With +ADDR0+ and +ADDR1+ pins pulled low on mt9v034-dev, the address is +0x48+, 
  0x90 (0x91) | REG\_ADDRESS | WB1 (RB0) | WB2 (RB0)
 ~~~
 
-for example, +0x90070188+ write 0x0188 to 0x07 in mt9v034, +0x9107XXXX+ read DBYTE from 0x07 in mt9v034.
+for example, +0x90070188+ *write* 0x0188 to 0x07 in mt9v034, +0x9107XXXX+ *read* DBYTE from 0x07 in mt9v034.
 
 ~~~
 As a simple rule-of-the-thumb, we may put +0x91000000+ on data bus, trigger +data\_stream\_in\_stb+, and read out the content of +0x00+ on mt9v034 by acknowledge +data\_stream\_out\_stb+, and finally put the register (which is the CHIPID, +0x1324+) on BCD segment display.
@@ -137,11 +137,11 @@ As a simple rule-of-the-thumb, we may put +0x91000000+ on data bus, trigger +dat
 
 Another simple example is command +0x900400FF+, which changes the +WINDOW\_WIDTH+ to *256*, this can also be verified via Chipscope.
 
-== NIR -- config mt9v034 (copied from +px4flow+)
+== NIR -- config mt9v034 (copied from px4flow)
 
 After testing the *R\/W* functionality of +i2c\_io\_16bit.vhd+, we next store all the command and registers in the +mt9v034.coe+, and loaded in a rom to config this camera module. The top module, which is called +mt9v034.vhd+, embedded the *mt9v034.coe*, sequentially read the content out, and config the device via I2C protocol.
 
-We port the source code +mt9v034.c+ in PX4Flow to NIR project, (+Context A+, context, is like a fast stack-switch machanism, context B in PX4Flow is used for videos streaming only, while context A is for practical optical flow calculation).
+We port the source code *mt9v034.c* in PX4Flow to NIR project, (*Context A*, context, is like a fast stack-switch machanism, context B in PX4Flow is used for videos streaming only, while context A is for practical optical flow calculation).
 
 *Context A\/B*
 ~~~

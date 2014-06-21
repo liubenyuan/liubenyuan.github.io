@@ -47,14 +47,14 @@
 &gt;&gt; cd ..
 &gt;&gt; sudo mv JLink_Linux_V480 ~/bin/jlink
 </pre></div></div>
-<p>我们将jlink安装在了个人目录的bin目录下。安装完成后，需要重新连接jlink调试器，然后运行<b>JLinkExe</b>就会看到自动更新固件的信息以及链路上的设备信息，在这里应该是Cortex-M0。在后面的Makefile中，我们需要设定<tt>PROG_ROOT</tt>为</p>
+<p>我们将jlink安装在了个人目录的bin目录下。安装完成后，需要重新连接jlink调试器，然后运行<b>JLinkExe</b>就会看到自动更新固件的信息以及链路上的设备信息，在这里应该是Cortex-M0。在后面的Makefile中，我们需要设定 <b>PROG_ROOT</b> 为</p>
 <div class="codeblock">
 <div class="blockcontent"><pre>
 PROG_ROOT = $(HOME)/bin/jlink
 </pre></div></div>
 <h2>2. arm-none-eabi-{gcc,binutils,gdb} &ndash; cross toolchain 编译环境</h2>
 <p>我们需要在linux下用交叉编译工具生成cortex-M0可执行代码。这一步很简单，可以使用官方的arm-none-eabi，或者使用mentor的<b>sourcery codebench</b>的最新的交叉编译程序。</p>
-<p>这里，我们选择是使用archlinux提供的ARM交叉编译工具，见<a href="https://launchpad.net/gcc-arm-embedded" target=&ldquo;blank&rdquo;>https://launchpad.net/gcc-arm-embedded</a>，直接用pacman安装好<b>arm-non-eabi-{gcc,gdb,binutils}</b>包即可。然后我们需要设定<tt>GNU_INSTALL_ROOT</tt>:</p>
+<p>这里，我们选择是使用archlinux提供的ARM交叉编译工具，见<a href="https://launchpad.net/gcc-arm-embedded" target=&ldquo;blank&rdquo;>https://launchpad.net/gcc-arm-embedded</a>，直接用pacman安装好<b>arm-non-eabi-{gcc,gdb,binutils}</b>包即可。然后我们需要设定 <b>GNU_INSTALL_ROOT</b> :</p>
 <div class="codeblock">
 <div class="blockcontent"><pre>
 GNU_INSTALL_ROOT := /usr
@@ -62,13 +62,13 @@ GNU_VERSION := 4.9.0
 GNU_PREFIX := arm-none-eabi
 </pre></div></div>
 <h2>3. Nordic nrf51822 SDK</h2>
-<p>我们可以下载最新的nrf51822的SDK，以及nordic的<tt>s110,s120</tt> softdevice（类比FPGA中的说法，我们可以称softdevice为有<b>API的软核</b>）。如果你购买的是nrf51822 AK开发板，那么可以去<a href="http://www.nrf51.com" target=&ldquo;blank&rdquo;>nrf51论坛</a>下载。假定他们都放在了<b>$(HOME)/bin</b>目录下，那么需要设定好<tt>SDK_PATH</tt>和<tt>SOC_PATH</tt>:</p>
+<p>我们可以下载最新的nrf51822的SDK，以及nordic的 <tt>s110</tt>, <tt>s120</tt> softdevice（类比FPGA中的说法，我们可以称softdevice为有<b>API的软核</b>）。如果你购买的是nrf51822 AK开发板，那么可以去<a href="http://www.nrf51.com" target=&ldquo;blank&rdquo;>nrf51论坛</a>下载。假定他们都放在了<b>$(HOME)/bin</b>目录下，那么需要设定好 <b>SDK_PATH</b> 和 <b>SOC_PATH</b> :</p>
 <div class="codeblock">
 <div class="blockcontent"><pre>
 SDK_PATH := $(HOME)/bin/nrf51_sdk_v5_2_0_39364/Nordic/nrf51822/
 SOC_PATH := $(HOME)/bin/nrf51_softdevice/
 </pre></div></div>
-<p>这样，<tt>s110</tt>, <tt>s120</tt>等软核的hex文件都位于<tt>SOC_PATH</tt>下面。</p>
+<p>这样，<tt>s110</tt>, <tt>s120</tt> 等软核的hex文件都位于 <b>SOC_PATH</b> 下面。</p>
 <h2>ARM 开发初探 (you may skip this section)</h2>
 <p>作为一个新手，我对启动开发Cortex-M0加蓝牙的程序是很茫然的，我先前的所有经验都是在FPGA和ADSP上进行开发。现在，我们要一步的迁移到交叉编译环境加ARM与蓝牙上面。所幸，网上有很多相当优秀的教程，我列以下两个：</p>
 <ol>
@@ -79,10 +79,10 @@ SOC_PATH := $(HOME)/bin/nrf51_softdevice/
 </ol>
 <h3>Balau82的博客集锦</h3>
 <p>我们首先阅读Balau82的博客获取一些基础知识。</p>
-<p><a href="http://balau82.wordpress.com/2010/02/14/simplest-bare-metal-program-for-arm/" target=&ldquo;blank&rdquo;>Simplest bare metal program for ARM</a>. Bare Metal (裸机) 程序是无需操作系统即可运行的程式。学习裸机程序对于理解硬件架构以及操作系统的底层都很有帮助。我们在安装好arm-none-eabi工具(<tt>none</tt>即为<b>bare metal</b>的含义)后，将arm-none-eabi-*添加到系统可执行路径中即可。</p>
+<p><a href="http://balau82.wordpress.com/2010/02/14/simplest-bare-metal-program-for-arm/" target=&ldquo;blank&rdquo;>Simplest bare metal program for ARM</a>. Bare Metal (裸机) 程序是无需操作系统即可运行的程式。学习裸机程序对于理解硬件架构以及操作系统的底层都很有帮助。我们在安装好arm-none-eabi工具( none 即为<b>bare metal</b>的含义)后，将arm-none-eabi-*添加到系统可执行路径中即可。</p>
 <table class="imgtable"><tr><td>
 <img src="pics/balau82_20100214.png" alt="ARM bare metal" width="300px" />&nbsp;</td>
-<td align="left"><p>nrf51822 AK开发板可以看作是cortex-M0架构下<tt>最小</tt>的开发板。最基本的源代码包括<b>test.c</b>，启动代码<b>startup.s</b>，链接配置<b>test.ld</b>。相应的交叉编译工具也可以在图中找到。<tt>启动代码</tt>最基本的功能就是在程序初始化端口，屏蔽中断，映射程序。<tt>链接配置</tt>则包含text，data以及堆栈的位置，或者说 <i><tt>tells the linker where different memory sections map into real, physical memory on the chip</tt></i> 。针对cortex-M0架构，我们需好好理解启动代码（balau给出的例子并不是针对cortex-M0架构的，针对不同架构有不同的汇编语法），不要被复杂的.s程序所困扰，只要让程序运行起来即可。编程离不开数据手册和硬件原理图的。</p>
+<td align="left"><p>nrf51822 AK开发板可以看作是cortex-M0架构下最小的开发板。最基本的源代码包括<b>test.c</b>，启动代码<b>startup.s</b>，链接配置<b>test.ld</b>。相应的交叉编译工具也可以在图中找到。 <tt>启动代码</tt> 最基本的功能就是在程序初始化端口，屏蔽中断，映射程序。 <tt>链接配置</tt> 则包含text，data以及堆栈的位置，或者说 <i> tells the linker where different memory sections map into real, physical memory on the chip </i> 。针对cortex-M0架构，我们需好好理解启动代码（balau给出的例子并不是针对cortex-M0架构的，针对不同架构有不同的汇编语法），不要被复杂的.s程序所困扰，只要让程序运行起来即可。编程离不开数据手册 (datasheet) 和硬件原理图 (schematic) 的。</p>
 </td></tr></table>
 <p><a href="http://balau82.wordpress.com/2010/02/28/hello-world-for-bare-metal-arm-using-qemu/" target=&ldquo;blank&rdquo;>Hello world for bare metal ARM using QEMU</a>. 我们可以用qemu和arm-none-eabi-gdb来调试程序。在这里，我们还是使用上面test.c的例子。运行</p>
 <div class="codeblock">
@@ -105,7 +105,7 @@ $ arm-none-eabi-gdb
 (gdb) stepi
 </pre></div></div>
 <p>需要退出qemu的仿真，可以Ctrl+a, x。</p>
-<p><a href="http://balau82.wordpress.com/2011/09/03/using-codesourcery-bare-metal-toolchain-for-cortex-m3/" target=&ldquo;blank&rdquo;>Using CodeSourcery bare metal toolchain for Cortex-M3</a>. 之前的交叉编译的例子都是基于arm926ej-s，balau在本文中提供了针对cortex-m3的例子。Bare metal程式最大的用处是在MCU上，我直接复制了例子中的文件并且制作了makefile，在qemu上仿真一切OK，源代码可见 <tt>main.c, syscalls.c, reset.S, lm3s6965.ld</tt> 。</p>
+<p><a href="http://balau82.wordpress.com/2011/09/03/using-codesourcery-bare-metal-toolchain-for-cortex-m3/" target=&ldquo;blank&rdquo;>Using CodeSourcery bare metal toolchain for Cortex-M3</a>. 之前的交叉编译的例子都是基于arm926ej-s，balau在本文中提供了针对cortex-m3的例子。Bare metal程式最大的用处是在MCU上，我直接复制了例子中的文件并且制作了makefile，在qemu上仿真一切OK，源代码可见 main.c, syscalls.c, reset.S, lm3s6965.ld 。</p>
 <div class="codeblock">
 <div class="blockcontent"><pre>
 $ alias gcc-cortex-m3='arm-none-eabi-gcc -mthumb -march=armv7 -mfix-cortex-m3-ldrd'
@@ -121,7 +121,7 @@ $ qemu-system-arm -M lm3s6965evb --kernel main.bin --serial stdio
 <div class="blockcontent"><pre>
 $ gcc-cortex-m3 -T lm3s6965.ld main.c reset.S syscalls.c -o main.elf
 </pre></div></div>
-<p>随后我们还要<tt>(1)</tt>&nbsp;检查程序大小，<tt>(2)</tt>&nbsp;初始化向量表（湾湾的称呼为<b>序列埠</b>，很有意思），以及<tt>(3)</tt>&nbsp;用MCU官方的工具对Flash进行擦写。问题是：针对cortex-m0的开发，我们需要怎样做呢？</p>
+<p>随后我们还要 (1)&nbsp;检查程序大小，(2)&nbsp;初始化向量表（湾湾的称呼为<b>序列埠</b>，很有意思），以及(3)&nbsp;用MCU官方的工具对Flash进行擦写。问题是：针对cortex-m0的开发，我们需要怎样做呢？</p>
 <h2>4. template for nrf51822</h2>
 <p>可以从<a href="https://github.com/liubenyuan/nrf51822-makefile" target=&ldquo;blank&rdquo;>nrf51822-makefile @ github</a>下载linux下nrf51822的Makefile，需要注意，当前测试的工作环境是：</p>
 <ul>
@@ -134,7 +134,7 @@ $ gcc-cortex-m3 -T lm3s6965.ld main.c reset.S syscalls.c -o main.elf
 <li><p>s110 6.0.0-5 beta, s120 0.8.0-3 alpha</p>
 </li>
 </ul>
-<p>我们只需将makefile（包括<tt>Makefile</tt>, <tt>Makefile.config</tt>）放到正确的位置上即可，如对于project，</p>
+<p>我们只需将makefile（包括 Makefile, Makefile.config ）放到正确的位置上即可，如对于project，</p>
 <div class="codeblock">
 <div class="blockcontent"><pre>
 $ mkdir -p project/gcc
@@ -157,7 +157,7 @@ $ make echostuff
 C_OBJECTS: [_build/main.o _build/nrf_delay.o _build/system_nrf51.o]
 C_SOURCE_FILES: [main.c nrf_delay.c system_nrf51.c]
 </pre></div></div>
-<p>当然还有<tt>gcc_startup_nrf51.s</tt></p>
+<p>当然还有 gcc_startup_nrf51.s</p>
 <h2>your 2nd program : ble_hrs</h2>
 <p>对于第二个例子，由于我们用到了s110 SOC，因此，需要修改<b>Makefile.config</b>（或者可以直接使用<b>Makefile.config.ble</b>）</p>
 <div class="codeblock">
@@ -172,10 +172,10 @@ $ make all
 $ make flash-softdevice
 $ make flash
 </pre></div></div>
-<p>Note that <tt>make flash-softdevice</tt> automatically erase-all the device.</p>
+<p>Note that <b>make flash-softdevice</b> automatically erase-all the device.</p>
 <div id="footer">
 <div id="footer-text">
-Page generated 2014-06-21 17:50:38 UTC, by <a href="https://github.com/wsshin/jemdoc_mathjax" target="blank">jemdoc+MathJax</a>.
+Page generated 2014-06-21 22:09:13 UTC, by <a href="https://github.com/wsshin/jemdoc_mathjax" target="blank">jemdoc+MathJax</a>.
 </div>
 </div>
 </td>

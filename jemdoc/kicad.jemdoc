@@ -74,7 +74,3 @@ Finally, we come to the CAM process (for ShenZhen manufacture). We will need *dr
 
 So let's sum up, we have +GTL, GTS, GTO+ and +GBL, GBS, GBO+ files, plus the drill file +.TXT, .drl, .drd+. And one file +.GTP+ may also be included. If we are manufacturing 4-layer PCB, we will need +.G2L, .G3L+ to denote the 3rd and 4th layer. All these files need to be visually checked in CAM350 and export as +.CAM+ file.
 
-== 電阻，電感，電容的封裝 (note)
-
-. 例风华系列的贴片电容的命名：*0805CG102J500NT*。*0805*：是指该贴片电容的尺寸套小，是用英寸来表示的。08表示长度是0.08英寸、05表示宽度为0.05英寸； *CG*：是表示做这种电容要求用的材质，这个材质一般适合于做小于10000PF以下的电容； *102*：是指电容容量，前面两位是有效数字、后面的2表示有多少个零102=10×102,也就是=1000PF； *J*：是要求电容的容量值达到的误差精度为5％，介质材料和误差精度是配对的； *500*：是要求电容承受的耐压为50V。同样500前面两位是有效数字，后面是指有多少个零； *N*：是指端头材料。现在一般的端头都是指三层电极(银/铜层)、镍、锡； *T*：是指包装方式，T表示编带包装，B表示塑料盒散包装。
-. 钽贴片电解电容有黑色或灰色标志的一头是正极，另外一头是负极。对于铝贴片电解电容就和普通直插电解电容一样，有杠杠的那端为负极。
