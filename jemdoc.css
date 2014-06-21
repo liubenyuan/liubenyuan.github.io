@@ -49,8 +49,8 @@ body {
 
 /* texttt */
 tt {
-    color : #E71108; /* Red : #D71108 */
-    font-weight : bold;
+    color : #E71108; /* Red : #D71108, #E71108 */
+    font-weight : normal; /* bold */
 }
 pre, tt {
     font-family : Inconsolata, Monaco, 'Frutiger Neue W02 Book', monospace;
@@ -131,7 +131,7 @@ h1, h2, h3 {
 }
 h1 {
     font-size: 26px;
-    padding-top: 0.6em;
+    padding-top: 1.0em;
     padding-bottom: 0.4em;
     padding-left: 0.4em;
     border-left: 8px solid silver;
@@ -267,12 +267,14 @@ div.blocktitle {
 }
 
 div.blockcontent {
-    border-left: 6px solid #F1EDE0;
-    padding: 0.2em 0.5em;
+    border-left: 6px solid #D6D6D6; /* #F1EDE0 */
+    padding-left: 0.8em;
+    padding-top: 0.8em;
+    padding-bottom: 0.8em;
 }
 
 div.infoblock > div.blockcontent {
-    background: #fffff0;
+    background: #f9f9f9;
 }
 
 div.blockcontent p + ul, div.blockcontent p + ol {
