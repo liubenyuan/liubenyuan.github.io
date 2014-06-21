@@ -27,6 +27,8 @@
 <div class="menu-item"><a href="nrf51822.html">nrf51822</a></div>
 <div class="menu-item"><a href="flexbot.html">flexbot</a></div>
 <div class="menu-item"><a href="msp430.html">msp430</a></div>
+<div class="menu-category">jemdoc</div>
+<div class="menu-item"><a href="mathjax.html">mathjax</a></div>
 </td>
 <td id="layout-content">
 <h1>Nexys3 &ndash; NIR videos and spatio-temporal information processing</h1>
@@ -195,7 +197,7 @@ Look from top-down, on the camera side.</p>
 <div class="infoblock">
 <div class="blockcontent">
 <p>我们针对的是Xilinx的Spartan 6 Lx9 (XC6SLX9) micro开发板，需要用到cp210x uart to usb转接芯片以及Digilent的Jtag驱动。在Archlinux的wiki主页上（或者你可以Google搜索linux, digilent, lx9micro, Xilinx ISE），有关于在linux下，配置Xilinx ISE和Lx9micro的具体步骤。</p>
-<p>简而言之，就是[https:<i></i>wiki.archlinux.org<i>index.php</i>Xilinx_ISE_WebPACK</p>
+<p>简而言之，就是</p>
 <ol>
 <li><p>安装<tt>adept-runtime</tt>, 安装<tt>digilent-plugin</tt>，安装<tt>adept-utilities</tt>；</p>
 </li>
@@ -210,18 +212,18 @@ Look from top-down, on the camera side.</p>
 <div class="blockcontent">
 <p>需要注意的是，我们需要下载Lx9micro对应的Xilinx Board Description (XBD)文件，这个文件可以从Avnet网站上下载到。具体到对于新制作的板子，我们应该怎样设计和编写这个文件，我们可以暂时放下。</p>
 </div></div>
-<p><b>第一课</b>, <a href="https://www.em.avnet.com/Support%20And%20Downloads/EDK01-Creating_Embedded_System_13_2_1.pdf">EDK01 - Creating Embedded System</a> 课程中讲解的很详细了，我们在这里重新温习一下里面的关键步骤和器件、软件。测试程序将置于LPDDR (一种mobile DDR) 中。步骤包括：</p>
+<p><b>第一课</b>, <a href="https://www.em.avnet.com/Support%20And%20Downloads/EDK01-Creating_Embedded_System_13_2_1.pdf" target=&ldquo;blank&rdquo;>EDK01 - Creating Embedded System</a> 课程中讲解的很详细了，我们在这里重新温习一下里面的关键步骤和器件、软件。测试程序将置于LPDDR (一种mobile DDR) 中。步骤包括：</p>
 <ol>
-<li><p><b>Create the hardware platform</b>: 使用ISE添加一个embedded processor，通过BSB定制我们的硬件；在做这一步之前，我们需要下载Avnet的XBD文件（参见 <a href="https://www.em.avnet.com/Support%20And%20Downloads/avnet_edk14_3_xbd_files_9_11_2012_spartan.zip">EDK 14.3 XBD/IP-XACT Files</a>），按照步骤添加板级描述文件。(需要注意的是，在配置processor和peripheral时，我们没有添加CDCE913_I2C模块)。这一步骤会生成两个文件，一个是Microprocessor Hardware Specification (MHS)，用来配置总线以及外设等；另外一个是UCF文件，这一文件与VHDL工程中的用法一致。</p>
+<li><p><b>Create the hardware platform</b>: 使用ISE添加一个embedded processor，通过BSB定制我们的硬件；在做这一步之前，我们需要下载Avnet的XBD文件（参见 <a href="https://www.em.avnet.com/Support%20And%20Downloads/avnet_edk14_3_xbd_files_9_11_2012_spartan.zip" target=&ldquo;blank&rdquo;>EDK 14.3 XBD/IP-XACT Files</a>），按照步骤添加板级描述文件。(需要注意的是，在配置processor和peripheral时，我们没有添加CDCE913_I2C模块)。这一步骤会生成两个文件，一个是Microprocessor Hardware Specification (MHS)，用来配置总线以及外设等；另外一个是UCF文件，这一文件与VHDL工程中的用法一致。</p>
 </li>
 <li><p><b>Compiling the bitstream</b>: 添加UCF, Generate Top HDL Source，生成microblaze的bit文件，并且调出EDK界面；</p>
 </li>
 <li><p><b>Add Xilinx Application</b>: 生成一个peripheral的测试程序，这一步有现成的模板，生成后自动添加一个默认的BSP和默认的linker script；随后我们可以从EDK中将bit文件和Block Memory Map File (BMM)文件烧录到板子上。</p>
 </li>
-<li><p>配置run as，将STDIO重定向到ttyUSB0上，这样我们即可以在Console中看到运行结果，也可以通过EDK的Terminal连接来查看程序的运行结果。为了访问USB转串口，需要将你的用户添加到uucp以及lock组中，并且可以通过udev.rules修改ttyUSB0的默认属性（方法看这里 <a href="https://bbs.archlinux.org/viewtopic.php?id=86088">Permission to /dev/ttyUSB0</a>）。另外在ISE 14.3下，EDK会出现segfault，我们需要安装java-rxtx包，随后（参考 <a href="http://forums.xilinx.com/t5/Installation-and-Licensing/SDK-segfault-on-UART-output/td-p/160000">SDK segfault on UART output?</a>），创建simlink即可。</p>
+<li><p>配置run as，将STDIO重定向到ttyUSB0上，这样我们即可以在Console中看到运行结果，也可以通过EDK的Terminal连接来查看程序的运行结果。为了访问USB转串口，需要将你的用户添加到uucp以及lock组中，并且可以通过udev.rules修改ttyUSB0的默认属性（方法看这里 <a href="https://bbs.archlinux.org/viewtopic.php?id=86088" target=&ldquo;blank&rdquo;>Permission to /dev/ttyUSB0</a>）。另外在ISE 14.3下，EDK会出现segfault，我们需要安装java-rxtx包，随后（参考 <a href="http://forums.xilinx.com/t5/Installation-and-Licensing/SDK-segfault-on-UART-output/td-p/160000" target=&ldquo;blank&rdquo;>SDK segfault on UART output?</a>），创建simlink即可。</p>
 </li>
 </ol>
-<p><b>第一课后续练习</b>，<a href="https://wiki.analog.com/resources/fpga/xilinx/pmod/ad7991">AD7991 PMOD XILINX FPGA REFERENCE DESIGN</a>. 发扬rapid  prototyping精神，我们直接研究一下AD7991模板的结构。</p>
+<p><b>第一课后续练习</b>，<a href="https://wiki.analog.com/resources/fpga/xilinx/pmod/ad7991" target=&ldquo;blank&rdquo;>AD7991 PMOD XILINX FPGA REFERENCE DESIGN</a>. 发扬rapid  prototyping精神，我们直接研究一下AD7991模板的结构。</p>
 <p>我们得到的reference design中有system.mhs system.xmp system.bsd data/system.ucf，在这些文件中，system.xmp是有ISE添加embedded processor自动生成的，而system.bsd是由xps (bsd)在配置MHS后编译得到的。我们首先：</p>
 <ol>
 <li><p>在ISE中添加embedded processor</p>
@@ -242,43 +244,48 @@ Look from top-down, on the camera side.</p>
 <h2>Ethernet</h2>
 <p>The commercial IP core (Xilinx Tri-MAC) is a complete implementation of a MAC layer. The lx9 microboard has an National Semiconductor DP83848J Phy layer and Tyco RJ45 connector. I found designs which directly use the LVDS pins on FPGA to implement the 10BASE-T protocol (MAC + PHY all in FPGA):</p>
 <ol>
-<li><p><a href="http://www.punk.co.nz/2013/03/07/crafting-a-basic-ethernet-mac-and-10base-t-phy/">http://www.punk.co.nz/2013/03/07/crafting-a-basic-ethernet-mac-and-10base-t-phy/</a></p>
+<li><p><a href="http://www.punk.co.nz/2013/03/07/crafting-a-basic-ethernet-mac-and-10base-t-phy/" target=&ldquo;blank&rdquo;>http://www.punk.co.nz/2013/03/07/crafting-a-basic-ethernet-mac-and-10base-t-phy/</a></p>
 </li>
-<li><p><a href="http://www.fpga4fun.com/10BASE-T.html">http://www.fpga4fun.com/10BASE-T.html</a></p>
+<li><p><a href="http://www.fpga4fun.com/10BASE-T.html" target=&ldquo;blank&rdquo;>http://www.fpga4fun.com/10BASE-T.html</a></p>
 </li>
-<li><p><a href="http://midir.fi/?i=ktvwn44y&amp;la=en">http://midir.fi/?i=ktvwn44y&amp;la=en</a></p>
+<li><p><a href="http://midir.fi/?i=ktvwn44y&amp;la=en" target=&ldquo;blank&rdquo;>http://midir.fi/?i=ktvwn44y&amp;la=en</a></p>
 </li>
 </ol>
 <p>and some publicity available code (small state machines) on interfacing with a PHY device. Our targeting PHY interface <b>DP83848J</b> might be used in this way, so check out:</p>
 <ol>
-<li><p><a href="http://forums.xilinx.com/t5/Spartan-Family-FPGAs/UDP-IP-stack-on-a-Spartan-6/td-p/149492">http://forums.xilinx.com/t5/Spartan-Family-FPGAs/UDP-IP-stack-on-a-Spartan-6/td-p/149492</a></p>
+<li><p><a href="http://forums.xilinx.com/t5/Spartan-Family-FPGAs/UDP-IP-stack-on-a-Spartan-6/td-p/149492" target=&ldquo;blank&rdquo;>http://forums.xilinx.com/t5/Spartan-Family-FPGAs/UDP-IP-stack-on-a-Spartan-6/td-p/149492</a></p>
 </li>
-<li><p><a href="http://www.joelw.id.au/FPGA/DigilentAtlysResources">http://www.joelw.id.au/FPGA/DigilentAtlysResources</a></p>
+<li><p><a href="http://www.joelw.id.au/FPGA/DigilentAtlysResources" target=&ldquo;blank&rdquo;>http://www.joelw.id.au/FPGA/DigilentAtlysResources</a></p>
 </li>
-<li><p><a href="http://people.ece.cornell.edu/land/courses/ece5760/FinalProjects/f2011/mis47_ayg6/mis47_ayg6/">http://people.ece.cornell.edu/land/courses/ece5760/FinalProjects/f2011/mis47_ayg6/mis47_ayg6/</a></p>
+<li><p><a href="http://people.ece.cornell.edu/land/courses/ece5760/FinalProjects/f2011/mis47_ayg6/mis47_ayg6/" target=&ldquo;blank&rdquo;>http://people.ece.cornell.edu/land/courses/ece5760/FinalProjects/f2011/mis47_ayg6/mis47_ayg6/</a></p>
 </li>
-<li><p><a href="https://www.deyisupport.com/question_answer/dsp_arm/sitara_arm/f/25/t/45981.aspx">https://www.deyisupport.com/question_answer/dsp_arm/sitara_arm/f/25/t/45981.aspx</a> In Chinese</p>
+<li><p><a href="https://www.deyisupport.com/question_answer/dsp_arm/sitara_arm/f/25/t/45981.aspx" target=&ldquo;blank&rdquo;>https://www.deyisupport.com/question_answer/dsp_arm/sitara_arm/f/25/t/45981.aspx</a> In Chinese</p>
 </li>
 </ol>
 <p>An GMAC on opencore.org (I do not like opencores as I had little success in using that website)</p>
 <ol>
-<li><p><a href="http://opencores.org/project,ethernet_tri_mode">http://opencores.org/project,ethernet_tri_mode</a></p>
+<li><p><a href="http://opencores.org/project,ethernet_tri_mode" target=&ldquo;blank&rdquo;>http://opencores.org/project,ethernet_tri_mode</a></p>
 </li>
 </ol>
 <p>Some discussions indicated that, it may not be a wise choice to use FPGA to negotiate with the ethernet protocol, the best choice is a microcontroller.</p>
 <ol>
-<li><p><a href="http://www.eevblog.com/forum/microcontrollers/open-(functional!)-core-for-ethernet-vhdl-for-ethernet-spartan-6/?PHPSESSID=f6f35063e39f50fd4818c8ba811cac6f">Topic: Open (functional!) core for Ethernet / VHDL for Ethernet - Spartan 6?  (Read 3120 times)</a></p>
+<li><p><a href="http://www.eevblog.com/forum/microcontrollers/open-(functional!)-core-for-ethernet-vhdl-for-ethernet-spartan-6/?PHPSESSID=f6f35063e39f50fd4818c8ba811cac6f" target=&ldquo;blank&rdquo;>Topic: Open (functional!) core for Ethernet / VHDL for Ethernet - Spartan 6?  (Read 3120 times)</a></p>
 </li>
 </ol>
 <p>as I only had a spartan6 FPGA, a softcore (lattice8 or lattice32, Microblaze) is my third (last) choice.</p>
 <p>If crafting an PHY + MAC + IP protocol is not your <b>job</b>, then simply using one softcore with light IP stack.</p>
 <div id="footer">
 <div id="footer-text">
-Page generated 2014-06-17 23:11:57 UTC, by <a href="http://jemdoc.jaboc.net/">jemdoc</a>.
+Page generated 2014-06-21 17:25:22 UTC, by <a href="https://github.com/wsshin/jemdoc_mathjax" target="blank">jemdoc+MathJax</a>.
 </div>
 </div>
 </td>
 </tr>
 </table>
-</body>
-</html>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript">
+</script>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>

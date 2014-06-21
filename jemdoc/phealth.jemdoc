@@ -22,22 +22,22 @@ We build a FPGA prototyping board to collect cardio-related bio-signals.
 
 FPGA captures 3-axis accelerometer reads from +ADXL345+, 4-channel biosignals (one for ECG, and three for PPG) from +AD7991+. These recordings are transferred to PC via USB2UART using +CP2102+, or remotely via a bluetooth device +RN-42+.
 
-Two peripherals are used, which are I2C and UART. SPI may also be used if we utilize the 4-wire connection of ADXL345. Those codes, *i2c_master.vhd* and *uart.vhd* are publicity available, and borrowed from [http://eewiki.net/pages/viewpage.action?pageId=10125324 I2C master @ eewiki] and [https://github.com/pabennett/uart uart @ pabennett].
+Two peripherals are used, which are I2C and UART. SPI may also be used if we utilize the 4-wire connection of ADXL345. Those codes, *i2c\_master.vhd* and *uart.vhd* are publicity available, and borrowed from [http://eewiki.net/pages/viewpage.action?pageId=10125324 I2C master @ eewiki] and [https://github.com/pabennett/uart uart @ pabennett].
 
 FPGA, is simply a *logic wrapper* of all the auxiliary peripherals.
 ~~~
 
 == pmodAD2 -- AD7991
 
-PmodAD2, ad7991, has an I2C interface and up to 4 channels of ADC conversion. It supports 12-bit resolution. AD7991 remains in shutdown mode, powering up only for conversions. The conversion process is controlled by an I2C command. The range (when REF_SEL disabled) is 0V to VDD. We enable *4-channel* conversion by disable REF_SEL, and connet jumper JP1 to vin4.
+PmodAD2, ad7991, has an I2C interface and up to 4 channels of ADC conversion. It supports 12-bit resolution. AD7991 remains in shutdown mode, powering up only for conversions. The conversion process is controlled by an I2C command. The range (when REF\_SEL disabled) is 0V to VDD. We enable *4-channel* conversion by disable REF\_SEL, and connet jumper JP1 to vin4.
 
 The serial clock frequencies for AD7991 are standard (100KHz), fast (400KHz) and high speed(3.4MHz). The address of AD7991 is +b"0101000"+, followed by a tailing bit denotes whether it is write +(RW=0)+ or read +(RW=1)+. You may refer to AD7991 datasheet, Table 10, for more details.
 
 The converted samples, each has 2-Byte, where D15-D14 are 0s, D13-D12 is the channel identifier, D11-D0 are the ADC conversions in the range 0 to VDD.
 
 The workflow of *ad7991.vhd* wrapper is,
-. put address +b"0101000"+ on the ADDRESS bus of *i2c_master.vhd*, +RW=0+ for write, I2C data is +b"11110100"+;
-. +RW=1+ for read, wait until +i2c_busy+ is pulled up;
+. put address +b"0101000"+ on the ADDRESS bus of *i2c\_master.vhd*, +RW=0+ for write, I2C data is +b"11110100"+;
+. +RW=1+ for read, wait until +i2c\_busy+ is pulled up;
 . put AD7991 in continuous read mode, issue +RW=1+ and register *valid* and *dout* for the incomming data.
 
 see the code *ad7991.vhd* for more details.
@@ -58,17 +58,17 @@ The I2C address of ADXL345 is +0x1D+. In order to use this address (rather than 
 . *Hint 2*, in I2C mode, when your read DATAX0 using 0x32, and continuous trigger the I2C read operation, it by default works in the continous read mode. +0x32+ has the same effect as +0x72+ in I2C mode.
 
 The *adxl345.vhd* wrapper works as,
-. ADDRESS +x"1D"+, +RW=0+, continuous write data +x"31"+ (DATA_FORMAT) and +x"01"+ (4g range); *stop*;
-. ADDRESS +x"1D"+, +RW=0+, continuous write data +x"2C"+ (BW_RATE) and +x"0C"+ (400Hz rates); *stop*;
-. ADDRESS +x"1D"+, +RW=0+, continuous write data +x"2D"+ (POWER_CTL) and +x"08"+ (start measure); *stop*;
+. ADDRESS +x"1D"+, +RW=0+, continuous write data +x"31"+ (DATA\_FORMAT) and +x"01"+ (4g range); *stop*;
+. ADDRESS +x"1D"+, +RW=0+, continuous write data +x"2C"+ (BW\_RATE) and +x"0C"+ (400Hz rates); *stop*;
+. ADDRESS +x"1D"+, +RW=0+, continuous write data +x"2D"+ (POWER\_CTL) and +x"08"+ (start measure); *stop*;
 . ADDRESS +x"1D"+, +RW=0+, write data +x"72"+ (0x40 | 0x32 = 0x72, continuous read from DATAX0); *restart*
 . ADDRESS +x"1D"+, +RW=1+, continous read 6-Byte; *idle*.
 
 == USB2UART -- cp2102
 
-The interface of *uart.vhd* is very pleasant ! We may connect rx, tx pins to proper direction, (+tx+ on *uart.vhd* denotes *bits* streamed out this module, +data_stream_in_\*+ denote the *Byte* to be write *into* this module.)
-. +WRITE+, put data on bus, issue +data_stream_in_stb+, wait until +data_stream_in_ack+;
-. +READ+, register data when +data_stream_out_stb+ is valid, responds by issue +data_stream_out_ack+.
+The interface of *uart.vhd* is very pleasant ! We may connect rx, tx pins to proper direction, (+tx+ on *uart.vhd* denotes *bits* streamed out this module, +data\_stream\_in\_\*+ denote the *Byte* to be write *into* this module.)
+. +WRITE+, put data on bus, issue +data\_stream\_in\_stb+, wait until +data\_stream\_in\_ack+;
+. +READ+, register data when +data\_stream\_out\_stb+ is valid, responds by issue +data\_stream\_out\_ack+.
 
 == pmodBT2 -- RN-42
 
@@ -76,8 +76,8 @@ We may use RN-42 as a replacement of CP2102, where
 ~~~
 {}{table}{UART Connections}
 *uart.vhd* | *CP2102* (fpga is master) | *RN-42* (rn42 is master) ||
-tx | USB_RS232_TXD | RN42_RXD ||
-rx | USB_RS232_RXD | RN42_TXD
+tx | USB\_RS232\_TXD | RN42\_RXD ||
+rx | USB\_RS232\_RXD | RN42\_TXD
 ~~~
 we also wire the RTS pin of RN-42 *into* CTS.
 

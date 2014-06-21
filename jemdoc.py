@@ -190,7 +190,7 @@ def standardconf():
   <div class="menu-category">|</div>
 
   [menuitem]
-  <div class="menu-item"><a href="|1">|2</a></div>
+  <div class="menu-item"><a href="|1"|3>|2</a></div>
 
   [specificcss]
   <link rel="stylesheet" href="|" type="text/css" />
@@ -199,7 +199,7 @@ def standardconf():
   <script src="|.js" type="text/javascript"></script>
   
   [currentmenuitem]
-  <div class="menu-item"><a href="|1" class="current">|2</a></div>
+  <div class="menu-item"><a href="|1" class="current"|3>|2</a></div>
   
   [nomenu]
   <div id="layout-content">
@@ -252,7 +252,7 @@ def standardconf():
   </div>
   
   [lastupdated]
-  Page generated |, by <a href="http://jemdoc.jaboc.net/">jemdoc</a>.
+  Page generated |, by <a href="https://github.com/wsshin/jemdoc_mathjax" target="blank">jemdoc+MathJax</a>.
 
   [sourcelink]
   (<a href="|">source</a>)
@@ -329,6 +329,12 @@ def insertmenuitems(f, mname, current, prefix):
 
     if r: # then we have a menu item.
       link = r.group(2)
+      if link[0] == '\\':
+        option = ' target="blank"'
+        link = link[1:]
+      else:
+        option = ''
+
       # Don't use prefix if we have an absolute link.
       if '://' not in r.group(2):
         link = prefix + allreplace(link)
@@ -353,9 +359,9 @@ def insertmenuitems(f, mname, current, prefix):
             menuitem += br(re.sub(r'(?<!\\n) +', '~', group), f)
 
       if link[-len(current):] == current:
-        hb(f.outf, f.conf['currentmenuitem'], link, menuitem)
+        hb(f.outf, f.conf['currentmenuitem'], link, menuitem, option)
       else:
-        hb(f.outf, f.conf['menuitem'], link, menuitem)
+        hb(f.outf, f.conf['menuitem'], link, menuitem, option)
 
     else: # menu category.
       hb(f.outf, f.conf['menucategory'], br(l, f))
@@ -365,17 +371,62 @@ def insertmenuitems(f, mname, current, prefix):
 def out(f, s):
   f.write(s)
 
-def hb(f, tag, content1, content2=None):
+def myussub(link):
+  link = link.replace('_', 'UNDERSCORE65358')
+
+  return link
+
+def myusresub(r):
+  r = re.sub('UNDERSCORE65358', '_', r)
+
+  return r
+
+def myeqsub(eqtext):
+  eqtext = eqtext.replace('\\', 'BACKSLASH65358')
+  eqtext = eqtext.replace('[', 'OPENBRACKET65358')
+  eqtext = eqtext.replace(']', 'CLOSEBRACKET65358')
+  eqtext = eqtext.replace('+', 'PLUS65358')
+  eqtext = eqtext.replace('&', 'AMPERSAND65358')
+  eqtext = eqtext.replace('<', 'LESSTHAN65358')
+  eqtext = eqtext.replace('>', 'GREATERTHAN65358')
+#  eqtext = eqtext.replace('\n', ' ')
+  eqtext = eqtext.replace('_', 'UNDERSCORE65358')
+
+  return eqtext
+
+def myeqresub(r):
+  r = re.sub('BACKSLASH65358', r'\\', r)
+  r = re.sub('OPENBRACKET65358', '[', r)
+  r = re.sub('CLOSEBRACKET65358', ']', r)
+  r = re.sub('PLUS65358', '+', r)
+  r = re.sub('AMPERSAND65358', '&', r)
+  r = re.sub('LESSTHAN65358', '<', r)
+  r = re.sub('GREATERTHAN65358', '>', r)
+  r = re.sub('QUOTATION65358', '"', r)
+  r = re.sub('UNDERSCORE65358', '_', r)
+
+  return r
+
+def hb(f, tag, content1, content2=None, content3=None):
   """Writes out a halfblock (hb)."""
 
   if content1 is None:
     content1 = ""
 
+  if content3 is None:
+    content3 = ""
+
   if content2 is None:
-    out(f, re.sub(r'\|', content1, tag))
+#    out(f, re.sub(r'\|', content1, tag))
+    r = re.sub(r'\|', content1, tag)
+    r = re.sub(r'\|3', content3, r)
+    r = myeqresub(r)
+    out(f, r)
   else:
     r = re.sub(r'\|1', content1, tag)
+    r = re.sub(r'\|3', content3, r)
     r = re.sub(r'\|2', content2, r)
+    r = myeqresub(r)
     out(f, r)
 
 def pc(f, ditchcomments=True):
@@ -519,50 +570,27 @@ def replaceequations(b, f):
       else:
         fn = str(abs(hash(eq)))
 
-      # Find out the baseline when we first encounter an equation (don't
-      # bother, otherwise).
-      # Other initialization stuff which we do only once we know we have
-      # equations.
-      if f.baseline is None:
-        # See if the eqdir exists, and if not, create it.
-        if not os.path.isdir(f.eqdir):
-          os.mkdir(f.eqdir)
-
-        # Check that the tools we need exist.
-        (supported, message) = testeqsupport()
-        if not supported:
-          print 'WARNING: equation support disabled.'
-          print message
-          f.eqsupport = False
-          return b
-
-        # Calculate the baseline.
-        eqt = "0123456789xxxXXxX"
-        (f.baseline, blfn) = geneq(f, eqt, dpi=f.eqdpi, wl=False,
-                       outname='baseline-' + str(f.eqdpi))
-        if os.path.exists(blfn):
-          os.remove(blfn)
-
-      fn = fn + '-' + str(f.eqdpi)
-      (depth, fullfn) = geneq(f, eq, dpi=f.eqdpi, wl=wl, outname=fn)
-      fullfn = fullfn.replace('\\', '/')
-
-      offset = depth - f.baseline + 1
-
       eqtext = allreplace(eq)
-      eqtext = eqtext.replace('\\', '')
-      eqtext = eqtext.replace('\n', ' ')
+#      print eqtext
+#      eqtext = eqtext.replace('\\', '')
+      eqtext = myeqsub(eqtext)
 
       # Double braces will cause problems with escaping of image tag.
       eqtext = eqtext.replace('{{', 'DOUBLEOPENBRACE')
       eqtext = eqtext.replace('}}', 'DOUBLECLOSEBRACE')
 
       if wl:
-        b = b[:m.start()] + \
-            '{{\n<div class="eqwl"><img class="eqwl" src="%s" alt="%s" />\n<br /></div>}}' % (fullfn, eqtext) + b[m.end():]
+#        b = b[:m.start()] + \
+#            '{{\n<div class="eqwl"><img class="eqwl" src="%s" alt="%s" />\n<br /></div>}}' % (fullfn, eqtext) + b[m.end():]
+        #b = b[:m.start()] + 'BACKSLASH65358OPENBRACKET65358\n' + eqtext + '\nBACKSLASH65358CLOSEBRACKET65358'+ b[m.end():]
+        b = b[:m.start()] + 'BACKSLASH65358OPENBRACKET65358' + eqtext + 'BACKSLASH65358CLOSEBRACKET65358'+ b[m.end():]
+        #b = b[:m.start()] + 'BACKSLASH(BACKSLASHbegin{equation}\n' + eqtext + '\nBACKSLASHend{equation}BACKSLASH)'+ b[m.end():]
+        b = '<p style=QUOTATION65358text-align:centerQUOTATION65358>\n' + b + '\n</p>'
+        b = myeqsub(b)
       else:
-        b = b[:m.start()] + \
-          '{{<img class="eq" src="%s" alt="%s" style="vertical-align: -%dpx" />}}' % (fullfn, eqtext, offset) + b[m.end():]
+#        b = b[:m.start()] + \
+#          '{{<img class="eq" src="%s" alt="%s" style="vertical-align: -%dpx" />}}' % (fullfn, eqtext, offset) + b[m.end():]
+        b = b[:m.start()] + 'BACKSLASH65358(' + eqtext + 'BACKSLASH65358)' + b[m.end():]
 
       # jem: also clean out line breaks in the alttext?
       m = r.search(b, m.start())
@@ -613,6 +641,12 @@ def replacelinks(b):
   while m:
     m1 = m.group(1).strip()
 
+    if m1[0] == '/':
+        option = ''
+        m1 = m1[1:]
+    else:
+        option = ' target="blank"'
+
     if '@' in m1 and not m1.startswith('mailto:') and not \
        m1.startswith('http://'):
       link = 'mailto:' + m1
@@ -626,6 +660,7 @@ def replacelinks(b):
     link = re.sub(r'(\+\{\{|\}\}\+)', r'%', link)
 
     link = quote(link)
+    link = myussub(link)  # to prevent _ in address from changing
 
     if m.group(2):
       linkname = m.group(2).strip()
@@ -633,7 +668,7 @@ def replacelinks(b):
       # remove any mailto before labelling.
       linkname = re.sub('^mailto:', '', link)
 
-    b = b[:m.start()] + r'<a href=\"%s\">%s<\/a>' % (link, linkname) + b[m.end():]
+    b = b[:m.start()] + r'<a href=\"%s\"%s>%s<\/a>' % (link, option, linkname) + b[m.end():]
 
     m = r.search(b, m.start())
 
@@ -681,7 +716,12 @@ def br(b, f, tableblock=False):
   # Deal with *bold*.
   r = re.compile(r'(?<!\\)\*(.*?)(?<!\\)\*', re.M + re.S)
   b = re.sub(r, r'<b>\1</b>', b)
-
+ 
+  # Deal with _underscore_.
+  r = re.compile(r'(?<!\\)_(.*?)(?<!\\)_', re.M + re.S)
+  b = re.sub(r, r'<u>\1</u>', b)
+  b = myusresub(b)
+ 
   # Deal with +monospace+.
   r = re.compile(r'(?<!\\)\+(.*?)(?<!\\)\+', re.M + re.S)
   b = re.sub(r, r'<tt>\1</tt>', b)
@@ -715,6 +755,7 @@ def br(b, f, tableblock=False):
   # Deal with non-breaking space ~.
   r = re.compile(r"(?<!\\)~", re.M + re.S)
   b = re.sub(r, r'&nbsp;', b)
+  b = re.sub('TILDE', '~', b)
 
   # Deal with registered trademark \R.
   r = re.compile(r"(?<!\\)\\R", re.M + re.S)
@@ -1050,7 +1091,7 @@ def dashlist(f, ordered=False):
       # same level, make a new list item.
       out(f.outf, '\n</li>\n<li>')
 
-    out(f.outf, '<p>' + br(s, f) + '</p>')
+    out(f.outf, '<p>' + myeqresub(br(s, f)) + '</p>')
     level = newlevel
 
   for i in range(level):
@@ -1337,6 +1378,7 @@ def procfile(f):
 
   infoblock = False
   imgblock = False
+  imgcenterblock = False
   tableblock = False
   while 1: # wait for EOF.
     p = pc(f)
@@ -1360,7 +1402,9 @@ def procfile(f):
           s += l
           if l.strip() == '\)':
             break
-      out(f.outf, br(s.strip(), f))
+      r = br(s.strip(), f)
+      r = myeqresub(r)
+      out(f.outf, r)
 
     # look for lists.
     elif p == '-':
@@ -1397,6 +1441,11 @@ def procfile(f):
       elif imgblock:
         out(f.outf, '</td></tr></table>\n')
         imgblock = False
+        nl(f)
+        continue
+      elif imgcenterblock:
+        out(f.outf, '</center>\n</td></tr></table></center>\n')
+        imgcenterblock = False
         nl(f)
         continue
       elif tableblock:
@@ -1467,6 +1516,32 @@ def procfile(f):
             out(f.outf, '</a>')
           out(f.outf, '&nbsp;</td>\n<td align="left">')
           imgblock = True
+
+        elif len(g) >= 4 and g[1] == 'img_center':
+          # handles
+          # {}{img_center}{source}{alttext}{width}{height}{linktarget}.
+          g += ['']*(7 - len(g))
+
+          if g[4].isdigit():
+            g[4] += 'px'
+
+          if g[5].isdigit():
+            g[5] += 'px'
+
+          out(f.outf, '<center><table class="imgtable"><tr><td><center>\n')
+          if g[6]:
+            out(f.outf, '<a href="%s">' % g[6])
+          out(f.outf, '<img src="%s"' % g[2])
+          out(f.outf, ' alt="%s"' % g[3])
+          if g[4]:
+            out(f.outf, ' width="%s"' % g[4])
+          if g[5]:
+            out(f.outf, ' height="%s"' % g[5])
+          out(f.outf, ' />')
+          if g[6]:
+            out(f.outf, '</a>')
+          out(f.outf, '&nbsp;</center></td></tr>\n<tr><td><center>')
+          imgcenterblock = True
 
         else:
           raise JandalError("couldn't handle block", f.linenum)

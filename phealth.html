@@ -27,6 +27,8 @@
 <div class="menu-item"><a href="nrf51822.html">nrf51822</a></div>
 <div class="menu-item"><a href="flexbot.html">flexbot</a></div>
 <div class="menu-item"><a href="msp430.html">msp430</a></div>
+<div class="menu-category">jemdoc</div>
+<div class="menu-item"><a href="mathjax.html">mathjax</a></div>
 </td>
 <td id="layout-content">
 <h1>Portable Healthcare &ndash; Hybrid Cardiography Monitoring via BLE</h1>
@@ -47,7 +49,7 @@
 <table class="imgtable"><tr><td>
 <img src="pics/lx9health.png" alt="Lx9 Microboard for Healthcare" width="400px" />&nbsp;</td>
 <td align="left"><p>FPGA captures 3-axis accelerometer reads from <tt>ADXL345</tt>, 4-channel biosignals (one for ECG, and three for PPG) from <tt>AD7991</tt>. These recordings are transferred to PC via USB2UART using <tt>CP2102</tt>, or remotely via a bluetooth device <tt>RN-42</tt>.</p>
-<p>Two peripherals are used, which are I2C and UART. SPI may also be used if we utilize the 4-wire connection of ADXL345. Those codes, <b>i2c_master.vhd</b> and <b>uart.vhd</b> are publicity available, and borrowed from <a href="http://eewiki.net/pages/viewpage.action?pageId=10125324">I2C master @ eewiki</a> and <a href="https://github.com/pabennett/uart">uart @ pabennett</a>.</p>
+<p>Two peripherals are used, which are I2C and UART. SPI may also be used if we utilize the 4-wire connection of ADXL345. Those codes, <b>i2c_master.vhd</b> and <b>uart.vhd</b> are publicity available, and borrowed from <a href="http://eewiki.net/pages/viewpage.action?pageId=10125324" target=&ldquo;blank&rdquo;>I2C master @ eewiki</a> and <a href="https://github.com/pabennett/uart" target=&ldquo;blank&rdquo;>uart @ pabennett</a>.</p>
 <p>FPGA, is simply a <b>logic wrapper</b> of all the auxiliary peripherals.</p>
 </td></tr></table>
 <h2>pmodAD2 &ndash; AD7991</h2>
@@ -108,7 +110,7 @@
 <p>The serial can be debuged using <b>minicom</b>. <tt>Warning</tt>, it was said that RN42 enable <b>hardware flowcontrol</b>, however when I connect via minicom -s, (remember to enable <tt>echo</tt> by Ctrl + A, E), I had to <b>disable hardware flowcontrol</b>, to enter the command mode of RN42. (where 3 dollar signs may enter the CMD prompt).</p>
 <p><i>you may use the command mode to debug the connection of RN42</i></p>
 <h3>connect to RN42 and record data</h3>
-<p>References : Archlinux <a href="https://bbs.archlinux.org/viewtopic.php?pid=1388523">FAQ 1</a>, <a href="https://bbs.archlinux.org/viewtopic.php?pid=1322604">FAQ 2</a>, <a href="https://wiki.archlinux.org/index.php/bluetooth">Archlinux bluetooth tutorial</a>, <a href="http://www.thinkwiki.org/wiki/How_to_setup_Bluetooth">Thinkwiki &ndash; Bluetooth</a>, <a href="http://archlinuxarm.org/forum/viewtopic.php?f=9&amp;t=6016">write a rfcomm.conf</a>. We may use either bluetooth dongle or the bluetooth in the PC.</p>
+<p>References : Archlinux <a href="https://bbs.archlinux.org/viewtopic.php?pid=1388523" target=&ldquo;blank&rdquo;>FAQ 1</a>, <a href="https://bbs.archlinux.org/viewtopic.php?pid=1322604" target=&ldquo;blank&rdquo;>FAQ 2</a>, <a href="https://wiki.archlinux.org/index.php/bluetooth" target=&ldquo;blank&rdquo;>Archlinux bluetooth tutorial</a>, <a href="http://www.thinkwiki.org/wiki/How_to_setup_Bluetooth" target=&ldquo;blank&rdquo;>Thinkwiki &ndash; Bluetooth</a>, <a href="http://archlinuxarm.org/forum/viewtopic.php?f=9&amp;t=6016" target=&ldquo;blank&rdquo;>write a rfcomm.conf</a>. We may use either bluetooth dongle or the bluetooth in the PC.</p>
 <div class="codeblock">
 <div class="blockcontent"><pre>
 $ rfkill list
@@ -150,11 +152,16 @@ $ sudo rfcomm bind rfcomm0 00:06:66:43:0F:2E
 <p><tt>NOTE</tt> When we connect to the bluetooth serial (via python, minicom, etc.,) and receive data, the pairing LED on RN42 will <b>flash</b>, and the connection status LED will <b>pulldown</b> (connected). Data are now transmitted from slave to our PC.</p>
 <div id="footer">
 <div id="footer-text">
-Page generated 2014-06-13 20:04:59 UTC, by <a href="http://jemdoc.jaboc.net/">jemdoc</a>.
+Page generated 2014-06-21 17:25:22 UTC, by <a href="https://github.com/wsshin/jemdoc_mathjax" target="blank">jemdoc+MathJax</a>.
 </div>
 </div>
 </td>
 </tr>
 </table>
-</body>
-</html>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript">
+</script>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>

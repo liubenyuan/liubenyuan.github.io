@@ -27,52 +27,24 @@
 <div class="menu-item"><a href="nrf51822.html">nrf51822</a></div>
 <div class="menu-item"><a href="flexbot.html">flexbot</a></div>
 <div class="menu-item"><a href="msp430.html">msp430</a></div>
+<div class="menu-category">jemdoc</div>
+<div class="menu-item"><a href="mathjax.html">mathjax</a></div>
 </td>
 <td id="layout-content">
 <h1>EIT &ndash; Electrical Impedance Tomography</h1>
 <p>Hardware/Software</p>
-<h1>NIR &ndash; Near Infra-Red Monitoring</h1>
-<h2>NIR &ndash; the hardware</h2>
-<p><b>Pmod J4 :</b> right panel (look into the holes)</p>
-<table id="NIR Pin set -- J4">
-<tr class="r1"><td class="c1"><b>1</b> </td><td class="c2"> <b>2</b> </td><td class="c3"> <b>3</b> </td><td class="c4"> <b>4</b> </td><td class="c5"> <b>5</b> </td><td class="c6"> <b>6</b> </td></tr>
-<tr class="r2"><td class="c1">D8 </td><td class="c2"> D6 </td><td class="c3"> D7 </td><td class="c4"> D5 </td><td class="c5"> <tt>GND</tt> </td><td class="c6"> <tt>VCC</tt> </td></tr>
-<tr class="r3"><td class="c1">FRV </td><td class="c2"> D9 </td><td class="c3"> EXP </td><td class="c4"> LIV </td><td class="c5"> - </td><td class="c6"> - </td></tr>
-<tr class="r4"><td class="c1"><b>7</b> </td><td class="c2"> <b>8</b> </td><td class="c3"> <b>9</b> </td><td class="c4"> <b>10</b> </td><td class="c5"> <b>11</b> </td><td class="c6"> <b>12</b>
-</td></tr></table>
-<p><b>Pmod J5 :</b> left panel (look into the holes)</p>
-<table id="NIR Pin set -- J4">
-<tr class="r1"><td class="c1"><b>1</b> </td><td class="c2"> <b>2</b> </td><td class="c3"> <b>3</b> </td><td class="c4"> <b>4</b> </td><td class="c5"> <b>5</b> </td><td class="c6"> <b>6</b> </td></tr>
-<tr class="r2"><td class="c1">D2 </td><td class="c2"> XCK </td><td class="c3"> D4 </td><td class="c4"> SCK </td><td class="c5"> <tt>GND</tt> </td><td class="c6"> <tt>VCC</tt> </td></tr>
-<tr class="r3"><td class="c1">PCK </td><td class="c2"> D3 </td><td class="c3"> LED </td><td class="c4"> SDA </td><td class="c5"> - </td><td class="c6"> - </td></tr>
-<tr class="r4"><td class="c1"><b>7</b> </td><td class="c2"> <b>8</b> </td><td class="c3"> <b>9</b> </td><td class="c4"> <b>10</b> </td><td class="c5"> <b>11</b> </td><td class="c6"> <b>12</b>
-</td></tr></table>
-<p>We wire (where FPGA is the master)</p>
-<table id="ucf definition">
-<tr class="r1"><td class="c1"><b>Port</b> </td><td class="c2"> <b>MT9V034-devboard</b> </td><td class="c3"> <b>IO (FPGA is the master)</b> </td><td class="c4"> <b>Annotation</b> </td></tr>
-<tr class="r2"><td class="c1">DCMI_SYS_CLK </td><td class="c2"> XCK </td><td class="c3"> Output </td><td class="c4"> <b>system clock</b> </td></tr>
-<tr class="r3"><td class="c1">DCMI_CLK </td><td class="c2"> PCK </td><td class="c3"> Input </td><td class="c4"> <b>Data clock</b> </td></tr>
-<tr class="r4"><td class="c1">DCMI_EXP </td><td class="c2"> EXP </td><td class="c3"> Output </td><td class="c4"> <b>Exposure</b> </td></tr>
-<tr class="r5"><td class="c1">DCMI_DATA&lt;7:0&gt; </td><td class="c2"> D9 &ndash; D2 </td><td class="c3"> Input </td><td class="c4"> <b>Data</b> </td></tr>
-<tr class="r6"><td class="c1">DCMI_HSYNC </td><td class="c2"> LIV </td><td class="c3"> Input </td><td class="c4"> <b>Line valid</b> </td></tr>
-<tr class="r7"><td class="c1">DCMI_VSYNC </td><td class="c2"> FRV </td><td class="c3"> Input </td><td class="c4"> <b>Frame valid</b> </td></tr>
-<tr class="r8"><td class="c1">DCMI_LED </td><td class="c2"> LED </td><td class="c3"> Input </td><td class="c4"> </td></tr>
-<tr class="r9"><td class="c1">DCMI_SCK </td><td class="c2"> SCK </td><td class="c3"> Output </td><td class="c4"> </td></tr>
-<tr class="r10"><td class="c1">DCMI_SDA </td><td class="c2"> SDA </td><td class="c3"> Inout </td><td class="c4">
-</td></tr></table>
-<div class="infoblock">
-<div class="blockcontent">
-<p>By comparing PX4Flow and the MT9v034 taobao board, we found some common connections, <tt>OE</tt> (active HIGH) tied to VCC, <tt>RSVD</tt> tied to GND. <tt>BYPASS_CLKIN_P</tt> and <tt>SER_DATAIN_P</tt> are tied to GND, while <tt>BYPASS_CLKIN_N</tt> and <tt>SER_DATAIN_N</tt> are tied to VCC with 1k Ohm pull-up resistor.</p>
-<p>However, for MT9v034-dev, the <tt>STANDBY</tt> is tied to GND, and the <tt>RESET_N</tt> is tied to VCC with 10k Ohm pull-up resistor. For PX4Flow, these two pins are controlled by MCU. For mt9v034-dev, <tt>SCTRL_ADDR0</tt> and <tt>SCTRL_ADDR1</tt> are tied to GND, while for PX4Flow, these pins are tied to VCC.</p>
-<p>These two boards works in master mode, with steroscopy mode disabled. <tt>SCK</tt> and <tt>SDA</tt> should be pulled-up with 1.5K Ohm resistors when no other I2C peripheral is connected.</p>
-</div></div>
 <div id="footer">
 <div id="footer-text">
-Page generated 2014-06-14 08:52:56 UTC, by <a href="http://jemdoc.jaboc.net/">jemdoc</a>.
+Page generated 2014-06-21 17:25:22 UTC, by <a href="https://github.com/wsshin/jemdoc_mathjax" target="blank">jemdoc+MathJax</a>.
 </div>
 </div>
 </td>
 </tr>
 </table>
-</body>
-</html>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript">
+</script>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>

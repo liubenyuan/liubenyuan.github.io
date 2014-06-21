@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta name="generator" content="jemdoc, see http://jemdoc.jaboc.net/" />
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<link rel="stylesheet" href="jemdoc.css" type="text/css" />
+<title></title>
+</head>
+<body>
+<table summary="Table for page layout." id="tlayout">
+<tr valign="top">
+<td id="layout-menu">
+<div class="menu-item"><a href="index.html">Main</a></div>
+<div class="menu-item"><a href="publications.html">Publications</a></div>
+<div class="menu-category">Research</div>
+<div class="menu-item"><a href="bsbl.html">BSBL</a></div>
+<div class="menu-item"><a href="eit.html">EIT</a></div>
+<div class="menu-item"><a href="connectomics.html">Connectomics</a></div>
+<div class="menu-item"><a href="nircm.html">NIRCM</a></div>
+<div class="menu-category">Hacks</div>
+<div class="menu-item"><a href="phealth.html">phealth</a></div>
+<div class="menu-item"><a href="kicad.html">kicad</a></div>
+<div class="menu-item"><a href="radar.html">radar</a></div>
+<div class="menu-item"><a href="nudtpaper.html">nudtpaper</a></div>
+<div class="menu-item"><a href="atmel.html">atmel</a></div>
+<div class="menu-item"><a href="nrf51822.html">nrf51822</a></div>
+<div class="menu-item"><a href="flexbot.html">flexbot</a></div>
+<div class="menu-item"><a href="msp430.html">msp430</a></div>
+<div class="menu-category">jemdoc</div>
+<div class="menu-item"><a href="mathjax.html" class="current">mathjax</a></div>
+</td>
+<td id="layout-content">
+<h1>MathJax Example</h1>
+<p>In this modified version of <tt>jemdoc</tt>, a LaTeX equation block can be typed in as</p>
+<p style="text-align:center">
+\[
+\nabla \cdot \mathbf{D} = \rho_f\\
+\nabla \cdot \mathbf{B} = 0,\\
+\nabla \times \mathbf{E} = -\frac{\partial\mathbf{B}}{\partial t}\\
+\nabla \times \mathbf{H} = \mathbf{J}_f - \frac{\partial\mathbf{D}}{\partial t}.
+\]
+</p><p>You can also align equations using LaTeX's <tt>aligned</tt> block:</p>
+<p style="text-align:center">
+\[
+\begin{aligned}
+\nabla \cdot \mathbf{D} &amp;= \rho_f\\
+\nabla \cdot \mathbf{B} &amp;= 0\\
+\nabla \times \mathbf{E} &amp;= -\frac{\partial\mathbf{B}}{\partial t}\\
+\nabla \times \mathbf{H} &amp;= \mathbf{J}_f - \frac{\partial\mathbf{D}}{\partial t}.
+\end{aligned}
+\]
+</p><p>To number the equation block, wrap the equations with LaTeX's <tt>equation</tt> block:</p>
+<p style="text-align:center">
+\[
+\begin{equation}
+\begin{aligned}
+\nabla \cdot \mathbf{D} &amp;= \rho_f\\
+\nabla \cdot \mathbf{B} &amp;= 0\\
+\nabla \times \mathbf{E} &amp;= -\frac{\partial\mathbf{B}}{\partial t}\\
+\nabla \times \mathbf{H} &amp;= \mathbf{J}_f - \frac{\partial\mathbf{D}}{\partial t}.
+\end{aligned}
+\end{equation}
+\]
+</p><p>Instead, you can use LaTeX's <tt>align</tt> (not <tt>aligned</tt>) block to number the individual equations:</p>
+<p style="text-align:center">
+\[
+\begin{align}
+\nabla \cdot \mathbf{D} &amp;= \rho_f\label{eq:D}\\
+\nabla \cdot \mathbf{B} &amp;= 0\label{eq:B}\\
+\nabla \times \mathbf{E} &amp;= -\frac{\partial\mathbf{B}}{\partial t}\label{eq:E}\\
+\nabla \times \mathbf{H} &amp;= \mathbf{J}_f - \frac{\partial\mathbf{D}}{\partial t}\label{eq:H}
+\end{align}
+\]
+</p><p>You can also type inline equations as \(A x = b\).  Referencing equations is done as Eqs.&nbsp;\(\eqref{eq:E}\) and \(\eqref{eq:H}\).</p>
+<h2>Underscore Example</h2>
+<p>Like <b>bold</b> and <i>italic</i>, <u>underscore</u> can be used for emphasis in this modified version of <tt>jemdoc</tt>.  Useful for highlighting different parts of a bibliography item as:</p>
+<p>1. <u>First Author</u>, Second Author, and <b>Corresponding Author</b>, &ldquo;Amazing Paper,&rdquo; <i>High-impact Journal</i>, vol.&nbsp;1, pp.&nbsp;1&ndash;10 (2014).</p>
+<div id="footer">
+<div id="footer-text">
+Page generated 2014-06-21 17:25:22 UTC, by <a href="https://github.com/wsshin/jemdoc_mathjax" target="blank">jemdoc+MathJax</a>.
+</div>
+</div>
+</td>
+</tr>
+</table>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript">
+</script>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>

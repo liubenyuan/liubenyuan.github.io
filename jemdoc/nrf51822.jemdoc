@@ -23,7 +23,7 @@
 >> sudo mv JLink_Linux_V480 ~/bin/jlink
 ~~~
 
-我们将jlink安装在了个人目录的bin目录下。安装完成后，需要重新连接jlink调试器，然后运行*JLinkExe*就会看到自动更新固件的信息以及链路上的设备信息，在这里应该是Cortex-M0。在后面的Makefile中，我们需要设定+PROG_ROOT+为
+我们将jlink安装在了个人目录的bin目录下。安装完成后，需要重新连接jlink调试器，然后运行*JLinkExe*就会看到自动更新固件的信息以及链路上的设备信息，在这里应该是Cortex-M0。在后面的Makefile中，我们需要设定+PROG\_ROOT+为
 ~~~
 {}{bash}
 PROG_ROOT = $(HOME)/bin/jlink
@@ -33,7 +33,7 @@ PROG_ROOT = $(HOME)/bin/jlink
 
 我们需要在linux下用交叉编译工具生成cortex-M0可执行代码。这一步很简单，可以使用官方的arm-none-eabi，或者使用mentor的*sourcery codebench*的最新的交叉编译程序。
 
-这里，我们选择是使用archlinux提供的ARM交叉编译工具，见[https://launchpad.net/gcc-arm-embedded]，直接用pacman安装好*arm-non-eabi-\{gcc,gdb,binutils\}*包即可。然后我们需要设定+GNU_INSTALL_ROOT+:
+这里，我们选择是使用archlinux提供的ARM交叉编译工具，见[https://launchpad.net/gcc-arm-embedded]，直接用pacman安装好*arm-non-eabi-\{gcc,gdb,binutils\}*包即可。然后我们需要设定+GNU\_INSTALL\_ROOT+:
 ~~~
 {}{bash}
 GNU_INSTALL_ROOT := /usr
@@ -42,13 +42,13 @@ GNU_PREFIX := arm-none-eabi
 ~~~
 
 == 3. Nordic nrf51822 SDK
-我们可以下载最新的nrf51822的SDK，以及nordic的+s110,s120+ softdevice（类比FPGA中的说法，我们可以称softdevice为有*API的软核*）。如果你购买的是nrf51822 AK开发板，那么可以去[http://www.nrf51.com nrf51论坛]下载。假定他们都放在了*$(HOME)/bin*目录下，那么需要设定好+SDK_PATH+和+SOC_PATH+:
+我们可以下载最新的nrf51822的SDK，以及nordic的+s110,s120+ softdevice（类比FPGA中的说法，我们可以称softdevice为有*API的软核*）。如果你购买的是nrf51822 AK开发板，那么可以去[http://www.nrf51.com nrf51论坛]下载。假定他们都放在了*$(HOME)/bin*目录下，那么需要设定好+SDK\_PATH+和+SOC\_PATH+:
 ~~~
 {}{bash}
 SDK_PATH := $(HOME)/bin/nrf51_sdk_v5_2_0_39364/Nordic/nrf51822/
 SOC_PATH := $(HOME)/bin/nrf51_softdevice/
 ~~~
-这样，+s110+, +s120+等软核的hex文件都位于+SOC_PATH+下面。
+这样，+s110+, +s120+等软核的hex文件都位于+SOC\_PATH+下面。
 
 == ARM 开发初探 (you may skip this section)
 
@@ -147,9 +147,9 @@ $ make echostuff
 C_OBJECTS: [_build/main.o _build/nrf_delay.o _build/system_nrf51.o]
 C_SOURCE_FILES: [main.c nrf_delay.c system_nrf51.c]
 ~~~
-当然还有+gcc_startup_nrf51.s+
+当然还有+gcc\_startup\_nrf51.s+
 
-== your 2nd program : ble_hrs
+== your 2nd program : ble\_hrs
 
 对于第二个例子，由于我们用到了s110 SOC，因此，需要修改*Makefile.config*（或者可以直接使用*Makefile.config.ble*）
 ~~~
