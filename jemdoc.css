@@ -8,9 +8,9 @@ table#tlayout {
 
 body {
     color: #212121;
-    background: #ffffff;
+    background: white;
     /* font-family: Monaco, 'Frutiger Neue W02 Book', sans-serif; */
-    font-family : Inconsolata, Georgia, 'Frutiger Neue W02 Book', sans-serif;
+    font-family : Menlo, Monaco, Inconsolata, Georgia, 'Frutiger Neue W02 Book', sans-serif;
     padding-bottom: 8px;
     line-height: 1.25;
     margin: 0;
@@ -30,7 +30,7 @@ body {
 }
 
 #layout-menu td {
-    background: #f4f4f4;
+    background: #f6f6f6;
     vertical-align: top;
 }
 
@@ -39,7 +39,7 @@ body {
     padding-left: 1.0em;
     padding-right: 1.0em;
     border: none;
-    background: #fdfffd;
+    background: white;
     text-align: left;
     vertical-align: top;
 }
@@ -54,7 +54,7 @@ tt {
     color: #E71108; /* Red : #D71108, #E71108 */
     font-weight: normal; /* bold */
     border: 1px solid silver;
-    background: #F6F6F6;
+    background: #f6f6f6;
     padding: 0.2em 0.2em 0.2em 0.2em;
 }
 pre, tt {
@@ -64,17 +64,17 @@ pre, tt {
 
 /* hyperlinks (all colors are here), font-weight: bold, normal */
 a, a > tt {
-    color: #006D00; /* dark-green : #006D00 */
+    color: #00006D;
     text-decoration: none;
     font-weight : normal;
 }
 a:hover {
-    color: #05A605; /* light-green : #05A605 */
-    border-bottom: 2px dotted #05A605;
+    color: #268bd2;
+    border-bottom: 2px dotted #268bd2;
 }
 
 #layout-menu a.current:link, #layout-menu a.current:visited {
-    color: #0535D6;
+    color: #268bd2;
     border-bottom: 1px gray solid;
 }
 #layout-menu a:link, #layout-menu a:visited, #layout-menu a:hover {
@@ -126,13 +126,13 @@ strong {
 
 /* headings */
 h1, h2, h3 {
-    color: #006D00;
+    color: #268bd2;
     margin-top: 0.5em;
     margin-bottom: 0.3em;
     padding-bottom: 0.3em;
     line-height: 1.25;
     padding-top: 0.5em;
-    border-bottom: 2px solid #05A605;
+    border-bottom: 2px solid #268bd2;
 }
 h1 {
     font-size: 26px;
@@ -186,13 +186,13 @@ pre {
 /* footers */
 div#footer {
     font-size: 12px;
-    border-top: 1px solid #c0c0c0;
+    border-top: 2px solid #f6f6f6;
     padding-top: 0.2em;
     margin-top: 4.0em;
     color: #c0c0c0;
 }
 div#footer a {
-    color: #006D00;
+    color: #00006D;
 }
 div#footer-text {
     float: left;
@@ -271,14 +271,14 @@ div.blocktitle {
 }
 
 div.blockcontent {
-    border-left: 6px solid #D6D6D6; /* #F1EDE0 */
+    border-left: 6px solid #d6d6d6;
     padding-left: 0.8em;
     padding-top: 0.8em;
     padding-bottom: 0.8em;
 }
 
 div.infoblock > div.blockcontent {
-    background: #f9f9f9;
+    background: #f6f6f6;
 }
 
 div.blockcontent p + ul, div.blockcontent p + ol {
@@ -302,26 +302,26 @@ div.codeblock > div.blockcontent {
 }
 
 span.pycommand {
-    color: #000070;
+    color: #00006D;
 }
 
 span.statement {
-    color: #008800;
+    color: #006D00;
 }
 span.builtin {
-    color: #000088;
+    color: #00006D;
 }
 span.special {
-    color: #990000;
+    color: #6D0000;
 }
 span.operator {
-    color: #880000;
+    color: #6D0000;
 }
 span.error {
-    color: #aa0000;
+    color: #6D0000;
 }
 span.comment, span.comment > *, span.string, span.string > * {
-    color: #606060;
+    color: #6D6D6D;
 }
 
 @media print {
