@@ -53,6 +53,11 @@ MODE\[2:0\] bits controls the working mode of phy. Default is +b"100"+ (you need
 ~~~
 
 RMIISEL pins (*RXD2*) controls the working mode, with +PD (0)+ works in MII mode, +PU (1)+ in RMII mode. Default is PD(0) in +MII+ mode.
+~~~
+{}{table}{MODE Address}
+ ADDRESS BIT | *PIN* | *default* ||
+ RMIISEL | RXD2 | external PD(0)
+~~~
 
 Some nots on CRS (Carrier Sense) and COL (Collision Detect).
 . +CRS:+ The device asserts CRS
