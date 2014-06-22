@@ -1,18 +1,69 @@
 # jemdoc: menu{MENU}{udpip.html}, nofooter
 
-= UDP\/IP -- Data logging via DP83848J and VHDL based MAC layer
+= UDP\/IP -- VHDL based MAC layer and transport protocol
 
-MII mode configuration of DP83848, via power up boot mode (1 for pullup, 0 for pulldown, by default, RX\_DV is internally weakly *pulled down*, the default value of *RX\_DV is 0*),
+We interface phy device with FPGA. On Lx9 microboard, a +DP83848J+ phy is used, while on Nexys3, a +LAN8710A+ is used. Both Phy device support standard MII\/RMII interface.
+
+== strap pins
+
+Configuration straps are latched upon Power-On reset (POR) or pin reset (nRST).
+
+=== DP83848J
+
+MII mode configuration of DP83848J, via power up boot mode (*PU* for pullup, *PD* for pulldown, by default, RX\_DV is internally weakly *pulled down*, the default value of *RX\_DV is 0*),
 ~~~
 {}{table}{Configuration of DP83848}
 *RX\_DV* (pin 39, MII\_MODE) | MAC Interface ||
-0 | MII Mode ||
-1 | RMII Mode
+PD (0) | MII Mode ||
+PU (1) | RMII Mode
+~~~
+
+PHYAD\[4:0\] are,
+~~~
+{}{table}{PHY ADDRESS}
+ ADDRESS BIT | *PIN* | *default* ||
+ PHYAD\[0\] | COL | connect to FPGA ||
+ PHYAD\[1\] | RXD0 | connect ||
+ PHYAD\[2\] | RXD1 | connect ||
+ PHYAD\[3\] | RXD2 | connect ||
+ PHYAD\[4\] | RXD3 | connect
 ~~~
 
 About the PHY\_ADDRESS. PHYAD4-PHYAD1 is internally *pulled down*, PHYAD0 is internally weakly *pulled up*, the PHY\_ADDRESS is by default +b"00001"+; if *bitgen* let's unused pins COL/PHYAD0 pulled down, and PHYAD4-PHYAD1 pulled-up as specified in ucf, the PHY\_ADDRESS will be altered as +b"11110"+. PHY\_ADDRESS +b"00000"+ is not allowed.
 
-== downlink -- receive data from PC and send packet back via UART interface
+=== LAN8710A
+
+PHYAD\[2:0\] are showed below. LAN8710 uses a SMI interface, where ADDRESS are configured via PHYAD\[2:0\]. These address are latched into an internal register at the end of hardware reset (default +b"000"+ ).
+~~~
+{}{table}{PHY Address}
+ ADDRESS BIT | *PIN* | *default* ||
+ PHYAD\[0\] | RXER | external PD(0) ||
+ PHYAD\[1\] | RXCLK | external PD(0) ||
+ PHYAD\[2\] | RXD3 | external PD(0)
+~~~
+
+MODE\[2:0\] bits controls the working mode of phy. Default is +b"100"+ (you need to pull-up COL in FPGA), works in /100Base-TX Half Duplex is advertised. Auto-negotiation enabled. CRS is active during Transmit & Receive./
+
+~~~
+{}{table}{MODE Address}
+ ADDRESS BIT | *PIN* | *default* ||
+ MODE\[0\] | RXD0 | external PD(0) ||
+ MODE\[1\] | RXD1 | external PD(0) ||
+ MODE\[2\] | COL | connect via 10$\Omega$ to FPGA
+~~~
+
+RMIISEL pins (*RXD2*) controls the working mode, with +PD (0)+ works in MII mode, +PU (1)+ in RMII mode. Default is PD(0) in +MII+ mode.
+
+Some nots on CRS (Carrier Sense) and COL (Collision Detect).
+. +CRS:+ The device asserts CRS
+based only on receive activity whenever the transceiver is either in repeater mode or full-duplex mode.
+Otherwise the transceiver asserts CRS based on either transmit or receive activity.
+. +COL:+ A collision is the occurrence of simultaneous transmit and receive operations. The COL output is
+asserted to indicate that a collision has been detected. COL remains active for the duration of the
+collision. COL is changed asynchronously to both RXCLK and TXCLK. The COL output becomes
+inactive during full duplex mode.
+
+== downlink -- receive data from PC and send back via UART interface
 
 == uplink -- receive data from uart and send to PC via ethernet
 

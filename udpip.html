@@ -20,25 +20,66 @@
 <div class="menu-item"><a href="nircm.html">NIRCM</a></div>
 <div class="menu-item"><a href="phealth.html">phealth</a></div>
 <div class="menu-category">Hacks</div>
+<div class="menu-item"><a href="nudtpaper.html">nudtpaper</a></div>
+<div class="menu-item"><a href="udpip.html" class="current">udp/ip</a></div>
+<div class="menu-item"><a href="nrf51822.html">nrf51822</a></div>
 <div class="menu-item"><a href="kicad.html">kicad</a></div>
 <div class="menu-item"><a href="radar.html">radar</a></div>
-<div class="menu-item"><a href="nudtpaper.html">nudtpaper</a></div>
-<div class="menu-item"><a href="nrf51822.html">nrf51822</a></div>
 <div class="menu-item"><a href="flexbot.html">flexbot</a></div>
 <div class="menu-item"><a href="msp430.html">msp430</a></div>
-<div class="menu-item"><a href="udpip.html" class="current">udp/ip</a></div>
 <div class="menu-item"><a href="mathjax.html">mathjax</a></div>
 </td>
 <td id="layout-content">
-<h1>UDP/IP &ndash; Data logging via DP83848J and VHDL based MAC layer</h1>
-<p>MII mode configuration of DP83848, via power up boot mode (1 for pullup, 0 for pulldown, by default, RX_DV is internally weakly <b>pulled down</b>, the default value of <b>RX_DV is 0</b>),</p>
+<h1>UDP/IP &ndash; VHDL based MAC layer and transport protocol</h1>
+<p>We interface phy device with FPGA. On Lx9 microboard, a <tt>DP83848J</tt> phy is used, while on Nexys3, a <tt>LAN8710A</tt> is used. Both Phy device support standard MII/RMII interface.</p>
+<h2>strap pins</h2>
+<p>Configuration straps are latched upon Power-On reset (POR) or pin reset (nRST).</p>
+<h3>DP83848J</h3>
+<p>MII mode configuration of DP83848J, via power up boot mode (<b>PU</b> for pullup, <b>PD</b> for pulldown, by default, RX_DV is internally weakly <b>pulled down</b>, the default value of <b>RX_DV is 0</b>),</p>
 <table id="Configuration of DP83848">
 <tr class="r1"><td class="c1"><b>RX_DV</b> (pin 39, MII_MODE) </td><td class="c2"> MAC Interface </td></tr>
-<tr class="r2"><td class="c1">0 </td><td class="c2"> MII Mode </td></tr>
-<tr class="r3"><td class="c1">1 </td><td class="c2"> RMII Mode
+<tr class="r2"><td class="c1">PD (0) </td><td class="c2"> MII Mode </td></tr>
+<tr class="r3"><td class="c1">PU (1) </td><td class="c2"> RMII Mode
+</td></tr></table>
+<p>PHYAD[4:0] are,</p>
+<table id="PHY ADDRESS">
+<tr class="r1"><td class="c1">ADDRESS BIT </td><td class="c2"> <b>PIN</b> </td><td class="c3"> <b>default</b> </td></tr>
+<tr class="r2"><td class="c1">PHYAD[0] </td><td class="c2"> COL </td><td class="c3"> connect to FPGA </td></tr>
+<tr class="r3"><td class="c1">PHYAD[1] </td><td class="c2"> RXD0 </td><td class="c3"> connect </td></tr>
+<tr class="r4"><td class="c1">PHYAD[2] </td><td class="c2"> RXD1 </td><td class="c3"> connect </td></tr>
+<tr class="r5"><td class="c1">PHYAD[3] </td><td class="c2"> RXD2 </td><td class="c3"> connect </td></tr>
+<tr class="r6"><td class="c1">PHYAD[4] </td><td class="c2"> RXD3 </td><td class="c3"> connect
 </td></tr></table>
 <p>About the PHY_ADDRESS. PHYAD4-PHYAD1 is internally <b>pulled down</b>, PHYAD0 is internally weakly <b>pulled up</b>, the PHY_ADDRESS is by default <tt>b&ldquo;00001&rdquo;</tt>; if <b>bitgen</b> let's unused pins COL/PHYAD0 pulled down, and PHYAD4-PHYAD1 pulled-up as specified in ucf, the PHY_ADDRESS will be altered as <tt>b&ldquo;11110&rdquo;</tt>. PHY_ADDRESS <tt>b&ldquo;00000&rdquo;</tt> is not allowed.</p>
-<h2>downlink &ndash; receive data from PC and send packet back via UART interface</h2>
+<h3>LAN8710A</h3>
+<p>PHYAD[2:0] are showed below. LAN8710 uses a SMI interface, where ADDRESS are configured via PHYAD[2:0]. These address are latched into an internal register at the end of hardware reset (default <tt>b&ldquo;000&rdquo;</tt> ).</p>
+<table id="PHY Address">
+<tr class="r1"><td class="c1">ADDRESS BIT </td><td class="c2"> <b>PIN</b> </td><td class="c3"> <b>default</b> </td></tr>
+<tr class="r2"><td class="c1">PHYAD[0] </td><td class="c2"> RXER </td><td class="c3"> external PD(0) </td></tr>
+<tr class="r3"><td class="c1">PHYAD[1] </td><td class="c2"> RXCLK </td><td class="c3"> external PD(0) </td></tr>
+<tr class="r4"><td class="c1">PHYAD[2] </td><td class="c2"> RXD3 </td><td class="c3"> external PD(0)
+</td></tr></table>
+<p>MODE[2:0] bits controls the working mode of phy. Default is <tt>b&ldquo;100&rdquo;</tt> (you need to pull-up COL in FPGA), works in <i>100Base-TX Half Duplex is advertised. Auto-negotiation enabled. CRS is active during Transmit &amp; Receive.</i></p>
+<table id="MODE Address">
+<tr class="r1"><td class="c1">ADDRESS BIT </td><td class="c2"> <b>PIN</b> </td><td class="c3"> <b>default</b> </td></tr>
+<tr class="r2"><td class="c1">MODE[0] </td><td class="c2"> RXD0 </td><td class="c3"> external PD(0) </td></tr>
+<tr class="r3"><td class="c1">MODE[1] </td><td class="c2"> RXD1 </td><td class="c3"> external PD(0) </td></tr>
+<tr class="r4"><td class="c1">MODE[2] </td><td class="c2"> COL </td><td class="c3"> connect via 10\(\Omega\) to FPGA
+</td></tr></table>
+<p>RMIISEL pins (<b>RXD2</b>) controls the working mode, with <tt>PD (0)</tt> works in MII mode, <tt>PU (1)</tt> in RMII mode. Default is PD(0) in <tt>MII</tt> mode.</p>
+<p>Some nots on CRS (Carrier Sense) and COL (Collision Detect).</p>
+<ol>
+<li><p><tt>CRS:</tt> The device asserts CRS
+based only on receive activity whenever the transceiver is either in repeater mode or full-duplex mode.
+Otherwise the transceiver asserts CRS based on either transmit or receive activity.</p>
+</li>
+<li><p><tt>COL:</tt> A collision is the occurrence of simultaneous transmit and receive operations. The COL output is
+asserted to indicate that a collision has been detected. COL remains active for the duration of the
+collision. COL is changed asynchronously to both RXCLK and TXCLK. The COL output becomes
+inactive during full duplex mode.</p>
+</li>
+</ol>
+<h2>downlink &ndash; receive data from PC and send back via UART interface</h2>
 <h2>uplink &ndash; receive data from uart and send to PC via ethernet</h2>
 <h2>High-speed full duplex data logging from FPGA to PC</h2>
 <p>Most of the time, we collected large amount of data using FPGA and on-chip ADCs, and want sent them direct to PC. Only standard peripherals can be used. Some protocols may bump to our mind, for example, Bluetooth 2.1 (BLE is too slow for data logging), RS232 (where most of the time, we will use CP2102 to convert a serial interface to USB, and utilize the ttyUSBx on PC), wifi and ethernet. Among all these options, UART is the best. It is simple, utilize little FPGA on-chip resources, and the data can be logged in raw format. Most important, I had success with this protocol.</p>
