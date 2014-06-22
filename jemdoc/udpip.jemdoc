@@ -1,4 +1,4 @@
-# jemdoc: menu{MENU}{udpip.html}
+# jemdoc: menu{MENU}{udpip.html}, nofooter
 
 = UDP\/IP -- Data logging via DP83848J and VHDL based MAC layer
 

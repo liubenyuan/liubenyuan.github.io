@@ -1,5 +1,5 @@
 DOCS = index publications bsbl eit radar nudtpaper nrf51822 phealth
-DOCS += nircm kicad msp430 connectomics flexbot atmel mathjax udpip
+DOCS += nircm kicad msp430 connectomics flexbot mathjax udpip
 
 HDOCS=$(addsuffix .html, $(DOCS))
 # PHDOCS=$(addprefix html/, $(HDOCS))

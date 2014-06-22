@@ -1,4 +1,4 @@
-# jemdoc: menu{MENU}{nrf51822.html}
+# jemdoc: menu{MENU}{nrf51822.html}, nofooter
 
 = NRF51822 -- Cortex-M0 + BLE stack, Dev in Linux.
 

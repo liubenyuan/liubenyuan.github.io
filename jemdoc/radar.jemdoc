@@ -1,4 +1,4 @@
-# jemdoc: menu{MENU}{radar.html}
+# jemdoc: menu{MENU}{radar.html}, nofooter
 
 = Homemade FMCW Radar
 
