@@ -10,7 +10,7 @@ body {
     color: #212121;
     background: white;
     /* font-family: Monaco, 'Frutiger Neue W02 Book', sans-serif; */
-    font-family : Menlo, Monaco, Inconsolata, Georgia, 'Frutiger Neue W02 Book', sans-serif;
+    font-family : Monaco, Menlo, Inconsolata, Georgia, 'Frutiger Neue W02 Book', sans-serif;
     padding-bottom: 8px;
     line-height: 1.25;
     margin: 0;
@@ -170,13 +170,13 @@ h2 {counter-reset: h3}
 h2:before {counter-increment: h2; content: counter(h2) ". "}
 h3:before {counter-increment: h3; content: counter(h2) "." counter(h3) ". "}
 
-/* paragraph */
+/* paragraph 16/26px */
 p {
     margin-top: 0.4em;
     margin-bottom: 0.8em;
     padding: 0px;
-    line-height: 26px;
-    font-size: 16px;
+    line-height: 25px;
+    font-size: 15px;
 }
 pre {
     padding: 0;
