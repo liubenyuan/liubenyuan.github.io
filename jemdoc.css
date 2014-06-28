@@ -9,9 +9,8 @@ table#tlayout {
 body {
     color: #212121;
     background: white;
-    /* font-family: Monaco, 'Frutiger Neue W02 Book', sans-serif; */
     /* font-family : Monaco, Menlo, Inconsolata, Georgia, 'Frutiger Neue W02 Book', sans-serif; */
-    font-family : Menlo, Georgia, 'Frutiger Neue W02 Book', sans-serif;
+    font-family : Inconsolata, Monaco, 'Frutiger Neue W02 Book', sans-serif;
     padding-bottom: 8px;
     line-height: 1.25;
     margin: 0;
