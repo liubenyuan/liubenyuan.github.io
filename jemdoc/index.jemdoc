@@ -17,7 +17,7 @@ I am now a research assistant at the department of BioMedical Engineering (BME),
 
 = Academia
 
-My primary research is side-information assisted +Compressive Sensing (CS)+. We (in collaborate with [https://sites.google.com/site/researchbyzhang Dr. Zhilin Zhang]) have developed advanced Bayesian learning algorithms --- the [https://sites.google.com/site/researchbyzhang/biocs BSBL] framework. I used those algorithms in group target Direction-of-Arrival (DOA) estimation, radar imaging and dynamic scene tracking. We also applied CS as a /low-complexity, low-power, robust/ data compression method in bio-signals (ECG, EEG, PPG, etc.) telemonitoring applications.
+My primary research is side-information assisted +Compressive Sensing (CS)+. We (in collaborate with [https://sites.google.com/site/researchbyzhang Dr. Zhilin Zhang]) have developed advanced Bayesian learning algorithms --- the [https://sites.google.com/site/researchbyzhang/biocs BSBL] framework. I apply these algorithms on Direction-of-Arrival (DOA) estimation, radar imaging and tracking. We also applied CS as a /low-complexity, low-power, robust/ data compression method in bio-signals (ECG, EEG, PPG, etc.) telemonitoring applications.
 
 I am now building +Electrical Impedance Tomograpgy (EIT)+ hardware/software at [http://bme.fmmu.edu.cn Dept. of Biomedical Enegineering, FMMU].
 

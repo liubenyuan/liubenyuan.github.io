@@ -12,7 +12,7 @@ body {
     /* font-family : Monaco, Menlo, Inconsolata, Georgia, 'Frutiger Neue W02 Book', sans-serif; */
     font-family : Inconsolata, Monaco, 'Frutiger Neue W02 Book', sans-serif;
     padding-bottom: 8px;
-    line-height: 1.25;
+    line-height: 1.20;
     margin: 0;
 }
 
@@ -173,7 +173,7 @@ h3:before {counter-increment: h3; content: counter(h2) "." counter(h3) ". "}
 /* paragraph 16/26px */
 p {
     margin-top: 0.4em;
-    margin-bottom: 0.8em;
+    margin-bottom: 0.6em;
     padding: 0px;
     line-height: 25px;
     font-size: 16px;
