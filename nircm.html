@@ -30,12 +30,18 @@
 <div class="menu-item"><a href="mathjax.html">mathjax</a></div>
 </td>
 <td id="layout-content">
-<h1>Nexys3 &ndash; NIR videos and spatio-temporal information processing</h1>
-<h2>Nexys3 &ndash; boards and vhdl basics</h2>
+<h1>Nexys &ndash; NIR videos and spatio-temporal information processing</h1>
+<h2>Nexys &ndash; boards and vhdl basics</h2>
+<p><b>Nexys3:</b></p>
 <div class="infoblock">
 <div class="blockcontent">
 <p>Device : xc6slx16-csg324-3 <br />
 SPI bus-width should be <tt>4</tt> ?</p>
+</div></div>
+<p><b>Nexys4:</b></p>
+<div class="infoblock">
+<div class="blockcontent">
+<p>Device : xc7a100t-csg324-1 <br /></p>
 </div></div>
 <h3>How to program?</h3>
 <div class="codeblock">
@@ -71,11 +77,11 @@ led_for : <span class="statement">for</span> i in 0 to 4 <span class="special">g
     bcd <span class="operator">&lt;=</span> "10001110" <span class="statement">when</span> "1111";
            "11111111" <span class="statement">when</span> <span class="statement">others</span>;
 </pre></div></div>
-<h1>NIR on Nexys3 &ndash; connect mt9v032 with dual&ndash;pmods</h1>
+<h1>NIR on Nexys3 &ndash; connect mt9v034 with dual&ndash;pmods</h1>
 <h2>NIR &ndash; the hardware</h2>
-<p><b>mt9v032 :</b> <br />
+<p><b>mt9v034 :</b> <br />
 Look from top-down, on the camera side.</p>
-<table id="mt9v032 pin configuration">
+<table id="mt9v034 pin configuration">
 <tr class="r1"><td class="c1"><b>12</b> </td><td class="c2"> <b>11</b> </td><td class="c3"> <b>10</b> </td><td class="c4"> <b>9</b> </td><td class="c5"> <b>8</b> </td><td class="c6"> <b>7</b> </td><td class="c7"> <b>6</b> </td><td class="c8"> <b>5</b> </td><td class="c9"> <b>4</b> </td><td class="c10"> <b>3</b> </td><td class="c11"> <b>2</b> </td><td class="c12"> <b>1</b> </td></tr>
 <tr class="r2"><td class="c1">D1 </td><td class="c2"> PCK </td><td class="c3"> D3 </td><td class="c4"> LED </td><td class="c5"> SDA </td><td class="c6"> FRV </td><td class="c7"> D9 </td><td class="c8"> C_P </td><td class="c9"> D_P </td><td class="c10"> D8 </td><td class="c11"> D6 </td><td class="c12"> <b>VCC</b> </td></tr>
 <tr class="r3"><td class="c1">D2 </td><td class="c2"> D0 </td><td class="c3"> XCK </td><td class="c4"> D4 </td><td class="c5"> SCK </td><td class="c6"> EXP </td><td class="c7"> LIV </td><td class="c8"> C_N </td><td class="c9"> D_N </td><td class="c10"> D7 </td><td class="c11"> D5 </td><td class="c12"> <b>GND</b> </td></tr>
@@ -99,7 +105,7 @@ Look from top-down, on the camera side.</p>
 <p><b>Note:</b> we should place <b>clk</b> pins on GCLK sites, where <tt>C-1 (H3)</tt>, <tt>B-9 (K3)</tt>, <tt>B-10 (K5)</tt>. We wrap B9 and B10 to <b>XCK</b> and <b>PCK</b>. And we add insulate via Tin foil (锡铂纸).</p>
 <p>We wire (where FPGA is the master)</p>
 <table id="ucf definition">
-<tr class="r1"><td class="c1"><b>Port</b> </td><td class="c2"> <b>mt9v032-devboard</b> </td><td class="c3"> <b>IO (FPGA is the master)</b> </td><td class="c4"> <b>Annotation</b> </td></tr>
+<tr class="r1"><td class="c1"><b>Port</b> </td><td class="c2"> <b>mt9v034-devboard</b> </td><td class="c3"> <b>IO (FPGA is the master)</b> </td><td class="c4"> <b>Annotation</b> </td></tr>
 <tr class="r2"><td class="c1">DCMI_SYS_CLK </td><td class="c2"> XCK </td><td class="c3"> Output </td><td class="c4"> <b>system clock</b> </td></tr>
 <tr class="r3"><td class="c1">DCMI_CLK </td><td class="c2"> PCK </td><td class="c3"> Input </td><td class="c4"> <b>Data clock</b> </td></tr>
 <tr class="r4"><td class="c1">DCMI_EXP </td><td class="c2"> EXP </td><td class="c3"> Output </td><td class="c4"> <b>Exposure</b> </td></tr>
@@ -112,33 +118,33 @@ Look from top-down, on the camera side.</p>
 </td></tr></table>
 <div class="infoblock">
 <div class="blockcontent">
-<p>By comparing PX4Flow and the mt9v032 taobao board, we found some common connections, <tt>OE</tt> (active HIGH) tied to VCC, <tt>RSVD</tt> tied to GND. <tt>BYPASS_CLKIN_P</tt> and <tt>SER_DATAIN_P</tt> are tied to GND, while <tt>BYPASS_CLKIN_N</tt> and <tt>SER_DATAIN_N</tt> are tied to VCC with 1k Ohm pull-up resistor.</p>
-<p>However, for mt9v032-dev, the <tt>STANDBY</tt> is tied to GND, and the <tt>RESET_N</tt> is tied to VCC with 10k Ohm pull-up resistor. For PX4Flow, these two pins are controlled by MCU. For mt9v032-dev, <tt>SCTRL_ADDR0</tt> and <tt>SCTRL_ADDR1</tt> are tied to GND, while for PX4Flow, these pins are tied to VCC.</p>
+<p>By comparing PX4Flow and the mt9v034 taobao board, we found some common connections, <tt>OE</tt> (active HIGH) tied to VCC, <tt>RSVD</tt> tied to GND. <tt>BYPASS_CLKIN_P</tt> and <tt>SER_DATAIN_P</tt> are tied to GND, while <tt>BYPASS_CLKIN_N</tt> and <tt>SER_DATAIN_N</tt> are tied to VCC with 1k Ohm pull-up resistor.</p>
+<p>However, for mt9v034-dev, the <tt>STANDBY</tt> is tied to GND, and the <tt>RESET_N</tt> is tied to VCC with 10k Ohm pull-up resistor. For PX4Flow, these two pins are controlled by MCU. For mt9v034-dev, <tt>SCTRL_ADDR0</tt> and <tt>SCTRL_ADDR1</tt> are tied to GND, while for PX4Flow, these pins are tied to VCC.</p>
 <p>These two boards works in master mode, with steroscopy mode disabled. <tt>SCK</tt> and <tt>SDA</tt> should be pulled-up with 1.5K Ohm resistors when no other I2C peripheral is connected.</p>
 </div></div>
-<h2>NIR &ndash; boot mt9v032 via nexys3</h2>
-<p>In principles, the mt9v032 works <tt>output wide-VGA image at 60fps</tt> by default.</p>
+<h2>NIR &ndash; boot mt9v034 via nexys3</h2>
+<p>In principles, the mt9v034 works <tt>output wide-VGA image at 60fps</tt> by default.</p>
 <div class="infoblock">
 <div class="blockcontent">
 <p>By injecting <tt>DCMI_SYS_CLK</tt> with 25MHz clock input, and trigger <tt>DCMI_EXP</tt> with a rising-edge sensitive pulse (<b>1000</b> cycles duty period, in snapshot or slave mode; in master mode, <tt>DCMI_EXP</tt> may tie to GND). We may monitor the <tt>DCMI_DATA</tt> bus, <tt>DCMI_HSYNC</tt> and <tt>DCMI_VSYNC</tt> signals, as well as <tt>DCMI_LED</tt> pins.</p>
 <p><tt>DCMI_VSYNC</tt> is HIGH valid during the whole imaging process (a frame), <tt>DCMI_HSYNC</tt> is periodorically HIGH valid. The image format is <b>752x480</b>. However, currently <tt>DCMI_CLK</tt> could not register exactly <tt>752</tt> datum each <b>HSYNC</b> pules. <i>(need debug this)</i>. Strange, <tt>DCMI_CLK</tt> may be <b>26.6</b>MHz PLL locked even if we inject a <b>25</b>MHz <tt>DCMI_SYS_CLK</tt>.</p>
 </div></div>
 <h2>NIR &ndash; the wrapper of i2c_io_16bit.vhd</h2>
-<p>With <tt>ADDR0</tt> and <tt>ADDR1</tt> pins pulled low on mt9v032-dev, the address is <tt>0x48</tt>, with the last bit denotes write (&rsquo;0&rsquo;) or read (&rsquo;1&rsquo;). Therefore, the mt9v032 board has <tt>0x90</tt> for <b>write</b>, <tt>0x91</tt> for <b>read</b>. We build dedicated module <tt>i2c_io_16bit.vhd</tt> to handle the <b>Read/Write</b> process to mt9v032.</p>
-<table id="mt9v032 IO">
+<p>With <tt>ADDR0</tt> and <tt>ADDR1</tt> pins pulled low on mt9v034-dev, the address is <tt>0x48</tt>, with the last bit denotes write (&rsquo;0&rsquo;) or read (&rsquo;1&rsquo;). Therefore, the mt9v034 board has <tt>0x90</tt> for <b>write</b>, <tt>0x91</tt> for <b>read</b>. We build dedicated module <tt>i2c_io_16bit.vhd</tt> to handle the <b>Read/Write</b> process to mt9v034.</p>
+<table id="mt9v034 IO">
 <tr class="r1"><td class="c1">0x90 (0x91) </td><td class="c2"> REG_ADDRESS </td><td class="c3"> WB1 (RB0) </td><td class="c4"> WB2 (RB0)
 </td></tr></table>
-<p>for example, <tt>0x90070188</tt> <b>write</b> 0x0188 to 0x07 in mt9v032, <tt>0x9107XXXX</tt> <b>read</b> DBYTE from 0x07 in mt9v032.</p>
+<p>for example, <tt>0x90070188</tt> <b>write</b> 0x0188 to 0x07 in mt9v034, <tt>0x9107XXXX</tt> <b>read</b> DBYTE from 0x07 in mt9v034.</p>
 <div class="infoblock">
 <div class="blockcontent">
-<p>As a simple rule-of-the-thumb, we may put <tt>0x91000000</tt> on data bus, trigger <tt>data_stream_in_stb</tt>, and read out the content of <tt>0x00</tt> on mt9v032 by acknowledge <tt>data_stream_out_stb</tt>, and finally put the register (which is the CHIPID, <tt>0x1324</tt>) on BCD segment display.</p>
+<p>As a simple rule-of-the-thumb, we may put <tt>0x91000000</tt> on data bus, trigger <tt>data_stream_in_stb</tt>, and read out the content of <tt>0x00</tt> on mt9v034 by acknowledge <tt>data_stream_out_stb</tt>, and finally put the register (which is the CHIPID, <tt>0x1324</tt>) on BCD segment display.</p>
 </div></div>
 <p>Another simple example is command <tt>0x900400FF</tt>, which changes the <tt>WINDOW_WIDTH</tt> to <b>256</b>, this can also be verified via Chipscope.</p>
-<h2>NIR &ndash; config mt9v032 (copied from px4flow)</h2>
-<p>After testing the <b>R/W</b> functionality of <tt>i2c_io_16bit.vhd</tt>, we next store all the command and registers in the <tt>mt9v032.coe</tt>, and loaded in a rom to config this camera module. The top module, which is called <tt>mt9v032.vhd</tt>, embedded the <b>mt9v032.coe</b>, sequentially read the content out, and config the device via I2C protocol.</p>
-<p>We port the source code <b>mt9v032.c</b> in PX4Flow to NIR project, (<b>Context A</b>, context, is like a fast stack-switch machanism, context B in PX4Flow is used for videos streaming only, while context A is for practical optical flow calculation).</p>
+<h2>NIR &ndash; config mt9v034 (copied from px4flow)</h2>
+<p>After testing the <b>R/W</b> functionality of <tt>i2c_io_16bit.vhd</tt>, we next store all the command and registers in the <tt>mt9v034.coe</tt>, and loaded in a rom to config this camera module. The top module, which is called <tt>mt9v034.vhd</tt>, embedded the <b>mt9v034.coe</b>, sequentially read the content out, and config the device via I2C protocol.</p>
+<p>We port the source code <b>mt9v034.c</b> in PX4Flow to NIR project, (<b>Context A</b>, context, is like a fast stack-switch machanism, context B in PX4Flow is used for videos streaming only, while context A is for practical optical flow calculation).</p>
 <p><b>Context A/B</b></p>
-<table id="mt9v032.c">
+<table id="mt9v034.c">
 <tr class="r1"><td class="c1"><b>Register</b> </td><td class="c2"> <b>Name</b> </td><td class="c3"> <b>Default</b> </td><td class="c4"> <b>Context A (Context B)</b> </td><td class="c5"> <b>COMMAND</b> </td><td class="c6"> <b>Annotation</b> </td></tr>
 <tr class="r2"><td class="c1">0x07 </td><td class="c2"> Chip Control </td><td class="c3"> 0x0388 </td><td class="c4"> 0x0188 (0x8188) </td><td class="c5"> 90070188 </td><td class="c6"> <b>0x0088</b> </td></tr>
 <tr class="r3"><td class="c1">0x03 (OxCB) </td><td class="c2"> WINDOW_HEIGHT </td><td class="c3"> 480 </td><td class="c4"> 64*4 (120*4) </td><td class="c5"> 90030100 </td><td class="c6"> 4-binning </td></tr>
@@ -154,7 +160,7 @@ Look from top-down, on the camera side.</p>
 <tr class="r13"><td class="c1">0x0B </td><td class="c2"> Coarse Width Total     </td><td class="c3"> </td><td class="c4"> </td><td class="c5"> 900B01E0 </td><td class="c6">
 </td></tr></table>
 <p><b>General Settings</b></p>
-<table id="mt9v032.c section2">
+<table id="mt9v034.c section2">
 <tr class="r1"><td class="c1"><b>Register</b> </td><td class="c2"> <b>Name</b> </td><td class="c3"> <b>Default</b> </td><td class="c4"> <b>Context A (Context B)</b> </td><td class="c5"> <b>COMMAND</b> </td><td class="c6"> <b>Annotation</b> </td></tr>
 <tr class="r2"><td class="c1">0x70 </td><td class="c2"> Row Noise Corr </td><td class="c3"> 0 </td><td class="c4"> 0x0000 </td><td class="c5"> 90700000 </td><td class="c6"> </td></tr>
 <tr class="r3"><td class="c1">0xAF </td><td class="c2"> AEC/AGC Enable </td><td class="c3"> 0x3 </td><td class="c4"> 0x0303 </td><td class="c5"> 90AF0303 </td><td class="c6"> </td></tr>
@@ -172,7 +178,7 @@ Look from top-down, on the camera side.</p>
 <tr class="r15"><td class="c1">0xAA </td><td class="c2"> AGC lowpass Filter </td><td class="c3"> 0x2 </td><td class="c4"> 0x2 </td><td class="c5"> 90AA0002 </td><td class="c6">
 </td></tr></table>
 <p><b>finally, reset</b></p>
-<table id="mt9v032.c section2">
+<table id="mt9v034.c section2">
 <tr class="r1"><td class="c1"><b>Register</b> </td><td class="c2"> <b>Name</b> </td><td class="c3"> <b>Default</b> </td><td class="c4"> <b>Context A (Context B)</b> </td><td class="c5"> <b>COMMAND</b> </td><td class="c6"> <b>Annotation</b> </td></tr>
 <tr class="r2"><td class="c1">0x0C </td><td class="c2"> Reset </td><td class="c3"> </td><td class="c4"> </td><td class="c5"> 0x900C0001 </td><td class="c6"> </td></tr>
 <tr class="r3"><td class="c1">0x00 </td><td class="c2"> Chip ID </td><td class="c3"> </td><td class="c4"> </td><td class="c5"> 0x91000000 </td><td class="c6"> <b>read back</b>
@@ -196,7 +202,7 @@ Look from top-down, on the camera side.</p>
 <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 <div id="footer">
 <div id="footer-text">
-Page generated 2014-07-04 20:23:11 UTC, by <a href="https://github.com/wsshin/jemdoc_mathjax" target="blank">jemdoc+MathJax</a>.
+Page generated 2014-07-04 23:34:35 UTC, by <a href="https://github.com/wsshin/jemdoc_mathjax" target="blank">jemdoc+MathJax</a>.
 </div>
 </div>
 </td>

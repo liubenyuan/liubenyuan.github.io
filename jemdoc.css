@@ -365,6 +365,7 @@ td {
     padding-right: 0.5em;
     text-align: center;
     border: 1px solid gray;
+    line-height: 1.33;
 }
 
 table + table {

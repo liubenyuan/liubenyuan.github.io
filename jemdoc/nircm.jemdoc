@@ -4,13 +4,19 @@
 # this is a working document for <N>ear <I>nfra <R>ed <C>ontactless <M>onitoring
 #
 
-= Nexys3 -- NIR videos and spatio-temporal information processing
+= Nexys -- NIR videos and spatio-temporal information processing
 
-== Nexys3 -- boards and vhdl basics
+== Nexys -- boards and vhdl basics
 
+*Nexys3:*
 ~~~
 Device : xc6slx16-csg324-3 \n
 SPI bus-width should be +4+ ?
+~~~
+
+*Nexys4:*
+~~~
+Device : xc7a100t-csg324-1 \n
 ~~~
 
 === How to program?
@@ -51,14 +57,14 @@ with seg select
            "11111111" when others;
 ~~~
 
-= NIR on Nexys3 -- connect mt9v032 with dual--pmods
+= NIR on Nexys3 -- connect mt9v034 with dual--pmods
 
 == NIR -- the hardware
 
-*mt9v032 :* \n
+*mt9v034 :* \n
 Look from top-down, on the camera side.
 ~~~
-{}{table}{mt9v032 pin configuration}
+{}{table}{mt9v034 pin configuration}
 *12* | *11* | *10* | *9* | *8* | *7* | *6* | *5* | *4* | *3* | *2* | *1* ||
  D1 | PCK | D3 | LED | SDA | FRV | D9 | C\_P | D\_P | D8 | D6 | *VCC* ||
  D2 | D0 | XCK | D4 | SCK | EXP | LIV | C\_N | D\_N | D7 | D5 | *GND* ||
@@ -90,7 +96,7 @@ where +D0+, +D1+ and +C\_P+, +C\_N+, +D\_P+, +D\_N+ are NC.
 We wire (where FPGA is the master)
 ~~~
 {}{table}{ucf definition}
-*Port* | *mt9v032-devboard* | *IO (FPGA is the master)* | *Annotation* ||
+*Port* | *mt9v034-devboard* | *IO (FPGA is the master)* | *Annotation* ||
 DCMI\_SYS\_CLK | XCK | Output | *system clock* ||
 DCMI\_CLK | PCK | Input | *Data clock* ||
 DCMI\_EXP | EXP | Output | *Exposure* ||
@@ -103,16 +109,16 @@ DCMI\_SDA | SDA | Inout *(pullup)* |
 ~~~
 
 ~~~
-By comparing PX4Flow and the mt9v032 taobao board, we found some common connections, +OE+ (active HIGH) tied to VCC, +RSVD+ tied to GND. +BYPASS\_CLKIN\_P+ and +SER\_DATAIN\_P+ are tied to GND, while +BYPASS\_CLKIN\_N+ and +SER\_DATAIN\_N+ are tied to VCC with 1k Ohm pull-up resistor.
+By comparing PX4Flow and the mt9v034 taobao board, we found some common connections, +OE+ (active HIGH) tied to VCC, +RSVD+ tied to GND. +BYPASS\_CLKIN\_P+ and +SER\_DATAIN\_P+ are tied to GND, while +BYPASS\_CLKIN\_N+ and +SER\_DATAIN\_N+ are tied to VCC with 1k Ohm pull-up resistor.
 
-However, for mt9v032-dev, the +STANDBY+ is tied to GND, and the +RESET\_N+ is tied to VCC with 10k Ohm pull-up resistor. For PX4Flow, these two pins are controlled by MCU. For mt9v032-dev, +SCTRL\_ADDR0+ and +SCTRL\_ADDR1+ are tied to GND, while for PX4Flow, these pins are tied to VCC.
+However, for mt9v034-dev, the +STANDBY+ is tied to GND, and the +RESET\_N+ is tied to VCC with 10k Ohm pull-up resistor. For PX4Flow, these two pins are controlled by MCU. For mt9v034-dev, +SCTRL\_ADDR0+ and +SCTRL\_ADDR1+ are tied to GND, while for PX4Flow, these pins are tied to VCC.
 
 These two boards works in master mode, with steroscopy mode disabled. +SCK+ and +SDA+ should be pulled-up with 1.5K Ohm resistors when no other I2C peripheral is connected.
 ~~~
 
-== NIR -- boot mt9v032 via nexys3
+== NIR -- boot mt9v034 via nexys3
 
-In principles, the mt9v032 works +output wide-VGA image at 60fps+ by default.
+In principles, the mt9v034 works +output wide-VGA image at 60fps+ by default.
 
 ~~~
 By injecting +DCMI\_SYS\_CLK+ with 25MHz clock input, and trigger +DCMI\_EXP+ with a rising-edge sensitive pulse (*1000* cycles duty period, in snapshot or slave mode; in master mode, +DCMI\_EXP+ may tie to GND). We may monitor the +DCMI\_DATA+ bus, +DCMI\_HSYNC+ and +DCMI\_VSYNC+ signals, as well as +DCMI\_LED+ pins.
@@ -122,30 +128,30 @@ By injecting +DCMI\_SYS\_CLK+ with 25MHz clock input, and trigger +DCMI\_EXP+ wi
 
 == NIR -- the wrapper of i2c\_io\_16bit.vhd
 
-With +ADDR0+ and +ADDR1+ pins pulled low on mt9v032-dev, the address is +0x48+, with the last bit denotes write ('0') or read ('1'). Therefore, the mt9v032 board has +0x90+ for *write*, +0x91+ for *read*. We build dedicated module +i2c\_io\_16bit.vhd+ to handle the *Read\/Write* process to mt9v032.
+With +ADDR0+ and +ADDR1+ pins pulled low on mt9v034-dev, the address is +0x48+, with the last bit denotes write ('0') or read ('1'). Therefore, the mt9v034 board has +0x90+ for *write*, +0x91+ for *read*. We build dedicated module +i2c\_io\_16bit.vhd+ to handle the *Read\/Write* process to mt9v034.
 
 ~~~
-{}{table}{mt9v032 IO}
+{}{table}{mt9v034 IO}
  0x90 (0x91) | REG\_ADDRESS | WB1 (RB0) | WB2 (RB0)
 ~~~
 
-for example, +0x90070188+ *write* 0x0188 to 0x07 in mt9v032, +0x9107XXXX+ *read* DBYTE from 0x07 in mt9v032.
+for example, +0x90070188+ *write* 0x0188 to 0x07 in mt9v034, +0x9107XXXX+ *read* DBYTE from 0x07 in mt9v034.
 
 ~~~
-As a simple rule-of-the-thumb, we may put +0x91000000+ on data bus, trigger +data\_stream\_in\_stb+, and read out the content of +0x00+ on mt9v032 by acknowledge +data\_stream\_out\_stb+, and finally put the register (which is the CHIPID, +0x1324+) on BCD segment display.
+As a simple rule-of-the-thumb, we may put +0x91000000+ on data bus, trigger +data\_stream\_in\_stb+, and read out the content of +0x00+ on mt9v034 by acknowledge +data\_stream\_out\_stb+, and finally put the register (which is the CHIPID, +0x1324+) on BCD segment display.
 ~~~
 
 Another simple example is command +0x900400FF+, which changes the +WINDOW\_WIDTH+ to *256*, this can also be verified via Chipscope.
 
-== NIR -- config mt9v032 (copied from px4flow)
+== NIR -- config mt9v034 (copied from px4flow)
 
-After testing the *R\/W* functionality of +i2c\_io\_16bit.vhd+, we next store all the command and registers in the +mt9v032.coe+, and loaded in a rom to config this camera module. The top module, which is called +mt9v032.vhd+, embedded the *mt9v032.coe*, sequentially read the content out, and config the device via I2C protocol.
+After testing the *R\/W* functionality of +i2c\_io\_16bit.vhd+, we next store all the command and registers in the +mt9v034.coe+, and loaded in a rom to config this camera module. The top module, which is called +mt9v034.vhd+, embedded the *mt9v034.coe*, sequentially read the content out, and config the device via I2C protocol.
 
-We port the source code *mt9v032.c* in PX4Flow to NIR project, (*Context A*, context, is like a fast stack-switch machanism, context B in PX4Flow is used for videos streaming only, while context A is for practical optical flow calculation).
+We port the source code *mt9v034.c* in PX4Flow to NIR project, (*Context A*, context, is like a fast stack-switch machanism, context B in PX4Flow is used for videos streaming only, while context A is for practical optical flow calculation).
 
 *Context A\/B*
 ~~~
-{}{table}{mt9v032.c}
+{}{table}{mt9v034.c}
  *Register* | *Name* | *Default* | *Context A (Context B)* | *COMMAND* | *Annotation* ||
  0x07 | Chip Control | 0x0388 | 0x0188 (0x8188) | 90070188 | *0x0088* ||
  0x03 (OxCB) | WINDOW\_HEIGHT | 480 | 64\*4 (120\*4) | 90030100 | 4-binning ||
@@ -163,7 +169,7 @@ We port the source code *mt9v032.c* in PX4Flow to NIR project, (*Context A*, con
 
 *General Settings*
 ~~~
-{}{table}{mt9v032.c section2}
+{}{table}{mt9v034.c section2}
  *Register* | *Name* | *Default* | *Context A (Context B)* | *COMMAND* | *Annotation* ||
  0x70 | Row Noise Corr | 0 | 0x0000 | 90700000 | ||
  0xAF | AEC\/AGC Enable | 0x3 | 0x0303 | 90AF0303 | ||
@@ -183,7 +189,7 @@ We port the source code *mt9v032.c* in PX4Flow to NIR project, (*Context A*, con
 
 *finally, reset*
 ~~~
-{}{table}{mt9v032.c section2}
+{}{table}{mt9v034.c section2}
  *Register* | *Name* | *Default* | *Context A (Context B)* | *COMMAND* | *Annotation* ||
  0x0C | Reset | | | 0x900C0001 | ||
  0x00 | Chip ID | | | 0x91000000 | *read back*
