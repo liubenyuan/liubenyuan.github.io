@@ -192,7 +192,7 @@ def standardconf():
   [menuend]
   </ul></nav></div></div>
   </header>
-  <div class="page"><div class="page-content margin20 nrm"><div class="page-container">
+  <div class="page"><div class="page-content margin20"><div class="page-container">
 
   [menucategory]
   <li><a class="dropdown-toggle" href="#">|</a>
@@ -736,7 +736,7 @@ def br(b, f, tableblock=False):
 
   # Deal with +monospace+.
   r = re.compile(r'(?<!\\)\+(.*?)(?<!\\)\+', re.M + re.S)
-  b = re.sub(r, r'<tt>\1</tt>', b)
+  b = re.sub(r, r'<small><span class=text-warning>\1</span></small>', b)
 
   # Deal with "double quotes".
   r = re.compile(r'(?<!\\)"(.*?)(?<!\\)"', re.M + re.S)
@@ -788,7 +788,7 @@ def br(b, f, tableblock=False):
   # Deal with paragraph break. Caution! Should only use when we're already in
   # a paragraph.
   r = re.compile(r"(?<!\\)\\p", re.M + re.S)
-  b = re.sub(r, r'</p><p>', b)
+  b = re.sub(r, r'</p><p class="readable-text">', b)
 
   if tableblock:
     # Deal with ||, meaning </td></tr><tr><td>
@@ -1103,7 +1103,7 @@ def dashlist(f, ordered=False):
       # same level, make a new list item.
       out(f.outf, '\n</li>\n<li>')
 
-    out(f.outf, '<p>' + myeqresub(br(s, f)) + '</p>')
+    out(f.outf, '<p class="readable-text">' + myeqresub(br(s, f)) + '</p>')
     level = newlevel
 
   for i in range(level):
@@ -1124,7 +1124,7 @@ def colonlist(f):
     rest = g.group(2)
 
     hb(f.outf, '<dt>|</dt>\n', br(defpart, f))
-    hb(f.outf, '<dd><p>|</p></dd>\n', br(rest, f))
+    hb(f.outf, '<dd><p class="readable-text">|</p></dd>\n', br(rest, f))
 
   out(f.outf, '</dl>\n')
 
@@ -1451,12 +1451,12 @@ def procfile(f):
         nl(f)
         continue
       elif imgblock:
-        out(f.outf, '</td></tr></table>\n')
+        out(f.outf, '</div></div>\n')
         imgblock = False
         nl(f)
         continue
       elif imgcenterblock:
-        out(f.outf, '</center>\n</td></tr></table></center>\n')
+        out(f.outf, '</div>\n')
         imgcenterblock = False
         nl(f)
         continue
@@ -1507,26 +1507,21 @@ def procfile(f):
           # handles
           # {}{img_left}{source}{alttext}{width}{height}{linktarget}.
           g += ['']*(7 - len(g))
-          
+
           if g[4].isdigit():
             g[4] += 'px'
 
           if g[5].isdigit():
             g[5] += 'px'
 
-          out(f.outf, '<table class="imgtable"><tr><td>\n')
-          if g[6]:
-            out(f.outf, '<a href="%s">' % g[6])
+          out(f.outf, '<div class="panel margin10"><div class="panel-content fg-dark">\n')
           out(f.outf, '<img src="%s"' % g[2])
           out(f.outf, ' alt="%s"' % g[3])
           if g[4]:
             out(f.outf, ' width="%s"' % g[4])
           if g[5]:
             out(f.outf, ' height="%s"' % g[5])
-          out(f.outf, ' />')
-          if g[6]:
-            out(f.outf, '</a>')
-          out(f.outf, '&nbsp;</td>\n<td align="left">')
+          out(f.outf, ' class="place-left margin10 nlm ntm"/>')
           imgblock = True
 
         elif len(g) >= 4 and g[1] == 'img_center':
@@ -1540,9 +1535,7 @@ def procfile(f):
           if g[5].isdigit():
             g[5] += 'px'
 
-          out(f.outf, '<center><table class="imgtable"><tr><td><center>\n')
-          if g[6]:
-            out(f.outf, '<a href="%s">' % g[6])
+          out(f.outf, '<div class="panel"><div class="panel-content fg-dark nlp nrp">\n')
           out(f.outf, '<img src="%s"' % g[2])
           out(f.outf, ' alt="%s"' % g[3])
           if g[4]:
@@ -1550,9 +1543,6 @@ def procfile(f):
           if g[5]:
             out(f.outf, ' height="%s"' % g[5])
           out(f.outf, ' />')
-          if g[6]:
-            out(f.outf, '</a>')
-          out(f.outf, '&nbsp;</center></td></tr>\n<tr><td><center>')
           imgcenterblock = True
 
         else:
@@ -1564,7 +1554,10 @@ def procfile(f):
         if tableblock:
           hb(f.outf, '|\n', s)
         else:
-          hb(f.outf, '<p>|</p>\n', s)
+          if imgblock==True or imgcenterblock==True:
+            hb(f.outf, '<p class="readable-text text-muted">|</p>\n\n', s)
+          else:
+            hb(f.outf, '<p class=readable-text>|</p>\n', s)
 
   if showfooter and (showlastupdated or showsourcelink):
     out(f.outf, f.conf['footerstart'])
