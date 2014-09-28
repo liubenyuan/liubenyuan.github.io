@@ -4,35 +4,43 @@
 <head>
 <meta name="generator" content="jemdoc, see http://jemdoc.jaboc.net/" />
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<link rel="stylesheet" href="jemdoc.css" type="text/css" />
+<link rel="stylesheet" href="metro_style/metro-bootstrap.css" media="screen">
+<link rel="stylesheet" href="private.css" media="screen">
+<script src="metro_style/jquery.min.js"></script>
+<script src="metro_style/jquery.widget.min.js"></script>
+<script src="metro_style/metro.min.js"></script>
 <title></title>
 </head>
-<body>
-<table summary="Table for page layout." id="tlayout">
-<tr valign="top">
-<td id="layout-menu">
-<div class="menu-item"><a href="index.html">Main</a></div>
-<div class="menu-item"><a href="publications.html">Publications</a></div>
-<div class="menu-category">Research</div>
-<div class="menu-item"><a href="bsbl.html">BSBL</a></div>
-<div class="menu-item"><a href="eit.html">EIT</a></div>
-<div class="menu-item"><a href="connectomics.html">Connectomics</a></div>
-<div class="menu-item"><a href="nircm.html">NIRCM</a></div>
-<div class="menu-item"><a href="phealth.html">phealth</a></div>
-<div class="menu-category">Hacks</div>
-<div class="menu-item"><a href="nudtpaper.html">nudtpaper</a></div>
-<div class="menu-item"><a href="udpip.html">udp/ip</a></div>
-<div class="menu-item"><a href="nrf51822.html">nrf51822</a></div>
-<div class="menu-item"><a href="kicad.html">kicad</a></div>
-<div class="menu-item"><a href="radar.html">radar</a></div>
-<div class="menu-item"><a href="flexbot.html">flexbot</a></div>
-<div class="menu-item"><a href="msp430.html">msp430</a></div>
-<div class="menu-item"><a href="mathjax.html" class="current">mathjax</a></div>
-</td>
-<td id="layout-content">
+<body class="metro">
+<header class="bg-light">
+<div class="navigation-bar light">
+<div class="navigation-bar-content container">
+<nav class="horizontal-menu"><ul>
+<li><a href="index.html">Main</a></li>
+<li><a href="publications.html">Publications</a></li>
+<li><a class="dropdown-toggle" href="#">Research</a>
+<ul class="dropdown-menu inverse" data-role="dropdown">
+<li><a href="bsbl.html">BSBL</a></li>
+<li><a href="eit.html">EIT</a></li>
+<li><a href="connectomics.html">Connectomics</a></li>
+<li><a href="nircm.html">NIRCM</a></li>
+<li><a href="phealth.html">phealth</a></li>
+</ul></li>
+<li><a class="dropdown-toggle" href="#">Hacks</a>
+<ul class="dropdown-menu inverse" data-role="dropdown">
+<li><a href="nudtpaper.html">nudtpaper</a></li>
+<li><a href="udpip.html">udp/ip</a></li>
+<li><a href="nrf51822.html">nrf51822</a></li>
+<li><a href="kicad.html">kicad</a></li>
+<li><a href="mathjax.html" class="current">mathjax</a></li>
+</ul></li>
+</ul></nav></div></div>
+</header>
+<div class="page"><div class="page-content margin20"><div class="page-container">
 <h1>New features in local copy : jemdoc.py</h1>
 <h2>MathJax Example</h2>
-<p>In this modified version of <tt>jemdoc</tt>, a LaTeX equation block can be typed in as</p>
+
+<p class=readable-text>In this modified version of <small><span class=text-warning>jemdoc</span></small>, a LaTeX equation block can be typed in as</p>
 <p style="text-align:center">
 \[
 \nabla \cdot \mathbf{D} = \rho_f\\
@@ -40,7 +48,8 @@
 \nabla \times \mathbf{E} = -\frac{\partial\mathbf{B}}{\partial t}\\
 \nabla \times \mathbf{H} = \mathbf{J}_f - \frac{\partial\mathbf{D}}{\partial t}.
 \]
-</p><p>You can also align equations using LaTeX's <tt>aligned</tt> block:</p>
+</p>
+<p class=readable-text>You can also align equations using LaTeX's <small><span class=text-warning>aligned</span></small> block:</p>
 <p style="text-align:center">
 \[
 \begin{aligned}
@@ -50,7 +59,8 @@
 \nabla \times \mathbf{H} &amp;= \mathbf{J}_f - \frac{\partial\mathbf{D}}{\partial t}.
 \end{aligned}
 \]
-</p><p>To number the equation block, wrap the equations with LaTeX's <tt>equation</tt> block:</p>
+</p>
+<p class=readable-text>To number the equation block, wrap the equations with LaTeX's <small><span class=text-warning>equation</span></small> block:</p>
 <p style="text-align:center">
 \[
 \begin{equation}
@@ -62,7 +72,8 @@
 \end{aligned}
 \end{equation}
 \]
-</p><p>Instead, you can use LaTeX's <tt>align</tt> (not <tt>aligned</tt>) block to number the individual equations:</p>
+</p>
+<p class=readable-text>Instead, you can use LaTeX's <small><span class=text-warning>align</span></small> (not <small><span class=text-warning>aligned</span></small>) block to number the individual equations:</p>
 <p style="text-align:center">
 \[
 \begin{align}
@@ -72,13 +83,14 @@
 \nabla \times \mathbf{H} &amp;= \mathbf{J}_f - \frac{\partial\mathbf{D}}{\partial t}\label{eq:H}
 \end{align}
 \]
-</p><p>You can also type inline equations as \(A x = b\).  Referencing equations is done as Eqs.&nbsp;\(\eqref{eq:E}\) and \(\eqref{eq:H}\).</p>
+</p>
+<p class=readable-text>You can also type inline equations as \(A x = b\).  Referencing equations is done as Eqs.&nbsp;\(\eqref{eq:E}\) and \(\eqref{eq:H}\).</p>
 <h2>Underscore Example</h2>
-<p>Like <b>bold</b> and <i>italic</i>, <u>underscore</u> can be used for emphasis in this modified version of <tt>jemdoc</tt>.  Useful for highlighting different parts of a bibliography item as:</p>
-<p>1. <u>First Author</u>, Second Author, and <b>Corresponding Author</b>, &ldquo;Amazing Paper,&rdquo; <i>High-impact Journal</i>, vol.&nbsp;1, pp.&nbsp;1&ndash;10 (2014).</p>
-</td>
-</tr>
-</table>
+
+<p class=readable-text>Like <strong>bold</strong> and <em>italic</em>, <u>underscore</u> can be used for emphasis in this modified version of <small><span class=text-warning>jemdoc</span></small>.  Useful for highlighting different parts of a bibliography item as:</p>
+
+<p class=readable-text>1. <u>First Author</u>, Second Author, and <strong>Corresponding Author</strong>, &ldquo;Amazing Paper,&rdquo; <em>High-impact Journal</em>, vol.&nbsp;1, pp.&nbsp;1&ndash;10 (2014).</p>
+</div></div></div>
 <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript">
 </script>
 <script type="text/x-mathjax-config">

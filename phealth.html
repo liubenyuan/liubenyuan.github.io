@@ -4,173 +4,186 @@
 <head>
 <meta name="generator" content="jemdoc, see http://jemdoc.jaboc.net/" />
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<link rel="stylesheet" href="jemdoc.css" type="text/css" />
+<link rel="stylesheet" href="metro_style/metro-bootstrap.css" media="screen">
+<link rel="stylesheet" href="private.css" media="screen">
+<script src="metro_style/jquery.min.js"></script>
+<script src="metro_style/jquery.widget.min.js"></script>
+<script src="metro_style/metro.min.js"></script>
 <title></title>
 </head>
-<body>
-<table summary="Table for page layout." id="tlayout">
-<tr valign="top">
-<td id="layout-menu">
-<div class="menu-item"><a href="index.html">Main</a></div>
-<div class="menu-item"><a href="publications.html">Publications</a></div>
-<div class="menu-category">Research</div>
-<div class="menu-item"><a href="bsbl.html">BSBL</a></div>
-<div class="menu-item"><a href="eit.html">EIT</a></div>
-<div class="menu-item"><a href="connectomics.html">Connectomics</a></div>
-<div class="menu-item"><a href="nircm.html">NIRCM</a></div>
-<div class="menu-item"><a href="phealth.html" class="current">phealth</a></div>
-<div class="menu-category">Hacks</div>
-<div class="menu-item"><a href="nudtpaper.html">nudtpaper</a></div>
-<div class="menu-item"><a href="udpip.html">udp/ip</a></div>
-<div class="menu-item"><a href="nrf51822.html">nrf51822</a></div>
-<div class="menu-item"><a href="kicad.html">kicad</a></div>
-<div class="menu-item"><a href="radar.html">radar</a></div>
-<div class="menu-item"><a href="flexbot.html">flexbot</a></div>
-<div class="menu-item"><a href="msp430.html">msp430</a></div>
-<div class="menu-item"><a href="mathjax.html">mathjax</a></div>
-</td>
-<td id="layout-content">
+<body class="metro">
+<header class="bg-light">
+<div class="navigation-bar light">
+<div class="navigation-bar-content container">
+<nav class="horizontal-menu"><ul>
+<li><a href="index.html">Main</a></li>
+<li><a href="publications.html">Publications</a></li>
+<li><a class="dropdown-toggle" href="#">Research</a>
+<ul class="dropdown-menu inverse" data-role="dropdown">
+<li><a href="bsbl.html">BSBL</a></li>
+<li><a href="eit.html">EIT</a></li>
+<li><a href="connectomics.html">Connectomics</a></li>
+<li><a href="nircm.html">NIRCM</a></li>
+<li><a href="phealth.html" class="current">phealth</a></li>
+</ul></li>
+<li><a class="dropdown-toggle" href="#">Hacks</a>
+<ul class="dropdown-menu inverse" data-role="dropdown">
+<li><a href="nudtpaper.html">nudtpaper</a></li>
+<li><a href="udpip.html">udp/ip</a></li>
+<li><a href="nrf51822.html">nrf51822</a></li>
+<li><a href="kicad.html">kicad</a></li>
+<li><a href="mathjax.html">mathjax</a></li>
+</ul></li>
+</ul></nav></div></div>
+</header>
+<div class="page"><div class="page-content margin20"><div class="page-container">
 <h1>Portable Healthcare &ndash; Hybrid Cardiography Monitoring via BLE</h1>
-<p>We build a FPGA prototyping board to collect cardio-related bio-signals.</p>
-<p><tt>Highlights:</tt></p>
+
+<p class=readable-text>We build a FPGA prototyping board to collect cardio-related bio-signals.</p>
+
+<p class=readable-text><small><span class=text-warning>Highlights:</span></small></p>
 <ol>
-<li><p><b>Robust heartbeat tracking using wrist mounted photoplethysmography(PPG) signals;</b></p>
+<li><p class="readable-text"><strong>Robust heartbeat tracking using wrist mounted photoplethysmography(PPG) signals;</strong></p>
 </li>
-<li><p><b>Synchronous ECG/PPG sampling during fitness on a treadmill with speed ranging from 2km/h to 15km/h;</b></p>
+<li><p class="readable-text"><strong>Synchronous ECG/PPG sampling during fitness on a treadmill with speed ranging from 2km/h to 15km/h;</strong></p>
 </li>
-<li><p><b>PPG data with strong motion artifact can be effectively compressed via low-power compresssed sensing.</b></p>
+<li><p class="readable-text"><strong>PPG data with strong motion artifact can be effectively compressed via low-power compresssed sensing.</strong></p>
 </li>
 </ol>
-<p><tt>Papers:</tt></p>
+
+<p class=readable-text><small><span class=text-warning>Papers:</span></small></p>
 <h1>lx9micro + pmodAD2 + pmodACL + pmodBT2</h1>
-<p><b>building a 4-channel, 3-axis accelerometer evaluation system</b></p>
+
+<p class=readable-text><strong>building a 4-channel, 3-axis accelerometer evaluation system</strong></p>
 <h2>phealth &ndash; architecture</h2>
-<table class="imgtable"><tr><td>
-<img src="pics/lx9health.png" alt="Lx9 Microboard for Healthcare" width="400px" />&nbsp;</td>
-<td align="left"><p>FPGA captures 3-axis accelerometer reads from <tt>ADXL345</tt>, 4-channel biosignals (one for ECG, and three for PPG) from <tt>AD7991</tt>. These recordings are transferred to PC via USB2UART using <tt>CP2102</tt>, or remotely via a bluetooth device <tt>RN-42</tt>.</p>
-<p>Two peripherals are used, which are I2C and UART. SPI may also be used if we utilize the 4-wire connection of ADXL345. Those codes, <b>i2c_master.vhd</b> and <b>uart.vhd</b> are publicity available, and borrowed from <a href="http://eewiki.net/pages/viewpage.action?pageId=10125324" target=&ldquo;blank&rdquo;>I2C master @ eewiki</a> and <a href="https://github.com/pabennett/uart" target=&ldquo;blank&rdquo;>uart @ pabennett</a>.</p>
-<p>FPGA, is simply a <b>logic wrapper</b> of all the auxiliary peripherals.</p>
-</td></tr></table>
+<div class="panel margin10 padding0"><div class="panel-content fg-dark">
+<img src="pics/lx9health.png" alt="Lx9 Microboard for Healthcare" width="400px" class="place-left margin10"/><div class="page"><div class="page-content margin10 nlm nrm">
+<p class="readable-text text-muted">FPGA captures 3-axis accelerometer reads from <small><span class=text-warning>ADXL345</span></small>, 4-channel biosignals (one for ECG, and three for PPG) from <small><span class=text-warning>AD7991</span></small>. These recordings are transferred to PC via USB2UART using <small><span class=text-warning>CP2102</span></small>, or remotely via a bluetooth device <small><span class=text-warning>RN-42</span></small>.</p>
+
+<p class="readable-text text-muted">Two peripherals are used, which are I2C and UART. SPI may also be used if we utilize the 4-wire connection of ADXL345. Those codes, <strong>i2c_master.vhd</strong> and <strong>uart.vhd</strong> are publicity available, and borrowed from <a href="http://eewiki.net/pages/viewpage.action?pageId=10125324" target=&ldquo;blank&rdquo;>I2C master @ eewiki</a> and <a href="https://github.com/pabennett/uart" target=&ldquo;blank&rdquo;>uart @ pabennett</a>.</p>
+
+<p class="readable-text text-muted">FPGA, is simply a <strong>logic wrapper</strong> of all the auxiliary peripherals.</p>
+</div></div></div></div>
 <h2>pmodAD2 &ndash; AD7991</h2>
-<p>PmodAD2, ad7991, has an I2C interface and up to 4 channels of ADC conversion. It supports 12-bit resolution. AD7991 remains in shutdown mode, powering up only for conversions. The conversion process is controlled by an I2C command. The range (when REF_SEL disabled) is 0V to VDD. We enable <b>4-channel</b> conversion by disable REF_SEL, and connet jumper JP1 to vin4.</p>
-<p>The serial clock frequencies for AD7991 are standard (100KHz), fast (400KHz) and high speed(3.4MHz). The address of AD7991 is <tt>b&ldquo;0101000&rdquo;</tt>, followed by a tailing bit denotes whether it is write <tt>(RW=0)</tt> or read <tt>(RW=1)</tt>. You may refer to AD7991 datasheet, Table 10, for more details.</p>
-<p>The converted samples, each has 2-Byte, where D15-D14 are 0s, D13-D12 is the channel identifier, D11-D0 are the ADC conversions in the range 0 to VDD.</p>
-<p>The workflow of <b>ad7991.vhd</b> wrapper is,</p>
+
+<p class=readable-text>PmodAD2, ad7991, has an I2C interface and up to 4 channels of ADC conversion. It supports 12-bit resolution. AD7991 remains in shutdown mode, powering up only for conversions. The conversion process is controlled by an I2C command. The range (when REF_SEL disabled) is 0V to VDD. We enable <strong>4-channel</strong> conversion by disable REF_SEL, and connet jumper JP1 to vin4.</p>
+
+<p class=readable-text>The serial clock frequencies for AD7991 are standard (100KHz), fast (400KHz) and high speed(3.4MHz). The address of AD7991 is <small><span class=text-warning>b&ldquo;0101000&rdquo;</span></small>, followed by a tailing bit denotes whether it is write <small><span class=text-warning>(RW=0)</span></small> or read <small><span class=text-warning>(RW=1)</span></small>. You may refer to AD7991 datasheet, Table 10, for more details.</p>
+
+<p class=readable-text>The converted samples, each has 2-Byte, where D15-D14 are 0s, D13-D12 is the channel identifier, D11-D0 are the ADC conversions in the range 0 to VDD.</p>
+
+<p class=readable-text>The workflow of <strong>ad7991.vhd</strong> wrapper is,</p>
 <ol>
-<li><p>put address <tt>b&ldquo;0101000&rdquo;</tt> on the ADDRESS bus of <b>i2c_master.vhd</b>, <tt>RW=0</tt> for write, I2C data is <tt>b&ldquo;11110100&rdquo;</tt>;</p>
+<li><p class="readable-text">put address <small><span class=text-warning>b&ldquo;0101000&rdquo;</span></small> on the ADDRESS bus of <strong>i2c_master.vhd</strong>, <small><span class=text-warning>RW=0</span></small> for write, I2C data is <small><span class=text-warning>b&ldquo;11110100&rdquo;</span></small>;</p>
 </li>
-<li><p><tt>RW=1</tt> for read, wait until <tt>i2c_busy</tt> is pulled up;</p>
+<li><p class="readable-text"><small><span class=text-warning>RW=1</span></small> for read, wait until <small><span class=text-warning>i2c_busy</span></small> is pulled up;</p>
 </li>
-<li><p>put AD7991 in continuous read mode, issue <tt>RW=1</tt> and register <b>valid</b> and <b>dout</b> for the incomming data.</p>
+<li><p class="readable-text">put AD7991 in continuous read mode, issue <small><span class=text-warning>RW=1</span></small> and register <strong>valid</strong> and <strong>dout</strong> for the incomming data.</p>
 </li>
 </ol>
-<p>see the code <b>ad7991.vhd</b> for more details.</p>
+
+<p class=readable-text>see the code <strong>ad7991.vhd</strong> for more details.</p>
 <h2>pmodACL &ndash; ADXL345</h2>
-<p>We connect the ADXL345 cable to the pmod slot by,</p>
-<table>
+
+<p class=readable-text>We connect the ADXL345 cable to the pmod slot by,</p>
+<table class="table hovered bordered">
 <tr class="r1"><td class="c1">1 </td><td class="c2"> 2 </td><td class="c3"> 3 </td><td class="c4"> 4 </td><td class="c5"> 5 </td><td class="c6"> 6 </td></tr>
-<tr class="r2"><td class="c1">CS </td><td class="c2"> SDO </td><td class="c3"> SCL </td><td class="c4"> SDA </td><td class="c5"> <b>GND</b> </td><td class="c6"> <b>VCC</b>
+<tr class="r2"><td class="c1">CS </td><td class="c2"> SDO </td><td class="c3"> SCL </td><td class="c4"> SDA </td><td class="c5"> <strong>GND</strong> </td><td class="c6"> <strong>VCC</strong>
 </td></tr></table>
-<p>The I2C address of ADXL345 is <tt>0x1D</tt>. In order to use this address (rather than SPI interface or the alternate address), you should tied <b>CS</b> to HIGH and <b>SDO</b> to HIGH; if you want to use the alternate address <tt>0x53</tt>, pin <b>SDO</b> must pulldown to GND. You could test the function of I2C interface by reading the chip ID from the <b>CHIPID</b> address <tt>0x00</tt>, see if you can get <tt>0xE5</tt>.</p>
+
+<p class=readable-text>The I2C address of ADXL345 is <small><span class=text-warning>0x1D</span></small>. In order to use this address (rather than SPI interface or the alternate address), you should tied <strong>CS</strong> to HIGH and <strong>SDO</strong> to HIGH; if you want to use the alternate address <small><span class=text-warning>0x53</span></small>, pin <strong>SDO</strong> must pulldown to GND. You could test the function of I2C interface by reading the chip ID from the <strong>CHIPID</strong> address <small><span class=text-warning>0x00</span></small>, see if you can get <small><span class=text-warning>0xE5</span></small>.</p>
 <ol>
-<li><p><b>Hint 1</b>, in <b>SPI</b> interface, DATAX0 is stored in 0x32 and 0x33 respectively, so you may put address <tt>(0x80 | 0x32) = 0xB2</tt> on that bus, where the MSB is for read; or <tt>(0x80 | 0x40 | 0x32) = 0xF2</tt> for continuous read operation. While for <b>I2C</b> to function, you only need <tt>0x32</tt> for single byte read, or <tt>0x72</tt> for continuous read. No <b>MSB</b> tunation is needed.</p>
+<li><p class="readable-text"><strong>Hint 1</strong>, in <strong>SPI</strong> interface, DATAX0 is stored in 0x32 and 0x33 respectively, so you may put address <small><span class=text-warning>(0x80 | 0x32) = 0xB2</span></small> on that bus, where the MSB is for read; or <small><span class=text-warning>(0x80 | 0x40 | 0x32) = 0xF2</span></small> for continuous read operation. While for <strong>I2C</strong> to function, you only need <small><span class=text-warning>0x32</span></small> for single byte read, or <small><span class=text-warning>0x72</span></small> for continuous read. No <strong>MSB</strong> tunation is needed.</p>
 </li>
-<li><p><b>Hint 2</b>, in I2C mode, when your read DATAX0 using 0x32, and continuous trigger the I2C read operation, it by default works in the continous read mode. <tt>0x32</tt> has the same effect as <tt>0x72</tt> in I2C mode.</p>
+<li><p class="readable-text"><strong>Hint 2</strong>, in I2C mode, when your read DATAX0 using 0x32, and continuous trigger the I2C read operation, it by default works in the continous read mode. <small><span class=text-warning>0x32</span></small> has the same effect as <small><span class=text-warning>0x72</span></small> in I2C mode.</p>
 </li>
 </ol>
-<p>The <b>adxl345.vhd</b> wrapper works as,</p>
+
+<p class=readable-text>The <strong>adxl345.vhd</strong> wrapper works as,</p>
 <ol>
-<li><p>ADDRESS <tt>x&ldquo;1D&rdquo;</tt>, <tt>RW=0</tt>, continuous write data <tt>x&ldquo;31&rdquo;</tt> (DATA_FORMAT) and <tt>x&ldquo;01&rdquo;</tt> (4g range); <b>stop</b>;</p>
+<li><p class="readable-text">ADDRESS <small><span class=text-warning>x&ldquo;1D&rdquo;</span></small>, <small><span class=text-warning>RW=0</span></small>, continuous write data <small><span class=text-warning>x&ldquo;31&rdquo;</span></small> (DATA_FORMAT) and <small><span class=text-warning>x&ldquo;01&rdquo;</span></small> (4g range); <strong>stop</strong>;</p>
 </li>
-<li><p>ADDRESS <tt>x&ldquo;1D&rdquo;</tt>, <tt>RW=0</tt>, continuous write data <tt>x&ldquo;2C&rdquo;</tt> (BW_RATE) and <tt>x&ldquo;0C&rdquo;</tt> (400Hz rates); <b>stop</b>;</p>
+<li><p class="readable-text">ADDRESS <small><span class=text-warning>x&ldquo;1D&rdquo;</span></small>, <small><span class=text-warning>RW=0</span></small>, continuous write data <small><span class=text-warning>x&ldquo;2C&rdquo;</span></small> (BW_RATE) and <small><span class=text-warning>x&ldquo;0C&rdquo;</span></small> (400Hz rates); <strong>stop</strong>;</p>
 </li>
-<li><p>ADDRESS <tt>x&ldquo;1D&rdquo;</tt>, <tt>RW=0</tt>, continuous write data <tt>x&ldquo;2D&rdquo;</tt> (POWER_CTL) and <tt>x&ldquo;08&rdquo;</tt> (start measure); <b>stop</b>;</p>
+<li><p class="readable-text">ADDRESS <small><span class=text-warning>x&ldquo;1D&rdquo;</span></small>, <small><span class=text-warning>RW=0</span></small>, continuous write data <small><span class=text-warning>x&ldquo;2D&rdquo;</span></small> (POWER_CTL) and <small><span class=text-warning>x&ldquo;08&rdquo;</span></small> (start measure); <strong>stop</strong>;</p>
 </li>
-<li><p>ADDRESS <tt>x&ldquo;1D&rdquo;</tt>, <tt>RW=0</tt>, write data <tt>x&ldquo;72&rdquo;</tt> (0x40 | 0x32 = 0x72, continuous read from DATAX0); <b>restart</b></p>
+<li><p class="readable-text">ADDRESS <small><span class=text-warning>x&ldquo;1D&rdquo;</span></small>, <small><span class=text-warning>RW=0</span></small>, write data <small><span class=text-warning>x&ldquo;72&rdquo;</span></small> (0x40 | 0x32 = 0x72, continuous read from DATAX0); <strong>restart</strong></p>
 </li>
-<li><p>ADDRESS <tt>x&ldquo;1D&rdquo;</tt>, <tt>RW=1</tt>, continous read 6-Byte; <b>idle</b>.</p>
+<li><p class="readable-text">ADDRESS <small><span class=text-warning>x&ldquo;1D&rdquo;</span></small>, <small><span class=text-warning>RW=1</span></small>, continous read 6-Byte; <strong>idle</strong>.</p>
 </li>
 </ol>
 <h2>USB2UART &ndash; cp2102</h2>
-<p>The interface of <b>uart.vhd</b> is very pleasant ! We may connect rx, tx pins to proper direction, (<tt>tx</tt> on <b>uart.vhd</b> denotes <b>bits</b> streamed out this module, <tt>data_stream_in_*</tt> denote the <b>Byte</b> to be write <b>into</b> this module.)</p>
+
+<p class=readable-text>The interface of <strong>uart.vhd</strong> is very pleasant ! We may connect rx, tx pins to proper direction, (<small><span class=text-warning>tx</span></small> on <strong>uart.vhd</strong> denotes <strong>bits</strong> streamed out this module, <small><span class=text-warning>data_stream_in_*</span></small> denote the <strong>Byte</strong> to be write <strong>into</strong> this module.)</p>
 <ol>
-<li><p><tt>WRITE</tt>, put data on bus, issue <tt>data_stream_in_stb</tt>, wait until <tt>data_stream_in_ack</tt>;</p>
+<li><p class="readable-text"><small><span class=text-warning>WRITE</span></small>, put data on bus, issue <small><span class=text-warning>data_stream_in_stb</span></small>, wait until <small><span class=text-warning>data_stream_in_ack</span></small>;</p>
 </li>
-<li><p><tt>READ</tt>, register data when <tt>data_stream_out_stb</tt> is valid, responds by issue <tt>data_stream_out_ack</tt>.</p>
+<li><p class="readable-text"><small><span class=text-warning>READ</span></small>, register data when <small><span class=text-warning>data_stream_out_stb</span></small> is valid, responds by issue <small><span class=text-warning>data_stream_out_ack</span></small>.</p>
 </li>
 </ol>
 <h2>pmodBT2 &ndash; RN-42</h2>
-<p>We may use RN-42 as a replacement of CP2102, where</p>
-<table id="UART Connections">
-<tr class="r1"><td class="c1"><b>uart.vhd</b> </td><td class="c2"> <b>CP2102</b> (fpga is master) </td><td class="c3"> <b>RN-42</b> (rn42 is master) </td></tr>
+
+<p class=readable-text>We may use RN-42 as a replacement of CP2102, where</p>
+<table class="table hovered bordered">
+<tr class="r1"><td class="c1"><strong>uart.vhd</strong> </td><td class="c2"> <strong>CP2102</strong> (fpga is master) </td><td class="c3"> <strong>RN-42</strong> (rn42 is master) </td></tr>
 <tr class="r2"><td class="c1">tx </td><td class="c2"> USB_RS232_TXD </td><td class="c3"> RN42_RXD </td></tr>
 <tr class="r3"><td class="c1">rx </td><td class="c2"> USB_RS232_RXD </td><td class="c3"> RN42_TXD
 </td></tr></table>
-<p>The serial can be debuged using <b>minicom</b>. <b>Warning:</b> it was said that RN42 enable <b>hardware flowcontrol</b>, however when I connect via minicom -s, (remember to enable <b>echo</b> by Ctrl + A, E), I had to <b>disable hardware flowcontrol</b>, to enter the command mode of RN42. (where 3 dollar signs may enter the CMD prompt).</p>
-<p><i>you may use the command mode to debug the connection of RN42</i></p>
-<h3>connect to RN42 and record data</h3>
-<p>References : Archlinux <a href="https://bbs.archlinux.org/viewtopic.php?pid=1388523" target=&ldquo;blank&rdquo;>FAQ 1</a>, <a href="https://bbs.archlinux.org/viewtopic.php?pid=1322604" target=&ldquo;blank&rdquo;>FAQ 2</a>, <a href="https://wiki.archlinux.org/index.php/bluetooth" target=&ldquo;blank&rdquo;>Archlinux bluetooth tutorial</a>, <a href="http://www.thinkwiki.org/wiki/How_to_setup_Bluetooth" target=&ldquo;blank&rdquo;>Thinkwiki &ndash; Bluetooth</a>, <a href="http://archlinuxarm.org/forum/viewtopic.php?f=9&amp;t=6016" target=&ldquo;blank&rdquo;>write a rfcomm.conf</a>. We may use either bluetooth dongle or the bluetooth in the PC.</p>
-<div class="codeblock">
-<div class="blockcontent"><pre>
-$ rfkill list
-$ pacman -Q | grep blue
-$ systemctl status bluetooth.service
-</pre></div></div>
-<p>enable the <tt>bluetooth.service</tt></p>
-<div class="codeblock">
-<div class="blockcontent"><pre>
-$ lsusb
-Bus 003 Device 005: ID 0a5c:21e6 Broadcom Corp. BCM20702 Bluetooth 4.0 [ThinkPad]
-Bus 001 Device 017: ID 0a12:0001 Cambridge Silicon Radio, Ltd Bluetooth Dongle (HCI mode)
-</pre></div></div>
-<p>The bluetooth on-board is <tt>hci0</tt>, then</p>
-<div class="codeblock">
-<div class="blockcontent"><pre>
-$ sudo hciconfig hci0 up
-$ sudo hcitool scan
-Scanning ...
-    00:06:66:43:0F:2E   RN42-0F2E
-</pre></div></div>
-<p>The device name of <b>RN42</b> as well as the MAC address are listed.</p>
-<p>We may add a <tt>udev.rules</tt> to bringup the bluetooth by default.</p>
-<div class="codeblock">
-<div class="blockcontent"><pre>
-$ vim /etc/udev/rules.d/10-local.rules
-# Set bluetooth power up
-# ACTION=="add", KERNEL=="hci0", RUN+="/usr/bin/hciconfig hci0 up"
-</pre></div></div>
-<p>Finally, we use the bluetooth as a replacement of Serial interface, via <tt>rfcomm</tt>,</p>
-<div class="codeblock">
-<div class="blockcontent"><pre>
-$ sudo modprobe btusb
-$ sudo modprobe ath3k
-$ sudo modprobe rfcomm
-$ sudo rfcomm bind rfcomm0 00:06:66:43:0F:2E
-</pre></div></div>
-<p>We now have two serial interfaces, one is USB2UART <tt>/dev/ttyUSB0</tt>, another is bluetooth UART <tt>/dev/rfcomm0</tt>. By setting 115200 8N1 for both serial devices, we can communicate in minicom ! Remember to enable ECHO in minicom via Ctrl + A, E.</p>
-<p><tt>NOTE</tt> When we connect to the bluetooth serial (via python, minicom, etc.,) and receive data, the pairing LED on RN42 will <b>flash</b>, and the connection status LED will <b>pulldown</b> (connected). Data are now transmitted from slave to our PC.</p>
-<h1>Comments</h1>
-<div id="disqus_thread"></div>
-  <script type="text/javascript">
-  /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-  var disqus_shortname = 'liubenyuan'; // required: replace example with your forum shortname
-  /* * * DON'T EDIT BELOW THIS LINE * * */
-  (function() {
-    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
-  </script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-<div id="footer">
-<div id="footer-text">
-Page generated 2014-06-22 11:40:43 UTC, by <a href="https://github.com/wsshin/jemdoc_mathjax" target="blank">jemdoc+MathJax</a>.
-</div>
-</div>
-</td>
-</tr>
-</table>
+
+<p class=readable-text>The serial can be debuged using <strong>minicom</strong>. <strong>Warning:</strong> it was said that RN42 enable <strong>hardware flowcontrol</strong>, however when I connect via minicom -s, (remember to enable <strong>echo</strong> by Ctrl + A, E), I had to <strong>disable hardware flowcontrol</strong>, to enter the command mode of RN42. (where 3 dollar signs may enter the CMD prompt).</p>
+
+<p class=readable-text><em>you may use the command mode to debug the connection of RN42</em></p>
+<h3>Connect to RN42 and record data</h3>
+
+<p class=readable-text>References : Archlinux <a href="https://bbs.archlinux.org/viewtopic.php?pid=1388523" target=&ldquo;blank&rdquo;>FAQ 1</a>, <a href="https://bbs.archlinux.org/viewtopic.php?pid=1322604" target=&ldquo;blank&rdquo;>FAQ 2</a>, <a href="https://wiki.archlinux.org/index.php/bluetooth" target=&ldquo;blank&rdquo;>Archlinux bluetooth tutorial</a>, <a href="http://www.thinkwiki.org/wiki/How_to_setup_Bluetooth" target=&ldquo;blank&rdquo;>Thinkwiki &ndash; Bluetooth</a>, <a href="http://archlinuxarm.org/forum/viewtopic.php?f=9&amp;t=6016" target=&ldquo;blank&rdquo;>write a rfcomm.conf</a>. We may use either bluetooth dongle or the bluetooth in the PC.</p>
+<div class="example"><blockquote>
+
+<p class="code-text text-muted">\( rfkill list
+\) pacman -Q | grep blue
+$ systemctl status bluetooth.service</p>
+</blockquote></div>
+
+<p class=readable-text>enable the <small><span class=text-warning>bluetooth.service</span></small></p>
+<div class="example"><blockquote>
+
+<p class="code-text text-muted">$ lsusb <br />
+Bus 003 Device 005: ID 0a5c:21e6 Broadcom Corp. BCM20702 Bluetooth 4.0 <a href="ThinkPad" target=&ldquo;blank&rdquo;>ThinkPad</a> <br />
+Bus 001 Device 017: ID 0a12:0001 Cambridge Silicon Radio, Ltd Bluetooth Dongle (HCI mode) <br /></p>
+</blockquote></div>
+
+<p class=readable-text>The bluetooth on-board is <small><span class=text-warning>hci0</span></small>, then</p>
+<div class="example"><blockquote>
+
+<p class="code-text text-muted">\( sudo hciconfig hci0 up \n
+\) sudo hcitool scan <br />
+Scanning &hellip; <br />
+00:06:66:43:0F:2E   RN42-0F2E <br /></p>
+</blockquote></div>
+
+<p class=readable-text>We may add a <small><span class=text-warning>udev.rules</span></small> to bringup the bluetooth by default.</p>
+<div class="example"><blockquote>
+
+<p class="code-text text-muted">$ vim <em>etc</em>udev<em>rules.d</em>10-local.rules
+
+</p>
+</blockquote></div>
+
+<p class=readable-text>Finally, we use the bluetooth as a replacement of Serial interface, via <small><span class=text-warning>rfcomm</span></small>,</p>
+<div class="example"><blockquote>
+
+<p class="code-text text-muted">\( sudo modprobe btusb
+\) sudo modprobe ath3k
+\( sudo modprobe rfcomm
+\) sudo rfcomm bind rfcomm0 00:06:66:43:0F:2E</p>
+</blockquote></div>
+
+<p class=readable-text>We now have two serial interfaces, one is USB2UART <small><span class=text-warning>/dev/ttyUSB0</span></small>, another is bluetooth UART <small><span class=text-warning>/dev/rfcomm0</span></small>. By setting 115200 8N1 for both serial devices, we can communicate in minicom ! Remember to enable ECHO in minicom via Ctrl + A, E.</p>
+
+<p class=readable-text><small><span class=text-warning>NOTE</span></small> When we connect to the bluetooth serial (via python, minicom, etc.,) and receive data, the pairing LED on RN42 will <strong>flash</strong>, and the connection status LED will <strong>pulldown</strong> (connected). Data are now transmitted from slave to our PC.</p>
+<div class="panel ribbed-amber"><div class="panel-content">
+Page generated 2014-09-28 21:16:44 UTC, by <a href="https://github.com/wsshin/jemdoc_mathjax" target="blank">jemdoc+MathJax</a>.
+</div></div>
+</div></div></div>
 <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript">
 </script>
 <script type="text/x-mathjax-config">

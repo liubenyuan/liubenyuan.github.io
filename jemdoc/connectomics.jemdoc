@@ -15,7 +15,7 @@ We are working towards these exciting problems !
 / The +py-oopsi+ implementation can be obtained at: [https://github.com/liubenyuan/py-oopsi py-oopsi @ github] /
 
 ~~~
-{}{img_left}{pics/pyoopsi-demo.png}{Simulation Result of py-oopsi}{400px}{}{}
+{}{img_left}{pics/pyoopsi-demo.png}{Simulation Result of py-oopsi}{300px}{}{}
 
 *Top (a),* The synthetic calcium fluorescence trace, random noise are added to the ground truth signal (shows in red color). The parameters used to generate the synthetic fluorescence signals are : T=2000, dt=0.02ms, lambda=0.1, tau=1.5 and sigma=0.2.
 

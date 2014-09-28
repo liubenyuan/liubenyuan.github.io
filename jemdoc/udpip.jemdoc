@@ -194,9 +194,8 @@ Microblaze是一个Xilinx基于FPGA的硬核，主要使用Xilinx Platform Studi
 
 注意在dos编码格式下，我们可以用
 ~~~
-{}{vim}
-:update
-:set ff=unix
+update
+set ff=unix
 ~~~
 将refdesign中的编码更新一下，在diff之后，我们就看到仅仅是peripheral器件的版本号发生了改变。
 

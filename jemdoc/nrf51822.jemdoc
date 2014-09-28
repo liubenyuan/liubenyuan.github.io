@@ -1,6 +1,6 @@
 # jemdoc: menu{MENU}{nrf51822.html}, nofooter
 
-= NRF51822 -- Cortex-M0 + BLE stack, Dev in Linux.
+= NRF51822 -- Cortex-M0 + BLE stack
 
 # {}{where it is}{img file}{alt text}{Width}{Height}{}
 ~~~

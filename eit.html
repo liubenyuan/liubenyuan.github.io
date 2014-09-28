@@ -4,57 +4,48 @@
 <head>
 <meta name="generator" content="jemdoc, see http://jemdoc.jaboc.net/" />
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<link rel="stylesheet" href="jemdoc.css" type="text/css" />
+<link rel="stylesheet" href="metro_style/metro-bootstrap.css" media="screen">
+<link rel="stylesheet" href="private.css" media="screen">
+<script src="metro_style/jquery.min.js"></script>
+<script src="metro_style/jquery.widget.min.js"></script>
+<script src="metro_style/metro.min.js"></script>
 <title></title>
 </head>
-<body>
-<table summary="Table for page layout." id="tlayout">
-<tr valign="top">
-<td id="layout-menu">
-<div class="menu-item"><a href="index.html">Main</a></div>
-<div class="menu-item"><a href="publications.html">Publications</a></div>
-<div class="menu-category">Research</div>
-<div class="menu-item"><a href="bsbl.html">BSBL</a></div>
-<div class="menu-item"><a href="eit.html" class="current">EIT</a></div>
-<div class="menu-item"><a href="connectomics.html">Connectomics</a></div>
-<div class="menu-item"><a href="nircm.html">NIRCM</a></div>
-<div class="menu-item"><a href="phealth.html">phealth</a></div>
-<div class="menu-category">Hacks</div>
-<div class="menu-item"><a href="nudtpaper.html">nudtpaper</a></div>
-<div class="menu-item"><a href="udpip.html">udp/ip</a></div>
-<div class="menu-item"><a href="nrf51822.html">nrf51822</a></div>
-<div class="menu-item"><a href="kicad.html">kicad</a></div>
-<div class="menu-item"><a href="radar.html">radar</a></div>
-<div class="menu-item"><a href="flexbot.html">flexbot</a></div>
-<div class="menu-item"><a href="msp430.html">msp430</a></div>
-<div class="menu-item"><a href="mathjax.html">mathjax</a></div>
-</td>
-<td id="layout-content">
+<body class="metro">
+<header class="bg-light">
+<div class="navigation-bar light">
+<div class="navigation-bar-content container">
+<nav class="horizontal-menu"><ul>
+<li><a href="index.html">Main</a></li>
+<li><a href="publications.html">Publications</a></li>
+<li><a class="dropdown-toggle" href="#">Research</a>
+<ul class="dropdown-menu inverse" data-role="dropdown">
+<li><a href="bsbl.html">BSBL</a></li>
+<li><a href="eit.html" class="current">EIT</a></li>
+<li><a href="connectomics.html">Connectomics</a></li>
+<li><a href="nircm.html">NIRCM</a></li>
+<li><a href="phealth.html">phealth</a></li>
+</ul></li>
+<li><a class="dropdown-toggle" href="#">Hacks</a>
+<ul class="dropdown-menu inverse" data-role="dropdown">
+<li><a href="nudtpaper.html">nudtpaper</a></li>
+<li><a href="udpip.html">udp/ip</a></li>
+<li><a href="nrf51822.html">nrf51822</a></li>
+<li><a href="kicad.html">kicad</a></li>
+<li><a href="mathjax.html">mathjax</a></li>
+</ul></li>
+</ul></nav></div></div>
+</header>
+<div class="page"><div class="page-content margin20"><div class="page-container">
 <h1>EIT &ndash; Electrical Impedance Tomography</h1>
-<p><b>Hardware/Software</b></p>
-<p><a href="http://en.wikipedia.org/wiki/Electrical_impedance_tomography" target=&ldquo;blank&rdquo;>Electrical Impedance Tomography (EIT)</a> refers to a non-invasive medical imaging technique in which an image of the conductivity or permittivity of part of the body is inferred from surface electrode measurements. Electrical conductivity depends on free ion content and differs considerably between various biological tissues (absolute EIT) or different functional states of one and the same tissue or organ (relative or functional EIT). The majority of EIT systems apply small alternating currents at a single frequency, however, some EIT systems use multiple frequencies to better differentiate between normal and suspected abnormal tissue within the same organ (Multifrequency-EIT or Electrical Impedance Spectroscopy). Typically, conducting surface electrodes are attached to the skin around the body part being examined. Small alternating currents will be applied to some or all of the electrodes, the resulting equi-potentials being recorded from the other electrodes (figures 1 and 2). This process will then be repeated for numerous different electrode configurations and finally result in a two-dimensional tomogram according to the image reconstruction algorithms incorporated.</p>
-<h1>Comments</h1>
-<div id="disqus_thread"></div>
-  <script type="text/javascript">
-  /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-  var disqus_shortname = 'liubenyuan'; // required: replace example with your forum shortname
-  /* * * DON'T EDIT BELOW THIS LINE * * */
-  (function() {
-    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
-  </script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-<div id="footer">
-<div id="footer-text">
-Page generated 2014-06-22 11:40:43 UTC, by <a href="https://github.com/wsshin/jemdoc_mathjax" target="blank">jemdoc+MathJax</a>.
-</div>
-</div>
-</td>
-</tr>
-</table>
+
+<p class=readable-text><strong>Hardware/Software</strong></p>
+
+<p class=readable-text><a href="http://en.wikipedia.org/wiki/Electrical_impedance_tomography" target=&ldquo;blank&rdquo;>Electrical Impedance Tomography (EIT)</a> refers to a non-invasive medical imaging technique in which an image of the conductivity or permittivity of part of the body is inferred from surface electrode measurements. Electrical conductivity depends on free ion content and differs considerably between various biological tissues (absolute EIT) or different functional states of one and the same tissue or organ (relative or functional EIT). The majority of EIT systems apply small alternating currents at a single frequency, however, some EIT systems use multiple frequencies to better differentiate between normal and suspected abnormal tissue within the same organ (Multifrequency-EIT or Electrical Impedance Spectroscopy). Typically, conducting surface electrodes are attached to the skin around the body part being examined. Small alternating currents will be applied to some or all of the electrodes, the resulting equi-potentials being recorded from the other electrodes (figures 1 and 2). This process will then be repeated for numerous different electrode configurations and finally result in a two-dimensional tomogram according to the image reconstruction algorithms incorporated.</p>
+<div class="panel ribbed-amber"><div class="panel-content">
+Page generated 2014-09-28 21:16:43 UTC, by <a href="https://github.com/wsshin/jemdoc_mathjax" target="blank">jemdoc+MathJax</a>.
+</div></div>
+</div></div></div>
 <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript">
 </script>
 <script type="text/x-mathjax-config">

@@ -4,7 +4,7 @@
 # this is a working document for <N>ear <I>nfra <R>ed <C>ontactless <M>onitoring
 #
 
-= Nexys -- NIR videos and spatio-temporal information processing
+= NIR videos and spatio-temporal processing
 
 == Nexys -- boards and vhdl basics
 
@@ -25,39 +25,7 @@ Device : xc7a100t-csg324-1 \n
 $ djtgcfg prog -f top.bit -d Nexys3 -i 0
 ~~~
 
-=== Learn the VHDL +for+, +if+, +generate+, syntax:
-~~~
-{}{vhdl}
-btn_debounce_for : for i in 0 to 4 generate
-   UBTN : btn_debounce port map(clkin,gpio_btn(i),btn_internal(i));
-end generate btn_debounce_for;
-~~~
-
-+for+ -- +generate+ loop also supports +process+, and moreover, it supports nested +if+ -- +generate+ statement,
-~~~
-{}{vhdl}
-led_for : for i in 0 to 4 generate
-    p_led_latch : process(clkin) is
-    begin
-        if rising_edge(clkin) then
-            if btn_internal(i)='1' then
-                led_internal(i) <= not led_internal(i);
-            end if;
-        end if;
-    end process p_led_latch;
-    gpio_led(i) <= led_internal(i);
-end generate led_for;
-~~~
-
-We may also infer combinational logic use +with+ -- +select+ clause,
-~~~
-{}{vhdl}
-with seg select
-    bcd <= "10001110" when "1111";
-           "11111111" when others;
-~~~
-
-= NIR on Nexys3 -- connect mt9v034 with dual--pmods
+= Connect mt9v034 with dual--pmods
 
 == NIR -- the hardware
 

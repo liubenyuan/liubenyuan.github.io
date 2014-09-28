@@ -4,76 +4,70 @@
 <head>
 <meta name="generator" content="jemdoc, see http://jemdoc.jaboc.net/" />
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<link rel="stylesheet" href="jemdoc.css" type="text/css" />
+<link rel="stylesheet" href="metro_style/metro-bootstrap.css" media="screen">
+<link rel="stylesheet" href="private.css" media="screen">
+<script src="metro_style/jquery.min.js"></script>
+<script src="metro_style/jquery.widget.min.js"></script>
+<script src="metro_style/metro.min.js"></script>
 <title></title>
 </head>
-<body>
-<table summary="Table for page layout." id="tlayout">
-<tr valign="top">
-<td id="layout-menu">
-<div class="menu-item"><a href="index.html">Main</a></div>
-<div class="menu-item"><a href="publications.html">Publications</a></div>
-<div class="menu-category">Research</div>
-<div class="menu-item"><a href="bsbl.html">BSBL</a></div>
-<div class="menu-item"><a href="eit.html">EIT</a></div>
-<div class="menu-item"><a href="connectomics.html" class="current">Connectomics</a></div>
-<div class="menu-item"><a href="nircm.html">NIRCM</a></div>
-<div class="menu-item"><a href="phealth.html">phealth</a></div>
-<div class="menu-category">Hacks</div>
-<div class="menu-item"><a href="nudtpaper.html">nudtpaper</a></div>
-<div class="menu-item"><a href="udpip.html">udp/ip</a></div>
-<div class="menu-item"><a href="nrf51822.html">nrf51822</a></div>
-<div class="menu-item"><a href="kicad.html">kicad</a></div>
-<div class="menu-item"><a href="radar.html">radar</a></div>
-<div class="menu-item"><a href="flexbot.html">flexbot</a></div>
-<div class="menu-item"><a href="msp430.html">msp430</a></div>
-<div class="menu-item"><a href="mathjax.html">mathjax</a></div>
-</td>
-<td id="layout-content">
+<body class="metro">
+<header class="bg-light">
+<div class="navigation-bar light">
+<div class="navigation-bar-content container">
+<nav class="horizontal-menu"><ul>
+<li><a href="index.html">Main</a></li>
+<li><a href="publications.html">Publications</a></li>
+<li><a class="dropdown-toggle" href="#">Research</a>
+<ul class="dropdown-menu inverse" data-role="dropdown">
+<li><a href="bsbl.html">BSBL</a></li>
+<li><a href="eit.html">EIT</a></li>
+<li><a href="connectomics.html" class="current">Connectomics</a></li>
+<li><a href="nircm.html">NIRCM</a></li>
+<li><a href="phealth.html">phealth</a></li>
+</ul></li>
+<li><a class="dropdown-toggle" href="#">Hacks</a>
+<ul class="dropdown-menu inverse" data-role="dropdown">
+<li><a href="nudtpaper.html">nudtpaper</a></li>
+<li><a href="udpip.html">udp/ip</a></li>
+<li><a href="nrf51822.html">nrf51822</a></li>
+<li><a href="kicad.html">kicad</a></li>
+<li><a href="mathjax.html">mathjax</a></li>
+</ul></li>
+</ul></nav></div></div>
+</header>
+<div class="page"><div class="page-content margin20"><div class="page-container">
 <h1>Connectomics &ndash; Inferring Connectivity From Calcium Fluorescence</h1>
 <ol>
-<li><p>What's the <b>connectivities</b> in population of neurons ? <tt>connectomics</tt></p>
+<li><p class="readable-text">What's the <strong>connectivities</strong> in population of neurons ? <small><span class=text-warning>connectomics</span></small></p>
 </li>
-<li><p>What's the <b>mathematical model</b> of spikes ? <tt>mathematics</tt></p>
+<li><p class="readable-text">What's the <strong>mathematical model</strong> of spikes ? <small><span class=text-warning>mathematics</span></small></p>
 </li>
-<li><p>How do neurons <b>comupte</b> and <b>memory</b> ? <tt>intelligence</tt></p>
+<li><p class="readable-text">How do neurons <strong>comupte</strong> and <strong>memory</strong> ? <small><span class=text-warning>intelligence</span></small></p>
 </li>
 </ol>
-<p>We are working towards these exciting problems !</p>
+
+<p class=readable-text>We are working towards these exciting problems !</p>
 <h2>Py-oopsi : the python implementation of the fast-oopsi algorithm</h2>
-<p><tt>Fast-oopsi</tt> was developed by Dr. <b>joshua vogelstein</b> in 2009, which is now widely used to extract neuron spikes from calcium fluorescence signals. Here, we propose detailed implementation of the fast-oopsi algorithm in the python programming language, which is called <tt>py-oopsi</tt>. Some corrections are also made to the original fast-oopsi paper.</p>
-<p><i> The <tt>py-oopsi</tt> implementation can be obtained at: <a href="https://github.com/liubenyuan/py-oopsi" target=&ldquo;blank&rdquo;>py-oopsi @ github</a> </i></p>
-<table class="imgtable"><tr><td>
-<img src="pics/pyoopsi-demo.png" alt="Simulation Result of py-oopsi" width="400px" />&nbsp;</td>
-<td align="left"><p><b>Top (a),</b> The synthetic calcium fluorescence trace, random noise are added to the ground truth signal (shows in red color). The parameters used to generate the synthetic fluorescence signals are : T=2000, dt=0.02ms, lambda=0.1, tau=1.5 and sigma=0.2.</p>
-<p><b>Bottom (b), (c), (d),</b> The reconstructed spikes from fluorescence trace using <tt>py-oopsi</tt>, <tt>wiener filter</tt>, and <tt>discretize binning</tt>. The py-oopsi favors sparse (by adopting Poison prior and Gaussian approximation) and non-negativity, it has the most sparse yet positive spikes. Wiener filter has oscillary at the inferred spikes. It can also reconstruct spikes correctly. We may, for example, set a threshold at 0.5 to obtain clean spikes. Discretize with binning is not robust agains noise. However, in stetter2012, he used discretized with binning and GTE (generalized transfer entropy) to achieve ~0.90 AUC.</p>
-</td></tr></table>
+
+<p class=readable-text><small><span class=text-warning>Fast-oopsi</span></small> was developed by Dr. <strong>joshua vogelstein</strong> in 2009, which is now widely used to extract neuron spikes from calcium fluorescence signals. Here, we propose detailed implementation of the fast-oopsi algorithm in the python programming language, which is called <small><span class=text-warning>py-oopsi</span></small>. Some corrections are also made to the original fast-oopsi paper.</p>
+
+<p class=readable-text><em> The <small><span class=text-warning>py-oopsi</span></small> implementation can be obtained at: <a href="https://github.com/liubenyuan/py-oopsi" target=&ldquo;blank&rdquo;>py-oopsi @ github</a> </em></p>
+<div class="panel margin10 padding0"><div class="panel-content fg-dark">
+<img src="pics/pyoopsi-demo.png" alt="Simulation Result of py-oopsi" width="300px" class="place-left margin10"/><div class="page"><div class="page-content margin10 nlm nrm">
+<p class="readable-text text-muted"><strong>Top (a),</strong> The synthetic calcium fluorescence trace, random noise are added to the ground truth signal (shows in red color). The parameters used to generate the synthetic fluorescence signals are : T=2000, dt=0.02ms, lambda=0.1, tau=1.5 and sigma=0.2.</p>
+
+<p class="readable-text text-muted"><strong>Bottom (b), (c), (d),</strong> The reconstructed spikes from fluorescence trace using <small><span class=text-warning>py-oopsi</span></small>, <small><span class=text-warning>wiener filter</span></small>, and <small><span class=text-warning>discretize binning</span></small>. The py-oopsi favors sparse (by adopting Poison prior and Gaussian approximation) and non-negativity, it has the most sparse yet positive spikes. Wiener filter has oscillary at the inferred spikes. It can also reconstruct spikes correctly. We may, for example, set a threshold at 0.5 to obtain clean spikes. Discretize with binning is not robust agains noise. However, in stetter2012, he used discretized with binning and GTE (generalized transfer entropy) to achieve ~0.90 AUC.</p>
+</div></div></div></div>
 <h2>Connectomics challenge at kaggle</h2>
-<p>This <a href="http://www.kaggle.com/c/connectomics/" target=&ldquo;blank&rdquo;>connectomics</a> challenge brought about many interesting discussions, it also draw me a new look (perspective) on the frontier of the neuron technology. For example the <a href="http://www.nature.com/nbt/journal/v31/n8/full/nbt.2635.html" target=&ldquo;blank&rdquo;>Netword Deconvolotion (ND)</a> method, and many usefull features used by the kaggler. This section will address more of the related issues on the forum.</p>
+
+<p class=readable-text>This <a href="http://www.kaggle.com/c/connectomics/" target=&ldquo;blank&rdquo;>connectomics</a> challenge brought about many interesting discussions, it also draw me a new look (perspective) on the frontier of the neuron technology. For example the <a href="http://www.nature.com/nbt/journal/v31/n8/full/nbt.2635.html" target=&ldquo;blank&rdquo;>Netword Deconvolotion (ND)</a> method, and many usefull features used by the kaggler. This section will address more of the related issues on the forum.</p>
 <h2>Causual-Effect (CE) of time series data</h2>
 <h2>Causual-Effect (CE) fast challenge</h2>
-<h1>Comments</h1>
-<div id="disqus_thread"></div>
-  <script type="text/javascript">
-  /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-  var disqus_shortname = 'liubenyuan'; // required: replace example with your forum shortname
-  /* * * DON'T EDIT BELOW THIS LINE * * */
-  (function() {
-    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
-  </script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-<div id="footer">
-<div id="footer-text">
-Page generated 2014-06-22 11:40:43 UTC, by <a href="https://github.com/wsshin/jemdoc_mathjax" target="blank">jemdoc+MathJax</a>.
-</div>
-</div>
-</td>
-</tr>
-</table>
+<div class="panel ribbed-amber"><div class="panel-content">
+Page generated 2014-09-28 21:16:44 UTC, by <a href="https://github.com/wsshin/jemdoc_mathjax" target="blank">jemdoc+MathJax</a>.
+</div></div>
+</div></div></div>
 <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript">
 </script>
 <script type="text/x-mathjax-config">

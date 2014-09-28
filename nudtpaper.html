@@ -4,60 +4,70 @@
 <head>
 <meta name="generator" content="jemdoc, see http://jemdoc.jaboc.net/" />
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<link rel="stylesheet" href="jemdoc.css" type="text/css" />
+<link rel="stylesheet" href="metro_style/metro-bootstrap.css" media="screen">
+<link rel="stylesheet" href="private.css" media="screen">
+<script src="metro_style/jquery.min.js"></script>
+<script src="metro_style/jquery.widget.min.js"></script>
+<script src="metro_style/metro.min.js"></script>
 <title></title>
 </head>
-<body>
-<table summary="Table for page layout." id="tlayout">
-<tr valign="top">
-<td id="layout-menu">
-<div class="menu-item"><a href="index.html">Main</a></div>
-<div class="menu-item"><a href="publications.html">Publications</a></div>
-<div class="menu-category">Research</div>
-<div class="menu-item"><a href="bsbl.html">BSBL</a></div>
-<div class="menu-item"><a href="eit.html">EIT</a></div>
-<div class="menu-item"><a href="connectomics.html">Connectomics</a></div>
-<div class="menu-item"><a href="nircm.html">NIRCM</a></div>
-<div class="menu-item"><a href="phealth.html">phealth</a></div>
-<div class="menu-category">Hacks</div>
-<div class="menu-item"><a href="nudtpaper.html" class="current">nudtpaper</a></div>
-<div class="menu-item"><a href="udpip.html">udp/ip</a></div>
-<div class="menu-item"><a href="nrf51822.html">nrf51822</a></div>
-<div class="menu-item"><a href="kicad.html">kicad</a></div>
-<div class="menu-item"><a href="radar.html">radar</a></div>
-<div class="menu-item"><a href="flexbot.html">flexbot</a></div>
-<div class="menu-item"><a href="msp430.html">msp430</a></div>
-<div class="menu-item"><a href="mathjax.html">mathjax</a></div>
-</td>
-<td id="layout-content">
+<body class="metro">
+<header class="bg-light">
+<div class="navigation-bar light">
+<div class="navigation-bar-content container">
+<nav class="horizontal-menu"><ul>
+<li><a href="index.html">Main</a></li>
+<li><a href="publications.html">Publications</a></li>
+<li><a class="dropdown-toggle" href="#">Research</a>
+<ul class="dropdown-menu inverse" data-role="dropdown">
+<li><a href="bsbl.html">BSBL</a></li>
+<li><a href="eit.html">EIT</a></li>
+<li><a href="connectomics.html">Connectomics</a></li>
+<li><a href="nircm.html">NIRCM</a></li>
+<li><a href="phealth.html">phealth</a></li>
+</ul></li>
+<li><a class="dropdown-toggle" href="#">Hacks</a>
+<ul class="dropdown-menu inverse" data-role="dropdown">
+<li><a href="nudtpaper.html" class="current">nudtpaper</a></li>
+<li><a href="udpip.html">udp/ip</a></li>
+<li><a href="nrf51822.html">nrf51822</a></li>
+<li><a href="kicad.html">kicad</a></li>
+<li><a href="mathjax.html">mathjax</a></li>
+</ul></li>
+</ul></nav></div></div>
+</header>
+<div class="page"><div class="page-content margin20"><div class="page-container">
 <h1>NUDTPaper &ndash; Msc/Ph.D Latex Thesis Template</h1>
-<p><tt>代码下载:</tt> <a href="https://github.com/liubenyuan/nudtpaper" target=&ldquo;blank&rdquo;>NUDTPaper @ github</a> <br />
-<tt>项目主页:</tt> <a href="http://liubenyuan.github.io/nudtpaper" target=&ldquo;blank&rdquo;>NUDTPaper frontpage @ github</a></p>
-<p>旧代码主页: <a href="http://nudtpaper.googlecode.com" target=&ldquo;blank&rdquo;>NUDTPaper @ googlecode</a></p>
+
+<p class=readable-text><small><span class=text-warning>代码下载:</span></small> <a href="https://github.com/liubenyuan/nudtpaper" target=&ldquo;blank&rdquo;>NUDTPaper @ github</a> <br />
+<small><span class=text-warning>项目主页:</span></small> <a href="http://liubenyuan.github.io/nudtpaper" target=&ldquo;blank&rdquo;>NUDTPaper frontpage @ github</a></p>
+
+<p class=readable-text>旧代码主页: <a href="http://nudtpaper.googlecode.com" target=&ldquo;blank&rdquo;>NUDTPaper @ googlecode</a></p>
 <h2>简介</h2>
-<p>NUDTPaper是国防科学技术大学 <tt>硕士/博士 LaTeX 论文模板</tt> 的项目页。你可以去<a href="http://nudtpaper.googlecode.com" target=&ldquo;blank&rdquo;>NUDTPaper @ googlecode</a>下载详细的说明文档。有任何问题，欢迎给我发邮件。</p>
+
+<p class=readable-text>NUDTPaper是国防科学技术大学 <small><span class=text-warning>硕士/博士 LaTeX 论文模板</span></small> 的项目页。你可以去<a href="http://nudtpaper.googlecode.com" target=&ldquo;blank&rdquo;>NUDTPaper @ googlecode</a>下载详细的说明文档。有任何问题，欢迎给我发邮件。</p>
 <h2>使用概要</h2>
-<p>用户强烈看用户手册nudtpaper.pdf的 <tt>第一页</tt> ，有一些LaTeX经验的同学可以很快上手。一般来说，模板所依赖的包都会在TeX发行版（TexLive, MikTex, CTex）中包含。模板需要一些Office字体，为了获得更好的论文打印效果，用户需要下载一些中文及英文的OpenType（OTF）字体文件。具体的下载链接，同学们可以在CTeX论坛上咨询大牛们。</p>
-<p>Ctex论坛地址: <a href="http://bbs.ctex.org" target=&ldquo;blank&rdquo;>Ctex Forum</a> <br />
+
+<p class=readable-text>用户强烈看用户手册nudtpaper.pdf的 <small><span class=text-warning>第一页</span></small> ，有一些LaTeX经验的同学可以很快上手。一般来说，模板所依赖的包都会在TeX发行版（TexLive, MikTex, CTex）中包含。模板需要一些Office字体，为了获得更好的论文打印效果，用户需要下载一些中文及英文的OpenType（OTF）字体文件。具体的下载链接，同学们可以在CTeX论坛上咨询大牛们。</p>
+
+<p class=readable-text>Ctex论坛地址: <a href="http://bbs.ctex.org" target=&ldquo;blank&rdquo;>Ctex Forum</a> <br />
 模板使用的讨论页: <a href="http://bbs.ctex.org/forum.php?mod=viewthread&amp;tid=51842&amp;extra=page%3D2" target=&ldquo;blank&rdquo;>国防科大硕/博论文模板</a></p>
 <h2>模板特性 (old)</h2>
 <ol>
-<li><p>用xeCJK进行字体选择，比较方便。可以直接使用TTF或者OTF字体；</p>
+<li><p class="readable-text">用xeCJK进行字体选择，比较方便。可以直接使用TTF或者OTF字体；</p>
 </li>
-<li><p>安装需求少，只需要tex环境和xeCJK包，对平台Win<i>Linux</i>Mac没有要求。建议使用TeXLive，CTeX完整版；</p>
+<li><p class="readable-text">安装需求少，只需要tex环境和xeCJK包，对平台Win<em>Linux</em>Mac没有要求。建议使用TeXLive，CTeX完整版；</p>
 </li>
-<li><p>有模板用户手册和排版样例文件，上手简单；</p>
+<li><p class="readable-text">有模板用户手册和排版样例文件，上手简单；</p>
 </li>
-<li><p>编译方便：生成样例文件，只需双击makepdf.bat；</p>
+<li><p class="readable-text">编译方便：生成样例文件，只需双击makepdf.bat；</p>
 </li>
-<li><p>参考文献采用Jabref编辑，方便好管理。采用bstutf8的参考文献格式文件，符合中文参考文献规范；</p>
+<li><p class="readable-text">参考文献采用Jabref编辑，方便好管理。采用bstutf8的参考文献格式文件，符合中文参考文献规范；</p>
 </li>
-<li><p>模板、样例都采用docstrip生成：由nudtpaper.dtx编译得到，好理解，易管理。</p>
+<li><p class="readable-text">模板、样例都采用docstrip生成：由nudtpaper.dtx编译得到，好理解，易管理。</p>
 </li>
 </ol>
-</td>
-</tr>
-</table>
+</div></div></div>
 <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript">
 </script>
 <script type="text/x-mathjax-config">

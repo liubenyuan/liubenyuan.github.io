@@ -4,132 +4,147 @@
 <head>
 <meta name="generator" content="jemdoc, see http://jemdoc.jaboc.net/" />
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<link rel="stylesheet" href="jemdoc.css" type="text/css" />
+<link rel="stylesheet" href="metro_style/metro-bootstrap.css" media="screen">
+<link rel="stylesheet" href="private.css" media="screen">
+<script src="metro_style/jquery.min.js"></script>
+<script src="metro_style/jquery.widget.min.js"></script>
+<script src="metro_style/metro.min.js"></script>
 <title></title>
 </head>
-<body>
-<table summary="Table for page layout." id="tlayout">
-<tr valign="top">
-<td id="layout-menu">
-<div class="menu-item"><a href="index.html">Main</a></div>
-<div class="menu-item"><a href="publications.html">Publications</a></div>
-<div class="menu-category">Research</div>
-<div class="menu-item"><a href="bsbl.html">BSBL</a></div>
-<div class="menu-item"><a href="eit.html">EIT</a></div>
-<div class="menu-item"><a href="connectomics.html">Connectomics</a></div>
-<div class="menu-item"><a href="nircm.html">NIRCM</a></div>
-<div class="menu-item"><a href="phealth.html">phealth</a></div>
-<div class="menu-category">Hacks</div>
-<div class="menu-item"><a href="nudtpaper.html">nudtpaper</a></div>
-<div class="menu-item"><a href="udpip.html">udp/ip</a></div>
-<div class="menu-item"><a href="nrf51822.html">nrf51822</a></div>
-<div class="menu-item"><a href="kicad.html" class="current">kicad</a></div>
-<div class="menu-item"><a href="radar.html">radar</a></div>
-<div class="menu-item"><a href="flexbot.html">flexbot</a></div>
-<div class="menu-item"><a href="msp430.html">msp430</a></div>
-<div class="menu-item"><a href="mathjax.html">mathjax</a></div>
-</td>
-<td id="layout-content">
+<body class="metro">
+<header class="bg-light">
+<div class="navigation-bar light">
+<div class="navigation-bar-content container">
+<nav class="horizontal-menu"><ul>
+<li><a href="index.html">Main</a></li>
+<li><a href="publications.html">Publications</a></li>
+<li><a class="dropdown-toggle" href="#">Research</a>
+<ul class="dropdown-menu inverse" data-role="dropdown">
+<li><a href="bsbl.html">BSBL</a></li>
+<li><a href="eit.html">EIT</a></li>
+<li><a href="connectomics.html">Connectomics</a></li>
+<li><a href="nircm.html">NIRCM</a></li>
+<li><a href="phealth.html">phealth</a></li>
+</ul></li>
+<li><a class="dropdown-toggle" href="#">Hacks</a>
+<ul class="dropdown-menu inverse" data-role="dropdown">
+<li><a href="nudtpaper.html">nudtpaper</a></li>
+<li><a href="udpip.html">udp/ip</a></li>
+<li><a href="nrf51822.html">nrf51822</a></li>
+<li><a href="kicad.html" class="current">kicad</a></li>
+<li><a href="mathjax.html">mathjax</a></li>
+</ul></li>
+</ul></nav></div></div>
+</header>
+<div class="page"><div class="page-content margin20"><div class="page-container">
 <h1>Kicad &ndash; from pmod boards to complex design</h1>
-<p>This page is divided into two parts, <tt>(one)</tt> is a gallery of homebrew PCB boards and the corresponding <b>.sch</b> and <b>.brd</b> on github. <tt>(the other)</tt> is a on-going learning note of eagle(kicad) CAD software.</p>
+
+<p class=readable-text>This page is divided into two parts, <small><span class=text-warning>(one)</span></small> is a gallery of homebrew PCB boards and the corresponding <strong>.sch</strong> and <strong>.brd</strong> on github. <small><span class=text-warning>(the other)</span></small> is a on-going learning note of eagle(kicad) CAD software.</p>
 <h2>Homebrew PCB Galleries</h2>
 <h2>Digilent &ndash; the pmod resources</h2>
-<p>The best tutorial goes to the official tutorial <b>Getting started in Kicad</b> and <a href="http://store.curiousinventor.com/guides/" target=&ldquo;blank&rdquo;>Courious Inventor</a>. It also has comprehensive video guide on how to soldering SMD and many others.</p>
-<p>The most simple circuit board, as an add-on peripherals, might by the digilent pmod module. There are a lot example designs (schematics) on <a href="http://www.digilentinc.com/Products" target=&ldquo;blank&rdquo;>Digilent</a>. The <tt>first step</tt>, you could <i>copy board</i> a digilent pmod module, and feel the whole process of <b>printing</b> and <b>soldering</b> of one real PCB.</p>
+
+<p class=readable-text>The best tutorial goes to the official tutorial <strong>Getting started in Kicad</strong> and <a href="http://store.curiousinventor.com/guides/" target=&ldquo;blank&rdquo;>Courious Inventor</a>. It also has comprehensive video guide on how to soldering SMD and many others.</p>
+
+<p class=readable-text>The most simple circuit board, as an add-on peripherals, might by the digilent pmod module. There are a lot example designs (schematics) on <a href="http://www.digilentinc.com/Products" target=&ldquo;blank&rdquo;>Digilent</a>. The <small><span class=text-warning>first step</span></small>, you could <em>copy board</em> a digilent pmod module, and feel the whole process of <strong>printing</strong> and <strong>soldering</strong> of one real PCB.</p>
 <h2>Eagle vs Kicad &ndash; which one is better ?</h2>
-<p>Sparkfun is a great website. We watched the videos and some on-line <a href="https://www.sparkfun.com/tutorials/" target=&ldquo;blank&rdquo;>tutorials</a>,</p>
+
+<p class=readable-text>Sparkfun is a great website. We watched the videos and some on-line <a href="https://www.sparkfun.com/tutorials/" target=&ldquo;blank&rdquo;>tutorials</a>,</p>
 <ol>
-<li><p><a href="https://www.sparkfun.com/tutorials/115" target=&ldquo;blank&rdquo;>Better PCBs in Eagle</a></p>
+<li><p class="readable-text"><a href="https://www.sparkfun.com/tutorials/115" target=&ldquo;blank&rdquo;>Better PCBs in Eagle</a></p>
 </li>
-<li><p><a href="https://www.sparkfun.com/tutorials/109" target=&ldquo;blank&rdquo;>Beginning Embedded Electronics - 9</a></p>
+<li><p class="readable-text"><a href="https://www.sparkfun.com/tutorials/109" target=&ldquo;blank&rdquo;>Beginning Embedded Electronics - 9</a></p>
 </li>
 </ol>
 <h3>eagle &ndash; schematic</h3>
 <ol>
-<li><p>Eagle has a verb-noun working flow, each time you select a <b>verb</b> (i.e., <tt>move</tt>, <tt>add</tt>, <tt>copy</tt>) and click the object to perform such operation. Group-ops is: <i>&gt; move &gt; group &gt; right click &gt; group move</i>. Commands can be abbrievated, <tt>move</tt> can be typed in the command line as <b>mov</b>, <tt>copy</tt> is <b>cop</b>, etc. Remember there is a <tt>mirror</tt> icon just beside the grid icon.</p>
+<li><p class="readable-text">Eagle has a verb-noun working flow, each time you select a <strong>verb</strong> (i.e., <small><span class=text-warning>move</span></small>, <small><span class=text-warning>add</span></small>, <small><span class=text-warning>copy</span></small>) and click the object to perform such operation. Group-ops is: <em>&gt; move &gt; group &gt; right click &gt; group move</em>. Commands can be abbrievated, <small><span class=text-warning>move</span></small> can be typed in the command line as <strong>mov</strong>, <small><span class=text-warning>copy</span></small> is <strong>cop</strong>, etc. Remember there is a <small><span class=text-warning>mirror</span></small> icon just beside the grid icon.</p>
 </li>
-<li><p>You may <tt>move</tt> or <tt>copy</tt> a component to connect to another pin. To visually connect a wire to a pin, or cross wires, you may add a <tt>junction</tt> to the crosspoint.</p>
+<li><p class="readable-text">You may <small><span class=text-warning>move</span></small> or <small><span class=text-warning>copy</span></small> a component to connect to another pin. To visually connect a wire to a pin, or cross wires, you may add a <small><span class=text-warning>junction</span></small> to the crosspoint.</p>
 </li>
-<li><p>You should use <tt>net</tt> and <tt>label</tt> to denote a <b>common</b> connection from some ICs to another IC. Do not use <tt>wire</tt> and <tt>label</tt>. <tt>Show</tt> command is very useful in visualizing wires and ICs.</p>
+<li><p class="readable-text">You should use <small><span class=text-warning>net</span></small> and <small><span class=text-warning>label</span></small> to denote a <strong>common</strong> connection from some ICs to another IC. Do not use <small><span class=text-warning>wire</span></small> and <small><span class=text-warning>label</span></small>. <small><span class=text-warning>Show</span></small> command is very useful in visualizing wires and ICs.</p>
 </li>
-<li><p>Try always <tt>add frames</tt> to your schematics and group align the frame w.r.t the center.</p>
+<li><p class="readable-text">Try always <small><span class=text-warning>add frames</span></small> to your schematics and group align the frame w.r.t the center.</p>
 </li>
 </ol>
 <h3>eagle &ndash; PCB layout</h3>
-<p><i>usually, you may route with 10mil width and 8mil spacing, try to see how far you can go</i></p>
+
+<p class=readable-text><em>usually, you may route with 10mil width and 8mil spacing, try to see how far you can go</em></p>
 <ol>
-<li><p>Make sure all <tt>airwires</tt> (thin lines that have not been routed yet) are routed.</p>
+<li><p class="readable-text">Make sure all <small><span class=text-warning>airwires</span></small> (thin lines that have not been routed yet) are routed.</p>
 </li>
-<li><p>While you in <tt>move</tt> command, press <tt>Ctrl</tt> key while clicking a component, the origin of the component will snap to the grid. You must decide whether you <tt>route</tt> in the top or bottom layer. In surface mount devices, we usually route on the <b>top copper</b> layer. After you placed all the components, you can use <tt>ratsnest</tt> to recalculate the airwires. If you want to use the <tt>autorouter</tt>, be sure to setup the grid to appropriate width, for example, <b>7mil</b> or <b>14mil</b>, and then press the <tt>autorouter</tt>. In the config-box, set the line width to the corresponding value.</p>
+<li><p class="readable-text">While you in <small><span class=text-warning>move</span></small> command, press <small><span class=text-warning>Ctrl</span></small> key while clicking a component, the origin of the component will snap to the grid. You must decide whether you <small><span class=text-warning>route</span></small> in the top or bottom layer. In surface mount devices, we usually route on the <strong>top copper</strong> layer. After you placed all the components, you can use <small><span class=text-warning>ratsnest</span></small> to recalculate the airwires. If you want to use the <small><span class=text-warning>autorouter</span></small>, be sure to setup the grid to appropriate width, for example, <strong>7mil</strong> or <strong>14mil</strong>, and then press the <small><span class=text-warning>autorouter</span></small>. In the config-box, set the line width to the corresponding value.</p>
 </li>
-<li><p>Routing the <b>GND</b> plane. This is most important when you are using eagle. First, select the <tt>polygon</tt> tool, change line <b>width</b> to 10mil, and <b>select on</b> (the icon with a small circle on the up-left corner) to isolate parts and wires, the <b>isolation width</b> is 10mil, spacing (between the ground plane and the boarder of the PCB). Second, draw a rectangular around the board. Third, <tt>name</tt> the polygon <b>GND</b>. Final, press the <tt>ratsnest</tt> to generate the GND plane. <b>Note</b>, when you re-open the PCB board, the copper pour is not shown, so you need to press <tt>ratsnest</tt> to regenerate the GND plane. <i>Try, always pour GND plane with 10mil isolation.</i> You could modify the <b>isolation</b> and <b>spacing</b> of GND polygon by (i) <tt>information</tt> button.</p>
+<li><p class="readable-text">Routing the <strong>GND</strong> plane. This is most important when you are using eagle. First, select the <small><span class=text-warning>polygon</span></small> tool, change line <strong>width</strong> to 10mil, and <strong>select on</strong> (the icon with a small circle on the up-left corner) to isolate parts and wires, the <strong>isolation width</strong> is 10mil, spacing (between the ground plane and the boarder of the PCB). Second, draw a rectangular around the board. Third, <small><span class=text-warning>name</span></small> the polygon <strong>GND</strong>. Final, press the <small><span class=text-warning>ratsnest</span></small> to generate the GND plane. <strong>Note</strong>, when you re-open the PCB board, the copper pour is not shown, so you need to press <small><span class=text-warning>ratsnest</span></small> to regenerate the GND plane. <em>Try, always pour GND plane with 10mil isolation.</em> You could modify the <strong>isolation</strong> and <strong>spacing</strong> of GND polygon by (i) <small><span class=text-warning>information</span></small> button.</p>
 </li>
-<li><p>Add important information, such as polarize of diode or capacitors, in the silk layer. (you may simply add <tt>text</tt> to <b>tPlace</b> layer). Make sure you add <tt>text</tt> to your functional pins, and place them on the <b>tPlace</b> layer, please use the <tt>change</tt> button to alter the size of text to <b>0.05"</b>. You can use the eye button to <tt>show</tt> the connection of pins and wires during this process. Add time stamp wires to the <b>tBottom</b> layer where there is no connection, it will automatically mirro the text and it's cool.</p>
+<li><p class="readable-text">Add important information, such as polarize of diode or capacitors, in the silk layer. (you may simply add <small><span class=text-warning>text</span></small> to <strong>tPlace</strong> layer). Make sure you add <small><span class=text-warning>text</span></small> to your functional pins, and place them on the <strong>tPlace</strong> layer, please use the <small><span class=text-warning>change</span></small> button to alter the size of text to <strong>0.05"</strong>. You can use the eye button to <small><span class=text-warning>show</span></small> the connection of pins and wires during this process. Add time stamp wires to the <strong>tBottom</strong> layer where there is no connection, it will automatically mirro the text and it's cool.</p>
 </li>
-<li><p>Use grid smart! Component Placement grid should be <tt>50mil</tt> and the routing should be the width (<tt>10mil</tt>) of the wire. The 0.05" grid rule applies to the component centers. Many component footprints are hard metric (for example 0.5mm spacing or 1x1.2mm pad sizes) and it is completely ok to layout pads and parts on the mm grid. However, when placing components I recommend the component centers stay ‘on grid’. This will help with routing and component alignment.</p>
+<li><p class="readable-text">Use grid smart! Component Placement grid should be <small><span class=text-warning>50mil</span></small> and the routing should be the width (<small><span class=text-warning>10mil</span></small>) of the wire. The 0.05" grid rule applies to the component centers. Many component footprints are hard metric (for example 0.5mm spacing or 1x1.2mm pad sizes) and it is completely ok to layout pads and parts on the mm grid. However, when placing components I recommend the component centers stay ‘on grid’. This will help with routing and component alignment.</p>
 </li>
-<li><p>Hand route critical or sensitive parts of certain boards, Spend your time innovating! <b>Remember</b>, add (1) Date code at <b>tBottom</b>, (2) Silkscreen title and pin labels <tt>text</tt> <b>tPlace</b>, (3) Add standoff <tt>hole</tt> mounting <b>drews</b>, (4) Make sure all connections routed, (5) The direction of TX and RX being routed correctly, you may name <b>RX-I</b> and <b>TX-O</b>. (6) add debug vias, leds, and pullup and pulldown resistors.</p>
+<li><p class="readable-text">Hand route critical or sensitive parts of certain boards, Spend your time innovating! <strong>Remember</strong>, add (1) Date code at <strong>tBottom</strong>, (2) Silkscreen title and pin labels <small><span class=text-warning>text</span></small> <strong>tPlace</strong>, (3) Add standoff <small><span class=text-warning>hole</span></small> mounting <strong>drews</strong>, (4) Make sure all connections routed, (5) The direction of TX and RX being routed correctly, you may name <strong>RX-I</strong> and <strong>TX-O</strong>. (6) add debug vias, leds, and pullup and pulldown resistors.</p>
 </li>
 </ol>
 <h3>Analog &amp; RF PCB design rules (by Ondo88)</h3>
 <ol>
-<li><p>Some PCB software offer “tear” connections (<tt>use teardrop.ulp</tt>) for pads and vias. This reduces mechanical stress around the via connection, avoiding possible rupture of the traces. Again, it’s also useful for RF applications, as it makes a better Z matching (it behaves as a tamper used in micro-wave circuits).</p>
+<li><p class="readable-text">Some PCB software offer “tear” connections (<small><span class=text-warning>use teardrop.ulp</span></small>) for pads and vias. This reduces mechanical stress around the via connection, avoiding possible rupture of the traces. Again, it’s also useful for RF applications, as it makes a better Z matching (it behaves as a tamper used in micro-wave circuits).</p>
 </li>
-<li><p>It’s a good practice to place holes around the boards, joining top and bottom ground layers. That makes the board more similar to <tt>a Faraday cage</tt>, reducing greatly effects from EMI (Electro-magnetic Interference). But to be truth, randomizing the distance between the holes makes a better isolation as no single frequency gets benefited form constructive interference.</p>
+<li><p class="readable-text">It’s a good practice to place holes around the boards, joining top and bottom ground layers. That makes the board more similar to <small><span class=text-warning>a Faraday cage</span></small>, reducing greatly effects from EMI (Electro-magnetic Interference). But to be truth, randomizing the distance between the holes makes a better isolation as no single frequency gets benefited form constructive interference.</p>
 </li>
-<li><p>Get to know what you’re building. Before getting serious about PCB design, you should learn what is everything you’re using on them. I’ve always said you can know if someone is a good PCB designer by asking him to give you <tt>FR4</tt> permitivity, solder fusion temperature and the like (without checking wikipedia ;D).</p>
+<li><p class="readable-text">Get to know what you’re building. Before getting serious about PCB design, you should learn what is everything you’re using on them. I’ve always said you can know if someone is a good PCB designer by asking him to give you <small><span class=text-warning>FR4</span></small> permitivity, solder fusion temperature and the like (without checking wikipedia ;D).</p>
 </li>
-<li><p>Another common mistake is not taking account of <tt>thermal activity</tt> on the board. Make sure your temperature sensitive components (like oscillators, and almost any analog circuit) are far from your heat generating circuits (regulators and the like). If your board fits in a box, be sure to have cooling paths that keep the things ok.</p>
+<li><p class="readable-text">Another common mistake is not taking account of <small><span class=text-warning>thermal activity</span></small> on the board. Make sure your temperature sensitive components (like oscillators, and almost any analog circuit) are far from your heat generating circuits (regulators and the like). If your board fits in a box, be sure to have cooling paths that keep the things ok.</p>
 </li>
-<li><p>Some chips may have two VCC or GND pins one to each other. On SMD packages it’s tempting to just join them straight, avoid that if you’re using oven soldering (very likely on production). That will <tt>unbalance</tt> the thermal forces your chip may suffer, moving it from its original position, and possibly making it tombstone.</p>
+<li><p class="readable-text">Some chips may have two VCC or GND pins one to each other. On SMD packages it’s tempting to just join them straight, avoid that if you’re using oven soldering (very likely on production). That will <small><span class=text-warning>unbalance</span></small> the thermal forces your chip may suffer, moving it from its original position, and possibly making it tombstone.</p>
 </li>
-<li><p>I’ve found very useful to place a couple of <tt>squares on silkscreen</tt>, with an E (Error) and a T (Tested) on the side of each one. That allows you to mark easily your boards with anything you may have at hand, from a pen to a screwdriver.</p>
+<li><p class="readable-text">I’ve found very useful to place a couple of <small><span class=text-warning>squares on silkscreen</span></small>, with an E (Error) and a T (Tested) on the side of each one. That allows you to mark easily your boards with anything you may have at hand, from a pen to a screwdriver.</p>
 </li>
-<li><p>The last one is the more ethereal of the advises, <tt>“follow your ground paths”</tt>. Your signal propagates from your Vcc to your GND, mainly through the shortest path, if two signals share that ground path, they’ll interfere each other. Try to make that paths as short and trouble free as you can.</p>
+<li><p class="readable-text">The last one is the more ethereal of the advises, <small><span class=text-warning>“follow your ground paths”</span></small>. Your signal propagates from your Vcc to your GND, mainly through the shortest path, if two signals share that ground path, they’ll interfere each other. Try to make that paths as short and trouble free as you can.</p>
 </li>
 </ol>
 <h3>eagle &ndash; Gerber viewer</h3>
-<p>Gerber Files are text files with coordinates that tell the PCB machines to go to location X,Y and do something (drill, expose, etch, print, etc). Because there are different layers to your PCB, you need to create different text files for the different layers. This is where the Eagle CAM program comes into play.</p>
-<p>Here, we will use <tt>sfe-gerb274x.cam</tt> script by sparkfun (<b>Top Section</b> : Top, Pads, Vias, <tt>Dimension(?)</tt>. <b>Bottom Section</b> : Bottom, Pads, Vias). Anytime you transmit a PCB layout to a fab house, you need to pass them 7 files, and 7 files only:</p>
+
+<p class=readable-text>Gerber Files are text files with coordinates that tell the PCB machines to go to location X,Y and do something (drill, expose, etch, print, etc). Because there are different layers to your PCB, you need to create different text files for the different layers. This is where the Eagle CAM program comes into play.</p>
+
+<p class=readable-text>Here, we will use <small><span class=text-warning>sfe-gerb274x.cam</span></small> script by sparkfun (<strong>Top Section</strong> : Top, Pads, Vias, <small><span class=text-warning>Dimension(?)</span></small>. <strong>Bottom Section</strong> : Bottom, Pads, Vias). Anytime you transmit a PCB layout to a fab house, you need to pass them 7 files, and 7 files only:</p>
 <ol>
-<li><p>boardname.<b>GTL</b> Top Copper Layer</p>
+<li><p class="readable-text">boardname.<strong>GTL</strong> Top Copper Layer</p>
 </li>
-<li><p>boardname.<b>GBL</b> Bottom Copper Layer</p>
+<li><p class="readable-text">boardname.<strong>GBL</strong> Bottom Copper Layer</p>
 </li>
-<li><p>boardname.<b>GTS</b> Top Soldermask</p>
+<li><p class="readable-text">boardname.<strong>GTS</strong> Top Soldermask</p>
 </li>
-<li><p>boardname.<b>GBS</b> Bottom Soldermask</p>
+<li><p class="readable-text">boardname.<strong>GBS</strong> Bottom Soldermask</p>
 </li>
-<li><p>boardname.<b>GTO</b> Top Silkscreen</p>
+<li><p class="readable-text">boardname.<strong>GTO</strong> Top Silkscreen</p>
 </li>
-<li><p>boardname.<b>GBO</b> Bottom Silkscreen</p>
+<li><p class="readable-text">boardname.<strong>GBO</strong> Bottom Silkscreen</p>
 </li>
-<li><p>boardname.<b>GKO</b> Board Outline (<tt>x</tt>)</p>
+<li><p class="readable-text">boardname.<strong>GKO</strong> Board Outline (<small><span class=text-warning>x</span></small>)</p>
 </li>
-<li><p>boardname.<b>G2L</b> only if you're uploading a four layer board</p>
+<li><p class="readable-text">boardname.<strong>G2L</strong> only if you're uploading a four layer board</p>
 </li>
-<li><p>boardname.<b>G3L</b> only if you're uploading a four layer board</p>
+<li><p class="readable-text">boardname.<strong>G3L</strong> only if you're uploading a four layer board</p>
 </li>
-<li><p>boardname.<b>XLN</b> Drills <b>(2:4 Leading &ndash; remember this)</b> (<tt>.TXT</tt>, 1st digit 2bit, 2nd digit 4bit)</p>
+<li><p class="readable-text">boardname.<strong>XLN</strong> Drills <strong>(2:4 Leading &ndash; remember this)</strong> (<small><span class=text-warning>.TXT</span></small>, 1st digit 2bit, 2nd digit 4bit)</p>
 </li>
 </ol>
-<p>You will also see a <b>GTP</b> file extension. This is the Gerber Top Paste file. GTP includes all the paste for the pads of SMD and GTS includes both pads and vias. Last, but not finally, you can use <tt>kicad</tt> to visualize the gerber file.</p>
+
+<p class=readable-text>You will also see a <strong>GTP</strong> file extension. This is the Gerber Top Paste file. GTP includes all the paste for the pads of SMD and GTS includes both pads and vias. Last, but not finally, you can use <small><span class=text-warning>kicad</span></small> to visualize the gerber file.</p>
 <h3>eagle &ndash; CAM process</h3>
-<p>Finally, we come to the CAM process (for ShenZhen manufacture). We will need <b>drillcfg.ulp</b>, <b>sfe-gerb274x.cam</b> and <b>excellon.cam</b>.</p>
+
+<p class=readable-text>Finally, we come to the CAM process (for ShenZhen manufacture). We will need <strong>drillcfg.ulp</strong>, <strong>sfe-gerb274x.cam</strong> and <strong>excellon.cam</strong>.</p>
 <ol>
-<li><p>In PCB editor, type <tt>run drillcfg</tt> at the command window, select <b>inch</b> and press <b>ok</b>, you will get <b>.drl</b> file.</p>
+<li><p class="readable-text">In PCB editor, type <small><span class=text-warning>run drillcfg</span></small> at the command window, select <strong>inch</strong> and press <strong>ok</strong>, you will get <strong>.drl</strong> file.</p>
 </li>
-<li><p>Process CAM button, and <tt>load sfe-gerb274x.cam</tt>, process job. You may also use <tt>load excellon.cam</tt> to generate <b>.drd</b> file.</p>
+<li><p class="readable-text">Process CAM button, and <small><span class=text-warning>load sfe-gerb274x.cam</span></small>, process job. You may also use <small><span class=text-warning>load excellon.cam</span></small> to generate <strong>.drd</strong> file.</p>
 </li>
-<li><p>Open CAM350, import all the files exclude .TXT (the drill file), we will importing the drill file in CAM350 by: <b>import drill data</b>, then select format as <b>Leading 2:4</b> to pad zeros.</p>
+<li><p class="readable-text">Open CAM350, import all the files exclude .TXT (the drill file), we will importing the drill file in CAM350 by: <strong>import drill data</strong>, then select format as <strong>Leading 2:4</strong> to pad zeros.</p>
 </li>
-<li><p>Save all as <b>.cam</b> file.</p>
+<li><p class="readable-text">Save all as <strong>.cam</strong> file.</p>
 </li>
 </ol>
-<p>So let's sum up, we have <tt>GTL, GTS, GTO</tt> and <tt>GBL, GBS, GBO</tt> files, plus the drill file <tt>.TXT, .drl, .drd</tt>. And one file <tt>.GTP</tt> may also be included. If we are manufacturing 4-layer PCB, we will need <tt>.G2L, .G3L</tt> to denote the 3rd and 4th layer. All these files need to be visually checked in CAM350 and export as <tt>.CAM</tt> file.</p>
-</td>
-</tr>
-</table>
+
+<p class=readable-text>So let's sum up, we have <small><span class=text-warning>GTL, GTS, GTO</span></small> and <small><span class=text-warning>GBL, GBS, GBO</span></small> files, plus the drill file <small><span class=text-warning>.TXT, .drl, .drd</span></small>. And one file <small><span class=text-warning>.GTP</span></small> may also be included. If we are manufacturing 4-layer PCB, we will need <small><span class=text-warning>.G2L, .G3L</span></small> to denote the 3rd and 4th layer. All these files need to be visually checked in CAM350 and export as <small><span class=text-warning>.CAM</span></small> file.</p>
+</div></div></div>
 <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript">
 </script>
 <script type="text/x-mathjax-config">

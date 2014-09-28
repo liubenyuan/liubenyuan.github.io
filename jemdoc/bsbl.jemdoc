@@ -23,12 +23,7 @@ The BSBL-FM is a fast implementation of the BSBL framework. It is based on BCS (
 
 == Implementations
 
-=== Matlab Version :
+. *Matlab Version :* The *Matlab* Implementation can be downloaded at: [https://github.com/liubenyuan/bsbl-fm bsbl-fm @ github].
+. *C Version :* The *C* version as well as the *GPU* Cuda Implementation will be available soon.
+. *Python Version :* The *Python* implementations are available at: [https://github.com/liubenyuan/pyBSBL pyBSBL @ github].
 
-The *Matlab* Implementation can be downloaded at: [https://github.com/liubenyuan/bsbl-fm bsbl-fm @ github].
-
-=== C Version :
-The *C* version as well as the *GPU* Cuda Implementation will be available soon.
-
-=== Python Version :
-The *Python* implementations are available at: [https://github.com/liubenyuan/pyBSBL pyBSBL @ github].

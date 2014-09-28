@@ -85,12 +85,11 @@ The serial can be debuged using *minicom*. *Warning:* it was said that RN42 enab
 
 /you may use the command mode to debug the connection of RN42/
 
-=== connect to RN42 and record data
+=== Connect to RN42 and record data
 
 References : Archlinux [https://bbs.archlinux.org/viewtopic.php?pid=1388523 FAQ 1], [https://bbs.archlinux.org/viewtopic.php?pid=1322604 FAQ 2], [https://wiki.archlinux.org/index.php/bluetooth Archlinux bluetooth tutorial], [http://www.thinkwiki.org/wiki/How_to_setup_Bluetooth Thinkwiki -- Bluetooth], [http://archlinuxarm.org/forum/viewtopic.php?f=9&t=6016 write a rfcomm.conf]. We may use either bluetooth dongle or the bluetooth in the PC.
 
 ~~~
-{}{bash}
 $ rfkill list
 $ pacman -Q | grep blue
 $ systemctl status bluetooth.service
@@ -99,18 +98,18 @@ $ systemctl status bluetooth.service
 enable the +bluetooth.service+
 ~~~
 {}{bash}
-$ lsusb
-Bus 003 Device 005: ID 0a5c:21e6 Broadcom Corp. BCM20702 Bluetooth 4.0 [ThinkPad]
-Bus 001 Device 017: ID 0a12:0001 Cambridge Silicon Radio, Ltd Bluetooth Dongle (HCI mode)
+$ lsusb \n
+Bus 003 Device 005: ID 0a5c:21e6 Broadcom Corp. BCM20702 Bluetooth 4.0 [ThinkPad] \n
+Bus 001 Device 017: ID 0a12:0001 Cambridge Silicon Radio, Ltd Bluetooth Dongle (HCI mode) \n
 ~~~
 
 The bluetooth on-board is +hci0+, then
 ~~~
 {}{bash}
-$ sudo hciconfig hci0 up
-$ sudo hcitool scan
-Scanning ...
-    00:06:66:43:0F:2E   RN42-0F2E
+$ sudo hciconfig hci0 up \n
+$ sudo hcitool scan \n
+Scanning ... \n
+    00:06:66:43:0F:2E   RN42-0F2E \n
 ~~~
 The device name of *RN42* as well as the MAC address are listed.
 

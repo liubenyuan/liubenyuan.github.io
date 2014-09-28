@@ -4,149 +4,145 @@
 <head>
 <meta name="generator" content="jemdoc, see http://jemdoc.jaboc.net/" />
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<link rel="stylesheet" href="jemdoc.css" type="text/css" />
+<link rel="stylesheet" href="metro_style/metro-bootstrap.css" media="screen">
+<link rel="stylesheet" href="private.css" media="screen">
+<script src="metro_style/jquery.min.js"></script>
+<script src="metro_style/jquery.widget.min.js"></script>
+<script src="metro_style/metro.min.js"></script>
 <title></title>
 </head>
-<body>
-<table summary="Table for page layout." id="tlayout">
-<tr valign="top">
-<td id="layout-menu">
-<div class="menu-item"><a href="index.html">Main</a></div>
-<div class="menu-item"><a href="publications.html">Publications</a></div>
-<div class="menu-category">Research</div>
-<div class="menu-item"><a href="bsbl.html">BSBL</a></div>
-<div class="menu-item"><a href="eit.html">EIT</a></div>
-<div class="menu-item"><a href="connectomics.html">Connectomics</a></div>
-<div class="menu-item"><a href="nircm.html" class="current">NIRCM</a></div>
-<div class="menu-item"><a href="phealth.html">phealth</a></div>
-<div class="menu-category">Hacks</div>
-<div class="menu-item"><a href="nudtpaper.html">nudtpaper</a></div>
-<div class="menu-item"><a href="udpip.html">udp/ip</a></div>
-<div class="menu-item"><a href="nrf51822.html">nrf51822</a></div>
-<div class="menu-item"><a href="kicad.html">kicad</a></div>
-<div class="menu-item"><a href="radar.html">radar</a></div>
-<div class="menu-item"><a href="flexbot.html">flexbot</a></div>
-<div class="menu-item"><a href="msp430.html">msp430</a></div>
-<div class="menu-item"><a href="mathjax.html">mathjax</a></div>
-</td>
-<td id="layout-content">
-<h1>Nexys &ndash; NIR videos and spatio-temporal information processing</h1>
+<body class="metro">
+<header class="bg-light">
+<div class="navigation-bar light">
+<div class="navigation-bar-content container">
+<nav class="horizontal-menu"><ul>
+<li><a href="index.html">Main</a></li>
+<li><a href="publications.html">Publications</a></li>
+<li><a class="dropdown-toggle" href="#">Research</a>
+<ul class="dropdown-menu inverse" data-role="dropdown">
+<li><a href="bsbl.html">BSBL</a></li>
+<li><a href="eit.html">EIT</a></li>
+<li><a href="connectomics.html">Connectomics</a></li>
+<li><a href="nircm.html" class="current">NIRCM</a></li>
+<li><a href="phealth.html">phealth</a></li>
+</ul></li>
+<li><a class="dropdown-toggle" href="#">Hacks</a>
+<ul class="dropdown-menu inverse" data-role="dropdown">
+<li><a href="nudtpaper.html">nudtpaper</a></li>
+<li><a href="udpip.html">udp/ip</a></li>
+<li><a href="nrf51822.html">nrf51822</a></li>
+<li><a href="kicad.html">kicad</a></li>
+<li><a href="mathjax.html">mathjax</a></li>
+</ul></li>
+</ul></nav></div></div>
+</header>
+<div class="page"><div class="page-content margin20"><div class="page-container">
+<h1>NIR videos and spatio-temporal processing</h1>
 <h2>Nexys &ndash; boards and vhdl basics</h2>
-<p><b>Nexys3:</b></p>
-<div class="infoblock">
-<div class="blockcontent">
-<p>Device : xc6slx16-csg324-3 <br />
-SPI bus-width should be <tt>4</tt> ?</p>
-</div></div>
-<p><b>Nexys4:</b></p>
-<div class="infoblock">
-<div class="blockcontent">
-<p>Device : xc7a100t-csg324-1 <br /></p>
-</div></div>
+
+<p class=readable-text><strong>Nexys3:</strong></p>
+<div class="example"><blockquote>
+
+<p class="code-text text-muted">Device : xc6slx16-csg324-3 <br />
+SPI bus-width should be <small><span class=text-warning>4</span></small> ?</p>
+</blockquote></div>
+
+<p class=readable-text><strong>Nexys4:</strong></p>
+<div class="example"><blockquote>
+
+<p class="code-text text-muted">Device : xc7a100t-csg324-1 <br /></p>
+</blockquote></div>
 <h3>How to program?</h3>
-<div class="codeblock">
-<div class="blockcontent"><pre>
-$ djtgcfg prog -f top.bit -d Nexys3 -i 0
-</pre></div></div>
-<h3>Learn the VHDL <tt>for</tt>, <tt>if</tt>, <tt>generate</tt>, syntax:</h3>
-<div class="codeblock">
-<div class="blockcontent"><pre>
-btn_debounce_for : <span class="statement">for</span> i in 0 to 4 <span class="special">generate</span>
-   UBTN : btn_debounce <span class="special">port</span> <span class="statement">map</span>(clkin,gpio_btn(i),btn_internal(i));
-<span class="statement">end</span> <span class="special">generate</span> btn_debounce_for;
-</pre></div></div>
-<p><tt>for</tt> &ndash; <tt>generate</tt> loop also supports <tt>process</tt>, and moreover, it supports nested <tt>if</tt> &ndash; <tt>generate</tt> statement,</p>
-<div class="codeblock">
-<div class="blockcontent"><pre>
-led_for : <span class="statement">for</span> i in 0 to 4 <span class="special">generate</span>
-    p_led_latch : <span class="special">process</span>(clkin) is
-    <span class="statement">begin</span>
-        <span class="statement">if</span> rising_edge(clkin) <span class="statement">then</span>
-            <span class="statement">if</span> btn_internal(i)='1' <span class="statement">then</span>
-                led_internal(i) <span class="operator">&lt;=</span> not led_internal(i);
-            <span class="statement">end</span> <span class="statement">if</span>;
-        <span class="statement">end</span> <span class="statement">if</span>;
-    <span class="statement">end</span> <span class="special">process</span> p_led_latch;
-    gpio_led(i) <span class="operator">&lt;=</span> led_internal(i);
-<span class="statement">end</span> <span class="special">generate</span> led_for;
-</pre></div></div>
-<p>We may also infer combinational logic use <tt>with</tt> &ndash; <tt>select</tt> clause,</p>
-<div class="codeblock">
-<div class="blockcontent"><pre>
-<span class="statement">with</span> seg <span class="statement">select</span>
-    bcd <span class="operator">&lt;=</span> "10001110" <span class="statement">when</span> "1111";
-           "11111111" <span class="statement">when</span> <span class="statement">others</span>;
-</pre></div></div>
-<h1>NIR on Nexys3 &ndash; connect mt9v034 with dual&ndash;pmods</h1>
+<div class="example"><blockquote>
+
+<p class="code-text text-muted">$ djtgcfg prog -f top.bit -d Nexys3 -i 0</p>
+</blockquote></div>
+<h1>Connect mt9v034 with dual&ndash;pmods</h1>
 <h2>NIR &ndash; the hardware</h2>
-<p><b>mt9v034 :</b> <br />
+
+<p class=readable-text><strong>mt9v034 :</strong> <br />
 Look from top-down, on the camera side.</p>
-<table id="mt9v034 pin configuration">
-<tr class="r1"><td class="c1"><b>12</b> </td><td class="c2"> <b>11</b> </td><td class="c3"> <b>10</b> </td><td class="c4"> <b>9</b> </td><td class="c5"> <b>8</b> </td><td class="c6"> <b>7</b> </td><td class="c7"> <b>6</b> </td><td class="c8"> <b>5</b> </td><td class="c9"> <b>4</b> </td><td class="c10"> <b>3</b> </td><td class="c11"> <b>2</b> </td><td class="c12"> <b>1</b> </td></tr>
-<tr class="r2"><td class="c1">D1 </td><td class="c2"> PCK </td><td class="c3"> D3 </td><td class="c4"> LED </td><td class="c5"> SDA </td><td class="c6"> FRV </td><td class="c7"> D9 </td><td class="c8"> C_P </td><td class="c9"> D_P </td><td class="c10"> D8 </td><td class="c11"> D6 </td><td class="c12"> <b>VCC</b> </td></tr>
-<tr class="r3"><td class="c1">D2 </td><td class="c2"> D0 </td><td class="c3"> XCK </td><td class="c4"> D4 </td><td class="c5"> SCK </td><td class="c6"> EXP </td><td class="c7"> LIV </td><td class="c8"> C_N </td><td class="c9"> D_N </td><td class="c10"> D7 </td><td class="c11"> D5 </td><td class="c12"> <b>GND</b> </td></tr>
-<tr class="r4"><td class="c1"><b>13</b> </td><td class="c2"> <b>14</b> </td><td class="c3"> <b>15</b> </td><td class="c4"> <b>16</b> </td><td class="c5"> <b>17</b> </td><td class="c6"> <b>18</b> </td><td class="c7"> <b>19</b> </td><td class="c8"> <b>20</b> </td><td class="c9"> <b>21</b> </td><td class="c10"> <b>22</b> </td><td class="c11"> <b>23</b> </td><td class="c12"> <b>24</b>
+<table class="table hovered bordered">
+<tr class="r1"><td class="c1"><strong>12</strong> </td><td class="c2"> <strong>11</strong> </td><td class="c3"> <strong>10</strong> </td><td class="c4"> <strong>9</strong> </td><td class="c5"> <strong>8</strong> </td><td class="c6"> <strong>7</strong> </td><td class="c7"> <strong>6</strong> </td><td class="c8"> <strong>5</strong> </td><td class="c9"> <strong>4</strong> </td><td class="c10"> <strong>3</strong> </td><td class="c11"> <strong>2</strong> </td><td class="c12"> <strong>1</strong> </td></tr>
+<tr class="r2"><td class="c1">D1 </td><td class="c2"> PCK </td><td class="c3"> D3 </td><td class="c4"> LED </td><td class="c5"> SDA </td><td class="c6"> FRV </td><td class="c7"> D9 </td><td class="c8"> C_P </td><td class="c9"> D_P </td><td class="c10"> D8 </td><td class="c11"> D6 </td><td class="c12"> <strong>VCC</strong> </td></tr>
+<tr class="r3"><td class="c1">D2 </td><td class="c2"> D0 </td><td class="c3"> XCK </td><td class="c4"> D4 </td><td class="c5"> SCK </td><td class="c6"> EXP </td><td class="c7"> LIV </td><td class="c8"> C_N </td><td class="c9"> D_N </td><td class="c10"> D7 </td><td class="c11"> D5 </td><td class="c12"> <strong>GND</strong> </td></tr>
+<tr class="r4"><td class="c1"><strong>13</strong> </td><td class="c2"> <strong>14</strong> </td><td class="c3"> <strong>15</strong> </td><td class="c4"> <strong>16</strong> </td><td class="c5"> <strong>17</strong> </td><td class="c6"> <strong>18</strong> </td><td class="c7"> <strong>19</strong> </td><td class="c8"> <strong>20</strong> </td><td class="c9"> <strong>21</strong> </td><td class="c10"> <strong>22</strong> </td><td class="c11"> <strong>23</strong> </td><td class="c12"> <strong>24</strong>
 </td></tr></table>
-<p>where <tt>D0</tt>, <tt>D1</tt> and <tt>C_P</tt>, <tt>C_N</tt>, <tt>D_P</tt>, <tt>D_N</tt> are NC.</p>
-<p><b>Pmod C :</b> (GND and VCC are more closer to the boards)</p>
-<table id="NIR Pin set -- J4">
-<tr class="r1"><td class="c1"><b>7</b> </td><td class="c2"> <b>8</b> </td><td class="c3"> <b>9</b> </td><td class="c4"> <b>10</b> </td><td class="c5"> <b>11</b> </td><td class="c6"> <b>12</b> </td></tr>
-<tr class="r2"><td class="c1">FRV </td><td class="c2"> D9 </td><td class="c3"> D8 </td><td class="c4"> D6 </td><td class="c5"> <b>GND</b> </td><td class="c6"> <b>VCC</b> </td></tr>
+
+<p class=readable-text>where <small><span class=text-warning>D0</span></small>, <small><span class=text-warning>D1</span></small> and <small><span class=text-warning>C_P</span></small>, <small><span class=text-warning>C_N</span></small>, <small><span class=text-warning>D_P</span></small>, <small><span class=text-warning>D_N</span></small> are NC.</p>
+
+<p class=readable-text><strong>Pmod C :</strong> (GND and VCC are more closer to the boards)</p>
+<table class="table hovered bordered">
+<tr class="r1"><td class="c1"><strong>7</strong> </td><td class="c2"> <strong>8</strong> </td><td class="c3"> <strong>9</strong> </td><td class="c4"> <strong>10</strong> </td><td class="c5"> <strong>11</strong> </td><td class="c6"> <strong>12</strong> </td></tr>
+<tr class="r2"><td class="c1">FRV </td><td class="c2"> D9 </td><td class="c3"> D8 </td><td class="c4"> D6 </td><td class="c5"> <strong>GND</strong> </td><td class="c6"> <strong>VCC</strong> </td></tr>
 <tr class="r3"><td class="c1">EXP </td><td class="c2"> LIV </td><td class="c3"> D7 </td><td class="c4"> D5 </td><td class="c5"> - </td><td class="c6"> - </td></tr>
-<tr class="r4"><td class="c1"><b>1</b> </td><td class="c2"> <b>2</b> </td><td class="c3"> <b>3</b> </td><td class="c4"> <b>4</b> </td><td class="c5"> <b>5</b> </td><td class="c6"> <b>6</b>
+<tr class="r4"><td class="c1"><strong>1</strong> </td><td class="c2"> <strong>2</strong> </td><td class="c3"> <strong>3</strong> </td><td class="c4"> <strong>4</strong> </td><td class="c5"> <strong>5</strong> </td><td class="c6"> <strong>6</strong>
 </td></tr></table>
-<p><b>Pmod B :</b> (GND and VCC are more closer to the boards)</p>
-<table id="NIR Pin set -- J4">
-<tr class="r1"><td class="c1"><b>7</b> </td><td class="c2"> <b>8</b> </td><td class="c3"> <b>9</b> </td><td class="c4"> <b>10</b> </td><td class="c5"> <b>11</b> </td><td class="c6"> <b>12</b> </td></tr>
-<tr class="r2"><td class="c1">LED </td><td class="c2"> D3 </td><td class="c3"> <b>XCK</b> </td><td class="c4"> <b>PCK</b> </td><td class="c5"> <b>GND</b> </td><td class="c6"> <b>VCC</b> </td></tr>
+
+<p class=readable-text><strong>Pmod B :</strong> (GND and VCC are more closer to the boards)</p>
+<table class="table hovered bordered">
+<tr class="r1"><td class="c1"><strong>7</strong> </td><td class="c2"> <strong>8</strong> </td><td class="c3"> <strong>9</strong> </td><td class="c4"> <strong>10</strong> </td><td class="c5"> <strong>11</strong> </td><td class="c6"> <strong>12</strong> </td></tr>
+<tr class="r2"><td class="c1">LED </td><td class="c2"> D3 </td><td class="c3"> <strong>XCK</strong> </td><td class="c4"> <strong>PCK</strong> </td><td class="c5"> <strong>GND</strong> </td><td class="c6"> <strong>VCC</strong> </td></tr>
 <tr class="r3"><td class="c1">D2 </td><td class="c2"> SDA </td><td class="c3"> D4 </td><td class="c4"> SCK </td><td class="c5"> - </td><td class="c6"> - </td></tr>
-<tr class="r4"><td class="c1"><b>1</b> </td><td class="c2"> <b>2</b> </td><td class="c3"> <b>3</b> </td><td class="c4"> <b>4</b> </td><td class="c5"> <b>5</b> </td><td class="c6"> <b>6</b>
+<tr class="r4"><td class="c1"><strong>1</strong> </td><td class="c2"> <strong>2</strong> </td><td class="c3"> <strong>3</strong> </td><td class="c4"> <strong>4</strong> </td><td class="c5"> <strong>5</strong> </td><td class="c6"> <strong>6</strong>
 </td></tr></table>
-<p><b>Note:</b> we should place <b>clk</b> pins on GCLK sites, where <tt>C-1 (H3)</tt>, <tt>B-9 (K3)</tt>, <tt>B-10 (K5)</tt>. We wrap B9 and B10 to <b>XCK</b> and <b>PCK</b>. And we add insulate via Tin foil (锡铂纸).</p>
-<p>We wire (where FPGA is the master)</p>
-<table id="ucf definition">
-<tr class="r1"><td class="c1"><b>Port</b> </td><td class="c2"> <b>mt9v034-devboard</b> </td><td class="c3"> <b>IO (FPGA is the master)</b> </td><td class="c4"> <b>Annotation</b> </td></tr>
-<tr class="r2"><td class="c1">DCMI_SYS_CLK </td><td class="c2"> XCK </td><td class="c3"> Output </td><td class="c4"> <b>system clock</b> </td></tr>
-<tr class="r3"><td class="c1">DCMI_CLK </td><td class="c2"> PCK </td><td class="c3"> Input </td><td class="c4"> <b>Data clock</b> </td></tr>
-<tr class="r4"><td class="c1">DCMI_EXP </td><td class="c2"> EXP </td><td class="c3"> Output </td><td class="c4"> <b>Exposure</b> </td></tr>
-<tr class="r5"><td class="c1">DCMI_DATA&lt;7:0&gt; </td><td class="c2"> D9 &ndash; D2 </td><td class="c3"> Input </td><td class="c4"> <b>Data</b> </td></tr>
-<tr class="r6"><td class="c1">DCMI_HSYNC </td><td class="c2"> LIV </td><td class="c3"> Input </td><td class="c4"> <b>Line valid</b> </td></tr>
-<tr class="r7"><td class="c1">DCMI_VSYNC </td><td class="c2"> FRV </td><td class="c3"> Input </td><td class="c4"> <b>Frame valid</b> </td></tr>
+
+<p class=readable-text><strong>Note:</strong> we should place <strong>clk</strong> pins on GCLK sites, where <small><span class=text-warning>C-1 (H3)</span></small>, <small><span class=text-warning>B-9 (K3)</span></small>, <small><span class=text-warning>B-10 (K5)</span></small>. We wrap B9 and B10 to <strong>XCK</strong> and <strong>PCK</strong>. And we add insulate via Tin foil (锡铂纸).</p>
+
+<p class=readable-text>We wire (where FPGA is the master)</p>
+<table class="table hovered bordered">
+<tr class="r1"><td class="c1"><strong>Port</strong> </td><td class="c2"> <strong>mt9v034-devboard</strong> </td><td class="c3"> <strong>IO (FPGA is the master)</strong> </td><td class="c4"> <strong>Annotation</strong> </td></tr>
+<tr class="r2"><td class="c1">DCMI_SYS_CLK </td><td class="c2"> XCK </td><td class="c3"> Output </td><td class="c4"> <strong>system clock</strong> </td></tr>
+<tr class="r3"><td class="c1">DCMI_CLK </td><td class="c2"> PCK </td><td class="c3"> Input </td><td class="c4"> <strong>Data clock</strong> </td></tr>
+<tr class="r4"><td class="c1">DCMI_EXP </td><td class="c2"> EXP </td><td class="c3"> Output </td><td class="c4"> <strong>Exposure</strong> </td></tr>
+<tr class="r5"><td class="c1">DCMI_DATA&lt;7:0&gt; </td><td class="c2"> D9 &ndash; D2 </td><td class="c3"> Input </td><td class="c4"> <strong>Data</strong> </td></tr>
+<tr class="r6"><td class="c1">DCMI_HSYNC </td><td class="c2"> LIV </td><td class="c3"> Input </td><td class="c4"> <strong>Line valid</strong> </td></tr>
+<tr class="r7"><td class="c1">DCMI_VSYNC </td><td class="c2"> FRV </td><td class="c3"> Input </td><td class="c4"> <strong>Frame valid</strong> </td></tr>
 <tr class="r8"><td class="c1">DCMI_LED </td><td class="c2"> LED </td><td class="c3"> Input </td><td class="c4"> </td></tr>
-<tr class="r9"><td class="c1">DCMI_SCK </td><td class="c2"> SCK </td><td class="c3"> Inout <b>(pullup)</b> </td><td class="c4"> </td></tr>
-<tr class="r10"><td class="c1">DCMI_SDA </td><td class="c2"> SDA </td><td class="c3"> Inout <b>(pullup)</b> </td><td class="c4">
+<tr class="r9"><td class="c1">DCMI_SCK </td><td class="c2"> SCK </td><td class="c3"> Inout <strong>(pullup)</strong> </td><td class="c4"> </td></tr>
+<tr class="r10"><td class="c1">DCMI_SDA </td><td class="c2"> SDA </td><td class="c3"> Inout <strong>(pullup)</strong> </td><td class="c4">
 </td></tr></table>
-<div class="infoblock">
-<div class="blockcontent">
-<p>By comparing PX4Flow and the mt9v034 taobao board, we found some common connections, <tt>OE</tt> (active HIGH) tied to VCC, <tt>RSVD</tt> tied to GND. <tt>BYPASS_CLKIN_P</tt> and <tt>SER_DATAIN_P</tt> are tied to GND, while <tt>BYPASS_CLKIN_N</tt> and <tt>SER_DATAIN_N</tt> are tied to VCC with 1k Ohm pull-up resistor.</p>
-<p>However, for mt9v034-dev, the <tt>STANDBY</tt> is tied to GND, and the <tt>RESET_N</tt> is tied to VCC with 10k Ohm pull-up resistor. For PX4Flow, these two pins are controlled by MCU. For mt9v034-dev, <tt>SCTRL_ADDR0</tt> and <tt>SCTRL_ADDR1</tt> are tied to GND, while for PX4Flow, these pins are tied to VCC.</p>
-<p>These two boards works in master mode, with steroscopy mode disabled. <tt>SCK</tt> and <tt>SDA</tt> should be pulled-up with 1.5K Ohm resistors when no other I2C peripheral is connected.</p>
-</div></div>
+<div class="example"><blockquote>
+
+<p class="code-text text-muted">By comparing PX4Flow and the mt9v034 taobao board, we found some common connections, <small><span class=text-warning>OE</span></small> (active HIGH) tied to VCC, <small><span class=text-warning>RSVD</span></small> tied to GND. <small><span class=text-warning>BYPASS_CLKIN_P</span></small> and <small><span class=text-warning>SER_DATAIN_P</span></small> are tied to GND, while <small><span class=text-warning>BYPASS_CLKIN_N</span></small> and <small><span class=text-warning>SER_DATAIN_N</span></small> are tied to VCC with 1k Ohm pull-up resistor.</p>
+
+<p class="code-text text-muted">However, for mt9v034-dev, the <small><span class=text-warning>STANDBY</span></small> is tied to GND, and the <small><span class=text-warning>RESET_N</span></small> is tied to VCC with 10k Ohm pull-up resistor. For PX4Flow, these two pins are controlled by MCU. For mt9v034-dev, <small><span class=text-warning>SCTRL_ADDR0</span></small> and <small><span class=text-warning>SCTRL_ADDR1</span></small> are tied to GND, while for PX4Flow, these pins are tied to VCC.</p>
+
+<p class="code-text text-muted">These two boards works in master mode, with steroscopy mode disabled. <small><span class=text-warning>SCK</span></small> and <small><span class=text-warning>SDA</span></small> should be pulled-up with 1.5K Ohm resistors when no other I2C peripheral is connected.</p>
+</blockquote></div>
 <h2>NIR &ndash; boot mt9v034 via nexys3</h2>
-<p>In principles, the mt9v034 works <tt>output wide-VGA image at 60fps</tt> by default.</p>
-<div class="infoblock">
-<div class="blockcontent">
-<p>By injecting <tt>DCMI_SYS_CLK</tt> with 25MHz clock input, and trigger <tt>DCMI_EXP</tt> with a rising-edge sensitive pulse (<b>1000</b> cycles duty period, in snapshot or slave mode; in master mode, <tt>DCMI_EXP</tt> may tie to GND). We may monitor the <tt>DCMI_DATA</tt> bus, <tt>DCMI_HSYNC</tt> and <tt>DCMI_VSYNC</tt> signals, as well as <tt>DCMI_LED</tt> pins.</p>
-<p><tt>DCMI_VSYNC</tt> is HIGH valid during the whole imaging process (a frame), <tt>DCMI_HSYNC</tt> is periodorically HIGH valid. The image format is <b>752x480</b>. However, currently <tt>DCMI_CLK</tt> could not register exactly <tt>752</tt> datum each <b>HSYNC</b> pules. <i>(need debug this)</i>. Strange, <tt>DCMI_CLK</tt> may be <b>26.6</b>MHz PLL locked even if we inject a <b>25</b>MHz <tt>DCMI_SYS_CLK</tt>.</p>
-</div></div>
+
+<p class=readable-text>In principles, the mt9v034 works <small><span class=text-warning>output wide-VGA image at 60fps</span></small> by default.</p>
+<div class="example"><blockquote>
+
+<p class="code-text text-muted">By injecting <small><span class=text-warning>DCMI_SYS_CLK</span></small> with 25MHz clock input, and trigger <small><span class=text-warning>DCMI_EXP</span></small> with a rising-edge sensitive pulse (<strong>1000</strong> cycles duty period, in snapshot or slave mode; in master mode, <small><span class=text-warning>DCMI_EXP</span></small> may tie to GND). We may monitor the <small><span class=text-warning>DCMI_DATA</span></small> bus, <small><span class=text-warning>DCMI_HSYNC</span></small> and <small><span class=text-warning>DCMI_VSYNC</span></small> signals, as well as <small><span class=text-warning>DCMI_LED</span></small> pins.</p>
+
+<p class="code-text text-muted"><small><span class=text-warning>DCMI_VSYNC</span></small> is HIGH valid during the whole imaging process (a frame), <small><span class=text-warning>DCMI_HSYNC</span></small> is periodorically HIGH valid. The image format is <strong>752x480</strong>. However, currently <small><span class=text-warning>DCMI_CLK</span></small> could not register exactly <small><span class=text-warning>752</span></small> datum each <strong>HSYNC</strong> pules. <em>(need debug this)</em>. Strange, <small><span class=text-warning>DCMI_CLK</span></small> may be <strong>26.6</strong>MHz PLL locked even if we inject a <strong>25</strong>MHz <small><span class=text-warning>DCMI_SYS_CLK</span></small>.</p>
+</blockquote></div>
 <h2>NIR &ndash; the wrapper of i2c_io_16bit.vhd</h2>
-<p>With <tt>ADDR0</tt> and <tt>ADDR1</tt> pins pulled low on mt9v034-dev, the address is <tt>0x48</tt>, with the last bit denotes write (&rsquo;0&rsquo;) or read (&rsquo;1&rsquo;). Therefore, the mt9v034 board has <tt>0x90</tt> for <b>write</b>, <tt>0x91</tt> for <b>read</b>. We build dedicated module <tt>i2c_io_16bit.vhd</tt> to handle the <b>Read/Write</b> process to mt9v034.</p>
-<table id="mt9v034 IO">
+
+<p class=readable-text>With <small><span class=text-warning>ADDR0</span></small> and <small><span class=text-warning>ADDR1</span></small> pins pulled low on mt9v034-dev, the address is <small><span class=text-warning>0x48</span></small>, with the last bit denotes write (&rsquo;0&rsquo;) or read (&rsquo;1&rsquo;). Therefore, the mt9v034 board has <small><span class=text-warning>0x90</span></small> for <strong>write</strong>, <small><span class=text-warning>0x91</span></small> for <strong>read</strong>. We build dedicated module <small><span class=text-warning>i2c_io_16bit.vhd</span></small> to handle the <strong>Read/Write</strong> process to mt9v034.</p>
+<table class="table hovered bordered">
 <tr class="r1"><td class="c1">0x90 (0x91) </td><td class="c2"> REG_ADDRESS </td><td class="c3"> WB1 (RB0) </td><td class="c4"> WB2 (RB0)
 </td></tr></table>
-<p>for example, <tt>0x90070188</tt> <b>write</b> 0x0188 to 0x07 in mt9v034, <tt>0x9107XXXX</tt> <b>read</b> DBYTE from 0x07 in mt9v034.</p>
-<div class="infoblock">
-<div class="blockcontent">
-<p>As a simple rule-of-the-thumb, we may put <tt>0x91000000</tt> on data bus, trigger <tt>data_stream_in_stb</tt>, and read out the content of <tt>0x00</tt> on mt9v034 by acknowledge <tt>data_stream_out_stb</tt>, and finally put the register (which is the CHIPID, <tt>0x1324</tt>) on BCD segment display.</p>
-</div></div>
-<p>Another simple example is command <tt>0x900400FF</tt>, which changes the <tt>WINDOW_WIDTH</tt> to <b>256</b>, this can also be verified via Chipscope.</p>
+
+<p class=readable-text>for example, <small><span class=text-warning>0x90070188</span></small> <strong>write</strong> 0x0188 to 0x07 in mt9v034, <small><span class=text-warning>0x9107XXXX</span></small> <strong>read</strong> DBYTE from 0x07 in mt9v034.</p>
+<div class="example"><blockquote>
+
+<p class="code-text text-muted">As a simple rule-of-the-thumb, we may put <small><span class=text-warning>0x91000000</span></small> on data bus, trigger <small><span class=text-warning>data_stream_in_stb</span></small>, and read out the content of <small><span class=text-warning>0x00</span></small> on mt9v034 by acknowledge <small><span class=text-warning>data_stream_out_stb</span></small>, and finally put the register (which is the CHIPID, <small><span class=text-warning>0x1324</span></small>) on BCD segment display.</p>
+</blockquote></div>
+
+<p class=readable-text>Another simple example is command <small><span class=text-warning>0x900400FF</span></small>, which changes the <small><span class=text-warning>WINDOW_WIDTH</span></small> to <strong>256</strong>, this can also be verified via Chipscope.</p>
 <h2>NIR &ndash; config mt9v034 (copied from px4flow)</h2>
-<p>After testing the <b>R/W</b> functionality of <tt>i2c_io_16bit.vhd</tt>, we next store all the command and registers in the <tt>mt9v034.coe</tt>, and loaded in a rom to config this camera module. The top module, which is called <tt>mt9v034.vhd</tt>, embedded the <b>mt9v034.coe</b>, sequentially read the content out, and config the device via I2C protocol.</p>
-<p>We port the source code <b>mt9v034.c</b> in PX4Flow to NIR project, (<b>Context A</b>, context, is like a fast stack-switch machanism, context B in PX4Flow is used for videos streaming only, while context A is for practical optical flow calculation).</p>
-<p><b>Context A/B</b></p>
-<table id="mt9v034.c">
-<tr class="r1"><td class="c1"><b>Register</b> </td><td class="c2"> <b>Name</b> </td><td class="c3"> <b>Default</b> </td><td class="c4"> <b>Context A (Context B)</b> </td><td class="c5"> <b>COMMAND</b> </td><td class="c6"> <b>Annotation</b> </td></tr>
-<tr class="r2"><td class="c1">0x07 </td><td class="c2"> Chip Control </td><td class="c3"> 0x0388 </td><td class="c4"> 0x0188 (0x8188) </td><td class="c5"> 90070188 </td><td class="c6"> <b>0x0088</b> </td></tr>
+
+<p class=readable-text>After testing the <strong>R/W</strong> functionality of <small><span class=text-warning>i2c_io_16bit.vhd</span></small>, we next store all the command and registers in the <small><span class=text-warning>mt9v034.coe</span></small>, and loaded in a rom to config this camera module. The top module, which is called <small><span class=text-warning>mt9v034.vhd</span></small>, embedded the <strong>mt9v034.coe</strong>, sequentially read the content out, and config the device via I2C protocol.</p>
+
+<p class=readable-text>We port the source code <strong>mt9v034.c</strong> in PX4Flow to NIR project, (<strong>Context A</strong>, context, is like a fast stack-switch machanism, context B in PX4Flow is used for videos streaming only, while context A is for practical optical flow calculation).</p>
+
+<p class=readable-text><strong>Context A/B</strong></p>
+<table class="table hovered bordered">
+<tr class="r1"><td class="c1"><strong>Register</strong> </td><td class="c2"> <strong>Name</strong> </td><td class="c3"> <strong>Default</strong> </td><td class="c4"> <strong>Context A (Context B)</strong> </td><td class="c5"> <strong>COMMAND</strong> </td><td class="c6"> <strong>Annotation</strong> </td></tr>
+<tr class="r2"><td class="c1">0x07 </td><td class="c2"> Chip Control </td><td class="c3"> 0x0388 </td><td class="c4"> 0x0188 (0x8188) </td><td class="c5"> 90070188 </td><td class="c6"> <strong>0x0088</strong> </td></tr>
 <tr class="r3"><td class="c1">0x03 (OxCB) </td><td class="c2"> WINDOW_HEIGHT </td><td class="c3"> 480 </td><td class="c4"> 64*4 (120*4) </td><td class="c5"> 90030100 </td><td class="c6"> 4-binning </td></tr>
 <tr class="r4"><td class="c1">0x04 (0xCC) </td><td class="c2"> WINDOW_WIDTH </td><td class="c3"> 752 </td><td class="c4"> 64*4 (188*4) </td><td class="c5"> 90040100 </td><td class="c6"> </td></tr>
 <tr class="r5"><td class="c1">0x05 </td><td class="c2"> Hor Blanking </td><td class="c3"> 4 + 91 </td><td class="c4"> (752 - 64*4) + 91 </td><td class="c5"> 9005024B </td><td class="c6"> </td></tr>
@@ -159,9 +155,10 @@ Look from top-down, on the camera side.</p>
 <tr class="r12"><td class="c1">0x0A </td><td class="c2"> Coarse Width Control   </td><td class="c3"> </td><td class="c4"> </td><td class="c5"> 900A0164 </td><td class="c6"> </td></tr>
 <tr class="r13"><td class="c1">0x0B </td><td class="c2"> Coarse Width Total     </td><td class="c3"> </td><td class="c4"> </td><td class="c5"> 900B01E0 </td><td class="c6">
 </td></tr></table>
-<p><b>General Settings</b></p>
-<table id="mt9v034.c section2">
-<tr class="r1"><td class="c1"><b>Register</b> </td><td class="c2"> <b>Name</b> </td><td class="c3"> <b>Default</b> </td><td class="c4"> <b>Context A (Context B)</b> </td><td class="c5"> <b>COMMAND</b> </td><td class="c6"> <b>Annotation</b> </td></tr>
+
+<p class=readable-text><strong>General Settings</strong></p>
+<table class="table hovered bordered">
+<tr class="r1"><td class="c1"><strong>Register</strong> </td><td class="c2"> <strong>Name</strong> </td><td class="c3"> <strong>Default</strong> </td><td class="c4"> <strong>Context A (Context B)</strong> </td><td class="c5"> <strong>COMMAND</strong> </td><td class="c6"> <strong>Annotation</strong> </td></tr>
 <tr class="r2"><td class="c1">0x70 </td><td class="c2"> Row Noise Corr </td><td class="c3"> 0 </td><td class="c4"> 0x0000 </td><td class="c5"> 90700000 </td><td class="c6"> </td></tr>
 <tr class="r3"><td class="c1">0xAF </td><td class="c2"> AEC/AGC Enable </td><td class="c3"> 0x3 </td><td class="c4"> 0x0303 </td><td class="c5"> 90AF0303 </td><td class="c6"> </td></tr>
 <tr class="r4"><td class="c1">0x0F </td><td class="c2"> HDR </td><td class="c3"> 0x0100 </td><td class="c4"> 0x0000 </td><td class="c5"> 900F0000 </td><td class="c6"> </td></tr>
@@ -177,37 +174,22 @@ Look from top-down, on the camera side.</p>
 <tr class="r14"><td class="c1">0xA9 </td><td class="c2"> AGC update Freq </td><td class="c3"> 0x2 </td><td class="c4"> 0x2 </td><td class="c5"> 90A90002 </td><td class="c6"> </td></tr>
 <tr class="r15"><td class="c1">0xAA </td><td class="c2"> AGC lowpass Filter </td><td class="c3"> 0x2 </td><td class="c4"> 0x2 </td><td class="c5"> 90AA0002 </td><td class="c6">
 </td></tr></table>
-<p><b>finally, reset</b></p>
-<table id="mt9v034.c section2">
-<tr class="r1"><td class="c1"><b>Register</b> </td><td class="c2"> <b>Name</b> </td><td class="c3"> <b>Default</b> </td><td class="c4"> <b>Context A (Context B)</b> </td><td class="c5"> <b>COMMAND</b> </td><td class="c6"> <b>Annotation</b> </td></tr>
+
+<p class=readable-text><strong>finally, reset</strong></p>
+<table class="table hovered bordered">
+<tr class="r1"><td class="c1"><strong>Register</strong> </td><td class="c2"> <strong>Name</strong> </td><td class="c3"> <strong>Default</strong> </td><td class="c4"> <strong>Context A (Context B)</strong> </td><td class="c5"> <strong>COMMAND</strong> </td><td class="c6"> <strong>Annotation</strong> </td></tr>
 <tr class="r2"><td class="c1">0x0C </td><td class="c2"> Reset </td><td class="c3"> </td><td class="c4"> </td><td class="c5"> 0x900C0001 </td><td class="c6"> </td></tr>
-<tr class="r3"><td class="c1">0x00 </td><td class="c2"> Chip ID </td><td class="c3"> </td><td class="c4"> </td><td class="c5"> 0x91000000 </td><td class="c6"> <b>read back</b>
+<tr class="r3"><td class="c1">0x00 </td><td class="c2"> Chip ID </td><td class="c3"> </td><td class="c4"> </td><td class="c5"> 0x91000000 </td><td class="c6"> <strong>read back</strong>
 </td></tr></table>
-<p>The rom is a simplified form of PX4flow, where we may add more functionality with different configurations of switches.</p>
+
+<p class=readable-text>The rom is a simplified form of PX4flow, where we may add more functionality with different configurations of switches.</p>
 <h1>Insights</h1>
-<p>Non-invasive gluco tracking using Near-Infra-Red videos ? see, <a href="http://www.eeboard.com/bbs/thread-35333-1-1.html" target=&ldquo;blank&rdquo;>eeboard</a> and <a href="http://www.integrity-app.com/the-glucotrack/the-products/" target=&ldquo;blank&rdquo;>glucotrack</a> .</p>
-<h1>Comments</h1>
-<div id="disqus_thread"></div>
-  <script type="text/javascript">
-  /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-  var disqus_shortname = 'liubenyuan'; // required: replace example with your forum shortname
-  /* * * DON'T EDIT BELOW THIS LINE * * */
-  (function() {
-    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
-  </script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-<div id="footer">
-<div id="footer-text">
-Page generated 2014-07-04 23:34:35 UTC, by <a href="https://github.com/wsshin/jemdoc_mathjax" target="blank">jemdoc+MathJax</a>.
-</div>
-</div>
-</td>
-</tr>
-</table>
+
+<p class=readable-text>Non-invasive gluco tracking using Near-Infra-Red videos ? see, <a href="http://www.eeboard.com/bbs/thread-35333-1-1.html" target=&ldquo;blank&rdquo;>eeboard</a> and <a href="http://www.integrity-app.com/the-glucotrack/the-products/" target=&ldquo;blank&rdquo;>glucotrack</a> .</p>
+<div class="panel ribbed-amber"><div class="panel-content">
+Page generated 2014-09-28 21:16:44 UTC, by <a href="https://github.com/wsshin/jemdoc_mathjax" target="blank">jemdoc+MathJax</a>.
+</div></div>
+</div></div></div>
 <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript">
 </script>
 <script type="text/x-mathjax-config">

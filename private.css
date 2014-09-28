@@ -1,0 +1,16 @@
+/* Default css file for jemdoc. */
+
+@font-face {
+    /* font-family : Monaco, Menlo, Inconsolata, Georgia, 'Frutiger Neue W02 Book', sans-serif; */
+    font-family : Inconsolata, Monaco, 'Frutiger Neue W02 Book', sans-serif;
+    font-style : normal;
+    font-weight : 700;
+}
+
+pre {
+    font-family : Inconsolata, Monaco, 'Frutiger Neue W02 Book', monospace;
+    font-size : 100%;
+    padding : 0;
+    margin : 0;
+}
+

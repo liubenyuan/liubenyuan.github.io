@@ -220,41 +220,18 @@ def standardconf():
   </body>
   </html>
 
-  [infoblock]
-  <div class="infoblock">
-  
-  [codeblock]
-  <div class="codeblock">
-  
-  [blocktitle]
-  <div class="blocktitle">|</div>
-  
-  [infoblockcontent]
-  <div class="blockcontent">
-  
-  [codeblockcontent]
-  <div class="blockcontent"><pre>
-  
-  [codeblockend]
-  </pre></div></div>
-  
-  [codeblockcontenttt]
-  <div class="blockcontent"><tt class="tthl">
-  
-  [codeblockendtt]
-  </tt></div></div>
-  
+  [infoblockstart]
+  <div class="example"><blockquote>
+
   [infoblockend]
-  </div></div>
-  
+  </blockquote></div>
+
   [footerstart]
-  <div id="footer">
-  <div id="footer-text">
-  
+  <div class="panel ribbed-amber"><div class="panel-content">
+
   [footerend]
-  </div>
-  </div>
-  
+  </div></div>
+
   [lastupdated]
   Page generated |, by <a href="https://github.com/wsshin/jemdoc_mathjax" target="blank">jemdoc+MathJax</a>.
 
@@ -806,7 +783,7 @@ def br(b, f, tableblock=False):
       col = 2
       r2s = r2.split(l)
       for x in r2s[:-1]:
-        l2 += x + ('</td><td class="c%d">' % col)
+        l2 += x + ('</td><td class="c%d">' % col) # text-center, text-right
         col += 1
       l2 += r2s[-1]
 
@@ -854,140 +831,6 @@ def putbsbs(l):
     l[i] = '\\b' + l[i] + '\\b'
 
   return l
-
-def gethl(lang):
-  # disable comments by default, by choosing unlikely regex.
-  d = {'strings':False}
-  if lang in ('py', 'python'):
-    d['statement'] = ['break', 'continue', 'del', 'except', 'exec',
-              'finally', 'pass', 'print', 'raise', 'return', 'try',
-              'with', 'global', 'assert', 'lambda', 'yield', 'def',
-              'class', 'for', 'while', 'if', 'elif', 'else',
-              'import', 'from', 'as', 'assert']
-    d['builtin'] = ['True', 'False', 'set', 'open', 'frozenset',
-            'enumerate', 'object', 'hasattr', 'getattr', 'filter',
-            'eval', 'zip', 'vars', 'unicode', 'type', 'str',
-            'repr', 'round', 'range', 'and', 'in', 'is', 'not',
-            'or']
-    d['special'] = ['cols', 'optvar', 'param', 'problem', 'norm2', 'norm1',
-            'value', 'minimize', 'maximize', 'rows', 'rand',
-            'randn', 'printval', 'matrix']
-    d['error'] = ['\w*Error',]
-    d['commentuntilend'] = '#'
-    d['strings'] = True
-  elif lang in ['c', 'c++', 'cpp']:
-    d['statement'] = ['if', 'else', 'printf', 'return', 'for']
-    d['builtin'] = ['static', 'typedef', 'int', 'float', 'double', 'void',
-            'clock_t', 'struct', 'long', 'extern', 'char']
-    d['operator'] = ['#include.*', '#define', '@pyval{', '}@', '@pyif{',
-             '@py{']
-    d['error'] = ['\w*Error',]
-    d['commentuntilend'] = ['//', '/*', ' * ', '*/']
-  elif lang in ('rb', 'ruby'):
-    d['statement'] = putbsbs(['while', 'until', 'unless', 'if', 'elsif',
-                  'when', 'then', 'else', 'end', 'begin',
-                  'rescue', 'class', 'def'])
-    d['operator'] = putbsbs(['and', 'not', 'or'])
-    d['builtin'] = putbsbs(['true', 'false', 'require', 'warn'])
-    d['special'] = putbsbs(['IO'])
-    d['error'] = putbsbs(['\w*Error',])
-    d['commentuntilend'] = '#'
-    d['strings'] = True
-    d['strings'] = True
-    if lang in ['c++', 'cpp']:
-      d['builtin'] += ['bool', 'virtual']
-      d['statement'] += ['new', 'delete']
-      d['operator'] += ['&lt;&lt;', '&gt;&gt;']
-      d['special'] = ['public', 'private', 'protected', 'template',
-              'ASSERT']
-  elif lang == 'sh':
-    d['statement'] = ['cd', 'ls', 'sudo', 'cat', 'alias', 'for', 'do',
-              'done', 'in', ]
-    d['operator'] = ['&gt;', r'\\', r'\|', ';', '2&gt;', 'monolith&gt;',
-             'kiwi&gt;', 'ant&gt;', 'kakapo&gt;', 'client&gt;']
-    d['builtin'] = putbsbs(['gem', 'gcc', 'python', 'curl', 'wget', 'ssh',
-                'latex', 'find', 'sed', 'gs', 'grep', 'tee',
-                'gzip', 'killall', 'echo', 'touch',
-                'ifconfig', 'git', '(?<!\.)tar(?!\.)'])
-    d['commentuntilend'] = '#'
-    d['strings'] = True
-  elif lang == 'matlab':
-    d['statement'] = putbsbs(['max', 'min', 'find', 'rand', 'cumsum', 'randn', 'help',
-                     'error', 'if', 'end', 'for'])
-    d['operator'] = ['&gt;', 'ans =', '>>', '~', '\.\.\.']
-    d['builtin'] = putbsbs(['csolve'])
-    d['commentuntilend'] = '%'
-    d['strings'] = True
-  elif lang == 'vhdl':
-    d['statement'] = ['for', 'if', 'then', 'while', 'use', 'case', 'switch', 'when',
-                    'loop', 'begin', 'end', 'map', 'with', 'select', 'others']
-    d['operator'] = ['&lt;=', ':=', '>>', '~', '\.\.\.']
-    d['special'] = ['entity', 'component', 'architecture', 'process', 'port',
-                    'generate', 'generic']
-    d['commentuntilend'] = '--'
-  elif lang == 'commented':
-    d['commentuntilend'] = '#'
-
-  # Add bsbs (whatever those are).
-  for x in ['statement', 'builtin', 'special', 'error']:
-    if x in d:
-      d[x] = putbsbs(d[x])
-
-  return d
-
-def language(f, l, hl):
-  l = l.rstrip()
-  l = allreplace(l)
-  # handle strings.
-  if hl['strings']:
-    r = re.compile(r'(".*?")')
-    l = r.sub(r'<span CLCLclass="string">\1</span>', l)
-    r = re.compile(r"('.*?')")
-    l = r.sub(r'<span CLCLclass="string">\1</span>', l)
-
-  if 'statement' in hl:
-    r = re.compile('(' + '|'.join(hl['statement']) + ')')
-    l = r.sub(r'<span class="statement">\1</span>', l)
-
-  if 'operator' in hl:
-    r = re.compile('(' + '|'.join(hl['operator']) + ')')
-    l = r.sub(r'<span class="operator">\1</span>', l)
-
-  if 'builtin' in hl:
-    r = re.compile('(' + '|'.join(hl['builtin']) + ')')
-    l = r.sub(r'<span class="builtin">\1</span>', l)
-
-  if 'special' in hl:
-    r = re.compile('(' + '|'.join(hl['special']) + ')')
-    l = r.sub(r'<span class="special">\1</span>', l)
-
-  if 'error' in hl:
-    r = re.compile('(' + '|'.join(hl['error']) + ')')
-    l = r.sub(r'<span class="error">\1</span>', l)
-
-  l = re.sub('CLCLclass', 'class', l)
-
-  if 'commentuntilend' in hl:
-    cue = hl['commentuntilend']
-    if isinstance(cue, (list, tuple)):
-      for x in cue:
-        if l.strip().startswith(x):
-          hb(f, '<span class="comment">|</span>\n', allreplace(l))
-          return
-        if '//' in cue: # Handle this separately.
-          r = re.compile(r'\/\/.*')
-          l = r.sub(r'<span class="comment">\g<0></span>', l)
-    elif cue == '#': # Handle this separately.
-      r = re.compile(r'#.*')
-      l = r.sub(r'<span class="comment">\g<0></span>', l)
-    elif cue == '%': # Handle this separately.
-      r = re.compile(r'%.*')
-      l = r.sub(r'<span class="comment">\g<0></span>', l)
-    elif l.strip().startswith(cue):
-      hb(f, '<span class="comment">|</span>\n', allreplace(l))
-      return
-
-  out(f, l + '\n')
 
 def geneq(f, eq, dpi, wl, outname):
   # First check if there is an existing file.
@@ -1127,98 +970,6 @@ def colonlist(f):
     hb(f.outf, '<dd><p class="readable-text">|</p></dd>\n', br(rest, f))
 
   out(f.outf, '</dl>\n')
-
-def codeblock(f, g):
-  if g[1] == 'raw':
-    raw = True
-    ext_prog = None
-  elif g[0] == 'filter_through':
-    # Filter through external program.
-    raw = False
-    ext_prog = g[1]
-    buff = ""
-  else:
-    ext_prog = None
-    raw = False
-    out(f.outf, f.conf['codeblock'])
-    if g[0]:
-      hb(f.outf, f.conf['blocktitle'], g[0])
-    if g[1] == 'jemdoc':
-      out(f.outf, f.conf['codeblockcontenttt'])
-    else:
-      out(f.outf, f.conf['codeblockcontent'])
-
-  # Now we are handling code.
-  # Handle \~ and ~ differently.
-  stringmode = False
-  while 1: # wait for EOF.
-    l = nl(f, codemode=True)
-    if not l:
-      break
-    elif l.startswith('~'):
-      break
-    elif l.startswith('\\~'):
-      l = l[1:]
-    elif l.startswith('\\{'):
-      l = l[1:]
-    elif ext_prog:
-      buff += l
-      continue
-    elif stringmode:
-      if l.rstrip().endswith('"""'):
-        out(f.outf, l + '</span>')
-        stringmode = False
-      else:
-        out(f.outf, l)
-      continue
-
-    # jem revise pyint out of the picture.
-    if g[1] == 'pyint':
-      pyint(f.outf, l)
-    else:
-      if raw:
-        out(f.outf, l)
-      elif g[1] == 'jemdoc':
-        # doing this more nicely needs python 2.5.
-        for x in ('#', '~', '>>>', '\~', '{'):
-          if str(l).lstrip().startswith(x):
-            out(f.outf, '</tt><pre class="tthl">')
-            out(f.outf, l + '</pre><tt class="tthl">')
-            break
-        else:
-          for x in (':', '.', '-'):
-            if str(l).lstrip().startswith(x):
-              out(f.outf, '<br />' + prependnbsps(l))
-              break
-          else:
-            if str(l).lstrip().startswith('='):
-              out(f.outf, prependnbsps(l) + '<br />')
-            else:
-              out(f.outf, l)
-      else:
-        if l.startswith('\\#include{') or l.startswith('\\#includeraw{'):
-          out(f.outf, l[1:])
-        elif l.startswith('#') and doincludes(f, l[1:]):
-          continue
-        elif g[1] in ('python', 'py') and l.strip().startswith('"""'):
-          out(f.outf, '<span class="string">' + l)
-          stringmode = True
-        else:
-          language(f.outf, l, gethl(g[1]))
-
-  if raw:
-    return
-  elif ext_prog:
-    print 'filtering through %s...' % ext_prog
-
-    output,_ = Popen(ext_prog, shell=True, stdin=PIPE,
-                     stdout=PIPE).communicate(buff)
-    out(f.outf, output)
-  else:
-    if g[1] == 'jemdoc':
-      out(f.outf, f.conf['codeblockendtt'])
-    else:
-      out(f.outf, f.conf['codeblockend'])
 
 def prependnbsps(l):
   g = re.search('(^ *)(.*)', l).groups()
@@ -1390,7 +1141,6 @@ def procfile(f):
 
   infoblock = False
   imgblock = False
-  imgcenterblock = False
   tableblock = False
   while 1: # wait for EOF.
     p = pc(f)
@@ -1451,13 +1201,8 @@ def procfile(f):
         nl(f)
         continue
       elif imgblock:
-        out(f.outf, '</div></div>\n')
+        out(f.outf, '</div></div></div></div>\n')
         imgblock = False
-        nl(f)
-        continue
-      elif imgcenterblock:
-        out(f.outf, '</div>\n')
-        imgcenterblock = False
         nl(f)
         continue
       elif tableblock:
@@ -1477,16 +1222,7 @@ def procfile(f):
         if len(g) >= 1:
           g[0] = br(g[0], f)
 
-        if len(g) in (0, 1): # info block.
-          out(f.outf, f.conf['infoblock'])
-          infoblock = True
-          
-          if len(g) == 1: # info block.
-            hb(f.outf, f.conf['blocktitle'], g[0])
-
-          out(f.outf, f.conf['infoblockcontent'])
-
-        elif len(g) >= 2 and g[1] == 'table':
+        if len(g) >= 2 and g[1] == 'table':
           # handles
           # {title}{table}{name}
           # one | two ||
@@ -1494,16 +1230,13 @@ def procfile(f):
           name = ''
           if len(g) >= 3 and g[2]:
             name += ' id="%s"' % g[2]
-          out(f.outf, '<table%s>\n<tr class="r1"><td class="c1">' % name)
+          out(f.outf, '<table class="table hovered bordered">\n<tr class="r1"><td class="c1">') # bordered, bordered, hovered
           f.tablerow = 1
           f.tablecol = 1
 
           tableblock = True
 
-        elif len(g) == 2:
-          codeblock(f, g)
-
-        elif len(g) >= 4 and g[1] == 'img_left':
+        elif len(g) >= 4 and (g[1] == 'img_left' or g[1] == 'img_center'):
           # handles
           # {}{img_left}{source}{alttext}{width}{height}{linktarget}.
           g += ['']*(7 - len(g))
@@ -1514,36 +1247,23 @@ def procfile(f):
           if g[5].isdigit():
             g[5] += 'px'
 
-          out(f.outf, '<div class="panel margin10"><div class="panel-content fg-dark">\n')
+          out(f.outf, '<div class="panel margin10 padding0"><div class="panel-content fg-dark">\n')
           out(f.outf, '<img src="%s"' % g[2])
           out(f.outf, ' alt="%s"' % g[3])
           if g[4]:
             out(f.outf, ' width="%s"' % g[4])
           if g[5]:
             out(f.outf, ' height="%s"' % g[5])
-          out(f.outf, ' class="place-left margin10 nlm ntm"/>')
+          if g[1] == 'img_left':
+            out(f.outf, ' class="place-left margin10"/>')
+          else:
+            out(f.outf, ' class="place-center margin10"/>')
+          out(f.outf, '<div class="page"><div class="page-content margin10 nlm nrm">')
           imgblock = True
 
-        elif len(g) >= 4 and g[1] == 'img_center':
-          # handles
-          # {}{img_center}{source}{alttext}{width}{height}{linktarget}.
-          g += ['']*(7 - len(g))
-
-          if g[4].isdigit():
-            g[4] += 'px'
-
-          if g[5].isdigit():
-            g[5] += 'px'
-
-          out(f.outf, '<div class="panel"><div class="panel-content fg-dark nlp nrp">\n')
-          out(f.outf, '<img src="%s"' % g[2])
-          out(f.outf, ' alt="%s"' % g[3])
-          if g[4]:
-            out(f.outf, ' width="%s"' % g[4])
-          if g[5]:
-            out(f.outf, ' height="%s"' % g[5])
-          out(f.outf, ' />')
-          imgcenterblock = True
+        elif len(g) in (0, 1, 2): # info block.
+          out(f.outf, f.conf['infoblockstart'])
+          infoblock = True
 
         else:
           raise JandalError("couldn't handle block", f.linenum)
@@ -1553,11 +1273,12 @@ def procfile(f):
       if s:
         if tableblock:
           hb(f.outf, '|\n', s)
+        elif imgblock:
+          hb(f.outf, '\n<p class="readable-text text-muted">|</p>\n', s)
+        elif infoblock:
+          hb(f.outf, '\n<p class="code-text text-muted">|</p>\n', s)
         else:
-          if imgblock==True or imgcenterblock==True:
-            hb(f.outf, '<p class="readable-text text-muted">|</p>\n\n', s)
-          else:
-            hb(f.outf, '<p class=readable-text>|</p>\n', s)
+          hb(f.outf, '\n<p class=readable-text>|</p>\n', s)
 
   if showfooter and (showlastupdated or showsourcelink):
     out(f.outf, f.conf['footerstart'])
