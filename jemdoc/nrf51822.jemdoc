@@ -15,18 +15,16 @@
 从官方网站[http://www.segger.com/jlink-software.html?step=1&file=JLinkLinuxTGZ64_480]下载最新的Jlink程序，然后
 
 ~~~
-{}{bash}
->> tar -xvf JLink_Linux_V480.tgz
->> cd JLink_Linux_V480
->> sudo cp 99-jlink.rules /etc/udev/rules.d/
->> cd ..
->> sudo mv JLink_Linux_V480 ~/bin/jlink
+\$ tar -xvf JLink\_Linux\_V480.tgz
+\$ cd JLink\_Linux\_V480
+\$ sudo cp 99-jlink.rules /etc/udev/rules.d/
+\$ cd ..
+\$ sudo mv JLink\_Linux\_V480 ~/bin/jlink
 ~~~
 
 我们将jlink安装在了个人目录的bin目录下。安装完成后，需要重新连接jlink调试器，然后运行*JLinkExe*就会看到自动更新固件的信息以及链路上的设备信息，在这里应该是Cortex-M0。在后面的Makefile中，我们需要设定 *PROG\_ROOT* 为
 ~~~
-{}{bash}
-PROG_ROOT = $(HOME)/bin/jlink
+PROG_ROOT = \$(HOME)\/bin\/jlink
 ~~~
 
 == 2. arm-none-eabi-\{gcc,binutils,gdb\} -- cross toolchain 编译环境
@@ -35,18 +33,16 @@ PROG_ROOT = $(HOME)/bin/jlink
 
 这里，我们选择是使用archlinux提供的ARM交叉编译工具，见[https://launchpad.net/gcc-arm-embedded]，直接用pacman安装好*arm-non-eabi-\{gcc,gdb,binutils\}*包即可。然后我们需要设定 *GNU\_INSTALL\_ROOT* :
 ~~~
-{}{bash}
-GNU_INSTALL_ROOT := /usr
-GNU_VERSION := 4.9.0
-GNU_PREFIX := arm-none-eabi
+GNU\_INSTALL\_ROOT := \/usr
+GNU\_VERSION := 4.9.0
+GNU\_PREFIX := arm-none-eabi
 ~~~
 
 == 3. Nordic nrf51822 SDK
 我们可以下载最新的nrf51822的SDK，以及nordic的 +s110+, +s120+ softdevice（类比FPGA中的说法，我们可以称softdevice为有*API的软核*）。如果你购买的是nrf51822 AK开发板，那么可以去[http://www.nrf51.com nrf51论坛]下载。假定他们都放在了*$(HOME)/bin*目录下，那么需要设定好 *SDK\_PATH* 和 *SOC\_PATH* :
 ~~~
-{}{bash}
-SDK_PATH := $(HOME)/bin/nrf51_sdk_v5_2_0_39364/Nordic/nrf51822/
-SOC_PATH := $(HOME)/bin/nrf51_softdevice/
+SDK\_PATH := \$(HOME)\/bin\/nrf51\_sdk\_v5\_2\_0\_39364\/Nordic\/nrf51822\/
+SOC\_PATH := \$(HOME)\/bin\/nrf51\_softdevice\/
 ~~~
 这样，+s110+, +s120+ 等软核的hex文件都位于 *SOC\_PATH* 下面。
 
@@ -72,23 +68,21 @@ nrf51822 AK开发板可以看作是cortex-M0架构下最小的开发板。最基
 [http://balau82.wordpress.com/2010/02/28/hello-world-for-bare-metal-arm-using-qemu/ Hello world for bare metal ARM using QEMU]. 我们可以用qemu和arm-none-eabi-gdb来调试程序。在这里，我们还是使用上面test.c的例子。运行
 
 ~~~
-{}{bash}
-$ arm-none-eabi-as -mcpu=arm926ej-s -g startup.s -o startup.o
-$ arm-none-eabi-gcc -c -mcpu=arm926ej-s -g test.c -o test.o
-$ arm-none-eabi-ld -T test.ld test.o startup.o -o test.elf
-$ arm-none-eabi-objcopy -O binary test.elf test.bin
-$ qemu-system-arm -M versatilepb -m 128M -nographic -s -S -kernel test.bin
+\$ arm-none-eabi-as -mcpu=arm926ej-s -g startup.s -o startup.o
+\$ arm-none-eabi-gcc -c -mcpu=arm926ej-s -g test.c -o test.o
+\$ arm-none-eabi-ld -T test.ld test.o startup.o -o test.elf
+\$ arm-none-eabi-objcopy -O binary test.elf test.bin
+\$ qemu-system-arm -M versatilepb -m 128M -nographic -s -S -kernel test.bin
 ~~~
 
 随后在另一个终端中该目录下（需要有test.elf），
 ~~~
-{}{bash}
-$ arm-none-eabi-gdb
+\$ arm-none-eabi-gdb
 (gdb) target remote localhost:1234
 (gdb) file test.elf
-(gdb) b c_entry
+(gdb) b c\_entry
 (gdb) continue
-(gdb) set $pc=0
+(gdb) set \$pc=0
 (gdb) stepi
 ~~~
 需要退出qemu的仿真，可以Ctrl+a, x。
@@ -96,20 +90,18 @@ $ arm-none-eabi-gdb
 [http://balau82.wordpress.com/2011/09/03/using-codesourcery-bare-metal-toolchain-for-cortex-m3/ Using CodeSourcery bare metal toolchain for Cortex-M3]. 之前的交叉编译的例子都是基于arm926ej-s，balau在本文中提供了针对cortex-m3的例子。Bare metal程式最大的用处是在MCU上，我直接复制了例子中的文件并且制作了makefile，在qemu上仿真一切OK，源代码可见 main.c, syscalls.c, reset.S, lm3s6965.ld 。
 
 ~~~
-{}{bash}
-$ alias gcc-cortex-m3='arm-none-eabi-gcc -mthumb -march=armv7 -mfix-cortex-m3-ldrd'
-$ gcc-cortex-m3 -c main.c -o main.o
-$ gcc-cortex-m3 -c reset.S -o reset.o
-$ gcc-cortex-m3 -c syscalls.c -o syscalls.o
-$ gcc-cortex-m3 -T lm3s6965.ld main.o reset.o syscalls.o -o main.elf
-$ arm-none-eabi-objcopy -O binary main.elf main.bin
-$ qemu-system-arm -M lm3s6965evb --kernel main.bin --serial stdio
+\$ alias gcc-cortex-m3='arm-none-eabi-gcc -mthumb -march=armv7 -mfix-cortex-m3-ldrd'
+\$ gcc-cortex-m3 -c main.c -o main.o
+\$ gcc-cortex-m3 -c reset.S -o reset.o
+\$ gcc-cortex-m3 -c syscalls.c -o syscalls.o
+\$ gcc-cortex-m3 -T lm3s6965.ld main.o reset.o syscalls.o -o main.elf
+\$ arm-none-eabi-objcopy -O binary main.elf main.bin
+\$ qemu-system-arm -M lm3s6965evb --kernel main.bin --serial stdio
 ~~~
 
 我们也可以直接一步编译生成main.elf
 ~~~
-{}{bash}
-$ gcc-cortex-m3 -T lm3s6965.ld main.c reset.S syscalls.c -o main.elf
+\$ gcc-cortex-m3 -T lm3s6965.ld main.c reset.S syscalls.c -o main.elf
 ~~~
 
 随后我们还要 (1)~检查程序大小，(2)~初始化向量表（湾湾的称呼为*序列埠*，很有意思），以及(3)~用MCU官方的工具对Flash进行擦写。问题是：针对cortex-m0的开发，我们需要怎样做呢？
@@ -124,28 +116,25 @@ $ gcc-cortex-m3 -T lm3s6965.ld main.c reset.S syscalls.c -o main.elf
 
 我们只需将makefile（包括 Makefile, Makefile.config ）放到正确的位置上即可，如对于project，
 ~~~
-{}{bash}
-$ mkdir -p project/gcc
-$ cp -v Makefile.config Makefile project/gcc/
+\$ mkdir -p project/gcc
+\$ cp -v Makefile.config Makefile project/gcc/
 ~~~
 
 == your 1st program : blinky
 
 第一个例子很简单，是硬件调试中的 /hello, world/，我们直接用默认的*Makefile.config*即可，
 ~~~
-{}{bash}
-$ mkdir -p blinky_example/gcc
-$ cp -v Makefile.config Makefile blinky_example/gcc/
-$ cd blinky_example/gcc/
-$ make erase-all
-$ make flash
+\$ mkdir -p blinky\_example/gcc
+\$ cp -v Makefile.config Makefile blinky\_example/gcc/
+\$ cd blinky\_example/gcc/
+\$ make erase\-all
+\$ make flash
 ~~~
 所使用的依赖文件有，
 ~~~
-{}{bash}
-$ make echostuff
-C_OBJECTS: [_build/main.o _build/nrf_delay.o _build/system_nrf51.o]
-C_SOURCE_FILES: [main.c nrf_delay.c system_nrf51.c]
+\$ make echostuff
+C\_OBJECTS: [\_build/main.o \_build/nrf\_delay.o \_build/system\_nrf51.o]
+C\_SOURCE\_FILES: [main.c nrf\_delay.c system_nrf51.c]
 ~~~
 当然还有 gcc\_startup\_nrf51.s
 
@@ -153,16 +142,14 @@ C_SOURCE_FILES: [main.c nrf_delay.c system_nrf51.c]
 
 对于第二个例子，由于我们用到了s110 SOC，因此，需要修改*Makefile.config*（或者可以直接使用*Makefile.config.ble*）
 ~~~
-{}{bash}
 USE_SOFTDEVICE := s110
 ~~~
 然后
 ~~~
-{}{bash}
-$ make clean
-$ make all
-$ make flash-softdevice
-$ make flash
+\$ make clean
+\$ make all
+\$ make flash-softdevice
+\$ make flash
 ~~~
 Note that *make flash-softdevice* automatically erase-all the device.
 

@@ -2,8 +2,8 @@
 
 = NUDTPaper -- Msc/Ph.D Latex Thesis Template
 
-+代码下载:+ [https://github.com/liubenyuan/nudtpaper NUDTPaper @ github] \n
-+项目主页:+ [http://liubenyuan.github.io/nudtpaper NUDTPaper frontpage @ github]
+. +代码下载:+ [https://github.com/liubenyuan/nudtpaper NUDTPaper @ github]
+. +项目主页:+ [http://liubenyuan.github.io/nudtpaper NUDTPaper frontpage @ github]
 
 旧代码主页: [http://nudtpaper.googlecode.com NUDTPaper @ googlecode]
 
@@ -15,10 +15,10 @@ NUDTPaper是国防科学技术大学 +硕士/博士 LaTeX 论文模板+ 的项�
 
 用户强烈看用户手册nudtpaper.pdf的 +第一页+ ，有一些LaTeX经验的同学可以很快上手。一般来说，模板所依赖的包都会在TeX发行版（TexLive, MikTex, CTex）中包含。模板需要一些Office字体，为了获得更好的论文打印效果，用户需要下载一些中文及英文的OpenType（OTF）字体文件。具体的下载链接，同学们可以在CTeX论坛上咨询大牛们。
 
-Ctex论坛地址: [http://bbs.ctex.org Ctex Forum] \n
-模板使用的讨论页: [http://bbs.ctex.org/forum.php?mod=viewthread&tid=51842&extra=page%3D2 国防科大硕/博论文模板]
+. Ctex论坛地址: [http://bbs.ctex.org Ctex Forum]
+. 模板使用的讨论页: [http://bbs.ctex.org/forum.php?mod=viewthread&tid=51842&extra=page%3D2 国防科大硕/博论文模板]
 
-== 模板特性 (old)
+== 模板特性 (obselete)
 
 . 用xeCJK进行字体选择，比较方便。可以直接使用TTF或者OTF字体；
 . 安装需求少，只需要tex环境和xeCJK包，对平台Win/Linux/Mac没有要求。建议使用TeXLive，CTeX完整版；

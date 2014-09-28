@@ -89,45 +89,9 @@ The serial can be debuged using *minicom*. *Warning:* it was said that RN42 enab
 
 References : Archlinux [https://bbs.archlinux.org/viewtopic.php?pid=1388523 FAQ 1], [https://bbs.archlinux.org/viewtopic.php?pid=1322604 FAQ 2], [https://wiki.archlinux.org/index.php/bluetooth Archlinux bluetooth tutorial], [http://www.thinkwiki.org/wiki/How_to_setup_Bluetooth Thinkwiki -- Bluetooth], [http://archlinuxarm.org/forum/viewtopic.php?f=9&t=6016 write a rfcomm.conf]. We may use either bluetooth dongle or the bluetooth in the PC.
 
+We enable the +bluetooth.service+ via systemctl, and the list BLE devices via +lsusb+. The bluetooth on-board maybe named as +hci0+, then we can use +hciconfig hci0 up+ to bring this device up, +hcitool scan+ to find the MAC address of BLE device. Finally, we use the bluetooth as a replacement of Serial interface, via +rfcomm+,
 ~~~
-$ rfkill list
-$ pacman -Q | grep blue
-$ systemctl status bluetooth.service
-~~~
-
-enable the +bluetooth.service+
-~~~
-{}{bash}
-$ lsusb \n
-Bus 003 Device 005: ID 0a5c:21e6 Broadcom Corp. BCM20702 Bluetooth 4.0 [ThinkPad] \n
-Bus 001 Device 017: ID 0a12:0001 Cambridge Silicon Radio, Ltd Bluetooth Dongle (HCI mode) \n
-~~~
-
-The bluetooth on-board is +hci0+, then
-~~~
-{}{bash}
-$ sudo hciconfig hci0 up \n
-$ sudo hcitool scan \n
-Scanning ... \n
-    00:06:66:43:0F:2E   RN42-0F2E \n
-~~~
-The device name of *RN42* as well as the MAC address are listed.
-
-We may add a +udev.rules+ to bringup the bluetooth by default.
-~~~
-{}{bash}
-$ vim /etc/udev/rules.d/10-local.rules
-# Set bluetooth power up
-# ACTION=="add", KERNEL=="hci0", RUN+="/usr/bin/hciconfig hci0 up"
-~~~
-
-Finally, we use the bluetooth as a replacement of Serial interface, via +rfcomm+,
-~~~
-{}{bash}
-$ sudo modprobe btusb
-$ sudo modprobe ath3k
-$ sudo modprobe rfcomm
-$ sudo rfcomm bind rfcomm0 00:06:66:43:0F:2E
+sudo rfcomm bind rfcomm0 00:06:66:43:0F:2E
 ~~~
 
 We now have two serial interfaces, one is USB2UART +\/dev\/ttyUSB0+, another is bluetooth UART +\/dev\/rfcomm0+. By setting 115200 8N1 for both serial devices, we can communicate in minicom ! Remember to enable ECHO in minicom via Ctrl + A, E.

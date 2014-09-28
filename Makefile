@@ -5,7 +5,7 @@ HDOCS=$(addsuffix .html, $(DOCS))
 # PHDOCS=$(addprefix html/, $(HDOCS))
 
 .PHONY : all
-%.html : jemdoc/%.jemdoc MENU jemdoc.py mysite.conf
+%.html : jemdoc/%.jemdoc MENU jemdoc.py private.css mysite.conf
 	python2 jemdoc.py -c mysite.conf -o $@ $<
 
 .PHONY : docs

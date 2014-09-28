@@ -10,7 +10,17 @@
 pre {
     font-family : Inconsolata, Monaco, 'Frutiger Neue W02 Book', monospace;
     font-size : 100%;
-    padding : 0;
-    margin : 0;
+    overflow : auto;
+    background: #f6f6f6;
+    border-left: 6px solid #d6d6d6;
+    color: #00006D;
+    border-radius: 4px 4px 4px 4px;
+    display: block;
+    line-height: 1.3em;
+    margin: 0.3em 0;
+    padding: 0.3em 0.6em;
+    white-space: pre-wrap;
+    word-break: break-all;
+    word-wrap: break-word;
 }
 

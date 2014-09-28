@@ -1,6 +1,6 @@
 # jemdoc: menu{MENU}{udpip.html}, nofooter
 
-= UDP\/IP -- VHDL based MAC layer and transport protocol
+= UDP\/IP -- VHDL based transport protocol
 
 We interface phy device with FPGA. On Lx9 microboard, a +DP83848J+ phy is used, while on Nexys3, a +LAN8710A+ is used. Both Phy device support standard MII\/RMII interface.
 
@@ -84,34 +84,7 @@ Transparent data transfer using RS232 via bluetooth or wifi, or even ethernet ar
 
 == play with the hardware using +ip+
 
-We may control the interface via +ip+ under my archlinux,
-~~~
-{}{bash}
-$ ip list
-3: enp0s25: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 50
-    link/ether 3c:97:0e:9e:b8:34 brd ff:ff:ff:ff:ff:ff
-~~~
-
-we bring this interface up and manually assign ip address +192.168.1.10+ and mask +255.255.255.0+ (24bit 1s) to it,
-~~~
-{}{bash}
-$ sudo ip link set enp0s25 up
-3: enp0s25: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc pfifo_fast state DOWN mode DEFAULT group default qlen 50
-    link/ether 3c:97:0e:9e:b8:34 brd ff:ff:ff:ff:ff:ff
-$ sudo ip addr add 192.168.1.10/24 dev enp0s25
-$ sudo sysctl -w net.ipv4.tcp_window_scaling=0
-$ sudo sysctl -w net.ipv4.tcp_timestamps=0
-~~~
-
-now we have,
-~~~
-{}{bash}
-3: enp0s25: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc pfifo_fast state DOWN group default qlen 50
-    link/ether 3c:97:0e:9e:b8:34 brd ff:ff:ff:ff:ff:ff
-    inet 192.168.1.10/24 scope global enp0s25
-       valid_lft forever preferred_lft forever
-~~~
-where all the information can be viewed in +wireshark+.
+We may control the interface via +ip+ under my archlinux, i.e., +ip list+, +ip link set enp0s25 up+, +ip addr add ADDR dev enp0s25+ and +ip route add default via ROUTE+. All the information can be viewed in +wireshark+.
 
 == understand the packets (or /shells/) of OSI-7 layer
 
@@ -159,47 +132,6 @@ Data receive and transmite are simply +decap+ and +encap+ of the packets.
 = GUI frontend
 
 We are going to use +Qt+ as the GUI frontend.
-
-= Microblaze
-
-为什么不学习一下Xilinx的SDK呢，让我们用一晚上rock一下microblaze吧 :)
-
-~~~
-我们针对的是Xilinx的Spartan 6 Lx9 (XC6SLX9) micro开发板，需要用到cp210x uart to usb转接芯片以及Digilent的Jtag驱动。在Archlinux的wiki主页上（或者你可以Google搜索linux, digilent, lx9micro, Xilinx ISE），有关于在linux下，配置Xilinx ISE和Lx9micro的具体步骤。
-
-简而言之，就是
-. 安装+adept-runtime+, 安装+digilent-plugin+，安装+adept-utilities+；
-. 安装一些archlinux需要的+usbdrv+以及+fxload+，需要配置好*udev.rules*。添加用户到+uucp+；
-. 最后，安装digilent plugin到ISE的+plugins+目录；
-~~~
-
-Microblaze是一个Xilinx基于FPGA的硬核，主要使用Xilinx Platform Studio (XPS) Base System Builder (BSB) 进行开发. 
-
-~~~
-需要注意的是，我们需要下载Lx9micro对应的Xilinx Board Description (XBD)文件，这个文件可以从Avnet网站上下载到。具体到对于新制作的板子，我们应该怎样设计和编写这个文件，我们可以暂时放下。
-~~~
-
-*第一课*, [https://www.em.avnet.com/Support%20And%20Downloads/EDK01-Creating_Embedded_System_13_2_1.pdf EDK01 - Creating Embedded System] 课程中讲解的很详细了，我们在这里重新温习一下里面的关键步骤和器件、软件。测试程序将置于LPDDR (一种mobile DDR) 中。步骤包括：
-. *Create the hardware platform*: 使用ISE添加一个embedded processor，通过BSB定制我们的硬件；在做这一步之前，我们需要下载Avnet的XBD文件（参见 [https://www.em.avnet.com/Support%20And%20Downloads/avnet_edk14_3_xbd_files_9_11_2012_spartan.zip EDK 14.3 XBD\/IP-XACT Files]），按照步骤添加板级描述文件。(需要注意的是，在配置processor和peripheral时，我们没有添加CDCE913_I2C模块)。这一步骤会生成两个文件，一个是Microprocessor Hardware Specification (MHS)，用来配置总线以及外设等；另外一个是UCF文件，这一文件与VHDL工程中的用法一致。
-. *Compiling the bitstream*: 添加UCF, Generate Top HDL Source，生成microblaze的bit文件，并且调出EDK界面；
-. *Add Xilinx Application*: 生成一个peripheral的测试程序，这一步有现成的模板，生成后自动添加一个默认的BSP和默认的linker script；随后我们可以从EDK中将bit文件和Block Memory Map File (BMM)文件烧录到板子上。
-. 配置run as，将STDIO重定向到ttyUSB0上，这样我们即可以在Console中看到运行结果，也可以通过EDK的Terminal连接来查看程序的运行结果。为了访问USB转串口，需要将你的用户添加到uucp以及lock组中，并且可以通过udev.rules修改ttyUSB0的默认属性（方法看这里 [https://bbs.archlinux.org/viewtopic.php?id=86088 Permission to \/dev\/ttyUSB0]）。另外在ISE 14.3下，EDK会出现segfault，我们需要安装java-rxtx包，随后（参考 [http://forums.xilinx.com/t5/Installation-and-Licensing/SDK-segfault-on-UART-output/td-p/160000 SDK segfault on UART output?]），创建simlink即可。
-
-*第一课后续练习*，[https://wiki.analog.com/resources/fpga/xilinx/pmod/ad7991 AD7991 PMOD XILINX FPGA REFERENCE DESIGN]. 发扬rapid  prototyping精神，我们直接研究一下AD7991模板的结构。
-
-我们得到的reference design中有system.mhs system.xmp system.bsd data\/system.ucf，在这些文件中，system.xmp是有ISE添加embedded processor自动生成的，而system.bsd是由xps (bsd)在配置MHS后编译得到的。我们首先：
-. 在ISE中添加embedded processor
-. 然后启动一个空的XPS工程，将UCF文件和MHS文件*先后*复制到工程中。这里会弹出一个version manager更新我们的BSD。
-. 随后我们退出XPS，在ISE中生成HDL。生成的新的MHS文件可以用diff查看与旧工程文件的区别。
-
-注意在dos编码格式下，我们可以用
-~~~
-update
-set ff=unix
-~~~
-将refdesign中的编码更新一下，在diff之后，我们就看到仅仅是peripheral器件的版本号发生了改变。
-
-*注意！* 当我们采用microblaze的refdesign时，*仅仅需要连接pmodAD2到3-6管脚上*，而不能将8个管脚全部连接。这是因为在这个默认的refdesign中，7-12管脚是接地的。我们可以用extension cable来连接。
 
 == Ethernet
 

@@ -41,7 +41,7 @@
 
 <p class=readable-text>We build a FPGA prototyping board to collect cardio-related bio-signals.</p>
 
-<p class=readable-text><small><span class=text-warning>Highlights:</span></small></p>
+<p class=readable-text><code>Highlights:</code></p>
 <ol>
 <li><p class="readable-text"><strong>Robust heartbeat tracking using wrist mounted photoplethysmography(PPG) signals;</strong></p>
 </li>
@@ -51,14 +51,14 @@
 </li>
 </ol>
 
-<p class=readable-text><small><span class=text-warning>Papers:</span></small></p>
+<p class=readable-text><code>Papers:</code></p>
 <h1>lx9micro + pmodAD2 + pmodACL + pmodBT2</h1>
 
 <p class=readable-text><strong>building a 4-channel, 3-axis accelerometer evaluation system</strong></p>
 <h2>phealth &ndash; architecture</h2>
 <div class="panel margin10 padding0"><div class="panel-content fg-dark">
 <img src="pics/lx9health.png" alt="Lx9 Microboard for Healthcare" width="400px" class="place-left margin10"/><div class="page"><div class="page-content margin10 nlm nrm">
-<p class="readable-text text-muted">FPGA captures 3-axis accelerometer reads from <small><span class=text-warning>ADXL345</span></small>, 4-channel biosignals (one for ECG, and three for PPG) from <small><span class=text-warning>AD7991</span></small>. These recordings are transferred to PC via USB2UART using <small><span class=text-warning>CP2102</span></small>, or remotely via a bluetooth device <small><span class=text-warning>RN-42</span></small>.</p>
+<p class="readable-text text-muted">FPGA captures 3-axis accelerometer reads from <code>ADXL345</code>, 4-channel biosignals (one for ECG, and three for PPG) from <code>AD7991</code>. These recordings are transferred to PC via USB2UART using <code>CP2102</code>, or remotely via a bluetooth device <code>RN-42</code>.</p>
 
 <p class="readable-text text-muted">Two peripherals are used, which are I2C and UART. SPI may also be used if we utilize the 4-wire connection of ADXL345. Those codes, <strong>i2c_master.vhd</strong> and <strong>uart.vhd</strong> are publicity available, and borrowed from <a href="http://eewiki.net/pages/viewpage.action?pageId=10125324" target=&ldquo;blank&rdquo;>I2C master @ eewiki</a> and <a href="https://github.com/pabennett/uart" target=&ldquo;blank&rdquo;>uart @ pabennett</a>.</p>
 
@@ -68,17 +68,17 @@
 
 <p class=readable-text>PmodAD2, ad7991, has an I2C interface and up to 4 channels of ADC conversion. It supports 12-bit resolution. AD7991 remains in shutdown mode, powering up only for conversions. The conversion process is controlled by an I2C command. The range (when REF_SEL disabled) is 0V to VDD. We enable <strong>4-channel</strong> conversion by disable REF_SEL, and connet jumper JP1 to vin4.</p>
 
-<p class=readable-text>The serial clock frequencies for AD7991 are standard (100KHz), fast (400KHz) and high speed(3.4MHz). The address of AD7991 is <small><span class=text-warning>b&ldquo;0101000&rdquo;</span></small>, followed by a tailing bit denotes whether it is write <small><span class=text-warning>(RW=0)</span></small> or read <small><span class=text-warning>(RW=1)</span></small>. You may refer to AD7991 datasheet, Table 10, for more details.</p>
+<p class=readable-text>The serial clock frequencies for AD7991 are standard (100KHz), fast (400KHz) and high speed(3.4MHz). The address of AD7991 is <code>b&ldquo;0101000&rdquo;</code>, followed by a tailing bit denotes whether it is write <code>(RW=0)</code> or read <code>(RW=1)</code>. You may refer to AD7991 datasheet, Table 10, for more details.</p>
 
 <p class=readable-text>The converted samples, each has 2-Byte, where D15-D14 are 0s, D13-D12 is the channel identifier, D11-D0 are the ADC conversions in the range 0 to VDD.</p>
 
 <p class=readable-text>The workflow of <strong>ad7991.vhd</strong> wrapper is,</p>
 <ol>
-<li><p class="readable-text">put address <small><span class=text-warning>b&ldquo;0101000&rdquo;</span></small> on the ADDRESS bus of <strong>i2c_master.vhd</strong>, <small><span class=text-warning>RW=0</span></small> for write, I2C data is <small><span class=text-warning>b&ldquo;11110100&rdquo;</span></small>;</p>
+<li><p class="readable-text">put address <code>b&ldquo;0101000&rdquo;</code> on the ADDRESS bus of <strong>i2c_master.vhd</strong>, <code>RW=0</code> for write, I2C data is <code>b&ldquo;11110100&rdquo;</code>;</p>
 </li>
-<li><p class="readable-text"><small><span class=text-warning>RW=1</span></small> for read, wait until <small><span class=text-warning>i2c_busy</span></small> is pulled up;</p>
+<li><p class="readable-text"><code>RW=1</code> for read, wait until <code>i2c_busy</code> is pulled up;</p>
 </li>
-<li><p class="readable-text">put AD7991 in continuous read mode, issue <small><span class=text-warning>RW=1</span></small> and register <strong>valid</strong> and <strong>dout</strong> for the incomming data.</p>
+<li><p class="readable-text">put AD7991 in continuous read mode, issue <code>RW=1</code> and register <strong>valid</strong> and <strong>dout</strong> for the incomming data.</p>
 </li>
 </ol>
 
@@ -91,34 +91,34 @@
 <tr class="r2"><td class="c1">CS </td><td class="c2"> SDO </td><td class="c3"> SCL </td><td class="c4"> SDA </td><td class="c5"> <strong>GND</strong> </td><td class="c6"> <strong>VCC</strong>
 </td></tr></table>
 
-<p class=readable-text>The I2C address of ADXL345 is <small><span class=text-warning>0x1D</span></small>. In order to use this address (rather than SPI interface or the alternate address), you should tied <strong>CS</strong> to HIGH and <strong>SDO</strong> to HIGH; if you want to use the alternate address <small><span class=text-warning>0x53</span></small>, pin <strong>SDO</strong> must pulldown to GND. You could test the function of I2C interface by reading the chip ID from the <strong>CHIPID</strong> address <small><span class=text-warning>0x00</span></small>, see if you can get <small><span class=text-warning>0xE5</span></small>.</p>
+<p class=readable-text>The I2C address of ADXL345 is <code>0x1D</code>. In order to use this address (rather than SPI interface or the alternate address), you should tied <strong>CS</strong> to HIGH and <strong>SDO</strong> to HIGH; if you want to use the alternate address <code>0x53</code>, pin <strong>SDO</strong> must pulldown to GND. You could test the function of I2C interface by reading the chip ID from the <strong>CHIPID</strong> address <code>0x00</code>, see if you can get <code>0xE5</code>.</p>
 <ol>
-<li><p class="readable-text"><strong>Hint 1</strong>, in <strong>SPI</strong> interface, DATAX0 is stored in 0x32 and 0x33 respectively, so you may put address <small><span class=text-warning>(0x80 | 0x32) = 0xB2</span></small> on that bus, where the MSB is for read; or <small><span class=text-warning>(0x80 | 0x40 | 0x32) = 0xF2</span></small> for continuous read operation. While for <strong>I2C</strong> to function, you only need <small><span class=text-warning>0x32</span></small> for single byte read, or <small><span class=text-warning>0x72</span></small> for continuous read. No <strong>MSB</strong> tunation is needed.</p>
+<li><p class="readable-text"><strong>Hint 1</strong>, in <strong>SPI</strong> interface, DATAX0 is stored in 0x32 and 0x33 respectively, so you may put address <code>(0x80 | 0x32) = 0xB2</code> on that bus, where the MSB is for read; or <code>(0x80 | 0x40 | 0x32) = 0xF2</code> for continuous read operation. While for <strong>I2C</strong> to function, you only need <code>0x32</code> for single byte read, or <code>0x72</code> for continuous read. No <strong>MSB</strong> tunation is needed.</p>
 </li>
-<li><p class="readable-text"><strong>Hint 2</strong>, in I2C mode, when your read DATAX0 using 0x32, and continuous trigger the I2C read operation, it by default works in the continous read mode. <small><span class=text-warning>0x32</span></small> has the same effect as <small><span class=text-warning>0x72</span></small> in I2C mode.</p>
+<li><p class="readable-text"><strong>Hint 2</strong>, in I2C mode, when your read DATAX0 using 0x32, and continuous trigger the I2C read operation, it by default works in the continous read mode. <code>0x32</code> has the same effect as <code>0x72</code> in I2C mode.</p>
 </li>
 </ol>
 
 <p class=readable-text>The <strong>adxl345.vhd</strong> wrapper works as,</p>
 <ol>
-<li><p class="readable-text">ADDRESS <small><span class=text-warning>x&ldquo;1D&rdquo;</span></small>, <small><span class=text-warning>RW=0</span></small>, continuous write data <small><span class=text-warning>x&ldquo;31&rdquo;</span></small> (DATA_FORMAT) and <small><span class=text-warning>x&ldquo;01&rdquo;</span></small> (4g range); <strong>stop</strong>;</p>
+<li><p class="readable-text">ADDRESS <code>x&ldquo;1D&rdquo;</code>, <code>RW=0</code>, continuous write data <code>x&ldquo;31&rdquo;</code> (DATA_FORMAT) and <code>x&ldquo;01&rdquo;</code> (4g range); <strong>stop</strong>;</p>
 </li>
-<li><p class="readable-text">ADDRESS <small><span class=text-warning>x&ldquo;1D&rdquo;</span></small>, <small><span class=text-warning>RW=0</span></small>, continuous write data <small><span class=text-warning>x&ldquo;2C&rdquo;</span></small> (BW_RATE) and <small><span class=text-warning>x&ldquo;0C&rdquo;</span></small> (400Hz rates); <strong>stop</strong>;</p>
+<li><p class="readable-text">ADDRESS <code>x&ldquo;1D&rdquo;</code>, <code>RW=0</code>, continuous write data <code>x&ldquo;2C&rdquo;</code> (BW_RATE) and <code>x&ldquo;0C&rdquo;</code> (400Hz rates); <strong>stop</strong>;</p>
 </li>
-<li><p class="readable-text">ADDRESS <small><span class=text-warning>x&ldquo;1D&rdquo;</span></small>, <small><span class=text-warning>RW=0</span></small>, continuous write data <small><span class=text-warning>x&ldquo;2D&rdquo;</span></small> (POWER_CTL) and <small><span class=text-warning>x&ldquo;08&rdquo;</span></small> (start measure); <strong>stop</strong>;</p>
+<li><p class="readable-text">ADDRESS <code>x&ldquo;1D&rdquo;</code>, <code>RW=0</code>, continuous write data <code>x&ldquo;2D&rdquo;</code> (POWER_CTL) and <code>x&ldquo;08&rdquo;</code> (start measure); <strong>stop</strong>;</p>
 </li>
-<li><p class="readable-text">ADDRESS <small><span class=text-warning>x&ldquo;1D&rdquo;</span></small>, <small><span class=text-warning>RW=0</span></small>, write data <small><span class=text-warning>x&ldquo;72&rdquo;</span></small> (0x40 | 0x32 = 0x72, continuous read from DATAX0); <strong>restart</strong></p>
+<li><p class="readable-text">ADDRESS <code>x&ldquo;1D&rdquo;</code>, <code>RW=0</code>, write data <code>x&ldquo;72&rdquo;</code> (0x40 | 0x32 = 0x72, continuous read from DATAX0); <strong>restart</strong></p>
 </li>
-<li><p class="readable-text">ADDRESS <small><span class=text-warning>x&ldquo;1D&rdquo;</span></small>, <small><span class=text-warning>RW=1</span></small>, continous read 6-Byte; <strong>idle</strong>.</p>
+<li><p class="readable-text">ADDRESS <code>x&ldquo;1D&rdquo;</code>, <code>RW=1</code>, continous read 6-Byte; <strong>idle</strong>.</p>
 </li>
 </ol>
 <h2>USB2UART &ndash; cp2102</h2>
 
-<p class=readable-text>The interface of <strong>uart.vhd</strong> is very pleasant ! We may connect rx, tx pins to proper direction, (<small><span class=text-warning>tx</span></small> on <strong>uart.vhd</strong> denotes <strong>bits</strong> streamed out this module, <small><span class=text-warning>data_stream_in_*</span></small> denote the <strong>Byte</strong> to be write <strong>into</strong> this module.)</p>
+<p class=readable-text>The interface of <strong>uart.vhd</strong> is very pleasant ! We may connect rx, tx pins to proper direction, (<code>tx</code> on <strong>uart.vhd</strong> denotes <strong>bits</strong> streamed out this module, <code>data_stream_in_*</code> denote the <strong>Byte</strong> to be write <strong>into</strong> this module.)</p>
 <ol>
-<li><p class="readable-text"><small><span class=text-warning>WRITE</span></small>, put data on bus, issue <small><span class=text-warning>data_stream_in_stb</span></small>, wait until <small><span class=text-warning>data_stream_in_ack</span></small>;</p>
+<li><p class="readable-text"><code>WRITE</code>, put data on bus, issue <code>data_stream_in_stb</code>, wait until <code>data_stream_in_ack</code>;</p>
 </li>
-<li><p class="readable-text"><small><span class=text-warning>READ</span></small>, register data when <small><span class=text-warning>data_stream_out_stb</span></small> is valid, responds by issue <small><span class=text-warning>data_stream_out_ack</span></small>.</p>
+<li><p class="readable-text"><code>READ</code>, register data when <code>data_stream_out_stb</code> is valid, responds by issue <code>data_stream_out_ack</code>.</p>
 </li>
 </ol>
 <h2>pmodBT2 &ndash; RN-42</h2>
@@ -136,52 +136,18 @@
 <h3>Connect to RN42 and record data</h3>
 
 <p class=readable-text>References : Archlinux <a href="https://bbs.archlinux.org/viewtopic.php?pid=1388523" target=&ldquo;blank&rdquo;>FAQ 1</a>, <a href="https://bbs.archlinux.org/viewtopic.php?pid=1322604" target=&ldquo;blank&rdquo;>FAQ 2</a>, <a href="https://wiki.archlinux.org/index.php/bluetooth" target=&ldquo;blank&rdquo;>Archlinux bluetooth tutorial</a>, <a href="http://www.thinkwiki.org/wiki/How_to_setup_Bluetooth" target=&ldquo;blank&rdquo;>Thinkwiki &ndash; Bluetooth</a>, <a href="http://archlinuxarm.org/forum/viewtopic.php?f=9&amp;t=6016" target=&ldquo;blank&rdquo;>write a rfcomm.conf</a>. We may use either bluetooth dongle or the bluetooth in the PC.</p>
-<div class="example"><blockquote>
 
-<p class="code-text text-muted">\( rfkill list
-\) pacman -Q | grep blue
-$ systemctl status bluetooth.service</p>
-</blockquote></div>
+<p class=readable-text>We enable the <code>bluetooth.service</code> via systemctl, and the list BLE devices via <code>lsusb</code>. The bluetooth on-board maybe named as <code>hci0</code>, then we can use <code>hciconfig hci0 up</code> to bring this device up, <code>hcitool scan</code> to find the MAC address of BLE device. Finally, we use the bluetooth as a replacement of Serial interface, via <code>rfcomm</code>,</p>
+<pre>
 
-<p class=readable-text>enable the <small><span class=text-warning>bluetooth.service</span></small></p>
-<div class="example"><blockquote>
+<p class="code-text text-muted">sudo rfcomm bind rfcomm0 00:06:66:43:0F:2E</p>
+</pre>
 
-<p class="code-text text-muted">$ lsusb <br />
-Bus 003 Device 005: ID 0a5c:21e6 Broadcom Corp. BCM20702 Bluetooth 4.0 <a href="ThinkPad" target=&ldquo;blank&rdquo;>ThinkPad</a> <br />
-Bus 001 Device 017: ID 0a12:0001 Cambridge Silicon Radio, Ltd Bluetooth Dongle (HCI mode) <br /></p>
-</blockquote></div>
+<p class=readable-text>We now have two serial interfaces, one is USB2UART <code>/dev/ttyUSB0</code>, another is bluetooth UART <code>/dev/rfcomm0</code>. By setting 115200 8N1 for both serial devices, we can communicate in minicom ! Remember to enable ECHO in minicom via Ctrl + A, E.</p>
 
-<p class=readable-text>The bluetooth on-board is <small><span class=text-warning>hci0</span></small>, then</p>
-<div class="example"><blockquote>
-
-<p class="code-text text-muted">\( sudo hciconfig hci0 up \n
-\) sudo hcitool scan <br />
-Scanning &hellip; <br />
-00:06:66:43:0F:2E   RN42-0F2E <br /></p>
-</blockquote></div>
-
-<p class=readable-text>We may add a <small><span class=text-warning>udev.rules</span></small> to bringup the bluetooth by default.</p>
-<div class="example"><blockquote>
-
-<p class="code-text text-muted">$ vim <em>etc</em>udev<em>rules.d</em>10-local.rules
-
-</p>
-</blockquote></div>
-
-<p class=readable-text>Finally, we use the bluetooth as a replacement of Serial interface, via <small><span class=text-warning>rfcomm</span></small>,</p>
-<div class="example"><blockquote>
-
-<p class="code-text text-muted">\( sudo modprobe btusb
-\) sudo modprobe ath3k
-\( sudo modprobe rfcomm
-\) sudo rfcomm bind rfcomm0 00:06:66:43:0F:2E</p>
-</blockquote></div>
-
-<p class=readable-text>We now have two serial interfaces, one is USB2UART <small><span class=text-warning>/dev/ttyUSB0</span></small>, another is bluetooth UART <small><span class=text-warning>/dev/rfcomm0</span></small>. By setting 115200 8N1 for both serial devices, we can communicate in minicom ! Remember to enable ECHO in minicom via Ctrl + A, E.</p>
-
-<p class=readable-text><small><span class=text-warning>NOTE</span></small> When we connect to the bluetooth serial (via python, minicom, etc.,) and receive data, the pairing LED on RN42 will <strong>flash</strong>, and the connection status LED will <strong>pulldown</strong> (connected). Data are now transmitted from slave to our PC.</p>
+<p class=readable-text><code>NOTE</code> When we connect to the bluetooth serial (via python, minicom, etc.,) and receive data, the pairing LED on RN42 will <strong>flash</strong>, and the connection status LED will <strong>pulldown</strong> (connected). Data are now transmitted from slave to our PC.</p>
 <div class="panel ribbed-amber"><div class="panel-content">
-Page generated 2014-09-28 21:16:44 UTC, by <a href="https://github.com/wsshin/jemdoc_mathjax" target="blank">jemdoc+MathJax</a>.
+Page generated 2014-09-28 23:40:29 UTC, by <a href="https://github.com/wsshin/jemdoc_mathjax" target="blank">jemdoc+MathJax</a>.
 </div></div>
 </div></div></div>
 <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript">

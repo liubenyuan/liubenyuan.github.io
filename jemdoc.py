@@ -221,10 +221,10 @@ def standardconf():
   </html>
 
   [infoblockstart]
-  <div class="example"><blockquote>
+  <pre>
 
   [infoblockend]
-  </blockquote></div>
+  </pre>
 
   [footerstart]
   <div class="panel ribbed-amber"><div class="panel-content">
@@ -708,12 +708,12 @@ def br(b, f, tableblock=False):
 
   # Deal with _underscore_. (metro)
   r = re.compile(r'(?<!\\)_(.*?)(?<!\\)_', re.M + re.S)
-  b = re.sub(r, r'<u>\1</u>', b)
+  b = re.sub(r, r'<u><strong>\1</strong></u>', b)
   b = myusresub(b)
 
   # Deal with +monospace+.
   r = re.compile(r'(?<!\\)\+(.*?)(?<!\\)\+', re.M + re.S)
-  b = re.sub(r, r'<small><span class=text-warning>\1</span></small>', b)
+  b = re.sub(r, r'<code>\1</code>', b)
 
   # Deal with "double quotes".
   r = re.compile(r'(?<!\\)"(.*?)(?<!\\)"', re.M + re.S)
