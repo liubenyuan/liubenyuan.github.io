@@ -711,11 +711,11 @@ def br(b, f, tableblock=False):
   # Deal with /italics/ first because the '/' in other tags would otherwise
   # interfere.
   r = re.compile(r'(?<!\\)/(.*?)(?<!\\)/', re.M + re.S)
-  b = re.sub(r, r'<i>\1</i>', b)
+  b = re.sub(r, r'<em>\1</em>', b)
 
   # Deal with *bold*.
   r = re.compile(r'(?<!\\)\*(.*?)(?<!\\)\*', re.M + re.S)
-  b = re.sub(r, r'<b>\1</b>', b)
+  b = re.sub(r, r'<strong>\1</strong>', b)
  
   # Deal with _underscore_.
   r = re.compile(r'(?<!\\)_(.*?)(?<!\\)_', re.M + re.S)
