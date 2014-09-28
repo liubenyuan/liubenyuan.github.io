@@ -137,10 +137,10 @@ def standardconf():
   <head>
   <meta name="generator" content="jemdoc, see http://jemdoc.jaboc.net/" />
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-  
+
   [defaultcss]
   <link rel="stylesheet" href="jemdoc.css" type="text/css" />
-  
+
   [windowtitle]
   # used in header for window title.
   <title>|</title>
@@ -150,22 +150,22 @@ def standardconf():
 
   [fwtitleend]
   </div>
-  
+
   [doctitle]
   # used at top of document.
   <div id="toptitle">
   <h1>|</h1>
-  
+
   [subtitle]
   <div id="subtitle">|</div>
-  
+
   [doctitleend]
   </div>
-  
+
   [bodystart]
   </head>
   <body>
-  
+
   [analytics]
   <script type="text/javascript">
   var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
@@ -176,46 +176,50 @@ def standardconf():
       var pageTracker = _gat._getTracker("|");
       pageTracker._trackPageview();
   } catch(err) {}</script>
-  
-  [menustart]
-  <table summary="Table for page layout." id="tlayout">
-  <tr valign="top">
-  <td id="layout-menu">
-  
-  [menuend]
-  </td>
-  <td id="layout-content">
-  
-  [menucategory]
-  <div class="menu-category">|</div>
-
-  [menuitem]
-  <div class="menu-item"><a href="|1"|3>|2</a></div>
 
   [specificcss]
   <link rel="stylesheet" href="|" type="text/css" />
 
   [specificjs]
   <script src="|.js" type="text/javascript"></script>
-  
+
+  [menustart]
+  <header class="bg-light">
+  <div class="navigation-bar light">
+  <div class="navigation-bar-content container">
+  <nav class="horizontal-menu"><ul>
+
+  [menuend]
+  </ul></nav></div></div>
+  </header>
+  <div class="page"><div class="page-content margin20 nrm"><div class="page-container">
+
+  [menucategory]
+  <li><a class="dropdown-toggle" href="#">|</a>
+  <ul class="dropdown-menu inverse" data-role="dropdown">
+
+  [menucategoryend]
+  </ul></li>
+
+  [menuitem]
+  <li><a href="|1"|3>|2</a></li>
+
   [currentmenuitem]
-  <div class="menu-item"><a href="|1" class="current"|3>|2</a></div>
-  
-  [nomenu]
-  <div id="layout-content">
-  
+  <li><a href="|1" class="current"|3>|2</a></li>
+
   [menulastbit]
-  </td>
-  </tr>
-  </table>
-  
+  </div></div></div>
+
+  [nomenu]
+  <div class="container">
+
   [nomenulastbit]
   </div>
-  
+
   [bodyend]
   </body>
   </html>
-  
+
   [infoblock]
   <div class="infoblock">
   
@@ -319,6 +323,8 @@ def parseconf(cns):
 
 def insertmenuitems(f, mname, current, prefix):
   m = open(mname, 'rb')
+
+  unclosed_menu_category = 0
   while pc(controlstruct(m)) != '':
     l = readnoncomment(m)
     l = l.strip()
@@ -364,7 +370,13 @@ def insertmenuitems(f, mname, current, prefix):
         hb(f.outf, f.conf['menuitem'], link, menuitem, option)
 
     else: # menu category.
+      if unclosed_menu_category==1:
+        hb(f.outf, f.conf['menucategoryend'], br(l, f))
+      unclosed_menu_category = 1
       hb(f.outf, f.conf['menucategory'], br(l, f))
+
+  if unclosed_menu_category==1:
+    hb(f.outf, f.conf['menucategoryend'], br(l, f))
 
   m.close()
 
@@ -713,15 +725,15 @@ def br(b, f, tableblock=False):
   r = re.compile(r'(?<!\\)/(.*?)(?<!\\)/', re.M + re.S)
   b = re.sub(r, r'<em>\1</em>', b)
 
-  # Deal with *bold*.
+  # Deal with *bold*. (metro)
   r = re.compile(r'(?<!\\)\*(.*?)(?<!\\)\*', re.M + re.S)
   b = re.sub(r, r'<strong>\1</strong>', b)
- 
-  # Deal with _underscore_.
+
+  # Deal with _underscore_. (metro)
   r = re.compile(r'(?<!\\)_(.*?)(?<!\\)_', re.M + re.S)
   b = re.sub(r, r'<u>\1</u>', b)
   b = myusresub(b)
- 
+
   # Deal with +monospace+.
   r = re.compile(r'(?<!\\)\+(.*?)(?<!\\)\+', re.M + re.S)
   b = re.sub(r, r'<tt>\1</tt>', b)
