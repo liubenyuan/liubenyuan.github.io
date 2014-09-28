@@ -1,19 +1,19 @@
 # jemdoc: menu{MENU}{index.html}, nofooter
 
-~~~
-{}{img_left}{pics/lby.jpg}{liu benyuan}{160px}{}{}
-My name is *liu benyuan* (the Chinese characters are displayed in the left). *liu* is the Family name, *benyuan* is the Given name. It usually appears as /Benyuan Liu/ in press.
-~~~
-
 # you may use img_center if you like
-~~~
-{}{img_left}{pics/email.gif}{email me}{180px}{}{}
-Contact me at this email address, or liubenyuan $\boldsymbol{\alpha\tau}$ gmail $\boldsymbol{\delta o\tau}$ com
-~~~
-
 = About
 
 I am now a research assistant at the department of BioMedical Engineering (BME), [http://www.fmmu.edu.cn FMMU], co-work with *Prof. Xiuzhen Dong* and *Prof. Feng Fu*. I am also a fifth-year Ph.D at the Science and Technology on Automatic Target Recognition Laboratory (ATR Lab), [http://www.nudt.edu.cn NUDT], under the supervisor of *Prof. Qiang Fu* and *Dr. Hongqi Fan* in Adavance Radar Signal Processing *(ARSP)* group. My research interests lie broadly on biomedical signal processing, statistics, optimization, tracking and estimation.
+
+~~~
+{}{img_left}{pics/lby.jpg}{liu benyuan}{200px}{}{}
+My name is *liu benyuan* (the Chinese characters are displayed in the left). *liu* is the Family name, *benyuan* is the Given name. It usually appears as /Benyuan Liu/ in press.
+~~~
+
+~~~
+{}{img_left}{pics/email.gif}{email me}{200px}{}{}
+Contact me at this email address, or liubenyuan $\boldsymbol{\alpha\tau}$ gmail $\boldsymbol{\delta o\tau}$ com
+~~~
 
 = Academia
 

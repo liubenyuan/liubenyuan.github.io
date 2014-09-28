@@ -1,7 +1,7 @@
 # jemdoc: menu{MENU}{bsbl.html}
 #
 
-= BSBL: The Block Sparse Bayesian Learning Framework
+= BSBL: Block Sparse Bayesian Learning
 
 I developed fast implementations of the Block Sparse Bayesian Learning (*BSBL*, see [https://sites.google.com/site/researchbyzhang Zhilin Zhang's Website]) Framework, using the Fast Marginalized Likelihood Maximization method (see [http://research.microsoft.com/en-us/um/cambridge/events/aistats2003/proceedings/123.pdf Fast marginal likelihood maximisation for sparse Beysian models]).
 
