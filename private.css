@@ -9,17 +9,22 @@
 
 .metro .readable-text {
     font-size: 15pt;
-    line-height: 22pt;
+    line-height: 24pt;
 }
 
 .metro .text-muted {
-    font-size: 15pt;
-    line-height: 22pt;
+    font-family : Inconsolata, Monaco, 'Frutiger Neue W02 Book', monospace;
+    font-size : 100%;
+    line-height: 24pt;
     color: #48484c !important;
 }
 
 pre {
-    padding-left : 10px;
+    font-family : Inconsolata, Monaco, 'Frutiger Neue W02 Book', monospace;
+    font-size : 100%;
+    line-height: 24pt;
+    color: #48484c !important;
+    padding-left : 18px;
     border-left : 6px solid #24A0DA;
     display: block;
     overflow: auto;

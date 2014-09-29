@@ -39,25 +39,25 @@
 <div class="page"><div class="page-content margin20"><div class="page-container">
 <h1>Connectomics &ndash; Inferring Connectivity From Calcium Fluorescence</h1>
 <ol>
-<li><p class="readable-text">What's the <strong>connectivities</strong> in population of neurons ? <code><small>connectomics</small></code></p>
+<li><p class="readable-text">What's the <strong>connectivities</strong> in population of neurons ? <code>connectomics</code></p>
 </li>
-<li><p class="readable-text">What's the <strong>mathematical model</strong> of spikes ? <code><small>mathematics</small></code></p>
+<li><p class="readable-text">What's the <strong>mathematical model</strong> of spikes ? <code>mathematics</code></p>
 </li>
-<li><p class="readable-text">How do neurons <strong>comupte</strong> and <strong>memory</strong> ? <code><small>intelligence</small></code></p>
+<li><p class="readable-text">How do neurons <strong>comupte</strong> and <strong>memory</strong> ? <code>intelligence</code></p>
 </li>
 </ol>
 
 <p class=readable-text>We are working towards these exciting problems !</p>
 <h2>Py-oopsi : the python implementation of the fast-oopsi algorithm</h2>
 
-<p class=readable-text><code><small>Fast-oopsi</small></code> was developed by Dr. <strong>joshua vogelstein</strong> in 2009, which is now widely used to extract neuron spikes from calcium fluorescence signals. Here, we propose detailed implementation of the fast-oopsi algorithm in the python programming language, which is called <code><small>py-oopsi</small></code>. Some corrections are also made to the original fast-oopsi paper.</p>
+<p class=readable-text><code>Fast-oopsi</code> was developed by Dr. <strong>joshua vogelstein</strong> in 2009, which is now widely used to extract neuron spikes from calcium fluorescence signals. Here, we propose detailed implementation of the fast-oopsi algorithm in the python programming language, which is called <code>py-oopsi</code>. Some corrections are also made to the original fast-oopsi paper.</p>
 
-<p class=readable-text><em> The <code><small>py-oopsi</small></code> implementation can be obtained at: <a href="https://github.com/liubenyuan/py-oopsi" target=&ldquo;blank&rdquo;>py-oopsi @ github</a> </em></p>
+<p class=readable-text><em> The <code>py-oopsi</code> implementation can be obtained at: <a href="https://github.com/liubenyuan/py-oopsi" target=&ldquo;blank&rdquo;>py-oopsi @ github</a> </em></p>
 <div class="panel margin10 padding0"><div class="panel-content fg-dark">
 <img src="pics/pyoopsi-demo.png" alt="Simulation Result of py-oopsi" width="300px" class="place-left margin10"/><div class="page"><div class="page-content margin10 nlm nrm">
 <p class="readable-text text-muted"><strong>Top (a),</strong> The synthetic calcium fluorescence trace, random noise are added to the ground truth signal (shows in red color). The parameters used to generate the synthetic fluorescence signals are : T=2000, dt=0.02ms, lambda=0.1, tau=1.5 and sigma=0.2.</p>
 
-<p class="readable-text text-muted"><strong>Bottom (b), (c), (d),</strong> The reconstructed spikes from fluorescence trace using <code><small>py-oopsi</small></code>, <code><small>wiener filter</small></code>, and <code><small>discretize binning</small></code>. The py-oopsi favors sparse (by adopting Poison prior and Gaussian approximation) and non-negativity, it has the most sparse yet positive spikes. Wiener filter has oscillary at the inferred spikes. It can also reconstruct spikes correctly. We may, for example, set a threshold at 0.5 to obtain clean spikes. Discretize with binning is not robust agains noise. However, in stetter2012, he used discretized with binning and GTE (generalized transfer entropy) to achieve ~0.90 AUC.</p>
+<p class="readable-text text-muted"><strong>Bottom (b), (c), (d),</strong> The reconstructed spikes from fluorescence trace using <code>py-oopsi</code>, <code>wiener filter</code>, and <code>discretize binning</code>. The py-oopsi favors sparse (by adopting Poison prior and Gaussian approximation) and non-negativity, it has the most sparse yet positive spikes. Wiener filter has oscillary at the inferred spikes. It can also reconstruct spikes correctly. We may, for example, set a threshold at 0.5 to obtain clean spikes. Discretize with binning is not robust agains noise. However, in stetter2012, he used discretized with binning and GTE (generalized transfer entropy) to achieve ~0.90 AUC.</p>
 </div></div></div></div>
 <h2>Connectomics challenge at kaggle</h2>
 
@@ -65,7 +65,7 @@
 <h2>Causual-Effect (CE) of time series data</h2>
 <h2>Causual-Effect (CE) fast challenge</h2>
 <div class="panel ribbed-amber"><div class="panel-content">
-Page generated 2014-09-29 01:05:14 UTC, by <a href="https://github.com/wsshin/jemdoc_mathjax" target="blank">jemdoc+MathJax</a>.
+Page generated 2014-09-29 10:09:12 UTC, by <a href="https://github.com/wsshin/jemdoc_mathjax" target="blank">jemdoc+MathJax</a>.
 </div></div>
 </div></div></div>
 <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript">

@@ -713,7 +713,7 @@ def br(b, f, tableblock=False):
 
   # Deal with +monospace+.
   r = re.compile(r'(?<!\\)\+(.*?)(?<!\\)\+', re.M + re.S)
-  b = re.sub(r, r'<code><small>\1</small></code>', b)
+  b = re.sub(r, r'<code>\1</code>', b)
 
   # Deal with "double quotes".
   r = re.compile(r'(?<!\\)"(.*?)(?<!\\)"', re.M + re.S)
@@ -1262,6 +1262,8 @@ def procfile(f):
           imgblock = True
 
         elif len(g) in (0, 1, 2): # info block.
+          # handles
+          # ~~~
           out(f.outf, f.conf['infoblockstart'])
           infoblock = True
 
@@ -1276,7 +1278,8 @@ def procfile(f):
         elif imgblock:
           hb(f.outf, '\n<p class="readable-text text-muted">|</p>\n', s)
         elif infoblock:
-          hb(f.outf, '\n<p class="code-text text-muted">|</p>\n', s)
+          #hb(f.outf, '\n<p class="code-text text-muted margin0 padding0">|</p>\n', s)
+          hb(f.outf, '|\n', s)
         else:
           hb(f.outf, '\n<p class=readable-text>|</p>\n', s)
 

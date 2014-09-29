@@ -11,7 +11,7 @@
 我们开发的环境是Linux，其方便之处是可以使用gcc cross toolchain开发环境和Makefile。比较官方提供的keil \+ nrf51822 SDK \+ nrfgo的开发环境，其优点是自如，可以集成到任何使用makefile的IDE中去。下面，我们一步一步的讲解如何建立linux下的Makefile template。 *So, Let's Start!*
 ~~~
 
-== 1. jlink -- FLASH的擦写
+== jlink -- FLASH的擦写
 从官方网站[http://www.segger.com/jlink-software.html?step=1&file=JLinkLinuxTGZ64_480]下载最新的Jlink程序，然后
 
 ~~~
@@ -27,7 +27,7 @@
 PROG_ROOT = \$(HOME)\/bin\/jlink
 ~~~
 
-== 2. arm-none-eabi-\{gcc,binutils,gdb\} -- cross toolchain 编译环境
+== arm-none-eabi-\{gcc,binutils,gdb\} -- cross toolchain 编译环境
 
 我们需要在linux下用交叉编译工具生成cortex-M0可执行代码。这一步很简单，可以使用官方的arm-none-eabi，或者使用mentor的*sourcery codebench*的最新的交叉编译程序。
 
@@ -38,7 +38,7 @@ GNU\_VERSION := 4.9.0
 GNU\_PREFIX := arm-none-eabi
 ~~~
 
-== 3. Nordic nrf51822 SDK
+== Nordic nrf51822 SDK
 我们可以下载最新的nrf51822的SDK，以及nordic的 +s110+, +s120+ softdevice（类比FPGA中的说法，我们可以称softdevice为有*API的软核*）。如果你购买的是nrf51822 AK开发板，那么可以去[http://www.nrf51.com nrf51论坛]下载。假定他们都放在了*$(HOME)/bin*目录下，那么需要设定好 *SDK\_PATH* 和 *SOC\_PATH* :
 ~~~
 SDK\_PATH := \$(HOME)\/bin\/nrf51\_sdk\_v5\_2\_0\_39364\/Nordic\/nrf51822\/
@@ -106,7 +106,7 @@ nrf51822 AK开发板可以看作是cortex-M0架构下最小的开发板。最基
 
 随后我们还要 (1)~检查程序大小，(2)~初始化向量表（湾湾的称呼为*序列埠*，很有意思），以及(3)~用MCU官方的工具对Flash进行擦写。问题是：针对cortex-m0的开发，我们需要怎样做呢？
 
-== 4. template for nrf51822
+== template for nrf51822
 
 可以从[https://github.com/liubenyuan/nrf51822-makefile nrf51822-makefile @ github]下载linux下nrf51822的Makefile，需要注意，当前测试的工作环境是：
 - JLinkExe 4.80 (from segger.com)
@@ -133,7 +133,7 @@ nrf51822 AK开发板可以看作是cortex-M0架构下最小的开发板。最基
 所使用的依赖文件有，
 ~~~
 \$ make echostuff
-C\_OBJECTS: \[\_build/main.o \_build/nrf\_delay.o \_build/system\_nrf51.o\]
+C\_OBJECTS: \[\_build\/main.o \_build\/nrf\_delay.o \_build\/system\_nrf51.o\]
 C\_SOURCE\_FILES: \[main.c nrf\_delay.c system\_nrf51.c\]
 ~~~
 当然还有 gcc\_startup\_nrf51.s

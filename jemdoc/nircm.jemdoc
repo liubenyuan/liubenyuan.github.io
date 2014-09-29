@@ -10,18 +10,17 @@
 
 *Nexys3:*
 ~~~
-Device : xc6slx16-csg324-3 \n
+Device : xc6slx16-csg324-3
 SPI bus-width should be +4+ ?
 ~~~
 
 *Nexys4:*
 ~~~
-Device : xc7a100t-csg324-1 \n
+Device : xc7a100t-csg324-1
 ~~~
 
 *How to program?*
 ~~~
-{}{bash}
 $ djtgcfg prog -f top.bit -d Nexys3 -i 0
 ~~~
 

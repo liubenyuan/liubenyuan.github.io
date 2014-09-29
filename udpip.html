@@ -39,9 +39,9 @@
 <div class="page"><div class="page-content margin20"><div class="page-container">
 <h1>UDP/IP &ndash; VHDL based transport protocol</h1>
 
-<p class=readable-text>We interface phy device with FPGA. On Lx9 microboard, a <code><small>DP83848J</small></code> phy is used, while on Nexys3, a <code><small>LAN8710A</small></code> is used. Both Phy device support standard MII/RMII interface.</p>
+<p class=readable-text>We interface phy device with FPGA. On Lx9 microboard, a <code>DP83848J</code> phy is used, while on Nexys3, a <code>LAN8710A</code> is used. Both Phy device support standard MII/RMII interface.</p>
 
-<p class=readable-text>I recently (<strong>2014-07-05</strong>) purchased a nexys4 board, where it ships a <code><small>LAN8720A</small></code> phy, which supports only RMII interface.</p>
+<p class=readable-text>I recently (<strong>2014-07-05</strong>) purchased a nexys4 board, where it ships a <code>LAN8720A</code> phy, which supports only RMII interface.</p>
 <h2>strap pins</h2>
 
 <p class=readable-text>Configuration straps are latched upon Power-On reset (POR) or pin reset (nRST).</p>
@@ -64,10 +64,10 @@
 <tr class="r6"><td class="c1">PHYAD[4] </td><td class="c2"> RXD3 </td><td class="c3"> connect
 </td></tr></table>
 
-<p class=readable-text>About the PHY_ADDRESS. PHYAD4-PHYAD1 is internally <strong>pulled down</strong>, PHYAD0 is internally weakly <strong>pulled up</strong>, the PHY_ADDRESS is by default <code><small>b&ldquo;00001&rdquo;</small></code>; if <strong>bitgen</strong> let's unused pins COL/PHYAD0 pulled down, and PHYAD4-PHYAD1 pulled-up as specified in ucf, the PHY_ADDRESS will be altered as <code><small>b&ldquo;11110&rdquo;</small></code>. PHY_ADDRESS <code><small>b&ldquo;00000&rdquo;</small></code> is not allowed.</p>
+<p class=readable-text>About the PHY_ADDRESS. PHYAD4-PHYAD1 is internally <strong>pulled down</strong>, PHYAD0 is internally weakly <strong>pulled up</strong>, the PHY_ADDRESS is by default <code>b&ldquo;00001&rdquo;</code>; if <strong>bitgen</strong> let's unused pins COL/PHYAD0 pulled down, and PHYAD4-PHYAD1 pulled-up as specified in ucf, the PHY_ADDRESS will be altered as <code>b&ldquo;11110&rdquo;</code>. PHY_ADDRESS <code>b&ldquo;00000&rdquo;</code> is not allowed.</p>
 <h3>LAN8710A</h3>
 
-<p class=readable-text>PHYAD[2:0] are showed below. LAN8710 uses a SMI interface, where ADDRESS are configured via PHYAD[2:0]. These address are latched into an internal register at the end of hardware reset (default <code><small>b&ldquo;000&rdquo;</small></code> ).</p>
+<p class=readable-text>PHYAD[2:0] are showed below. LAN8710 uses a SMI interface, where ADDRESS are configured via PHYAD[2:0]. These address are latched into an internal register at the end of hardware reset (default <code>b&ldquo;000&rdquo;</code> ).</p>
 <table class="table hovered bordered">
 <tr class="r1"><td class="c1">ADDRESS BIT </td><td class="c2"> <strong>PIN</strong> </td><td class="c3"> <strong>default</strong> </td></tr>
 <tr class="r2"><td class="c1">PHYAD[0] </td><td class="c2"> RXER </td><td class="c3"> external PD(0) </td></tr>
@@ -75,7 +75,7 @@
 <tr class="r4"><td class="c1">PHYAD[2] </td><td class="c2"> RXD3 </td><td class="c3"> external PD(0)
 </td></tr></table>
 
-<p class=readable-text>MODE[2:0] bits controls the working mode of phy. Default is <code><small>b&ldquo;100&rdquo;</small></code> (you need to pull-up COL in FPGA), works in <em>100Base-TX Half Duplex is advertised. Auto-negotiation enabled. CRS is active during Transmit &amp; Receive.</em></p>
+<p class=readable-text>MODE[2:0] bits controls the working mode of phy. Default is <code>b&ldquo;100&rdquo;</code> (you need to pull-up COL in FPGA), works in <em>100Base-TX Half Duplex is advertised. Auto-negotiation enabled. CRS is active during Transmit &amp; Receive.</em></p>
 <table class="table hovered bordered">
 <tr class="r1"><td class="c1">ADDRESS BIT </td><td class="c2"> <strong>PIN</strong> </td><td class="c3"> <strong>default</strong> </td></tr>
 <tr class="r2"><td class="c1">MODE[0] </td><td class="c2"> RXD0 </td><td class="c3"> external PD(0) </td></tr>
@@ -83,7 +83,7 @@
 <tr class="r4"><td class="c1">MODE[2] </td><td class="c2"> COL </td><td class="c3"> connect via 10\(\Omega\) to FPGA
 </td></tr></table>
 
-<p class=readable-text>RMIISEL pins (<strong>RXD2</strong>) controls the working mode, with <code><small>PD (0)</small></code> works in MII mode, <code><small>PU (1)</small></code> in RMII mode. Default is PD(0) in <code><small>MII</small></code> mode.</p>
+<p class=readable-text>RMIISEL pins (<strong>RXD2</strong>) controls the working mode, with <code>PD (0)</code> works in MII mode, <code>PU (1)</code> in RMII mode. Default is PD(0) in <code>MII</code> mode.</p>
 <table class="table hovered bordered">
 <tr class="r1"><td class="c1">ADDRESS BIT </td><td class="c2"> <strong>PIN</strong> </td><td class="c3"> <strong>default</strong> </td></tr>
 <tr class="r2"><td class="c1">RMIISEL </td><td class="c2"> RXD2 </td><td class="c3"> external PD(0)
@@ -91,11 +91,11 @@
 
 <p class=readable-text>Some nots on CRS (Carrier Sense) and COL (Collision Detect).</p>
 <ol>
-<li><p class="readable-text"><code><small>CRS:</small></code> The device asserts CRS
+<li><p class="readable-text"><code>CRS:</code> The device asserts CRS
 based only on receive activity whenever the transceiver is either in repeater mode or full-duplex mode.
 Otherwise the transceiver asserts CRS based on either transmit or receive activity.</p>
 </li>
-<li><p class="readable-text"><code><small>COL:</small></code> A collision is the occurrence of simultaneous transmit and receive operations. The COL output is
+<li><p class="readable-text"><code>COL:</code> A collision is the occurrence of simultaneous transmit and receive operations. The COL output is
 asserted to indicate that a collision has been detected. COL remains active for the duration of the
 collision. COL is changed asynchronously to both RXCLK and TXCLK. The COL output becomes
 inactive during full duplex mode.</p>
@@ -109,9 +109,9 @@ inactive during full duplex mode.</p>
 
 <p class=readable-text>Transparent data transfer using RS232 via bluetooth or wifi, or even ethernet are now available. However, we had this problem : how could we transfer data from FPGA to PC, in high-speed, long-distance, and best of all, with little or no dirty work on excessive complex state machines?</p>
 <h1>Ethernet playground</h1>
-<h2>play with the hardware using <code><small>ip</small></code></h2>
+<h2>play with the hardware using <code>ip</code></h2>
 
-<p class=readable-text>We may control the interface via <code><small>ip</small></code> under my archlinux, i.e., <code><small>ip list</small></code>, <code><small>ip link set enp0s25 up</small></code>, <code><small>ip addr add ADDR dev enp0s25</small></code> and <code><small>ip route add default via ROUTE</small></code>. All the information can be viewed in <code><small>wireshark</small></code>.</p>
+<p class=readable-text>We may control the interface via <code>ip</code> under my archlinux, i.e., <code>ip list</code>, <code>ip link set enp0s25 up</code>, <code>ip addr add ADDR dev enp0s25</code> and <code>ip route add default via ROUTE</code>. All the information can be viewed in <code>wireshark</code>.</p>
 <h2>understand the packets (or <em>shells</em>) of OSI-7 layer</h2>
 
 <p class=readable-text>A sample packet (phy&ndash;ip&ndash;udp),</p>
@@ -123,40 +123,40 @@ inactive during full duplex mode.</p>
 <tr class="r5"><td class="c1">(src) </td><td class="c2"> 05 </td><td class="c3"> 06 </td><td class="c4"> 11 </td><td class="c5"> 12 </td><td class="c6"> dst=<strong>11-12-13-14-15-16</strong> </td></tr>
 <tr class="r6"><td class="c1"></td><td class="c2"> 13 </td><td class="c3"> 14 </td><td class="c4"> 15 </td><td class="c5"> 16 </td><td class="c6"> </td></tr>
 <tr class="r7"><td class="c1"></td><td class="c2"> 08 </td><td class="c3"> 00 </td><td class="c4">    </td><td class="c5">    </td><td class="c6"> type=IP </td></tr>
-<tr class="r8"><td class="c1">IP Header          </td><td class="c2"> 45 </td><td class="c3"> 00 </td><td class="c4"> 00 </td><td class="c5"> <code><small>2A</small></code> </td><td class="c6"> #IP=<strong>42B</strong> (0x2A) </td></tr>
+<tr class="r8"><td class="c1">IP Header          </td><td class="c2"> 45 </td><td class="c3"> 00 </td><td class="c4"> 00 </td><td class="c5"> <code>2A</code> </td><td class="c6"> #IP=<strong>42B</strong> (0x2A) </td></tr>
 <tr class="r9"><td class="c1"></td><td class="c2"> 00 </td><td class="c3"> 00 </td><td class="c4"> 40 </td><td class="c5"> 00 </td><td class="c6"> </td></tr>
-<tr class="r10"><td class="c1"></td><td class="c2"> 10 </td><td class="c3"> <code><small>11</small></code> </td><td class="c4">  </td><td class="c5">    </td><td class="c6"> type=UDP </td></tr>
-<tr class="r11"><td class="c1"><code><small>IP CRC</small></code>           </td><td class="c2">    </td><td class="c3">    </td><td class="c4"> CC </td><td class="c5"> 9E </td><td class="c6"> sum-add-inv </td></tr>
+<tr class="r10"><td class="c1"></td><td class="c2"> 10 </td><td class="c3"> <code>11</code> </td><td class="c4">  </td><td class="c5">    </td><td class="c6"> type=UDP </td></tr>
+<tr class="r11"><td class="c1"><code>IP CRC</code>           </td><td class="c2">    </td><td class="c3">    </td><td class="c4"> CC </td><td class="c5"> 9E </td><td class="c6"> sum-add-inv </td></tr>
 <tr class="r12"><td class="c1">IP (src)           </td><td class="c2"> 01 </td><td class="c3"> 23 </td><td class="c4"> 45 </td><td class="c5"> 67 </td><td class="c6"> </td></tr>
 <tr class="r13"><td class="c1">IP (dst)           </td><td class="c2"> 89 </td><td class="c3"> AB </td><td class="c4"> CD </td><td class="c5"> EF </td><td class="c6"> </td></tr>
 <tr class="r14"><td class="c1">UDP (src/dst)     </td><td class="c2"> 00 </td><td class="c3"> 17 </td><td class="c4"> 17 </td><td class="c5"> 17 </td><td class="c6"> </td></tr>
-<tr class="r15"><td class="c1">UDP length         </td><td class="c2"> 00 </td><td class="c3"> <code><small>16</small></code> </td><td class="c4">    </td><td class="c5">    </td><td class="c6"> #UDP=<strong>22B</strong> (0x16) </td></tr>
-<tr class="r16"><td class="c1"><code><small>UDP CRC</small></code>          </td><td class="c2">    </td><td class="c3">    </td><td class="c4"> CB </td><td class="c5"> 75 </td><td class="c6"> sum-add-inv </td></tr>
+<tr class="r15"><td class="c1">UDP length         </td><td class="c2"> 00 </td><td class="c3"> <code>16</code> </td><td class="c4">    </td><td class="c5">    </td><td class="c6"> #UDP=<strong>22B</strong> (0x16) </td></tr>
+<tr class="r16"><td class="c1"><code>UDP CRC</code>          </td><td class="c2">    </td><td class="c3">    </td><td class="c4"> CB </td><td class="c5"> 75 </td><td class="c6"> sum-add-inv </td></tr>
 <tr class="r17"><td class="c1">UDP payload        </td><td class="c2"> 48 </td><td class="c3"> 65 </td><td class="c4"> 6C </td><td class="c5"> 6C </td><td class="c6"> hell </td></tr>
 <tr class="r18"><td class="c1"></td><td class="c2"> 6F </td><td class="c3"> 20 </td><td class="c4"> 77 </td><td class="c5"> 6F </td><td class="c6"> o,wo </td></tr>
 <tr class="r19"><td class="c1"></td><td class="c2"> 72 </td><td class="c3"> 6C </td><td class="c4"> 64 </td><td class="c5"> 21 </td><td class="c6"> rld! </td></tr>
 <tr class="r20"><td class="c1"></td><td class="c2"> 0D </td><td class="c3"> 0A </td><td class="c4">    </td><td class="c5">    </td><td class="c6"> \n\r </td></tr>
 <tr class="r21"><td class="c1">UDP padding        </td><td class="c2"> 00 </td><td class="c3"> 00 </td><td class="c4"> 00 </td><td class="c5"> 00 </td><td class="c6"> pad for <strong>46B</strong> minimum </td></tr>
-<tr class="r22"><td class="c1"><code><small>Ethernet CRC</small></code>     </td><td class="c2"> 52 </td><td class="c3"> 5D </td><td class="c4"> A4 </td><td class="c5"> CF </td><td class="c6"> CRC-32
+<tr class="r22"><td class="c1"><code>Ethernet CRC</code>     </td><td class="c2"> 52 </td><td class="c3"> 5D </td><td class="c4"> A4 </td><td class="c5"> CF </td><td class="c6"> CRC-32
 </td></tr></table>
 
 <p class=readable-text>On the physical wire, bits are transmitted LSB first (bit reversed) in Byte order. For example, <strong>0xD5</strong> is transmitted as <strong>0x5, 0xD</strong> in MII interface and <strong>1010, 1011</strong> on the wire.</p>
 <ol>
-<li><p class="readable-text">Ethernet CRC is calculate from Ethernet MAC to the last quad-byte (i.e., at the end of UDP padding) of data, use <code><small>CRC-32</small></code>. Padding is needed to ensure the total ethernet payload is in <strong>46B~1500B</strong>.</p>
+<li><p class="readable-text">Ethernet CRC is calculate from Ethernet MAC to the last quad-byte (i.e., at the end of UDP padding) of data, use <code>CRC-32</code>. Padding is needed to ensure the total ethernet payload is in <strong>46B~1500B</strong>.</p>
 </li>
-<li><p class="readable-text">IP CRC is calculate on IP Header only. <strong>A very intuitive example</strong>, see <a href="http://en.wikipedia.org/wiki/IPv4_header_checksum" target=&ldquo;blank&rdquo;>IPv4 header checksum</a> !! Which is simply <code><small>sum</small></code>, <code><small>add carry</small></code>, and <code><small>bit-wise inverse</small></code>.</p>
+<li><p class="readable-text">IP CRC is calculate on IP Header only. <strong>A very intuitive example</strong>, see <a href="http://en.wikipedia.org/wiki/IPv4_header_checksum" target=&ldquo;blank&rdquo;>IPv4 header checksum</a> !! Which is simply <code>sum</code>, <code>add carry</code>, and <code>bit-wise inverse</code>.</p>
 </li>
-<li><p class="readable-text">UDP CRC is calculate on pseudo UDP/IP header. <strong>A very intuitive example</strong>, see <a href="http://en.wikipedia.org/wiki/User_Datagram_Protocol" target=&ldquo;blank&rdquo;>UDP pseudo header checksum</a> !! It forms a pseudo header by encapsulating IP src, dst, <code><small>0x0011</small></code> and UDP length, where the udp length is used twice and it stands for the total length of UDP header and data.</p>
+<li><p class="readable-text">UDP CRC is calculate on pseudo UDP/IP header. <strong>A very intuitive example</strong>, see <a href="http://en.wikipedia.org/wiki/User_Datagram_Protocol" target=&ldquo;blank&rdquo;>UDP pseudo header checksum</a> !! It forms a pseudo header by encapsulating IP src, dst, <code>0x0011</code> and UDP length, where the udp length is used twice and it stands for the total length of UDP header and data.</p>
 </li>
 </ol>
 
-<p class=readable-text>Data receive and transmite are simply <code><small>decap</small></code> and <code><small>encap</small></code> of the packets.</p>
+<p class=readable-text>Data receive and transmite are simply <code>decap</code> and <code>encap</code> of the packets.</p>
 <h3>decap</h3>
 <h3>encap</h3>
-<h2>play with the swiss-knife <code><small>wireshark</small></code></h2>
+<h2>play with the swiss-knife <code>wireshark</code></h2>
 <h1>GUI frontend</h1>
 
-<p class=readable-text>We are going to use <code><small>Qt</small></code> as the GUI frontend.</p>
+<p class=readable-text>We are going to use <code>Qt</code> as the GUI frontend.</p>
 <h2>Ethernet</h2>
 
 <p class=readable-text>The commercial IP core (Xilinx Tri-MAC) is a complete implementation of a MAC layer. The lx9 microboard has an National Semiconductor DP83848J Phy layer and Tyco RJ45 connector. I found designs which directly use the LVDS pins on FPGA to implement the 10BASE-T protocol (MAC + PHY all in FPGA):</p>
