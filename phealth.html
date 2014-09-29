@@ -138,16 +138,16 @@
 <p class=readable-text>References : Archlinux <a href="https://bbs.archlinux.org/viewtopic.php?pid=1388523" target=&ldquo;blank&rdquo;>FAQ 1</a>, <a href="https://bbs.archlinux.org/viewtopic.php?pid=1322604" target=&ldquo;blank&rdquo;>FAQ 2</a>, <a href="https://wiki.archlinux.org/index.php/bluetooth" target=&ldquo;blank&rdquo;>Archlinux bluetooth tutorial</a>, <a href="http://www.thinkwiki.org/wiki/How_to_setup_Bluetooth" target=&ldquo;blank&rdquo;>Thinkwiki &ndash; Bluetooth</a>, <a href="http://archlinuxarm.org/forum/viewtopic.php?f=9&amp;t=6016" target=&ldquo;blank&rdquo;>write a rfcomm.conf</a>. We may use either bluetooth dongle or the bluetooth in the PC.</p>
 
 <p class=readable-text>We enable the <code>bluetooth.service</code> via systemctl, and the list BLE devices via <code>lsusb</code>. The bluetooth on-board maybe named as <code>hci0</code>, then we can use <code>hciconfig hci0 up</code> to bring this device up, <code>hcitool scan</code> to find the MAC address of BLE device. Finally, we use the bluetooth as a replacement of Serial interface, via <code>rfcomm</code>,</p>
-<pre>
+<div class="example margin0"><pre>
 
 <p class="code-text text-muted">sudo rfcomm bind rfcomm0 00:06:66:43:0F:2E</p>
-</pre>
+</pre></div>
 
 <p class=readable-text>We now have two serial interfaces, one is USB2UART <code>/dev/ttyUSB0</code>, another is bluetooth UART <code>/dev/rfcomm0</code>. By setting 115200 8N1 for both serial devices, we can communicate in minicom ! Remember to enable ECHO in minicom via Ctrl + A, E.</p>
 
 <p class=readable-text><code>NOTE</code> When we connect to the bluetooth serial (via python, minicom, etc.,) and receive data, the pairing LED on RN42 will <strong>flash</strong>, and the connection status LED will <strong>pulldown</strong> (connected). Data are now transmitted from slave to our PC.</p>
 <div class="panel ribbed-amber"><div class="panel-content">
-Page generated 2014-09-28 23:40:29 UTC, by <a href="https://github.com/wsshin/jemdoc_mathjax" target="blank">jemdoc+MathJax</a>.
+Page generated 2014-09-29 00:46:38 UTC, by <a href="https://github.com/wsshin/jemdoc_mathjax" target="blank">jemdoc+MathJax</a>.
 </div></div>
 </div></div></div>
 <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript">

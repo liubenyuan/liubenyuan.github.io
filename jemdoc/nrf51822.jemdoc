@@ -17,9 +17,9 @@
 ~~~
 \$ tar -xvf JLink\_Linux\_V480.tgz
 \$ cd JLink\_Linux\_V480
-\$ sudo cp 99-jlink.rules /etc/udev/rules.d/
+\$ sudo cp 99-jlink.rules \/etc\/udev\/rules.d\/
 \$ cd ..
-\$ sudo mv JLink\_Linux\_V480 ~/bin/jlink
+\$ sudo mv JLink\_Linux\_V480 \~\/bin\/jlink
 ~~~
 
 我们将jlink安装在了个人目录的bin目录下。安装完成后，需要重新连接jlink调试器，然后运行*JLinkExe*就会看到自动更新固件的信息以及链路上的设备信息，在这里应该是Cortex-M0。在后面的Makefile中，我们需要设定 *PROG\_ROOT* 为
@@ -60,9 +60,9 @@ SOC\_PATH := \$(HOME)\/bin\/nrf51\_softdevice\/
 [http://balau82.wordpress.com/2010/02/14/simplest-bare-metal-program-for-arm/ Simplest bare metal program for ARM]. Bare Metal (裸机) 程序是无需操作系统即可运行的程式。学习裸机程序对于理解硬件架构以及操作系统的底层都很有帮助。我们在安装好arm-none-eabi工具( none 即为*bare metal*的含义)后，将arm-none-eabi-\*添加到系统可执行路径中即可。
 
 ~~~
-{}{img_left}{pics/balau82_20100214.png}{ARM bare metal}{300px}{}{}
+{}{img_left}{pics/balau82_20100214.png}{ARM bare metal}{400px}{}{}
 
-nrf51822 AK开发板可以看作是cortex-M0架构下最小的开发板。最基本的源代码包括*test.c*，启动代码*startup.s*，链接配置*test.ld*。相应的交叉编译工具也可以在图中找到。 +启动代码+ 最基本的功能就是在程序初始化端口，屏蔽中断，映射程序。 +链接配置+ 则包含text，data以及堆栈的位置，或者说 / tells the linker where different memory sections map into real, physical memory on the chip / 。针对cortex-M0架构，我们需好好理解启动代码（balau给出的例子并不是针对cortex-M0架构的，针对不同架构有不同的汇编语法），不要被复杂的.s程序所困扰，只要让程序运行起来即可。编程离不开数据手册 (datasheet) 和硬件原理图 (schematic) 的。
+nrf51822 AK开发板可以看作是cortex-M0架构下最小的开发板。最基本的源代码包括*test.c*，启动代码*startup.s*，链接配置*test.ld*。相应的交叉编译工具也可以在图中找到。 +启动代码+ 最基本的功能就是在程序初始化端口，屏蔽中断，映射程序。 +链接配置+ 则包含text，data以及堆栈的位置，或者说 /tells the linker where different memory sections map into real, physical memory on the chip/
 ~~~
 
 [http://balau82.wordpress.com/2010/02/28/hello-world-for-bare-metal-arm-using-qemu/ Hello world for bare metal ARM using QEMU]. 我们可以用qemu和arm-none-eabi-gdb来调试程序。在这里，我们还是使用上面test.c的例子。运行
@@ -116,25 +116,25 @@ nrf51822 AK开发板可以看作是cortex-M0架构下最小的开发板。最基
 
 我们只需将makefile（包括 Makefile, Makefile.config ）放到正确的位置上即可，如对于project，
 ~~~
-\$ mkdir -p project/gcc
-\$ cp -v Makefile.config Makefile project/gcc/
+\$ mkdir -p project\/gcc
+\$ cp -v Makefile.config Makefile project\/gcc\/
 ~~~
 
 == your 1st program : blinky
 
 第一个例子很简单，是硬件调试中的 /hello, world/，我们直接用默认的*Makefile.config*即可，
 ~~~
-\$ mkdir -p blinky\_example/gcc
-\$ cp -v Makefile.config Makefile blinky\_example/gcc/
-\$ cd blinky\_example/gcc/
+\$ mkdir -p blinky\_example\/gcc
+\$ cp -v Makefile.config Makefile blinky\_example\/gcc\/
+\$ cd blinky\_example\/gcc\/
 \$ make erase\-all
 \$ make flash
 ~~~
 所使用的依赖文件有，
 ~~~
 \$ make echostuff
-C\_OBJECTS: [\_build/main.o \_build/nrf\_delay.o \_build/system\_nrf51.o]
-C\_SOURCE\_FILES: [main.c nrf\_delay.c system_nrf51.c]
+C\_OBJECTS: \[\_build/main.o \_build/nrf\_delay.o \_build/system\_nrf51.o\]
+C\_SOURCE\_FILES: \[main.c nrf\_delay.c system\_nrf51.c\]
 ~~~
 当然还有 gcc\_startup\_nrf51.s
 

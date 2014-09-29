@@ -8,19 +8,38 @@
 }
 
 pre {
-    font-family : Inconsolata, Monaco, 'Frutiger Neue W02 Book', monospace;
-    font-size : 100%;
-    overflow : auto;
-    background: #f6f6f6;
-    border-left: 6px solid #d6d6d6;
-    color: #00006D;
-    border-radius: 4px 4px 4px 4px;
+    padding-left : 10px;
+    border-left : 6px solid #24A0DA;
     display: block;
-    line-height: 1.3em;
-    margin: 0.3em 0;
-    padding: 0.3em 0.6em;
-    white-space: pre-wrap;
-    word-break: break-all;
-    word-wrap: break-word;
+    overflow: auto;
+    white-space: pre;
+    white-space: pre-wrap;      /* css-3 */
+    white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+    white-space: -pre-wrap;     /* Opera 4-6 */
+    white-space: -o-pre-wrap;   /* Opera 7 */
+    word-wrap: break-word;      /* Internet Explorer 5.5+ */
 }
 
+.metro .text-muted {
+    color: #48484c !important;
+}
+
+.metro h1 {
+    border-left: 8px solid #e8e8ec;
+    border-radius: 8px;
+    padding-left: 12px;
+}
+.metro h2, h3 {
+    border-bottom: 4px dashed #e8e8ec;
+}
+.metro h1 {
+    font-size: 3.6rem;
+}
+.metro h2 {
+    font-size: 2.5rem;
+    padding-top: 2ex;
+}
+.metro h3 {
+    font-size: 2rem;
+    padding-top: 2ex;
+}

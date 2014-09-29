@@ -221,10 +221,10 @@ def standardconf():
   </html>
 
   [infoblockstart]
-  <pre>
+  <div class="example margin0"><pre>
 
   [infoblockend]
-  </pre>
+  </pre></div>
 
   [footerstart]
   <div class="panel ribbed-amber"><div class="panel-content">

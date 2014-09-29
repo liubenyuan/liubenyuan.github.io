@@ -41,22 +41,22 @@
 <h2>Nexys &ndash; boards and vhdl basics</h2>
 
 <p class=readable-text><strong>Nexys3:</strong></p>
-<pre>
+<div class="example margin0"><pre>
 
 <p class="code-text text-muted">Device : xc6slx16-csg324-3 <br />
 SPI bus-width should be <code>4</code> ?</p>
-</pre>
+</pre></div>
 
 <p class=readable-text><strong>Nexys4:</strong></p>
-<pre>
+<div class="example margin0"><pre>
 
 <p class="code-text text-muted">Device : xc7a100t-csg324-1 <br /></p>
-</pre>
+</pre></div>
 <h3>How to program?</h3>
-<pre>
+<div class="example margin0"><pre>
 
 <p class="code-text text-muted">$ djtgcfg prog -f top.bit -d Nexys3 -i 0</p>
-</pre>
+</pre></div>
 <h1>Connect mt9v034 with dual&ndash;pmods</h1>
 <h2>NIR &ndash; the hardware</h2>
 
@@ -102,23 +102,23 @@ Look from top-down, on the camera side.</p>
 <tr class="r9"><td class="c1">DCMI_SCK </td><td class="c2"> SCK </td><td class="c3"> Inout <strong>(pullup)</strong> </td><td class="c4"> </td></tr>
 <tr class="r10"><td class="c1">DCMI_SDA </td><td class="c2"> SDA </td><td class="c3"> Inout <strong>(pullup)</strong> </td><td class="c4">
 </td></tr></table>
-<pre>
+<div class="example margin0"><pre>
 
 <p class="code-text text-muted">By comparing PX4Flow and the mt9v034 taobao board, we found some common connections, <code>OE</code> (active HIGH) tied to VCC, <code>RSVD</code> tied to GND. <code>BYPASS_CLKIN_P</code> and <code>SER_DATAIN_P</code> are tied to GND, while <code>BYPASS_CLKIN_N</code> and <code>SER_DATAIN_N</code> are tied to VCC with 1k Ohm pull-up resistor.</p>
 
 <p class="code-text text-muted">However, for mt9v034-dev, the <code>STANDBY</code> is tied to GND, and the <code>RESET_N</code> is tied to VCC with 10k Ohm pull-up resistor. For PX4Flow, these two pins are controlled by MCU. For mt9v034-dev, <code>SCTRL_ADDR0</code> and <code>SCTRL_ADDR1</code> are tied to GND, while for PX4Flow, these pins are tied to VCC.</p>
 
 <p class="code-text text-muted">These two boards works in master mode, with steroscopy mode disabled. <code>SCK</code> and <code>SDA</code> should be pulled-up with 1.5K Ohm resistors when no other I2C peripheral is connected.</p>
-</pre>
+</pre></div>
 <h2>NIR &ndash; boot mt9v034 via nexys3</h2>
 
 <p class=readable-text>In principles, the mt9v034 works <code>output wide-VGA image at 60fps</code> by default.</p>
-<pre>
+<div class="example margin0"><pre>
 
 <p class="code-text text-muted">By injecting <code>DCMI_SYS_CLK</code> with 25MHz clock input, and trigger <code>DCMI_EXP</code> with a rising-edge sensitive pulse (<strong>1000</strong> cycles duty period, in snapshot or slave mode; in master mode, <code>DCMI_EXP</code> may tie to GND). We may monitor the <code>DCMI_DATA</code> bus, <code>DCMI_HSYNC</code> and <code>DCMI_VSYNC</code> signals, as well as <code>DCMI_LED</code> pins.</p>
 
 <p class="code-text text-muted"><code>DCMI_VSYNC</code> is HIGH valid during the whole imaging process (a frame), <code>DCMI_HSYNC</code> is periodorically HIGH valid. The image format is <strong>752x480</strong>. However, currently <code>DCMI_CLK</code> could not register exactly <code>752</code> datum each <strong>HSYNC</strong> pules. <em>(need debug this)</em>. Strange, <code>DCMI_CLK</code> may be <strong>26.6</strong>MHz PLL locked even if we inject a <strong>25</strong>MHz <code>DCMI_SYS_CLK</code>.</p>
-</pre>
+</pre></div>
 <h2>NIR &ndash; the wrapper of i2c_io_16bit.vhd</h2>
 
 <p class=readable-text>With <code>ADDR0</code> and <code>ADDR1</code> pins pulled low on mt9v034-dev, the address is <code>0x48</code>, with the last bit denotes write (&rsquo;0&rsquo;) or read (&rsquo;1&rsquo;). Therefore, the mt9v034 board has <code>0x90</code> for <strong>write</strong>, <code>0x91</code> for <strong>read</strong>. We build dedicated module <code>i2c_io_16bit.vhd</code> to handle the <strong>Read/Write</strong> process to mt9v034.</p>
@@ -127,10 +127,10 @@ Look from top-down, on the camera side.</p>
 </td></tr></table>
 
 <p class=readable-text>for example, <code>0x90070188</code> <strong>write</strong> 0x0188 to 0x07 in mt9v034, <code>0x9107XXXX</code> <strong>read</strong> DBYTE from 0x07 in mt9v034.</p>
-<pre>
+<div class="example margin0"><pre>
 
 <p class="code-text text-muted">As a simple rule-of-the-thumb, we may put <code>0x91000000</code> on data bus, trigger <code>data_stream_in_stb</code>, and read out the content of <code>0x00</code> on mt9v034 by acknowledge <code>data_stream_out_stb</code>, and finally put the register (which is the CHIPID, <code>0x1324</code>) on BCD segment display.</p>
-</pre>
+</pre></div>
 
 <p class=readable-text>Another simple example is command <code>0x900400FF</code>, which changes the <code>WINDOW_WIDTH</code> to <strong>256</strong>, this can also be verified via Chipscope.</p>
 <h2>NIR &ndash; config mt9v034 (copied from px4flow)</h2>
@@ -187,7 +187,7 @@ Look from top-down, on the camera side.</p>
 
 <p class=readable-text>Non-invasive gluco tracking using Near-Infra-Red videos ? see, <a href="http://www.eeboard.com/bbs/thread-35333-1-1.html" target=&ldquo;blank&rdquo;>eeboard</a> and <a href="http://www.integrity-app.com/the-glucotrack/the-products/" target=&ldquo;blank&rdquo;>glucotrack</a> .</p>
 <div class="panel ribbed-amber"><div class="panel-content">
-Page generated 2014-09-28 23:40:29 UTC, by <a href="https://github.com/wsshin/jemdoc_mathjax" target="blank">jemdoc+MathJax</a>.
+Page generated 2014-09-29 00:46:38 UTC, by <a href="https://github.com/wsshin/jemdoc_mathjax" target="blank">jemdoc+MathJax</a>.
 </div></div>
 </div></div></div>
 <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript">
