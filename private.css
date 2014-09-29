@@ -7,6 +7,17 @@
     font-weight : 700;
 }
 
+.metro .readable-text {
+    font-size: 15pt;
+    line-height: 22pt;
+}
+
+.metro .text-muted {
+    font-size: 15pt;
+    line-height: 22pt;
+    color: #48484c !important;
+}
+
 pre {
     padding-left : 10px;
     border-left : 6px solid #24A0DA;
@@ -18,10 +29,6 @@ pre {
     white-space: -pre-wrap;     /* Opera 4-6 */
     white-space: -o-pre-wrap;   /* Opera 7 */
     word-wrap: break-word;      /* Internet Explorer 5.5+ */
-}
-
-.metro .text-muted {
-    color: #48484c !important;
 }
 
 .metro h1 {
@@ -38,8 +45,10 @@ pre {
 .metro h2 {
     font-size: 2.5rem;
     padding-top: 2ex;
+    padding-bottom: .5ex;
 }
 .metro h3 {
     font-size: 2rem;
     padding-top: 2ex;
+    padding-bottom: .5ex;
 }

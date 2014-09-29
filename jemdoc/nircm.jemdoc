@@ -19,7 +19,7 @@ SPI bus-width should be +4+ ?
 Device : xc7a100t-csg324-1 \n
 ~~~
 
-=== How to program?
+*How to program?*
 ~~~
 {}{bash}
 $ djtgcfg prog -f top.bit -d Nexys3 -i 0
