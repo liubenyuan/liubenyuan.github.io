@@ -37,23 +37,16 @@ pre {
 }
 
 .metro h1 {
-    border-left: 8px solid #e8e8ec;
-    border-radius: 8px;
-    padding-left: 12px;
+    font-size: 2.5rem;
+    font-style : bold;
+    color : #6D8764 !important;
 }
 .metro h2, h3 {
+    font-size: 2.2rem;
+    font-style : bold;
+    color : #6D8764 !important;
+    padding-top: 2ex;
+    padding-bottom: .5ex;
     border-bottom: 4px dashed #e8e8ec;
 }
-.metro h1 {
-    font-size: 3.6rem;
-}
-.metro h2 {
-    font-size: 2.5rem;
-    padding-top: 2ex;
-    padding-bottom: .5ex;
-}
-.metro h3 {
-    font-size: 2rem;
-    padding-top: 2ex;
-    padding-bottom: .5ex;
-}
+
