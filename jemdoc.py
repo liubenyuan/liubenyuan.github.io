@@ -227,7 +227,7 @@ def standardconf():
   </pre></div>
 
   [footerstart]
-  <div class="panel ribbed-cyan"><div class="panel-content">
+  <div class="panel ribbed-amber"><div class="panel-content">
 
   [footerend]
   </div></div>
