@@ -3867,7 +3867,7 @@ a {
 .metro .dropdown-menu > li > a.dropdown-toggle:after {
   font-family: metroSysIcons;
   font-size: .7em;
-  content: ">>";
+  content: "\e156";
   left: 90%;
   top: 50%;
   margin-top: -1.4em;
@@ -3984,7 +3984,7 @@ a {
   bottom: 0;
   font-family: metroSysIcons;
   font-size: .7em;
-  content: '>>';
+  content: "\e156";
 }
 .metro .dropdown-toggle.no-marker:after {
   content: "";
@@ -6027,7 +6027,7 @@ a {
 .metro .sidebar > ul ul > li > a.dropdown-toggle:after {
   font-family: metroSysIcons;
   font-size: .7em;
-  content: ">>";
+  content: "\e156";
   left: 90%;
   top: 50%;
   margin-top: -1.4em;
