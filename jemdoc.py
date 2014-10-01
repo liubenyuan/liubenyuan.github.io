@@ -187,7 +187,7 @@ def standardconf():
   <header class="bg-light">
   <div class="navigation-bar light">
   <div class="navigation-bar-content container">
-  <nav class="horizontal-menu"><ul>
+  <nav class="horizontal-menu"><ul class="element-menu">
 
   [menuend]
   </ul></nav></div></div>
@@ -227,7 +227,7 @@ def standardconf():
   </pre></div>
 
   [footerstart]
-  <div class="panel ribbed-amber"><div class="panel-content">
+  <div class="panel ribbed-cyan"><div class="panel-content">
 
   [footerend]
   </div></div>
