@@ -1,4 +1,4 @@
-# jemdoc: menu{MENU}{udpip.html}, nofooter
+# jemdoc: menu{MENU}{udpip.html}
 
 = UDP\/IP -- VHDL based transport protocol
 

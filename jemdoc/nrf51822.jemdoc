@@ -1,4 +1,4 @@
-# jemdoc: menu{MENU}{nrf51822.html}, nofooter
+# jemdoc: menu{MENU}{nrf51822.html}
 
 = NRF51822 -- Cortex-M0 + BLE stack
 

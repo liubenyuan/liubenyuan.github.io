@@ -1,4 +1,4 @@
-# jemdoc: menu{MENU}{mathjax.html}, nofooter
+# jemdoc: menu{MENU}{mathjax.html}
 
 = New features in local copy : jemdoc.py
 

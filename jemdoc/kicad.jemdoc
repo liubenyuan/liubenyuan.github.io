@@ -1,4 +1,4 @@
-# jemdoc: menu{MENU}{kicad.html}, nofooter
+# jemdoc: menu{MENU}{kicad.html}
 
 = Kicad -- from pmod boards to complex design
 
