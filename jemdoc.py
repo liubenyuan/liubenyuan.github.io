@@ -196,7 +196,7 @@ def standardconf():
 
   [menucategory]
   <li><a class="dropdown-toggle" href="#">|</a>
-  <ul class="dropdown-menu inverse" data-role="dropdown">
+  <ul class="dropdown-menu" data-role="dropdown">
 
   [menucategoryend]
   </ul></li>
