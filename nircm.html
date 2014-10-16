@@ -100,6 +100,16 @@ Look from top-down, on the camera side.</p>
 <tr class="r9"><td class="c1">DCMI_SCK </td><td class="c2"> SCK </td><td class="c3"> Inout <strong>(pullup)</strong> </td><td class="c4"> </td></tr>
 <tr class="r10"><td class="c1">DCMI_SDA </td><td class="c2"> SDA </td><td class="c3"> Inout <strong>(pullup)</strong> </td><td class="c4">
 </td></tr></table>
+
+<p class=readable-text><code>Updated:</code> I build my own mt9v034 to pmods connector using eagle ! See:</p>
+<div class="panel margin10 padding0"><div class="panel-content fg-dark">
+<img src="pics/mt9v034conn.sch.png" alt="schematic" width="400px" class="place-left margin10"/><div class="page"><div class="page-content margin10 nlm nrm">
+<p class="readable-text text-muted">The schmeatic of MT9v034 to two pmods. Most <em>simple</em>, most <em>naive</em>, most <em>startup</em> boards. I used mostly <em>labels</em> in drawing this boards. And I do 1.5k Ohm pull-up on SDA and SCL line.</p>
+</div></div></div></div>
+<div class="panel margin10 padding0"><div class="panel-content fg-dark">
+<img src="pics/mt9v034conn.brd.png" alt="schematic" width="400px" class="place-left margin10"/><div class="page"><div class="page-content margin10 nlm nrm">
+<p class="readable-text text-muted">The PCB layout of MT9v034 connector. Hey, it's totally a mess, isn't it ? I do autorouter all the way as a beginner. May be I should do manual route :)</p>
+</div></div></div></div>
 <div class="example margin0"><pre>
 By comparing PX4Flow and the mt9v034 taobao board, we found some common connections, <code>OE</code> (active HIGH) tied to VCC, <code>RSVD</code> tied to GND. <code>BYPASS_CLKIN_P</code> and <code>SER_DATAIN_P</code> are tied to GND, while <code>BYPASS_CLKIN_N</code> and <code>SER_DATAIN_N</code> are tied to VCC with 1k Ohm pull-up resistor.
 However, for mt9v034-dev, the <code>STANDBY</code> is tied to GND, and the <code>RESET_N</code> is tied to VCC with 10k Ohm pull-up resistor. For PX4Flow, these two pins are controlled by MCU. For mt9v034-dev, <code>SCTRL_ADDR0</code> and <code>SCTRL_ADDR1</code> are tied to GND, while for PX4Flow, these pins are tied to VCC.
@@ -179,7 +189,7 @@ As a simple rule-of-the-thumb, we may put <code>0x91000000</code> on data bus, t
 
 <p class=readable-text>Non-invasive gluco tracking using Near-Infra-Red videos ? see, <a href="http://www.eeboard.com/bbs/thread-35333-1-1.html" target=&ldquo;blank&rdquo;>eeboard</a> and <a href="http://www.integrity-app.com/the-glucotrack/the-products/" target=&ldquo;blank&rdquo;>glucotrack</a> .</p>
 <div class="panel ribbed-amber"><div class="panel-content">
-Page generated 2014-10-06 18:17:40 UTC, by <strong>liubenyuan</strong> via a <strong>metro</strong> style <a href="https://github.com/wsshin/jemdoc_mathjax" target="blank">jemdoc+MathJax</a>.
+Page generated 2014-10-16 18:51:57 UTC, by <strong>liubenyuan</strong> via a <strong>metro</strong> style <a href="https://github.com/wsshin/jemdoc_mathjax" target="blank">jemdoc+MathJax</a>.
 </div></div>
 </div></div></div>
 <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript">

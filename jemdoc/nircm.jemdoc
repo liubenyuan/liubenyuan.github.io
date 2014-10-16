@@ -75,6 +75,20 @@ DCMI\_SCK | SCK | Inout *(pullup)* | ||
 DCMI\_SDA | SDA | Inout *(pullup)* |
 ~~~
 
++Updated:+ I build my own mt9v034 to pmods connector using eagle ! See:
+
+~~~
+{}{img_left}{pics/mt9v034conn.sch.png}{schematic}{400px}{}
+
+The schmeatic of MT9v034 to two pmods. Most /simple/, most /naive/, most /startup/ boards. I used mostly /labels/ in drawing this boards. And I do 1.5k Ohm pull-up on SDA and SCL line.
+~~~
+
+~~~
+{}{img_left}{pics/mt9v034conn.brd.png}{schematic}{400px}{}
+
+The PCB layout of MT9v034 connector. Hey, it's totally a mess, isn't it ? I do autorouter all the way as a beginner. May be I should do manual route :)
+~~~
+
 ~~~
 By comparing PX4Flow and the mt9v034 taobao board, we found some common connections, +OE+ (active HIGH) tied to VCC, +RSVD+ tied to GND. +BYPASS\_CLKIN\_P+ and +SER\_DATAIN\_P+ are tied to GND, while +BYPASS\_CLKIN\_N+ and +SER\_DATAIN\_N+ are tied to VCC with 1k Ohm pull-up resistor.
 
