@@ -3701,7 +3701,7 @@ a {
 .metro .side-menu > li > a.dropdown-toggle:after {
   font-family: metroSysIcons;
   font-size: .8em;
-  content: "\e1b1";
+  content: "+";
   left: 85%;
   top: .75em;
   -webkit-transform: rotate(0deg);
@@ -3867,7 +3867,7 @@ a {
 .metro .dropdown-menu > li > a.dropdown-toggle:after {
   font-family: metroSysIcons;
   font-size: .7em;
-  content: "\e1b1";
+  content: "+";
   left: 90%;
   top: 50%;
   margin-top: -1.4em;
@@ -3984,7 +3984,7 @@ a {
   bottom: 0;
   font-family: metroSysIcons;
   font-size: .7em;
-  content: "\e1b1";
+  content: "+";
 }
 .metro .dropdown-toggle.no-marker:after {
   content: "";
@@ -6027,7 +6027,7 @@ a {
 .metro .sidebar > ul ul > li > a.dropdown-toggle:after {
   font-family: metroSysIcons;
   font-size: .7em;
-  content: "\e1b1";
+  content: "+";
   left: 90%;
   top: 50%;
   margin-top: -1.4em;
