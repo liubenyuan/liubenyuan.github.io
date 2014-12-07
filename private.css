@@ -1,8 +1,7 @@
 /* Default css file for jemdoc. */
 
 @font-face {
-    /* font-family : Monaco, Menlo, Inconsolata, Georgia, 'Frutiger Neue W02 Book', sans-serif; */
-    font-family : Inconsolata, Monaco, 'Frutiger Neue W02 Book', sans-serif;
+    font-family : Monaco, Menlo, Inconsolata, Georgia, 'Frutiger Neue W02 Book', sans-serif; */
     font-style : normal;
     font-weight : 700;
 }
