@@ -21,7 +21,7 @@ NUDTPaper是国防科学技术大学 +硕士/博士 LaTeX 论文模板+ 的项�
 == 模板特性 (obselete)
 
 . 用xeCJK进行字体选择，比较方便。可以直接使用TTF或者OTF字体；
-. 安装需求少，只需要tex环境和xeCJK包，对平台Win/Linux/Mac没有要求。建议使用TeXLive，CTeX完整版；
+. 安装需求少，只需要tex环境和xeCJK包，对平台Win -- Linux -- Mac没有要求。建议使用TeXLive，CTeX完整版；
 . 有模板用户手册和排版样例文件，上手简单；
 . 编译方便：生成样例文件，只需双击makepdf.bat；
 . 参考文献采用Jabref编辑，方便好管理。采用bstutf8的参考文献格式文件，符合中文参考文献规范；

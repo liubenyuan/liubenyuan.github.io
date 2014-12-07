@@ -930,7 +930,7 @@ a {
 }
 .metro a,
 .metro .link {
-  color: #2e92cf;
+  color: #0645ad;
 }
 .metro a:hover,
 .metro .link:hover {
@@ -954,15 +954,19 @@ a {
   font-family: 'Segoe UI_', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
   font-weight: normal;
   font-style: normal;
-  color: #000000;
-  font-size: 11pt;
-  line-height: 15pt;
-  letter-spacing: 0.02em;
+  color: black;
+  font-size: 12pt;
+  line-height: 18pt;
+  letter-spacing: 0.025em;
 }
+
 .metro strong {
   font-family: 'Segoe UI Semibold_', 'Open Sans Bold', Verdana, Arial, Helvetica, sans-serif;
+  font-size: 90%;
+  color: #3C3C3C;
   font-weight: bold;
 }
+
 .metro .text-muted {
   color: #999999 !important;
 }
@@ -8604,19 +8608,19 @@ a {
 }
 .metro code,
 .metro .code {
-  font-family: 'Segoe UI_', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
   font-weight: normal;
   font-style: normal;
   color: #000000;
   font-size: 11pt;
   line-height: 15pt;
   letter-spacing: 0.02em;
-  font-family: 'Courier New', monospace;
+
+  font-family : Inconsolata, Monaco, 'Frutiger Neue W02 Book', monospace;
   display: inline-block;
-  padding: 3px 5px;
+  padding: 5px 5px;
   margin: 0;
   background-color: #eeeeee;
-  color: #e51400;
+  color: #000000; /* #e51400 */
   border: 1px #d4d4d4 solid;
   font-size: 90%;
   line-height: 90%;

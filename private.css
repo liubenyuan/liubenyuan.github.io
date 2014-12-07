@@ -36,14 +36,19 @@ pre {
 }
 
 .metro h1 {
+    font-family: 'Segoe UI Semibold_', 'Open Sans Bold', Verdana, Arial, Helvetica, sans-serif;
     font-size: 2.6rem;
-    font-style : bold;
-    color : #6D8764 !important;
+    font-style : normal;
+    font-weight : bold;
+    color : black;
+    /* color : #4D8744 !important; */
 }
+
 .metro h2, h3 {
+    font-family: 'Segoe UI Semibold_', 'Open Sans Bold', Verdana, Arial, Helvetica, sans-serif;
     font-size: 2.3rem;
-    font-style : bold;
-    color : #6D8764 !important;
+    font-style : normal;
+    color : black; /* #6D8764 */
     padding-top: 2ex;
     padding-bottom: .5ex;
     border-bottom: 4px dashed #e8e8ec;
