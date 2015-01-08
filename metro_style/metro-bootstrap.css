@@ -4228,11 +4228,12 @@ a {
   display: block;
   float: left;
   width: 100%;
-  padding: 15px;
-  line-height: 15px;
   color: inherit;
   font-family: 'Segoe UI Light_', 'Open Sans Light', Verdana, Arial, Helvetica, sans-serif;
+  padding: 15px;
+  line-height: 25px;
   font-size: 14px;
+  font-weight: bold;
 }
 .metro .navigation-bar .element-menu > li > a.dropdown-toggle,
 .metro .navbar .element-menu > li > a.dropdown-toggle {
