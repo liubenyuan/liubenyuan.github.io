@@ -58,11 +58,11 @@
 <h2>phealth &ndash; architecture</h2>
 <div class="panel margin10 padding0"><div class="panel-content fg-dark">
 <img src="pics/lx9health.png" alt="Lx9 Microboard for Healthcare" width="400px" class="place-left margin10"/><div class="page"><div class="page-content margin10 nlm nrm">
-<p class="readable-text text-muted">FPGA captures 3-axis accelerometer reads from <code>ADXL345</code>, 4-channel biosignals (one for ECG, and three for PPG) from <code>AD7991</code>. These recordings are transferred to PC via USB2UART using <code>CP2102</code>, or remotely via a bluetooth device <code>RN-42</code>.</p>
+<p class="text-muted">FPGA captures 3-axis accelerometer reads from <code>ADXL345</code>, 4-channel biosignals (one for ECG, and three for PPG) from <code>AD7991</code>. These recordings are transferred to PC via USB2UART using <code>CP2102</code>, or remotely via a bluetooth device <code>RN-42</code>.</p>
 
-<p class="readable-text text-muted">Two peripherals are used, which are I2C and UART. SPI may also be used if we utilize the 4-wire connection of ADXL345. Those codes, <strong>i2c_master.vhd</strong> and <strong>uart.vhd</strong> are publicity available, and borrowed from <a href="http://eewiki.net/pages/viewpage.action?pageId=10125324" target=&ldquo;blank&rdquo;>I2C master @ eewiki</a> and <a href="https://github.com/pabennett/uart" target=&ldquo;blank&rdquo;>uart @ pabennett</a>.</p>
+<p class="text-muted">Two peripherals are used, which are I2C and UART. SPI may also be used if we utilize the 4-wire connection of ADXL345. Those codes, <strong>i2c_master.vhd</strong> and <strong>uart.vhd</strong> are publicity available, and borrowed from <a href="http://eewiki.net/pages/viewpage.action?pageId=10125324" target=&ldquo;blank&rdquo;>I2C master @ eewiki</a> and <a href="https://github.com/pabennett/uart" target=&ldquo;blank&rdquo;>uart @ pabennett</a>.</p>
 
-<p class="readable-text text-muted">FPGA, is simply a <strong>logic wrapper</strong> of all the auxiliary peripherals.</p>
+<p class="text-muted">FPGA, is simply a <strong>logic wrapper</strong> of all the auxiliary peripherals.</p>
 </div></div></div></div>
 <h2>pmodAD2 &ndash; AD7991</h2>
 
@@ -146,7 +146,7 @@ sudo rfcomm bind rfcomm0 00:06:66:43:0F:2E
 
 <p class=readable-text><code>NOTE</code> When we connect to the bluetooth serial (via python, minicom, etc.,) and receive data, the pairing LED on RN42 will <strong>flash</strong>, and the connection status LED will <strong>pulldown</strong> (connected). Data are now transmitted from slave to our PC.</p>
 <div class="panel ribbed-amber"><div class="panel-content">
-Page generated 2014-12-07 19:38:45 UTC, by <strong>liubenyuan</strong> via a <strong>metro</strong> style <a href="https://github.com/wsshin/jemdoc_mathjax" target="blank">jemdoc+MathJax</a>.
+Page generated 2015-01-08 11:19:31 UTC, by <strong>liubenyuan</strong> via a <strong>metro</strong> style <a href="https://github.com/wsshin/jemdoc_mathjax" target="blank">jemdoc+MathJax</a>.
 </div></div>
 </div></div></div>
 <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript">

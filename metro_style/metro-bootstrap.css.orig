@@ -863,7 +863,6 @@ a {
   font-weight: 300;
   color: #000000;
   letter-spacing: 0.00em;
-  font-weight: bold;
   font-size: 4.8rem;
   line-height: 4.8rem;
 }
@@ -872,7 +871,6 @@ a {
   font-weight: 300;
   color: #000000;
   letter-spacing: 0.00em;
-  font-weight: bold;
   font-size: 2.5rem;
   line-height: 2.5rem;
   letter-spacing: 0.01em;
@@ -884,10 +882,10 @@ a {
   font-size: 2.5rem;
   line-height: 2.5rem;
   letter-spacing: 0.01em;
-  font-weight: bold;
   color: #000000;
   font-size: 2.2rem;
   line-height: 2.2rem;
+  font-weight: bold;
 }
 .metro h4 {
   font-family: 'Segoe UI Semibold_', 'Open Sans Bold', Verdana, Arial, Helvetica, sans-serif;
@@ -932,11 +930,11 @@ a {
 }
 .metro a,
 .metro .link {
-  color: rgba(13, 93, 255, 1.0);
+  color: #0645ad;
 }
 .metro a:hover,
 .metro .link:hover {
-  color: rgba(13, 93, 255, 0.8);
+  color: rgba(45, 173, 237, 0.8);
 }
 .metro a:focus,
 .metro .link:focus,
@@ -956,17 +954,19 @@ a {
   font-family: 'Segoe UI_', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
   font-weight: normal;
   font-style: normal;
-  color: #000000;
-  font-size: 11pt;
-  line-height: 15pt;
-  letter-spacing: 0.02em;
+  color: black;
+  font-size: 12pt;
+  line-height: 18pt;
+  letter-spacing: 0.025em;
 }
+
 .metro strong {
-  /* font-family: 'Segoe UI Semibold_', 'Open Sans Bold', Verdana, Arial, Helvetica, sans-serif; */
-  font-weight: bold;
-  color: #414141;
+  font-family: 'Segoe UI Semibold_', 'Open Sans Bold', Verdana, Arial, Helvetica, sans-serif;
   font-size: 90%;
+  color: #3C3C3C;
+  font-weight: bold;
 }
+
 .metro .text-muted {
   color: #999999 !important;
 }
@@ -3545,7 +3545,6 @@ a {
   padding: 0;
   list-style: none;
   padding: 0px;
-  color : black;
 }
 .metro .horizontal-menu li {
   display: inline-block;
@@ -8588,6 +8587,7 @@ a {
 }
 .metro .example:before {
   position: absolute;
+  content: "example";
   left: -21px;
   top: 30px;
   color: #999999 !important;
@@ -8608,18 +8608,22 @@ a {
 }
 .metro code,
 .metro .code {
-  font-family: 'Segoe UI_', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
   font-weight: normal;
   font-style: normal;
+  color: #000000;
+  font-size: 11pt;
+  line-height: 15pt;
   letter-spacing: 0.02em;
-  font-family: 'Courier New', monospace;
+
+  font-family : Inconsolata, Monaco, 'Frutiger Neue W02 Book', monospace;
   display: inline-block;
-  padding: 3px 5px;
-  margin: 1px;
-  color: #e51400;
+  padding: 5px 5px;
+  margin: 0;
+  background-color: #eeeeee;
+  color: #000000; /* #e51400 */
   border: 1px #d4d4d4 solid;
   font-size: 90%;
-  line-height: 110%;
+  line-height: 90%;
 }
 .metro .label {
   display: inline-block;

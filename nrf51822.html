@@ -40,9 +40,9 @@
 <h1>NRF51822 &ndash; Cortex-M0 + BLE stack</h1>
 <div class="panel margin10 padding0"><div class="panel-content fg-dark">
 <img src="pics/nrf51822ak.jpg" alt="NRF51822 AK II Board" width="300px" class="place-left margin10"/><div class="page"><div class="page-content margin10 nlm nrm">
-<p class="readable-text text-muted">左边就是我们的NRF51822 AK&ndash;II开发板！可以在<a href="http://nrf51.taobao.com" target=&ldquo;blank&rdquo;>NRF51淘宝店</a>或者<a href="http://www.nrf51.com" target=&ldquo;blank&rdquo;>NRF51开发者论坛</a>上购买。与nrf51822 DK(EK)不同的是，这个板子不自带jlink调试器，因此，我们需要购买jlink V8调试器来开发和调试程序。另外，尤为重要的是，我们可以将nrf51822理解成，<code>搭载BLE蓝牙外设的Cortex-M0开发板</code> ：）</p>
+<p class="text-muted">左边就是我们的NRF51822 AK&ndash;II开发板！可以在<a href="http://nrf51.taobao.com" target=&ldquo;blank&rdquo;>NRF51淘宝店</a>或者<a href="http://www.nrf51.com" target=&ldquo;blank&rdquo;>NRF51开发者论坛</a>上购买。与nrf51822 DK(EK)不同的是，这个板子不自带jlink调试器，因此，我们需要购买jlink V8调试器来开发和调试程序。另外，尤为重要的是，我们可以将nrf51822理解成，<code>搭载BLE蓝牙外设的Cortex-M0开发板</code> ：）</p>
 
-<p class="readable-text text-muted">我们开发的环境是Linux，其方便之处是可以使用gcc cross toolchain开发环境和Makefile。比较官方提供的keil + nrf51822 SDK + nrfgo的开发环境，其优点是自如，可以集成到任何使用makefile的IDE中去。下面，我们一步一步的讲解如何建立linux下的Makefile template。 <strong>So, Let's Start!</strong></p>
+<p class="text-muted">我们开发的环境是Linux，其方便之处是可以使用gcc cross toolchain开发环境和Makefile。比较官方提供的keil + nrf51822 SDK + nrfgo的开发环境，其优点是自如，可以集成到任何使用makefile的IDE中去。下面，我们一步一步的讲解如何建立linux下的Makefile template。 <strong>So, Let's Start!</strong></p>
 </div></div></div></div>
 <h2>jlink &ndash; FLASH的擦写</h2>
 
@@ -92,7 +92,7 @@ SOC_PATH := $(HOME)/bin/nrf51_softdevice/
 <p class=readable-text><a href="http://balau82.wordpress.com/2010/02/14/simplest-bare-metal-program-for-arm/" target=&ldquo;blank&rdquo;>Simplest bare metal program for ARM</a>. Bare Metal (裸机) 程序是无需操作系统即可运行的程式。学习裸机程序对于理解硬件架构以及操作系统的底层都很有帮助。我们在安装好arm-none-eabi工具( none 即为<strong>bare metal</strong>的含义)后，将arm-none-eabi-*添加到系统可执行路径中即可。</p>
 <div class="panel margin10 padding0"><div class="panel-content fg-dark">
 <img src="pics/balau82_20100214.png" alt="ARM bare metal" width="400px" class="place-left margin10"/><div class="page"><div class="page-content margin10 nlm nrm">
-<p class="readable-text text-muted">nrf51822 AK开发板可以看作是cortex-M0架构下最小的开发板。最基本的源代码包括<strong>test.c</strong>，启动代码<strong>startup.s</strong>，链接配置<strong>test.ld</strong>。相应的交叉编译工具也可以在图中找到。 <code>启动代码</code> 最基本的功能就是在程序初始化端口，屏蔽中断，映射程序。 <code>链接配置</code> 则包含text，data以及堆栈的位置，或者说 <em>tells the linker where different memory sections map into real, physical memory on the chip</em></p>
+<p class="text-muted">nrf51822 AK开发板可以看作是cortex-M0架构下最小的开发板。最基本的源代码包括<strong>test.c</strong>，启动代码<strong>startup.s</strong>，链接配置<strong>test.ld</strong>。相应的交叉编译工具也可以在图中找到。 <code>启动代码</code> 最基本的功能就是在程序初始化端口，屏蔽中断，映射程序。 <code>链接配置</code> 则包含text，data以及堆栈的位置，或者说 <em>tells the linker where different memory sections map into real, physical memory on the chip</em></p>
 </div></div></div></div>
 
 <p class=readable-text><a href="http://balau82.wordpress.com/2010/02/28/hello-world-for-bare-metal-arm-using-qemu/" target=&ldquo;blank&rdquo;>Hello world for bare metal ARM using QEMU</a>. 我们可以用qemu和arm-none-eabi-gdb来调试程序。在这里，我们还是使用上面test.c的例子。运行</p>
@@ -179,7 +179,7 @@ $ make flash-softdevice
 $ make flash
 </pre></div>
 <div class="panel ribbed-amber"><div class="panel-content">
-Page generated 2014-12-07 19:38:45 UTC, by <strong>liubenyuan</strong> via a <strong>metro</strong> style <a href="https://github.com/wsshin/jemdoc_mathjax" target="blank">jemdoc+MathJax</a>.
+Page generated 2015-01-08 11:19:31 UTC, by <strong>liubenyuan</strong> via a <strong>metro</strong> style <a href="https://github.com/wsshin/jemdoc_mathjax" target="blank">jemdoc+MathJax</a>.
 </div></div>
 </div></div></div>
 <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript">

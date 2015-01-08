@@ -14,7 +14,6 @@ Office : BME-405.
 
 ~~~
 {}{img_left}{pics/email.gif}{email me}{220px}{}{}
-Contact me via *liubenyuan $\boldsymbol{\alpha\tau}$ gmail $\cdot$ com* or *byliu $\alpha\tau$ fmmu $\cdot$ edu $\cdot$ cn*
 ~~~
 
 = About
@@ -23,9 +22,9 @@ I am now a research assistant at the department of BioMedical Engineering (BME),
 
 = Academia
 
-My primary research is side-information assisted +Compressive Sensing (CS)+. We (in collaborate with [https://sites.google.com/site/researchbyzhang Dr. Zhilin Zhang]) have developed advanced Bayesian learning algorithms --- the [https://sites.google.com/site/researchbyzhang/biocs BSBL] framework. I apply these algorithms on Direction-of-Arrival (DOA) estimation, radar imaging and tracking. We also applied CS as a /low-complexity, low-power, robust/ data compression method in bio-signals (ECG, EEG, PPG, etc.) telemonitoring applications.
+My primary research is structural information assisted +Compressive Sensing (CS)+, and variaous optimisation methods. I (in collaborate with [https://sites.google.com/site/researchbyzhang Dr. Zhilin Zhang]) have developed advanced Bayesian learning algorithms based on the [https://sites.google.com/site/researchbyzhang/biocs BSBL] framework. I apply these algorithms on Direction-of-Arrival (DOA) estimation, radar imaging and tracking. We also treated CS as a /low-complexity, low-power, robust/ data compression method in bio-signals (ECG, EEG, PPG, etc.) telemonitoring applications.
 
-My current hack-a-project is building advanced and yet small-form-factor +Electrical Impedance Tomograpgy (EIT)+ prototyping hardware at [http://bme.fmmu.edu.cn Dept. of Biomedical Enegineering, FMMU]. And yes, CS technology plays a important role in data acquisition !
+I am currently building an advanced, yet small-form-factor +Electrical Impedance Tomograpgy (EIT)+ prototyping hardware at [http://bme.fmmu.edu.cn Dept. of Biomedical Enegineering, FMMU]. CS plays an important role in both data acquisition and EIT image reconstruction !
 
 I am also a big electronic fan in amatuer radio (HackRF, GNURadio), homebrew PCB (Kicad, Cadsoft Eagle), embedded platforms (ARM cortex-M series, Xilinx FPGAs, and Labview) and Bluetooth technology (Roving Networks RN-42, Nordic nrf51822).  An novel *DCR* (Detect and Communication enabled RADAR) is building on the way, with *Dr. Hongqi Fan*.
 

@@ -1276,7 +1276,7 @@ def procfile(f):
         if tableblock:
           hb(f.outf, '|\n', s)
         elif imgblock:
-          hb(f.outf, '\n<p class="readable-text text-muted">|</p>\n', s)
+          hb(f.outf, '\n<p class="text-muted">|</p>\n', s)
         elif infoblock:
           #hb(f.outf, '\n<p class="code-text text-muted margin0 padding0">|</p>\n', s)
           hb(f.outf, '|\n', s)
