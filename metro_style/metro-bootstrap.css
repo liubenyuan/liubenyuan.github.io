@@ -964,7 +964,7 @@ a {
 .metro strong {
   /* font-family: 'Segoe UI Semibold_', 'Open Sans Bold', Verdana, Arial, Helvetica, sans-serif; */
   font-weight: bold;
-  color: #414141;
+  color: #212121;
   font-size: 90%;
 }
 .metro .text-muted {
@@ -4214,7 +4214,7 @@ a {
   margin: 0;
   padding: 0;
   list-style: none;
-  color: inherit;
+  color: #136e07 !important;
 }
 .metro .navigation-bar .element-menu > li,
 .metro .navbar .element-menu > li {
