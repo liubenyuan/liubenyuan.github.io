@@ -3,13 +3,10 @@
 ~~~
 {}{img_left}{pics/lby.jpg}{liu benyuan}{160px}{}{}
 
-Liu Benyuan \n
-I am a fifth-year Ph.D at The National University of Defense Technology, \n
-
-I am also a Lecture at the Department of Bio-Medical Engineering, \n
+Liu Benyuan, the Department of Bio-Medical Engineering, \n
 The Fourth Military Medical University, Shaanxi, Xi'an. \n
 
-Office : BME-405.
+I was a Ph.D student in the ARSP group of National University of Defense Technology. \n
 ~~~
 
 ~~~
@@ -18,18 +15,16 @@ Office : BME-405.
 
 = About
 
-I am now a research assistant at the department of BioMedical Engineering (BME), [http://www.fmmu.edu.cn FMMU], co-work with *Prof. Xiuzhen Dong* and *Prof. Feng Fu*. I am also a fifth-year Ph.D at the Science and Technology on Automatic Target Recognition Laboratory (ATR Lab), [http://www.nudt.edu.cn NUDT], under the supervisor of *Prof. Qiang Fu* and *Dr. Hongqi Fan* in Adavance Radar Signal Processing *(ARSP)* group. My research interests lie broadly on biomedical signal processing, statistics, optimization, tracking and estimation.
+I am now a lecture at the department of BioMedical Engineering (BME), [http://www.fmmu.edu.cn FMMU]. I was a Ph.D student in the Advanced Radar Signal Processing *(ARSP)* group of NUDT, where I worked with *Dr. Hongqi Fan* in Adavance Radar Signal Processing *(ARSP)* group. My research interests lie broadly on biomedical signal processing, optimization, tracking and estimation.
 
 = Academia
 
-My primary research is structural information assisted +Compressive Sensing (CS)+, and variaous optimisation methods. I (in collaborate with [https://sites.google.com/site/researchbyzhang Dr. Zhilin Zhang]) have developed advanced Bayesian learning algorithms based on the [https://sites.google.com/site/researchbyzhang/biocs BSBL] framework. I apply these algorithms on Direction-of-Arrival (DOA) estimation, radar imaging and tracking. We also treated CS as a /low-complexity, low-power, robust/ data compression method in bio-signals (ECG, EEG, PPG, etc.) telemonitoring applications.
-
-I am currently building an advanced, yet small-form-factor +Electrical Impedance Tomograpgy (EIT)+ prototyping hardware at [http://bme.fmmu.edu.cn Dept. of Biomedical Enegineering, FMMU]. CS plays an important role in both data acquisition and EIT image reconstruction !
-
-I am also a big electronic fan in amatuer radio (HackRF, GNURadio), homebrew PCB (Kicad, Cadsoft Eagle), embedded platforms (ARM cortex-M series, Xilinx FPGAs, and Labview) and Bluetooth technology (Roving Networks RN-42, Nordic nrf51822).  An novel *DCR* (Detect and Communication enabled RADAR) is building on the way, with *Dr. Hongqi Fan*.
+My primary research is structural information assisted +Compressive Sensing (CS)+ and optimisation methods. I apply these algorithms on Direction-of-Arrival (DOA) estimation, radar imaging and tracking. We (in collaborate with [https://sites.google.com/site/researchbyzhang Dr. Zhilin Zhang]) also treated CS and Quantized CS as a /low-complexity, low-power, robust/ data compression method for bio-signals (ECG, EEG, PPG, etc.) telemonitoring applications.
+In [http://bme.fmmu.edu.cn Dept. of Biomedical Enegineering, FMMU], I am now building an advanced, yet small-form-factor +Electrical Impedance Tomograpgy (EIT)+ system.
 
 = Scholar
 
 See my google scholar website : [http://scholar.google.com/citations?user=hq_pop0AAAAJ&hl=en Google Scholar -- liu benyuan].
 
 And my ORCID : [http://orcid.org/0000-0002-7543-1054 orcid.org/0000-0002-7543-1054].
+
