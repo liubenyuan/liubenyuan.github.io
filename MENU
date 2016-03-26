@@ -1,15 +1,10 @@
-Main                [index.html]
-Publications        [publications.html]
+Main            [index.html]
+Publications    [publications.html]
 Research
-    BSBL    [bsbl.html]
-    EIT     [eit.html]
-    Connectomics [connectomics.html]
-    NIRCM [nircm.html]
-    phealth [phealth.html]
+    py-bsbl     [bsbl.html]
+    py-eit      [eit.html]
+    py-oopsi    [connectomics.html]
 Hacks
-    nudtpaper [nudtpaper.html]
-    udp\/ip [udpip.html]
-    nrf51822 [nrf51822.html]
-    kicad [kicad.html]
-    mathjax [mathjax.html]
+    nudtpaper   [nudtpaper.html]
+    mathjax     [mathjax.html]
 

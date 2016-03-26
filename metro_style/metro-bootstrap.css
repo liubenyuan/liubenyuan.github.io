@@ -932,11 +932,15 @@ a {
 }
 .metro a,
 .metro .link {
-  color: rgba(13, 93, 255, 1.0);
+  color: rgba(20, 20, 155, 1.0);
+  font-size: 95%;
+  font-style: normal;
 }
 .metro a:hover,
 .metro .link:hover {
-  color: rgba(13, 93, 255, 0.8);
+  color: rgba(20, 20, 205, 0.8);
+  font-size: 95%;
+  font-style: italic;
 }
 .metro a:focus,
 .metro .link:focus,
@@ -8610,14 +8614,14 @@ a {
 .metro code,
 .metro .code {
   font-family: 'Segoe UI_', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
-  font-weight: normal;
+  font-weight: bold;
   font-style: normal;
   letter-spacing: 0.02em;
   font-family: 'Courier New', monospace;
-  display: inline-block;
+  display: inline;
   padding: 3px 5px;
   margin: 1px;
-  color: #e51400;
+  color: #345434;
   border: 1px #d4d4d4 solid;
   font-size: 90%;
   line-height: 110%;

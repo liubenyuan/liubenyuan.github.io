@@ -1,13 +1,13 @@
 /* Default css file for jemdoc. */
 
 @font-face {
-    font-family : Monaco, Menlo, Inconsolata, Georgia, 'Frutiger Neue W02 Book', sans-serif; */
+    font-family : Georgia, 'Frutiger Neue W02 Book', sans-serif; */
     font-style : normal;
     font-weight : 700;
 }
 
 .metro .readable-text {
-    font-family: 'Cambria_', 'PT Serif Caption', Verdana, Arial, Helvetica, sans-serif;
+    font-family : Georgia, 'Frutiger Neue W02 Book', sans-serif; */
     font-weight: normal;
     font-style: normal;
     font-size: 15pt;
@@ -16,16 +16,16 @@
 }
 
 .metro .text-muted {
-    font-family : Inconsolata, Monaco, 'Frutiger Neue W02 Book', monospace;
+    font-family : Monaco, Menlo, Inconsolata, Georgia, 'Frutiger Neue W02 Book', sans-serif; */
     font-weight: normal;
     font-style: normal;
     font-size: 15pt;
     line-height: 26pt;
-    color: #48484c !important;
+    color: #28282c !important;
 }
 
 pre {
-    font-family : Inconsolata, Monaco, 'Frutiger Neue W02 Book', monospace;
+    font-family : Monaco, 'Frutiger Neue W02 Book', monospace;
     font-size : 100%;
     line-height: 24pt;
     color: #48484c !important;
@@ -46,7 +46,7 @@ pre {
     font-size: 2.6rem;
     font-style : normal;
     font-weight : bold;
-    color : #e51400 !important;
+    color : #e51414 !important;
     /* color : #4D8744 !important; */
 }
 
@@ -55,7 +55,7 @@ pre {
     font-size: 2.3rem;
     font-style : normal;
     font-weight : bold;
-    color : #e51400 !important;
+    color : #e51414 !important;
     padding-top: 2ex;
     padding-bottom: .5ex;
     border-bottom: 0px dashed #e8e8ec;
